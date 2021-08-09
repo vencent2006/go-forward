@@ -1,0 +1,9 @@
+syntax = "proto3";
+package pkt;
+option go_package = "./pkt";
+
+message Pkt {
+uint32 Source  = 1;
+uint64 Sequence = 3;
+bytes  Data = 5;
+}
