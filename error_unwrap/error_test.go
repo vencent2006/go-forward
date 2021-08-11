@@ -59,8 +59,9 @@ func TestAs(t *testing.T) {
 
 	var targetErr *ErrorString
 	err := fmt.Errorf("new error:[%w]", &ErrorString{s: "target err"})
-	fmt.Println(errors.As(err, &targetErr))
-	fmt.Println(errors.Is(err, targetErr))
+	fmt.Println("errors.As is ", errors.As(err, &targetErr))
+	fmt.Println("errors.Is is ", errors.Is(err, targetErr))
+
 }
 
 // total
