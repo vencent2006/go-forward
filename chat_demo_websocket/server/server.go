@@ -14,6 +14,8 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/gobwas/ws/wsutil"
+
 	"github.com/gobwas/ws"
 	"github.com/sirupsen/logrus"
 )
@@ -77,9 +79,11 @@ func (s *Server) readLoop(userId string, conn net.Conn) error {
 		}
 
 		if frame.Header.OpCode == ws.OpPing {
-			logrus.Trace("recv a ping; resp with a pong")
-			f := ws.NewPongFrame(nil)
-			_ = ws.WriteFrame(conn, f)
+			logrus.Info("recv a ping; resp with a pong")
+			// f := ws.NewPongFrame(nil)
+			// _ = ws.WriteFrame(conn, f)
+			// 上面两句，等价于 wsutil.WriteServerMessage(conn, ws.OpPong, nil)
+			_ = wsutil.WriteServerMessage(conn, ws.OpPong, nil)
 			continue
 		}
 

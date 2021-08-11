@@ -147,6 +147,7 @@ func (h *handler) readLoop(conn net.Conn) error {
 			return err
 		}
 
+		// 老师说TIPS: 使用读超时而不是在一个线程中使用定时器检查是否有收到pong消息，效率更高，而且减少了系统开销。
 		// pong
 		if frame.Header.OpCode == ws.OpPong {
 			// 重置读取超时时间
@@ -172,7 +173,7 @@ func (h *handler) heartbeatLoop() error {
 	tick := time.NewTicker(h.heartbeat)
 	for range tick.C {
 		// 发送一个ping的心跳包给服务端
-		logrus.Info("ping ...")
+		logrus.Info("send ping ...")
 		_ = h.conn.SetWriteDeadline(time.Now().Add(time.Second * 10))
 		if err := wsutil.WriteClientMessage(h.conn, ws.OpPing, nil); err != nil {
 			return err
