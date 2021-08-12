@@ -3,6 +3,8 @@ module go-examples
 go 1.14
 
 require (
+	github.com/gin-gonic/gin v1.7.3
+	github.com/go-playground/validator/v10 v10.9.0
 	github.com/gobwas/ws v1.1.0
 	github.com/golang/protobuf v1.5.0
 	github.com/google/gops v0.3.19
@@ -11,4 +13,6 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.7.0
 	google.golang.org/protobuf v1.27.1
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
+	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 )
