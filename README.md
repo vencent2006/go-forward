@@ -10,7 +10,7 @@ go practice examples
 
 | Name                | Type                   | Desc                                                         |
 | ------------------- | ---------------------- | ------------------------------------------------------------ |
-| chat_demo_im        | IM                     |                                                              |
+| chat_demo_im        | IM                     | IM with websocket and tcp                                                             |
 | chat_demo_websocket | IM                     | IM with websocket                                            |
 | cobra_word          | package，cmd           | cobra for command line tool                                  |
 | error_unwrap        | package，error         | above Go 1.13，errors standard usage(wrap, unwrap,as, is)    |
