@@ -24,3 +24,4 @@ go practice examples
 | serialization       | network, serialization | compare big endian ,little endian; protocolbuf, json, customize |
 | string_concat       | package, string        | compare string cost: "A"+"B" vs fmt.Sprintf                  |
 | zero_garbage        | memory                 | alloc and sync.Pool                                          |
+| endian_demo         | byte order             | big endian for human, little endian for cpu                  |

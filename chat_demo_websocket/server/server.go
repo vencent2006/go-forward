@@ -70,7 +70,6 @@ func (s *Server) readLoop(userId string, conn net.Conn) error {
 		frame, err := ws.ReadFrame(conn)
 		if err != nil {
 			return fmt.Errorf("%s ReadFrame fail, %v", userId, err)
-			return err
 		}
 
 		if frame.Header.OpCode == ws.OpClose {
