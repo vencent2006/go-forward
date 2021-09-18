@@ -10,12 +10,12 @@ package mock
 
 import (
 	"context"
-	"go-examples/chat_demo_im/tcp"
+	"go-examples/demo/chat_demo_im/tcp"
 	"time"
 
-	kim "go-examples/chat_demo_im"
-	"go-examples/chat_demo_im/logger"
-	"go-examples/chat_demo_im/websocket"
+	kim "go-examples/demo/chat_demo_im"
+	"go-examples/demo/chat_demo_im/logger"
+	"go-examples/demo/chat_demo_im/websocket"
 	"net"
 
 	"github.com/gobwas/ws/wsutil"

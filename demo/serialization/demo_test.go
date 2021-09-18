@@ -11,7 +11,7 @@ package serialization
 import (
 	"encoding/binary"
 	"encoding/json"
-	"go-examples/serialization/pkt"
+	"go-examples/demo/serialization/pkt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

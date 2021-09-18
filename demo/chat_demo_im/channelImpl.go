@@ -11,7 +11,7 @@ package kim
 import (
 	"errors"
 	"fmt"
-	"go-examples/chat_demo_im/logger"
+	"go-examples/demo/chat_demo_im/logger"
 	"sync"
 	"time"
 )

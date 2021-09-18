@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	"go-examples/chat_demo_websocket/client"
-	"go-examples/chat_demo_websocket/server"
+	"go-examples/demo/chat_demo_websocket/client"
+	"go-examples/demo/chat_demo_websocket/server"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"

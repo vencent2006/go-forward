@@ -11,8 +11,8 @@ package tcp
 import (
 	"errors"
 	"fmt"
-	kim "go-examples/chat_demo_im"
-	"go-examples/chat_demo_im/logger"
+	kim "go-examples/demo/chat_demo_im"
+	"go-examples/demo/chat_demo_im/logger"
 	"net/url"
 	"sync"
 	"sync/atomic"

@@ -9,7 +9,7 @@
 package kim
 
 import (
-	"go-examples/chat_demo_im/logger"
+	"go-examples/demo/chat_demo_im/logger"
 	"sync"
 )
 

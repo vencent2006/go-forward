@@ -9,8 +9,8 @@
 package tcp
 
 import (
-	kim "go-examples/chat_demo_im"
-	"go-examples/chat_demo_im/wire/endian"
+	kim "go-examples/demo/chat_demo_im"
+	"go-examples/demo/chat_demo_im/wire/endian"
 	"io"
 	"net"
 )

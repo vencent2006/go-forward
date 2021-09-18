@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"flag"
-	"go-examples/chat_demo_im/examples/mock"
-	"go-examples/chat_demo_im/logger"
+	"go-examples/demo/chat_demo_im/examples/mock"
+	"go-examples/demo/chat_demo_im/logger"
 
 	"github.com/spf13/cobra"
 )

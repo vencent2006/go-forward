@@ -9,7 +9,7 @@
 package websocket
 
 import (
-	kim "go-examples/chat_demo_im"
+	kim "go-examples/demo/chat_demo_im"
 	"net"
 
 	"github.com/gobwas/ws"

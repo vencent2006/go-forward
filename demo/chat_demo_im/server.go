@@ -10,7 +10,7 @@ package kim
 
 import (
 	"context"
-	"go-examples/chat_demo_im/naming"
+	"go-examples/demo/chat_demo_im/naming"
 	"time"
 )
 

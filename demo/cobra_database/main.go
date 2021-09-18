@@ -1,9 +1,8 @@
 package main
 
 import (
+	"go-examples/demo/cobra_database/cmd"
 	"log"
-
-	"go-examples/cobra_word/cmd"
 )
 
 func main() {

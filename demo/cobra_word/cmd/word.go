@@ -9,7 +9,7 @@
 package cmd
 
 import (
-	"go-examples/cobra_word/internal/word"
+	"go-examples/demo/cobra_word/internal/word"
 	"log"
 	"strings"
 
