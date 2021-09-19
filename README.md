@@ -1,4 +1,4 @@
-# go-examples
+# go-forward
 
 go practice examples
 
@@ -10,8 +10,9 @@ go practice examples
 
 | Name                | Desc                   |
 | ------------------- | ---------------------- |
-| algorithm           | solution for leecode,sword-offer |
+| algorithm           | solution for [LeetCode](https://leetcode.com) |
 | course              | good online course     |
 | article             | daily or weekly article|
 | examples            | implementation package or design|
-| source code analysis| select typical topic to trace source code procedure             |
+| source code analysis| select typical topic to trace source code procedure |
+| performance analysis| select typical topic to compare performance |
