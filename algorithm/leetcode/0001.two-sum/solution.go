@@ -6,7 +6,7 @@
  * @Date: 2021/9/19 00:03
  */
 
-package _go
+package _001_two_sum
 
 func twoSum(nums []int, target int) []int {
 	hashMap := make(map[int]int)
