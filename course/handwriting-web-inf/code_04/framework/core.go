@@ -33,7 +33,7 @@ func NewCore() *Core {
 
 // 注册中间件
 func (c *Core) Use(middlewares ...ControllerHandler) {
-	// todo: vincent say ，这个是覆盖而不是追加，感觉应该是有问题的
+	// todo: vincent say ，这个是覆盖而不是追加，感觉应该是有问题
 	c.middlewares = middlewares
 }
 
