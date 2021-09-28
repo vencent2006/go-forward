@@ -6,7 +6,7 @@
  * @Date: 2021/9/3 23:55
  */
 
-package _go
+package _000_n_sum
 
 import (
 	"reflect"
