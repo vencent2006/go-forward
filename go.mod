@@ -3,6 +3,7 @@ module go-examples
 go 1.14
 
 require (
+	github.com/ClickHouse/clickhouse-go v1.5.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.7.3
 	github.com/go-playground/validator/v10 v10.9.0
@@ -11,9 +12,9 @@ require (
 	github.com/golang/protobuf v1.5.0
 	github.com/google/gops v0.3.19
 	github.com/jinzhu/gorm v1.9.16
+	github.com/jmoiron/sqlx v1.2.0
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
-	github.com/prometheus/common v0.4.0
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/segmentio/ksuid v1.0.4
 	//github.com/sirupsen/logrus v1.2.0
