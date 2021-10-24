@@ -7,9 +7,11 @@ import (
 )
 
 func main() {
+	core := framework.NewCore()
+	registerRouter(core)
 	server := http.Server{
 		Addr:    ":8088",
-		Handler: framework.NewCore(),
+		Handler: core,
 	}
 	log.Fatal(server.ListenAndServe())
 }

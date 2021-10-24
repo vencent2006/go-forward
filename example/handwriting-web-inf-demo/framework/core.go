@@ -9,60 +9,36 @@
 package framework
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
-	"strconv"
 )
 
 type Core struct {
+	router map[string]ControllerHandler
 }
 
 func NewCore() *Core {
-	return &Core{}
+	// map是要初始化的
+	return &Core{router: map[string]ControllerHandler{}}
 }
+
+// handler注册路由
+func (c *Core) Get(url string, handler ControllerHandler) {
+	c.router[url] = handler
+}
+
 func (c *Core) ServeHTTP(response http.ResponseWriter, request *http.Request) {
 	// todo: implement Handler interface: ServeHttp
-	log.Println("come to ServeHttp")
+	log.Println("core.ServeHTTP")
+	ctx := NewContext(request, response)
 
-	// 控制器
-
-	obj := map[string]interface{}{
-		"data": nil,
-	}
-	// 设置控制器 response 的 header 部分
-	response.Header().Set("Content-Type", "application/json")
-
-	// 从请求体中获取参数
-	foo := request.PostFormValue("foo")
-	if foo == "" {
-		foo = "10"
-	}
-	fooInt, err := strconv.Atoi(foo)
-	if err != nil {
-		response.WriteHeader(500)
+	// 一个简单的路由选择器,这里直接写死为foo
+	router := c.router["foo"]
+	if router == nil {
+		log.Println("foo router is nil")
 		return
 	}
-	// 构建返回结构
-	obj["data"] = fooInt
-	byt, err := json.Marshal(obj)
-	if err != nil {
-		response.WriteHeader(500)
-		return
-	}
-	// 构建返回状态，输出返回结构
-	response.WriteHeader(200)
-	response.Write(byt)
-
-	obj["name"] = "vincent"
-	byt, err = json.Marshal(obj)
-	if err != nil {
-		response.WriteHeader(500)
-		return
-	}
-	// 构建返回状态，输出返回结构
-	response.WriteHeader(200)
-	response.Write(byt)
-
-	return
+	log.Println("core.router")
+	// 都是使用foo的controllerHandler来处理的请求
+	_ = router(ctx)
 }
