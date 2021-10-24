@@ -1,15 +1,15 @@
 package main
 
 import (
-	"go-examples/course/handwriting-web-inf/code_01/framework"
+	"go-examples/example/handwriting-web-inf-demo/framework"
 	"log"
 	"net/http"
 )
 
 func main() {
-	server := &http.Server{
+	server := http.Server{
+		Addr:    ":8088",
 		Handler: framework.NewCore(),
-		Addr:    "localhost:8080",
 	}
 	log.Fatal(server.ListenAndServe())
 }
