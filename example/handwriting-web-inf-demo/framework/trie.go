@@ -18,10 +18,10 @@ type Tree struct {
 }
 
 type node struct {
-	isLast  bool              // 该节点是否能成为一个独立的uri，是否自身就是一个终极节点
-	segment string            // uri中的字符串
-	handler ControllerHandler // 控制器
-	childs  []*node           // 子节点
+	isLast   bool                // 该节点是否能成为一个独立的uri，是否自身就是一个终极节点
+	segment  string              // uri中的字符串
+	handlers []ControllerHandler // 中间件+控制器
+	childs   []*node             // 子节点
 }
 
 func newNode() *node {
@@ -120,7 +120,7 @@ func (n *node) matchNode(uri string) *node {
 /:user/name/:age （冲突）
 */
 
-func (tree *Tree) AddRouter(uri string, handler ControllerHandler) error {
+func (tree *Tree) AddRouter(uri string, handlers []ControllerHandler) error {
 	n := tree.root
 	if n.matchNode(uri) != nil {
 		return errors.New("route exist: " + uri)
@@ -156,7 +156,7 @@ func (tree *Tree) AddRouter(uri string, handler ControllerHandler) error {
 			if isLast {
 				// 是不是叶子节点
 				cnode.isLast = true
-				cnode.handler = handler
+				cnode.handlers = handlers
 			}
 			n.childs = append(n.childs, cnode)
 			objNode = cnode
@@ -169,10 +169,10 @@ func (tree *Tree) AddRouter(uri string, handler ControllerHandler) error {
 }
 
 // 匹配uri
-func (tree *Tree) FindHandler(uri string) ControllerHandler {
+func (tree *Tree) FindHandler(uri string) []ControllerHandler {
 	matchNode := tree.root.matchNode(uri)
 	if matchNode == nil {
 		return nil
 	}
-	return matchNode.handler
+	return matchNode.handlers
 }

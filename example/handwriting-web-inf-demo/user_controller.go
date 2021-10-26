@@ -11,6 +11,7 @@ package main
 import "go-examples/example/handwriting-web-inf-demo/framework"
 
 func UserLoginController(c *framework.Context) error {
+	panic("UserLoginControllerPanic")
 	c.Json(200, "ok, UserLoginController")
 	return nil
 }
