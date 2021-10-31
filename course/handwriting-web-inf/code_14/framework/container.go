@@ -149,7 +149,7 @@ func (hade *HadeContainer) newInstance(sp ServiceProvider, params []interface{})
 // 真正的实例化一个服务
 func (hade *HadeContainer) make(key string, params []interface{}, forceNew bool) (interface{}, error) {
 	// todo: 记得关掉
-	fmt.Printf("container(%p): make key(%s), Providers = %+v\n", hade, key, hade.PrintProviders())
+	//fmt.Printf("container(%p): make key(%s), Providers = %+v\n", hade, key, hade.PrintProviders())
 
 	// read lock
 	hade.lock.RLock()

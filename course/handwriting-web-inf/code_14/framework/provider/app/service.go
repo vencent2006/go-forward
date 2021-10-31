@@ -14,12 +14,15 @@ import (
 	"go-examples/course/handwriting-web-inf/code_14/framework"
 	"go-examples/course/handwriting-web-inf/code_14/framework/util"
 	"path/filepath"
+
+	"github.com/google/uuid"
 )
 
 // HadeApp 代表hade框架的App实现
 type HadeApp struct {
 	container  framework.Container // 服务容器
 	baseFolder string              // 基础路径
+	appId      string              // 表示当前这个app的唯一id，可以用于分布式锁等
 }
 
 // todo: 作者实现的是对象，我实现的是指针吗？？？
@@ -98,6 +101,11 @@ func (h *HadeApp) TestFolder() string {
 	return filepath.Join(h.BaseFolder(), "test")
 }
 
+// AppID 表示这个App的唯一ID
+func (h *HadeApp) AppID() string {
+	return h.appId
+}
+
 // NewHadeApp 初始化HadeApp
 func NewHadeApp(params ...interface{}) (interface{}, error) {
 	if len(params) != 2 {
@@ -107,5 +115,6 @@ func NewHadeApp(params ...interface{}) (interface{}, error) {
 	// 有两个参数，一个是容器，一个是baseFolder
 	container := params[0].(framework.Container)
 	baseFolder := params[1].(string)
-	return &HadeApp{baseFolder: baseFolder, container: container}, nil
+	appId := uuid.New().String()
+	return &HadeApp{baseFolder: baseFolder, container: container, appId: appId}, nil
 }

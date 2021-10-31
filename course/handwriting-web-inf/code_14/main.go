@@ -5,6 +5,7 @@ import (
 	"go-examples/course/handwriting-web-inf/code_14/app/http"
 	"go-examples/course/handwriting-web-inf/code_14/framework"
 	"go-examples/course/handwriting-web-inf/code_14/framework/provider/app"
+	"go-examples/course/handwriting-web-inf/code_14/framework/provider/distributed"
 	"go-examples/course/handwriting-web-inf/code_14/framework/provider/kernel"
 
 	"go.uber.org/zap"
@@ -26,6 +27,8 @@ func main() {
 	container := framework.NewHadeContainer()
 	// 绑定App服务提供者
 	container.Bind(&app.HadeAppProvider{})
+	// 后续初始化需要绑定的服务提供者...
+	container.Bind(&distributed.LocalDistributedProvider{})
 	// 后续初始化需要绑定的服务提供者...
 
 	// 将HTTP引擎初始化，并且作为服务提供者绑定到服务容器中
