@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
-	"go-examples/course/handwriting-web-inf/code_13/framework/gin"
-	"go-examples/course/handwriting-web-inf/code_13/framework/middleware"
-	"go-examples/course/handwriting-web-inf/code_13/provider/demo"
+	hadeHttp "go-examples/course/handwriting-web-inf/code_12/app/http"
+	"go-examples/course/handwriting-web-inf/code_12/app/provider/demo"
+	"go-examples/course/handwriting-web-inf/code_12/framework/gin"
+	"go-examples/course/handwriting-web-inf/code_12/framework/middleware"
+	"go-examples/course/handwriting-web-inf/code_12/framework/provider/app"
 	"log"
 	"net/http"
 	"os"
@@ -31,10 +33,13 @@ func main() {
 	// 创建engine结构
 	core := gin.New()
 	// 绑定具体的服务
-	core.Bind(&demo.DemoServiceProvider{})
+	core.Bind(&app.HadeAppProvider{})
+	core.Bind(&demo.DemoProvider{})
+
 	core.Use(gin.Recovery())
 	core.Use(middleware.Cost())
-	registerRouter(core)
+	//registerRouter(core)
+	hadeHttp.Routes(core)
 
 	server := &http.Server{
 		Handler: core,

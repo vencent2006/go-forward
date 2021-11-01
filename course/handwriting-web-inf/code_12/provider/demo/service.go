@@ -9,30 +9,37 @@
 package demo
 
 import (
-	"fmt"
-	"go-examples/course/handwriting-web-inf/code_13/framework"
+	"go-examples/course/handwriting-web-inf/code_12/framework"
 )
 
 // 具体的接口实例
-type DemoService struct {
+type Service struct {
 	// 实现接口
-	Service
+	IService
 
 	// 参数
-	c framework.Container
+	container framework.Container
 }
 
 // 初始化实例的方法
-func NewDemoService(params ...interface{}) (interface{}, error) {
+func NewService(params ...interface{}) (interface{}, error) {
 	// 这里需要将参数展开
-	c := params[0].(framework.Container)
+	container := params[0].(framework.Container)
 
-	fmt.Println("new demo service")
 	// 返回实例
-	return &DemoService{c: c}, nil
+	return &Service{container: container}, nil
 }
 
 // 实现接口
-func (s *DemoService) GetFoo() Foo {
-	return Foo{Name: "i am foo"}
+func (s *Service) GetAllStudent() []Student {
+	return []Student{
+		{
+			ID:   1,
+			Name: "foo",
+		},
+		{
+			ID:   2,
+			Name: "bar",
+		},
+	}
 }

@@ -7,3 +7,12 @@
  */
 
 package http
+
+import (
+	"go-examples/course/handwriting-web-inf/code_12/app/http/module/demo"
+	"go-examples/course/handwriting-web-inf/code_12/framework/gin"
+)
+
+func Routes(r *gin.Engine) {
+	demo.Register(r)
+}

@@ -10,7 +10,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"go-examples/course/handwriting-web-inf/code_13/framework/gin/binding"
+	"go-examples/course/handwriting-web-inf/code_12/framework/gin/binding"
 
 	"github.com/stretchr/testify/assert"
 )

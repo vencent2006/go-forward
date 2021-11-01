@@ -7,7 +7,7 @@ package gin
 import (
 	"errors"
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_13/framework"
+	"go-examples/course/handwriting-web-inf/code_12/framework"
 	"io"
 	"io/ioutil"
 	"math"
@@ -20,8 +20,8 @@ import (
 	"sync"
 	"time"
 
-	"go-examples/course/handwriting-web-inf/code_13/framework/gin/binding"
-	"go-examples/course/handwriting-web-inf/code_13/framework/gin/render"
+	"go-examples/course/handwriting-web-inf/code_12/framework/gin/binding"
+	"go-examples/course/handwriting-web-inf/code_12/framework/gin/render"
 
 	"github.com/gin-contrib/sse"
 )

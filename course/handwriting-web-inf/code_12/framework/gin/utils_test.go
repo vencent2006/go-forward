@@ -86,7 +86,7 @@ func TestFilterFlags(t *testing.T) {
 }
 
 func TestFunctionName(t *testing.T) {
-	assert.Regexp(t, `^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_13/framework/gin.somefunction$`, nameOfFunction(somefunction))
+	assert.Regexp(t, `^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_12/framework/gin.somefunction$`, nameOfFunction(somefunction))
 }
 
 func somefunction() {

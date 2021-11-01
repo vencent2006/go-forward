@@ -222,7 +222,7 @@ func TestTreeWildcard(t *testing.T) {
 		{"/a", false, "/:cc", Params{Param{Key: "cc", Value: "a"}}},
 		// * Error with argument being intercepted
 		// new PR handle (/all /all/cc /a/cc)
-		// fix PR: https://go-examples/course/handwriting-web-inf/code_13/framework/gin/pull/2796
+		// fix PR: https://go-examples/course/handwriting-web-inf/code_12/framework/gin/pull/2796
 		{"/all", false, "/:cc", Params{Param{Key: "cc", Value: "all"}}},
 		{"/d", false, "/:cc", Params{Param{Key: "cc", Value: "d"}}},
 		{"/ad", false, "/:cc", Params{Param{Key: "cc", Value: "ad"}}},
