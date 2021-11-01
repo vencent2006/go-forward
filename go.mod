@@ -16,7 +16,7 @@ require (
 	github.com/gin-gonic/gin v1.7.3
 	github.com/go-playground/validator/v10 v10.9.0
 	github.com/gobwas/ws v1.1.0
-	github.com/gohade/hade v0.0.3 // indirect
+	github.com/gohade/hade v0.0.3
 	github.com/golang/mock v1.6.0
 	github.com/golang/protobuf v1.5.2
 	github.com/google/gops v0.3.19
@@ -37,6 +37,7 @@ require (
 	github.com/sevlyar/go-daemon v0.1.5
 	//github.com/sirupsen/logrus v1.2.0
 	github.com/sirupsen/logrus v1.7.0
+	github.com/smartystreets/goconvey v1.6.4
 	github.com/soheilhy/cmux v0.1.4 // indirect
 	github.com/spf13/cast v1.4.0
 	github.com/spf13/cobra v1.2.1
