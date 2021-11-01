@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"go-examples/course/handwriting-web-inf/code_14/framework/gin/internal/bytesconv"
-	"go-examples/course/handwriting-web-inf/code_14/framework/gin/internal/json"
+	"go-examples/course/handwriting-web-inf/code_16/framework/gin/internal/bytesconv"
+	"go-examples/course/handwriting-web-inf/code_16/framework/gin/internal/json"
 )
 
 var errUnknownType = errors.New("unknown type")

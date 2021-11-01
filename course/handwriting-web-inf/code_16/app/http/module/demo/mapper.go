@@ -8,7 +8,7 @@
 
 package demo
 
-import demoService "go-examples/course/handwriting-web-inf/code_14/app/provider/demo"
+import demoService "go-examples/course/handwriting-web-inf/code_16/app/provider/demo"
 
 func StudentsToUserDTOs(students []demoService.Student) []UserDTO {
 	ret := []UserDTO{}

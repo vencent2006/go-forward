@@ -10,7 +10,7 @@ import (
 	"io"
 	"net/http"
 
-	"go-examples/course/handwriting-web-inf/code_14/framework/gin/internal/json"
+	"go-examples/course/handwriting-web-inf/code_16/framework/gin/internal/json"
 )
 
 // EnableDecoderUseNumber is used to call the UseNumber method on the JSON

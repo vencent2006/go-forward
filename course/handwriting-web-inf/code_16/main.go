@@ -1,12 +1,13 @@
 package main
 
 import (
-	"go-examples/course/handwriting-web-inf/code_14/app/console"
-	"go-examples/course/handwriting-web-inf/code_14/app/http"
-	"go-examples/course/handwriting-web-inf/code_14/framework"
-	"go-examples/course/handwriting-web-inf/code_14/framework/provider/app"
-	"go-examples/course/handwriting-web-inf/code_14/framework/provider/distributed"
-	"go-examples/course/handwriting-web-inf/code_14/framework/provider/kernel"
+	"go-examples/course/handwriting-web-inf/code_16/app/console"
+	"go-examples/course/handwriting-web-inf/code_16/app/http"
+	"go-examples/course/handwriting-web-inf/code_16/framework"
+	"go-examples/course/handwriting-web-inf/code_16/framework/provider/app"
+	"go-examples/course/handwriting-web-inf/code_16/framework/provider/distributed"
+	"go-examples/course/handwriting-web-inf/code_16/framework/provider/env"
+	"go-examples/course/handwriting-web-inf/code_16/framework/provider/kernel"
 
 	"go.uber.org/zap"
 )
@@ -28,6 +29,7 @@ func main() {
 	// 绑定App服务提供者
 	container.Bind(&app.HadeAppProvider{})
 	// 后续初始化需要绑定的服务提供者...
+	container.Bind(&env.HadeEnvProvider{})
 	container.Bind(&distributed.LocalDistributedProvider{})
 	// 后续初始化需要绑定的服务提供者...
 

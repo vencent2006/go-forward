@@ -10,8 +10,8 @@ package distributed
 
 import (
 	"errors"
-	"go-examples/course/handwriting-web-inf/code_14/framework"
-	"go-examples/course/handwriting-web-inf/code_14/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_16/framework"
+	"go-examples/course/handwriting-web-inf/code_16/framework/contract"
 	"io/ioutil"
 	"os"
 	"path/filepath"

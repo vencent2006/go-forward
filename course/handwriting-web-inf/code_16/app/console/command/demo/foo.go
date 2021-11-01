@@ -9,7 +9,7 @@
 package demo
 
 import (
-	"go-examples/course/handwriting-web-inf/code_14/framework/cobra"
+	"go-examples/course/handwriting-web-inf/code_16/framework/cobra"
 	"log"
 )
 

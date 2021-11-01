@@ -70,10 +70,10 @@ func (hade *HadeContainer) PrintProviders() []string {
 func (hade *HadeContainer) Bind(provider ServiceProvider) error {
 	// write lock
 	hade.lock.Lock()
-	defer hade.lock.Unlock()
 
 	key := provider.Name()
 	hade.providers[key] = provider
+	hade.lock.Unlock() // 解决死锁，防止provider.Boot里有make逻辑；锁用完就释放
 
 	// if provider is not defer
 	if provider.IsDefer() == false {

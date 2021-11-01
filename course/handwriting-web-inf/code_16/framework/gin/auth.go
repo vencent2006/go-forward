@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"go-examples/course/handwriting-web-inf/code_14/framework/gin/internal/bytesconv"
+	"go-examples/course/handwriting-web-inf/code_16/framework/gin/internal/bytesconv"
 )
 
 // AuthUserKey is the cookie name for user credential in basic auth.

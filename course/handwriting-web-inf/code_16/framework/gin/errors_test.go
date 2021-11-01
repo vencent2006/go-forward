@@ -8,7 +8,7 @@ import (
 	"errors"
 	"testing"
 
-	"go-examples/course/handwriting-web-inf/code_14/framework/gin/internal/json"
+	"go-examples/course/handwriting-web-inf/code_16/framework/gin/internal/json"
 
 	"github.com/stretchr/testify/assert"
 )

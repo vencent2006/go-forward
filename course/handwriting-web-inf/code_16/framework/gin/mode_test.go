@@ -8,7 +8,7 @@ import (
 	"os"
 	"testing"
 
-	"go-examples/course/handwriting-web-inf/code_14/framework/gin/binding"
+	"go-examples/course/handwriting-web-inf/code_16/framework/gin/binding"
 
 	"github.com/stretchr/testify/assert"
 )

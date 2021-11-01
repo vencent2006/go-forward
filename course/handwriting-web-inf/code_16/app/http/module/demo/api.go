@@ -9,9 +9,9 @@
 package demo
 
 import (
-	demoService "go-examples/course/handwriting-web-inf/code_14/app/provider/demo"
-	"go-examples/course/handwriting-web-inf/code_14/framework/contract"
-	"go-examples/course/handwriting-web-inf/code_14/framework/gin"
+	demoService "go-examples/course/handwriting-web-inf/code_16/app/provider/demo"
+	"go-examples/course/handwriting-web-inf/code_16/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_16/framework/gin"
 )
 
 type DemoApi struct {

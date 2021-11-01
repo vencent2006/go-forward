@@ -9,8 +9,8 @@
 package http
 
 import (
-	"go-examples/course/handwriting-web-inf/code_14/app/http/module/demo"
-	"go-examples/course/handwriting-web-inf/code_14/framework/gin"
+	"go-examples/course/handwriting-web-inf/code_16/app/http/module/demo"
+	"go-examples/course/handwriting-web-inf/code_16/framework/gin"
 )
 
 func Routes(r *gin.Engine) {

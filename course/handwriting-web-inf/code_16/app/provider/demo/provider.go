@@ -8,7 +8,7 @@
 
 package demo
 
-import "go-examples/course/handwriting-web-inf/code_14/framework"
+import "go-examples/course/handwriting-web-inf/code_16/framework"
 
 // 服务提供方
 type DemoProvider struct {
