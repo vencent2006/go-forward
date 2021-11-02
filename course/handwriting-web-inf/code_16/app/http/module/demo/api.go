@@ -34,6 +34,14 @@ func NewDemoApi() *DemoApi {
 	return &DemoApi{service: service}
 }
 
+func (api *DemoApi) Demo(c *gin.Context) {
+	// 获取password
+	configService := c.MustMake(contract.ConfigKey).(contract.Config)
+	password := configService.GetString("database.mysql.password")
+	// 打印出来
+	c.JSON(200, password)
+}
+
 // Demo godoc
 // @Summary 获取所有用户
 // @Description 获取所有用户
@@ -57,7 +65,7 @@ func (api *DemoApi) Demo2(c *gin.Context) {
 // @Tags demo
 // @Success 200 array []UserDTO
 // @Router /demo/demo [get]
-func (api *DemoApi) Demo(c *gin.Context) {
+func (api *DemoApi) Demo3(c *gin.Context) {
 	demoProvider := c.MustMake(demoService.DemoKey).(demoService.IService)
 	students := demoProvider.GetAllStudent()
 	usersDTO := StudentsToUserDTOs(students)
