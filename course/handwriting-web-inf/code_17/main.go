@@ -9,21 +9,10 @@ import (
 	"go-examples/course/handwriting-web-inf/code_17/framework/provider/distributed"
 	"go-examples/course/handwriting-web-inf/code_17/framework/provider/env"
 	"go-examples/course/handwriting-web-inf/code_17/framework/provider/kernel"
-
-	"go.uber.org/zap"
+	"go-examples/course/handwriting-web-inf/code_17/framework/provider/log"
 )
 
-var logger *zap.Logger
-var sugarLogger *zap.SugaredLogger
-
-func InitLogger() {
-	logger, _ = zap.NewProduction()
-}
-
 func main() {
-	// logger
-	InitLogger()
-	defer logger.Sync()
 
 	// 初始化服务容器
 	container := framework.NewHadeContainer()
@@ -33,6 +22,7 @@ func main() {
 	container.Bind(&env.HadeEnvProvider{})
 	container.Bind(&distributed.LocalDistributedProvider{})
 	container.Bind(&config.HadeConfigProvider{})
+	container.Bind(&log.HadeLogServiceProvider{})
 
 	// 后续初始化需要绑定的服务提供者...
 

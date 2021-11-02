@@ -38,6 +38,10 @@ func (api *DemoApi) Demo(c *gin.Context) {
 	// 获取password
 	configService := c.MustMake(contract.ConfigKey).(contract.Config)
 	password := configService.GetString("database.mysql.password")
+
+	logService := c.MustMake(contract.LogKey).(contract.Log)
+	logService.Debug(c, "hello", nil)
+	logService.Fatal(c, "fatal", nil)
 	// 打印出来
 	c.JSON(200, password)
 }
