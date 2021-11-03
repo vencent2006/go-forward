@@ -11,8 +11,13 @@ package http
 import (
 	"go-examples/course/handwriting-web-inf/code_18/app/http/module/demo"
 	"go-examples/course/handwriting-web-inf/code_18/framework/gin"
+	"go-examples/course/handwriting-web-inf/code_18/framework/middleware/static"
 )
 
 func Routes(r *gin.Engine) {
+	// 根路径"/"先去"/frontend/dist"目录下，查找文件是否存在，找到使用文件服务提供服务
+	r.Use(static.Serve("/", static.LocalFile("./frontend/dist", false)))
+
+	// 动态路由定义
 	demo.Register(r)
 }
