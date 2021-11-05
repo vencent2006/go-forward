@@ -12,3 +12,6 @@ LeetCode
 |Leetcode 18|[4sum](https://leetcode-cn.com/problems/4sum/)|[go](https://github.com/vencent2006/go-examples/blob/master/algorithm/leetcode/0018.4sum/solution.go)|Medium|2021.09.27|
 |Leetcode 0|[n-sum](https://github.com/vencent2006/go-examples/blob/master/algorithm/leetcode/0000.n-sum/solution.go)|[go](https://github.com/vencent2006/go-examples/blob/master/algorithm/leetcode/0000.n-sum/solution.go)|Medium|2021.09.28|
 |Leetcode 3|[longest-substring-without-repeating-characters](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)|[go](https://github.com/vencent2006/go-examples/blob/master/algorithm/leetcode/0003.longest-substring-without-repeating-characters/solution.go)|Medium|2021.09.29|
+|Leetcode 300|[Longest Increasing Subsequence](https://leetcode-cn.com/problems/longest-increasing-subsequence/)|[go](https://github.com/vencent2006/go-examples/blob/master/algorithm/leetcode/0300.Longest-Increasing-Subsequence/solution.go)|Hard|2021.11.02|
+|Leetcode 354|[russian-doll-envelopes](https://leetcode-cn.com/problems/russian-doll-envelopes/)|[go](https://github.com/vencent2006/go-examples/blob/master/algorithm/leetcode/0354.russian-doll-envelopes/solution.go)|Hard|2021.11.04|
+
