@@ -20,8 +20,11 @@ import (
 	"time"
 )
 
+var appAddress = ""
+
 // initAppCommand 初始化app命令和其子命令
 func initAppCommand() *cobra.Command {
+	appStartCommand.Flags().StringVar(&appAddress, "address", "", "set app address")
 	appCommand.AddCommand(appStartCommand)
 	return appCommand
 }
@@ -38,7 +41,7 @@ var appCommand = &cobra.Command{
 	},
 }
 
-// appstartCommand 启动一个Web服务
+// appStartCommand 启动一个Web服务
 var appStartCommand = &cobra.Command{
 	Use:   "start",
 	Short: "启动一个Web服务", // todo 其实这不是一个short
@@ -53,7 +56,7 @@ var appStartCommand = &cobra.Command{
 		// 创建一个Server服务
 		server := &http.Server{
 			Handler: core,
-			Addr:    ":8888",
+			Addr:    appAddress,
 		}
 
 		// 这个goroutine是启动服务的goroutine

@@ -17,4 +17,5 @@ func AddKernelCommands(root *cobra.Command) {
 	root.AddCommand(initEnvCommand())   // env 命令
 	root.AddCommand(initCronCommand())  // cron 命令
 	root.AddCommand(initBuildCommand()) // build 命令
+	root.AddCommand(initDevCommand())   // 调试 命令
 }
