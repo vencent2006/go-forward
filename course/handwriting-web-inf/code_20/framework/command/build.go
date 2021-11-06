@@ -17,6 +17,7 @@ import (
 
 // build相关的命令
 func initBuildCommand() *cobra.Command {
+	buildCommand.AddCommand(buildSelfCommand)
 	buildCommand.AddCommand(buildBackendCommand)
 	buildCommand.AddCommand(buildFrontendCommand)
 	buildCommand.AddCommand(buildAllCommand)
@@ -34,17 +35,15 @@ var buildCommand = &cobra.Command{
 	},
 }
 
-var buildBackendCommand = &cobra.Command{
-	Use:   "backend",
-	Short: "使用go编译后端",
+var buildSelfCommand = &cobra.Command{
+	Use:   "self",
+	Short: "编译hade命令",
 	RunE: func(c *cobra.Command, args []string) error {
-		// 寻找go的路径
 		path, err := exec.LookPath("go")
 		if err != nil {
-			log.Fatalln("hade go: please install go in path first")
+			log.Fatalln("hade go: 请在Path路径中先安装go")
 		}
 
-		// todo: 这里的目标文件是hade
 		cmd := exec.Command(path, "build", "-o", "hade", "./")
 		out, err := cmd.CombinedOutput()
 		if err != nil {
@@ -53,8 +52,16 @@ var buildBackendCommand = &cobra.Command{
 			fmt.Println("--------------")
 			return err
 		}
-		fmt.Println("build success please run ./hade direct")
+		fmt.Println("编译hade成功")
 		return nil
+	},
+}
+
+var buildBackendCommand = &cobra.Command{
+	Use:   "backend",
+	Short: "使用go编译后端",
+	RunE: func(c *cobra.Command, args []string) error {
+		return buildSelfCommand.RunE(c, args)
 	},
 }
 

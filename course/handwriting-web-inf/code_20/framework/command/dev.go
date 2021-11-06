@@ -42,6 +42,7 @@ type devConfig struct {
 
 // 初始化配置文件
 func initDevConfig(c framework.Container) *devConfig {
+	// 设置默认值
 	devConfig := &devConfig{
 		Port: "8070", // 调试模式监听端口：8070
 		Backend: struct {
@@ -59,16 +60,21 @@ func initDevConfig(c framework.Container) *devConfig {
 			"8071", // 调试模式前端监听端口：8071
 		},
 	}
+	// 容器中获取配置服务
 	configer := c.MustMake(contract.ConfigKey).(contract.Config)
 	if configer.IsExist("app.dev.port") {
 		devConfig.Port = configer.GetString("app.dev.port")
 	}
+
+	// 每个配置项进行检查
 	if configer.IsExist("app.dev.backend.refresh_time") {
 		devConfig.Backend.RefreshTime = configer.GetInt("app.dev.backend.refresh_time")
 	}
 	if configer.IsExist("app.dev.backend.port") {
 		devConfig.Backend.Port = configer.GetString("app.dev.backend.port")
 	}
+
+	// monitorFolder 默认使用目录服务的AppFolder()
 	monitorFolder := configer.GetString("app.dev.backend.monitor_folder")
 	if monitorFolder == "" {
 		appService := c.MustMake(contract.AppKey).(contract.App)
@@ -83,10 +89,10 @@ func initDevConfig(c framework.Container) *devConfig {
 
 // Proxy 代表serve启动的服务器代理
 type Proxy struct {
-	devConfig   *devConfig   // 配置文件
-	proxyServer *http.Server // proxy的服务
-	backendPid  int          // 当前的backend服务的pid
-	frontendPid int          // 当前的frontend服务的pid
+	devConfig *devConfig // 配置文件
+	//proxyServer *http.Server // proxy的服务
+	backendPid  int // 当前的backend服务的pid
+	frontendPid int // 当前的frontend服务的pid
 }
 
 // NewProxy 初始化一个Proxy
@@ -116,8 +122,14 @@ func (p *Proxy) newProxyReverseProxy(frontend, backend *url.URL) *httputil.Rever
 
 	// 先创建一个后端服务的director
 	director := func(req *http.Request) {
-		req.URL.Scheme = backend.Scheme
-		req.URL.Host = backend.Host
+		// todo: scheme是什么意思. 应该是协议，比如http
+		if req.URL.Path == "/" || req.URL.Path == "./app.js" {
+			req.URL.Scheme = frontend.Scheme
+			req.URL.Host = frontend.Host
+		} else {
+			req.URL.Scheme = backend.Scheme
+			req.URL.Host = backend.Host
+		}
 	}
 
 	// 定义一个NotFoundErr
@@ -240,11 +252,6 @@ func (p *Proxy) startProxy(startFrontend, startBackend bool) error {
 		}
 	}
 
-	// 如果已经启动过proxy了，就不要进行设置了
-	if p.proxyServer != nil {
-		return nil
-	}
-
 	if frontendURL, err = url.Parse(fmt.Sprintf("%s%s", "http://127.0.0.1:", p.devConfig.Frontend.Port)); err != nil {
 		return err
 	}
@@ -254,15 +261,15 @@ func (p *Proxy) startProxy(startFrontend, startBackend bool) error {
 
 	// 设置方向代理
 	proxyReverse := p.newProxyReverseProxy(frontendURL, backendURL)
-	p.proxyServer = &http.Server{
+	proxyServer := &http.Server{
 		Addr:    "127.0.0.1:" + p.devConfig.Port,
 		Handler: proxyReverse,
 	}
 
-	fmt.Println("代理服务启动:", "http://"+p.proxyServer.Addr)
+	fmt.Println("代理服务启动:", "http://"+proxyServer.Addr)
 
 	// 启动proxy服务
-	err = p.proxyServer.ListenAndServe()
+	err = proxyServer.ListenAndServe()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -279,15 +286,18 @@ func (p *Proxy) monitorBackend() error {
 	}
 	defer watcher.Close()
 
+	// 开启监听目标文件夹
 	appFolder := p.devConfig.Backend.MonitorFolder
 	fmt.Println("监控文件夹:", appFolder)
 
+	// 监听所有子目录，需要使用filepath.walk
 	filepath.Walk(appFolder, func(path string, info os.FileInfo, err error) error {
 		if info != nil && !info.IsDir() {
 			// 不是文件夹
 			return nil
 		}
 
+		// 如果是隐藏的目录，比如.或者.. 则不用进行监控
 		if util.IsHiddenDirectory(path) {
 			// 隐藏目录
 			return nil
@@ -296,13 +306,16 @@ func (p *Proxy) monitorBackend() error {
 		return watcher.Add(path)
 	})
 
-	// 刷新时间
+	// 刷新时间, 开启计时时间机制
 	refreshTime := p.devConfig.Backend.RefreshTime
 	t := time.NewTicker(time.Duration(refreshTime) * time.Second)
+	// 先停止计时器
 	t.Stop()
 	for {
 		select {
 		case <-t.C:
+			// 计时器时间到了，代表之前有文件更新时间重置过计时器
+			// 有文件更新
 			fmt.Println("...检测到文件更新，重启服务开始...")
 			if err := p.rebuildBackend(); err != nil {
 				fmt.Println("重新编译失败:", err.Error())
@@ -312,11 +325,13 @@ func (p *Proxy) monitorBackend() error {
 				}
 			}
 			fmt.Println("...检测到文件更新，重启服务结束...")
+			// 停止计时器
 			t.Stop()
 		case _, ok := <-watcher.Events:
 			if !ok {
 				continue
 			}
+			// 有文件更新事件，重置计时器
 			t.Reset(time.Duration(refreshTime) * time.Second)
 		case err, ok := <-watcher.Errors:
 			if !ok {
@@ -327,8 +342,6 @@ func (p *Proxy) monitorBackend() error {
 		}
 	}
 
-	// todo: 到不了这里, 上面的for没有break
-	return nil
 }
 
 // 初始化dev命令
