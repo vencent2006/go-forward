@@ -3,6 +3,7 @@ module go-examples
 go 1.14
 
 require (
+	github.com/AlecAivazis/survey/v2 v2.3.2
 	github.com/ClickHouse/clickhouse-go v1.5.1
 	github.com/cpuguy83/go-md2man/v2 v2.0.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -12,6 +13,7 @@ require (
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-contrib/static v0.0.1
 	github.com/gin-gonic/gin v1.7.3
+	github.com/go-git/go-git/v5 v5.4.2
 	github.com/go-playground/validator/v10 v10.9.0
 	github.com/gobwas/ws v1.1.0
 	github.com/gohade/hade v0.0.3
@@ -20,6 +22,7 @@ require (
 	github.com/google/gops v0.3.19
 	github.com/google/uuid v1.3.0
 	github.com/inconshreveable/mousetrap v1.0.0
+	github.com/jianfengye/collection v1.3.2
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/json-iterator/go v1.1.11
