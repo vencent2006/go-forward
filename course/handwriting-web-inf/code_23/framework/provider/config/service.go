@@ -11,8 +11,8 @@ package config
 import (
 	"bytes"
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 	"io/ioutil"
 	"log"
 	"os"

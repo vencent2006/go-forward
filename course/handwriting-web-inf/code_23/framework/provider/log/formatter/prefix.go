@@ -8,7 +8,7 @@
 
 package formatter
 
-import "go-examples/course/handwriting-web-inf/code_21/framework/contract"
+import "go-examples/course/handwriting-web-inf/code_23/framework/contract"
 
 func Prefix(level contract.LogLevel) string {
 	prefix := ""

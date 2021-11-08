@@ -10,8 +10,8 @@ package command
 
 import (
 	"context"
-	"go-examples/course/handwriting-web-inf/code_21/framework/cobra"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework/cobra"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 	"log"
 	"net/http"
 	"os"

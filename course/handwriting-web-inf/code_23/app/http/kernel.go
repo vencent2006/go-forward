@@ -9,8 +9,8 @@
 package http
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin"
 )
 
 // NewHttpEngine is command

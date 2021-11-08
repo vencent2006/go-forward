@@ -10,7 +10,7 @@ package gin
 
 import (
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_21/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
 )
 
 func (engine *Engine) SetContainer(container framework.Container) {

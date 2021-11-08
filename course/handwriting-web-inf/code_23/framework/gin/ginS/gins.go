@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"sync"
 
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin"
 )
 
 var once sync.Once

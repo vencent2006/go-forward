@@ -9,7 +9,7 @@
 package static
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin"
 	"net/http"
 	"os"
 	"path"

@@ -8,7 +8,7 @@
 
 package contract
 
-import "go-examples/course/handwriting-web-inf/code_21/framework/gin"
+import "go-examples/course/handwriting-web-inf/code_23/framework/gin"
 
 const KernelKey = "hade:kernel"
 

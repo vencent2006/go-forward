@@ -455,27 +455,27 @@ func TestListOfRoutes(t *testing.T) {
 	assertRoutePresent(t, list, RouteInfo{
 		Method:  "GET",
 		Path:    "/favicon.ico",
-		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_21/framework/gin.handlerTest1$",
+		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_23/framework/gin.handlerTest1$",
 	})
 	assertRoutePresent(t, list, RouteInfo{
 		Method:  "GET",
 		Path:    "/",
-		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_21/framework/gin.handlerTest1$",
+		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_23/framework/gin.handlerTest1$",
 	})
 	assertRoutePresent(t, list, RouteInfo{
 		Method:  "GET",
 		Path:    "/users/",
-		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_21/framework/gin.handlerTest2$",
+		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_23/framework/gin.handlerTest2$",
 	})
 	assertRoutePresent(t, list, RouteInfo{
 		Method:  "GET",
 		Path:    "/users/:id",
-		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_21/framework/gin.handlerTest1$",
+		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_23/framework/gin.handlerTest1$",
 	})
 	assertRoutePresent(t, list, RouteInfo{
 		Method:  "POST",
 		Path:    "/users/:id",
-		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_21/framework/gin.handlerTest2$",
+		Handler: "^(.*/vendor/)?go-examples/course/handwriting-web-inf/code_23/framework/gin.handlerTest2$",
 	})
 }
 

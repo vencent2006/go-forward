@@ -9,6 +9,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/erikdubbelboer/gspt v0.0.0-20210805194459-ce36a5128377
 	github.com/fsnotify/fsnotify v1.4.9
+	github.com/gin-contrib/cors v1.3.1
 	// gin
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-contrib/static v0.0.1
@@ -42,6 +43,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.8.1
 	github.com/stretchr/testify v1.7.0
+	github.com/swaggo/swag v1.7.4
 	github.com/ugorji/go/codec v1.1.7
 	go.uber.org/zap v1.17.0
 	golang.org/x/sys v0.0.0-20210816183151-1e6c022a8912 // indirect

@@ -9,10 +9,10 @@
 package console
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/app/console/command/demo"
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/cobra"
-	"go-examples/course/handwriting-web-inf/code_21/framework/command"
+	"go-examples/course/handwriting-web-inf/code_23/app/console/command/demo"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/cobra"
+	"go-examples/course/handwriting-web-inf/code_23/framework/command"
 )
 
 // RunCommand 初始化根Command并运行

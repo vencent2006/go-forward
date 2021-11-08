@@ -8,7 +8,7 @@
 
 package demo
 
-import "go-examples/course/handwriting-web-inf/code_21/framework"
+import "go-examples/course/handwriting-web-inf/code_23/framework"
 
 type Service struct {
 	container framework.Container

@@ -10,9 +10,9 @@ package services
 
 import (
 	"context"
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/log/formatter"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/log/formatter"
 	"io"
 	pkgLog "log"
 	"time"

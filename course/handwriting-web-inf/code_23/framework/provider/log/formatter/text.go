@@ -11,7 +11,7 @@ package formatter
 import (
 	"bytes"
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 	"time"
 )
 

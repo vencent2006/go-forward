@@ -9,8 +9,8 @@
 package env
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 )
 
 type HadeEnvProvider struct {

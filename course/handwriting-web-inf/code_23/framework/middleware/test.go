@@ -10,7 +10,7 @@ package middleware
 
 import (
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin"
 )
 
 func Test1() gin.HandlerFunc {

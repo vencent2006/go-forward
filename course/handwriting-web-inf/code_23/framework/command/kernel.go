@@ -8,7 +8,7 @@
 
 package command
 
-import "go-examples/course/handwriting-web-inf/code_21/framework/cobra"
+import "go-examples/course/handwriting-web-inf/code_23/framework/cobra"
 
 // AddKernelCommands will add all command/* to root command
 func AddKernelCommands(root *cobra.Command) {
@@ -23,4 +23,5 @@ func AddKernelCommands(root *cobra.Command) {
 	root.AddCommand(initCmdCommand())        // cmd 命令
 	root.AddCommand(initProviderCommand())   // provider 命令
 	root.AddCommand(initMiddlewareCommand()) // middleware 命令
+	root.AddCommand(initSwaggerCommand())    // swagger 命令
 }

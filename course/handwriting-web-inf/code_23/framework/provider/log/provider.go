@@ -9,13 +9,13 @@
 package log
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 	"io"
 	"strings"
 
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/log/formatter"
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/log/services"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/log/formatter"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/log/services"
 )
 
 type HadeLogServiceProvider struct {

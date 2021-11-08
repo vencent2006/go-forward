@@ -10,9 +10,9 @@ package services
 
 import (
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
-	"go-examples/course/handwriting-web-inf/code_21/framework/util"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework/util"
 	"os"
 	"path/filepath"
 	"time"

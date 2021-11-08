@@ -9,7 +9,7 @@
 package cobra
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 	"log"
 	"time"
 

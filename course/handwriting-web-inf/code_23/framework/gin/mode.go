@@ -8,7 +8,7 @@ import (
 	"io"
 	"os"
 
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin/binding"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin/binding"
 )
 
 // EnvGinMode indicates environment name for gin mode.

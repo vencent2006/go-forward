@@ -9,8 +9,8 @@
 package distributed
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 )
 
 // LocalDistributedProvider 提供App的具体实现方法

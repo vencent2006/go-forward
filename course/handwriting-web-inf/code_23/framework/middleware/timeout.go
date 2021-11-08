@@ -11,7 +11,7 @@ package middleware
 import (
 	"context"
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin"
 	"log"
 	"time"
 )

@@ -9,7 +9,7 @@
 package demo
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
 )
 
 // 服务提供方

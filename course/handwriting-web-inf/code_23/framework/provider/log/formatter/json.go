@@ -11,7 +11,7 @@ package formatter
 import (
 	"bytes"
 	"encoding/json"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 	"time"
 
 	"github.com/pkg/errors"

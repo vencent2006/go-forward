@@ -3,8 +3,8 @@ package command
 import (
 	"fmt"
 
-	"go-examples/course/handwriting-web-inf/code_21/framework/cobra"
-	"go-examples/course/handwriting-web-inf/code_21/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_23/framework/cobra"
+	"go-examples/course/handwriting-web-inf/code_23/framework/contract"
 )
 
 // helpCommand show current envionment

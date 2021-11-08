@@ -11,8 +11,8 @@ package app
 import (
 	"errors"
 	"flag"
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/util"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/util"
 	"path/filepath"
 
 	"github.com/google/uuid"

@@ -6,7 +6,7 @@ package gin
 
 import (
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_21/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
 	"html/template"
 	"net"
 	"net/http"
@@ -15,8 +15,8 @@ import (
 	"strings"
 	"sync"
 
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin/internal/bytesconv"
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin/render"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin/internal/bytesconv"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin/render"
 )
 
 const defaultMultipartMemory = 32 << 20 // 32 MB

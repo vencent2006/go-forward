@@ -1,15 +1,15 @@
 package main
 
 import (
-	"go-examples/course/handwriting-web-inf/code_21/app/console"
-	"go-examples/course/handwriting-web-inf/code_21/app/http"
-	"go-examples/course/handwriting-web-inf/code_21/framework"
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/app"
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/config"
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/distributed"
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/env"
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/kernel"
-	"go-examples/course/handwriting-web-inf/code_21/framework/provider/log"
+	"go-examples/course/handwriting-web-inf/code_23/app/console"
+	"go-examples/course/handwriting-web-inf/code_23/app/http"
+	"go-examples/course/handwriting-web-inf/code_23/framework"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/app"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/config"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/distributed"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/env"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/kernel"
+	"go-examples/course/handwriting-web-inf/code_23/framework/provider/log"
 )
 
 func main() {

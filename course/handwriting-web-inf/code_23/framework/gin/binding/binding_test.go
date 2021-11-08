@@ -19,7 +19,7 @@ import (
 	"testing"
 	"time"
 
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin/testdata/protoexample"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin/testdata/protoexample"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"

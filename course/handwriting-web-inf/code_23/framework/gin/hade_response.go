@@ -11,7 +11,7 @@ package gin
 import (
 	"encoding/xml"
 	"fmt"
-	"go-examples/course/handwriting-web-inf/code_21/framework/gin/internal/json"
+	"go-examples/course/handwriting-web-inf/code_23/framework/gin/internal/json"
 	"html/template"
 	"net/http"
 	"net/url"
