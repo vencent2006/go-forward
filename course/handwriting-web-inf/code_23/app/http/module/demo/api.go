@@ -25,6 +25,7 @@ func Register(r *gin.Engine) error {
 
 	r.GET("/demo/demo", api.Demo)
 	r.GET("/demo/demo2", api.Demo2)
+	r.GET("/demo/demo3", api.Demo3)
 
 	return nil
 }
@@ -34,31 +35,38 @@ func NewDemoApi() *DemoApi {
 	return &DemoApi{service: service}
 }
 
+// Demo godoc
+// @Summary 获取数据库密码
+// @Description 获取数据库密码，不用分页
+// @Produce  json
+// @Tags demo
+// @Success 200 {string} json "{"Password":password}"
+// @Router /demo/demo [get]
 func (api *DemoApi) Demo(c *gin.Context) {
 	// 获取password
 	configService := c.MustMake(contract.ConfigKey).(contract.Config)
 	password := configService.GetString("database.mysql.password")
+	res := map[string]interface{}{
+		"Password": password,
+	}
 
 	logService := c.MustMake(contract.LogKey).(contract.Log)
 	logService.Debug(c, "hello", nil)
 	logService.Fatal(c, "fatal", nil)
 	// 打印出来
-	c.JSON(200, password)
+	c.JSON(200, res)
 }
 
-// Demo godoc
-// @Summary 获取所有用户
-// @Description 获取所有用户
+// Demo2  for godoc
+// @Summary 获取app的baseFolder
+// @Description 获取app的baseFolder,不进行分页
 // @Produce  json
 // @Tags demo
-// @Success 200 array []UserDTO
-// @Router /demo/demo [get]
+// @Success 200 {string} baseFolder
+// @Router /demo/demo2 [get]
 func (api *DemoApi) Demo2(c *gin.Context) {
 	appService := c.MustMake(contract.AppKey).(contract.App)
 	baseFolder := appService.BaseFolder()
-	//users := api.service.GetUsers()
-	//usersDTO := UserModelsToUserDTOs(users)
-	//c.JSON(200, usersDTO)
 	c.JSON(200, baseFolder)
 }
 
@@ -68,7 +76,7 @@ func (api *DemoApi) Demo2(c *gin.Context) {
 // @Produce  json
 // @Tags demo
 // @Success 200 array []UserDTO
-// @Router /demo/demo [get]
+// @Router /demo/demo3 [get]
 func (api *DemoApi) Demo3(c *gin.Context) {
 	demoProvider := c.MustMake(demoService.DemoKey).(demoService.IService)
 	students := demoProvider.GetAllStudent()

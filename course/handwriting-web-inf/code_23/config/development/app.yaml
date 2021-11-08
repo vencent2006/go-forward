@@ -1,10 +1,4 @@
-url: http://127.0.0.1:8066
-
-swagger_open: true
-
-dev_fresh: 1
-
-path:
+swagger: true
 
 dev: # 调试模式
   port: 8070 #调试模式最终监听的端口，默认为8070
