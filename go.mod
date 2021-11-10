@@ -46,6 +46,7 @@ require (
 	github.com/swaggo/gin-swagger v1.3.3
 	github.com/swaggo/swag v1.7.4
 	github.com/ugorji/go/codec v1.1.7
+	github.com/yanyiwu/gojieba v1.1.2
 	go.uber.org/zap v1.17.0
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 	golang.org/x/sys v0.0.0-20210816183151-1e6c022a8912 // indirect
