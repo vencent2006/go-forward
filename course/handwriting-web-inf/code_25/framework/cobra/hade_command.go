@@ -66,7 +66,7 @@ func (c *Command) AddCronCommand(spec string, cmd *Command) {
 	cronCmd.SetContainer(root.GetContainer())
 
 	// 增加调用函数
-	entryID, err := root.Cron.AddFunc(spec, func() {
+	root.Cron.AddFunc(spec, func() {
 		// 如果后续的command出现panic, 这里要捕获
 		defer func() {
 			if err := recover(); err != nil {
@@ -82,7 +82,6 @@ func (c *Command) AddCronCommand(spec string, cmd *Command) {
 			log.Println(err)
 		}
 	})
-	log.Printf("after root.Cron.AddFunc: entryID(%d), err=%s", entryID, err)
 }
 
 // -- section end: cron

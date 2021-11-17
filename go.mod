@@ -16,6 +16,7 @@ require (
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/go-playground/validator/v10 v10.9.0
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gobwas/ws v1.1.0
 	github.com/gohade/hade v0.0.3
 	github.com/golang/mock v1.6.0
@@ -52,4 +53,10 @@ require (
 	golang.org/x/sys v0.0.0-20210816183151-1e6c022a8912 // indirect
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/yaml.v2 v2.4.0
+	gorm.io/driver/clickhouse v0.2.1
+	gorm.io/driver/mysql v1.2.0
+	gorm.io/driver/postgres v1.2.2
+	gorm.io/driver/sqlite v1.2.4
+	gorm.io/driver/sqlserver v1.2.1
+	gorm.io/gorm v1.22.3
 )

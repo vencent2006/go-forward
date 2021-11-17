@@ -9,7 +9,6 @@
 package gin
 
 import (
-	"fmt"
 	"go-examples/course/handwriting-web-inf/code_25/framework"
 )
 
@@ -25,7 +24,6 @@ func (engine *Engine) GetContainer() framework.Container {
 // 绑定是全局的，所以在Engine中Bind和IsBind
 // engine实现container的绑定封装
 func (engine *Engine) Bind(provider framework.ServiceProvider) error {
-	fmt.Printf("gin.Engine Bind() container(%p) provider(%v)\n", engine.container, provider)
 	return engine.container.Bind(provider)
 }
 

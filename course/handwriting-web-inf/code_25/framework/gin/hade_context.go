@@ -12,23 +12,23 @@ import (
 	"context"
 )
 
-func (ctx *Context) BaseContext() context.Context {
-	return ctx.Request.Context()
+func (c *Context) BaseContext() context.Context {
+	return c.Request.Context()
 }
 
 // ----- context实现container的几个封装
 // 实例化是在请求中的，所以在Context中Make
 // 实现make的封装
-func (ctx *Context) Make(key string) (interface{}, error) {
-	return ctx.container.Make(key)
+func (c *Context) Make(key string) (interface{}, error) {
+	return c.container.Make(key)
 }
 
 // 实现mustMake的封装
-func (ctx *Context) MustMake(key string) interface{} {
-	return ctx.container.MustMake(key)
+func (c *Context) MustMake(key string) interface{} {
+	return c.container.MustMake(key)
 }
 
 // 实现makeNew的封装
-func (ctx *Context) MakeNew(key string, params []interface{}) (interface{}, error) {
-	return ctx.container.MakeNew(key, params)
+func (c *Context) MakeNew(key string, params []interface{}) (interface{}, error) {
+	return c.container.MakeNew(key, params)
 }

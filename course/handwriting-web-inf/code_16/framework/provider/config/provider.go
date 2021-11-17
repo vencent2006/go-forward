@@ -9,8 +9,8 @@
 package config
 
 import (
-	"go-examples/course/handwriting-web-inf/code_16/framework"
-	"go-examples/course/handwriting-web-inf/code_16/framework/contract"
+	"go-examples/course/handwriting-web-inf/code_25/framework"
+	"go-examples/course/handwriting-web-inf/code_25/framework/contract"
 	"path/filepath"
 )
 

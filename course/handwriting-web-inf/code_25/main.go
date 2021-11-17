@@ -10,6 +10,7 @@ import (
 	"go-examples/course/handwriting-web-inf/code_25/framework/provider/env"
 	"go-examples/course/handwriting-web-inf/code_25/framework/provider/kernel"
 	"go-examples/course/handwriting-web-inf/code_25/framework/provider/log"
+	"go-examples/course/handwriting-web-inf/code_25/framework/provider/orm"
 )
 
 func main() {
@@ -23,6 +24,7 @@ func main() {
 	container.Bind(&distributed.LocalDistributedProvider{})
 	container.Bind(&config.HadeConfigProvider{})
 	container.Bind(&log.HadeLogServiceProvider{})
+	container.Bind(&orm.GormProvider{})
 
 	// 后续初始化需要绑定的服务提供者...
 

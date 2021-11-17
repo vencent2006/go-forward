@@ -8,7 +8,10 @@
 
 package kernel
 
-import "go-examples/course/handwriting-web-inf/code_25/framework/gin"
+import (
+	"go-examples/course/handwriting-web-inf/code_25/framework/gin"
+	"net/http"
+)
 
 // 引擎服务
 type HadeKernelService struct {
@@ -22,6 +25,6 @@ func NewHadeKernelService(params ...interface{}) (interface{}, error) {
 }
 
 // 返回web引擎
-func (s *HadeKernelService) HttpEngine() *gin.Engine {
+func (s *HadeKernelService) HttpEngine() http.Handler {
 	return s.engine
 }

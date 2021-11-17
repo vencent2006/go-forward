@@ -4,8 +4,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/gohade/hade/framework/contract"
-	tests "github.com/gohade/hade/test"
+	"go-examples/course/handwriting-web-inf/code_25/framework/contract"
+	tests "go-examples/course/handwriting-web-inf/code_25/test"
 
 	. "github.com/smartystreets/goconvey/convey"
 )

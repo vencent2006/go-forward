@@ -92,7 +92,7 @@ func (hade *HadeContainer) Bind(provider ServiceProvider) error {
 	}
 
 	// todo：调试用，记得关掉
-	fmt.Printf("container(%p): after bind key(%s), Providers = %+v\n", hade, key, hade.PrintProviders())
+	//fmt.Printf("container(%p): after bind key(%s), Providers = %+v\n", hade, key, hade.PrintProviders())
 
 	return nil
 }

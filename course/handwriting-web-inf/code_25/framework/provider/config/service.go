@@ -208,6 +208,7 @@ func NewHadeConfig(params ...interface{}) (interface{}, error) {
 		}
 	}()
 
+	//fmt.Printf("**** hadeConf is %+v\n", hadeConf)
 	return hadeConf, nil
 }
 

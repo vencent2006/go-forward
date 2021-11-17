@@ -8,12 +8,12 @@
 
 package contract
 
-import "go-examples/course/handwriting-web-inf/code_25/framework/gin"
+import "net/http"
 
 const KernelKey = "hade:kernel"
 
 // Kernel 接口提供框架核心的结构
 type Kernel interface {
 	// HttpEngine http.Handler结构，作为net/http框架使用, 实际上是gin.Engine
-	HttpEngine() *gin.Engine
+	HttpEngine() http.Handler
 }

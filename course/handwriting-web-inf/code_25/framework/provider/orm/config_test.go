@@ -1,12 +1,18 @@
-package config
+/**
+ * @Author: vincent
+ * @Description:
+ * @File:  config_test
+ * @Version: 1.0.0
+ * @Date: 2021/11/16 15:51
+ */
+
+package orm
 
 import (
-	"testing"
-
-	"go-examples/course/handwriting-web-inf/code_16/framework/provider/config"
 	"go-examples/course/handwriting-web-inf/code_25/framework/contract"
-
+	"go-examples/course/handwriting-web-inf/code_25/framework/provider/config"
 	tests "go-examples/course/handwriting-web-inf/code_25/test"
+	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
 )
