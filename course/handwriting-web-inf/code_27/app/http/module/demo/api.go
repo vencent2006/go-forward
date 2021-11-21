@@ -27,6 +27,8 @@ func Register(r *gin.Engine) error {
 	r.GET("/demo/demo2", api.Demo2)
 	r.GET("/demo/demo3", api.Demo3)
 	r.GET("/demo/orm", api.DemoOrm)
+	r.GET("/demo/cache/redis", api.DemoRedis)
+	r.GET("/demo/cache/cache", api.DemoCache)
 
 	return nil
 }

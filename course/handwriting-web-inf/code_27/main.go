@@ -5,12 +5,14 @@ import (
 	"go-examples/course/handwriting-web-inf/code_27/app/http"
 	"go-examples/course/handwriting-web-inf/code_27/framework"
 	"go-examples/course/handwriting-web-inf/code_27/framework/provider/app"
+	"go-examples/course/handwriting-web-inf/code_27/framework/provider/cache"
 	"go-examples/course/handwriting-web-inf/code_27/framework/provider/config"
 	"go-examples/course/handwriting-web-inf/code_27/framework/provider/distributed"
 	"go-examples/course/handwriting-web-inf/code_27/framework/provider/env"
 	"go-examples/course/handwriting-web-inf/code_27/framework/provider/kernel"
 	"go-examples/course/handwriting-web-inf/code_27/framework/provider/log"
 	"go-examples/course/handwriting-web-inf/code_27/framework/provider/orm"
+	"go-examples/course/handwriting-web-inf/code_27/framework/provider/redis"
 )
 
 func main() {
@@ -25,6 +27,8 @@ func main() {
 	container.Bind(&config.HadeConfigProvider{})
 	container.Bind(&log.HadeLogServiceProvider{})
 	container.Bind(&orm.GormProvider{})
+	container.Bind(&redis.RedisProvider{})
+	container.Bind(&cache.HadeCacheProvider{})
 
 	// 后续初始化需要绑定的服务提供者...
 
