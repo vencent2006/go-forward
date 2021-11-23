@@ -120,6 +120,14 @@ func (h *HadeApp) TestFolder() string {
 	return filepath.Join(h.BaseFolder(), "test")
 }
 
+// DeployFolder 定义发布需要的信息
+func (h *HadeApp) DeployFolder() string {
+	if val, ok := h.configMap["deploy_folder"]; ok {
+		return val
+	}
+	return filepath.Join(h.BaseFolder(), "deploy")
+}
+
 // AppID 表示这个App的唯一ID
 func (h *HadeApp) AppID() string {
 	return h.appId

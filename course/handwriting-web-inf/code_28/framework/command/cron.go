@@ -21,8 +21,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/erikdubbelboer/gspt"
-
 	"github.com/sevlyar/go-daemon"
 )
 
@@ -101,7 +99,7 @@ var cronStartCommand = &cobra.Command{
 				// 子进程执行Cron.Run
 				defer ctx.Release() // todo: 研究下release
 				fmt.Println("daemon started")
-				gspt.SetProcTitle("hade cron") //感觉像设置进程名称, 应该是调用c语言了
+				//gspt.SetProcTitle("hade cron") //感觉像设置进程名称, 应该是调用c语言了
 				cmd.Root().Cron.Run()
 				return nil
 			}
@@ -118,7 +116,7 @@ var cronStartCommand = &cobra.Command{
 				return err
 			}
 
-			gspt.SetProcTitle("hade cron")
+			//gspt.SetProcTitle("hade cron")
 			log.Printf("cmd is %p\n", cmd)
 			log.Printf("cmd.Root() is %p\n", cmd.Root())
 			log.Printf("cmd.Root().Cron is %p\n", cmd.Root().Cron)

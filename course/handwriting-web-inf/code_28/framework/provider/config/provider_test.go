@@ -3,7 +3,6 @@ package config
 import (
 	"testing"
 
-	"go-examples/course/handwriting-web-inf/code_16/framework/provider/config"
 	"go-examples/course/handwriting-web-inf/code_28/framework/contract"
 
 	tests "go-examples/course/handwriting-web-inf/code_28/test"
@@ -13,7 +12,7 @@ import (
 
 func TestHadeConfig_Load(t *testing.T) {
 	container := tests.InitBaseContainer()
-	container.Bind(&config.HadeConfigProvider{})
+	container.Bind(&HadeConfigProvider{})
 
 	Convey("test config", t, func() {
 		configService := container.MustMake(contract.ConfigKey).(contract.Config)

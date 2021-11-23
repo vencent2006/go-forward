@@ -13,6 +13,7 @@ import (
 	"go-examples/course/handwriting-web-inf/code_28/framework/provider/log"
 	"go-examples/course/handwriting-web-inf/code_28/framework/provider/orm"
 	"go-examples/course/handwriting-web-inf/code_28/framework/provider/redis"
+	"go-examples/course/handwriting-web-inf/code_28/framework/provider/ssh"
 )
 
 func main() {
@@ -29,6 +30,7 @@ func main() {
 	container.Bind(&orm.GormProvider{})
 	container.Bind(&redis.RedisProvider{})
 	container.Bind(&cache.HadeCacheProvider{})
+	container.Bind(&ssh.SSHProvider{})
 
 	// 后续初始化需要绑定的服务提供者...
 

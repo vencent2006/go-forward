@@ -302,6 +302,7 @@ func (conf *HadeConfig) GetStringMap(key string) map[string]interface{} {
 
 // GetStringMapString get map which key is string, value is string
 func (conf *HadeConfig) GetStringMapString(key string) map[string]string {
+	//fmt.Printf("configMapString is %+v\n", conf)
 	return cast.ToStringMapString(conf.find(key))
 }
 

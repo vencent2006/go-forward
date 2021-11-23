@@ -9,6 +9,7 @@
 package config
 
 import (
+	"fmt"
 	"go-examples/course/handwriting-web-inf/code_28/framework"
 	"go-examples/course/handwriting-web-inf/code_28/framework/contract"
 	"path/filepath"
@@ -40,6 +41,7 @@ func (provider *HadeConfigProvider) Params(c framework.Container) []interface{} 
 
 	// 配置文件夹地址
 	configFolder := appService.ConfigFolder()
+	fmt.Printf("configFolder is %s\n", configFolder)
 	envFolder := filepath.Join(configFolder, env)
 
 	return []interface{}{c, envFolder, envService.All()}

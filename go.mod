@@ -33,6 +33,7 @@ require (
 	github.com/mattn/go-isatty v0.0.12
 	github.com/mitchellh/mapstructure v1.4.1
 	github.com/pkg/errors v0.9.1
+	github.com/pkg/sftp v1.13.4
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/segmentio/ksuid v1.0.4
@@ -50,6 +51,7 @@ require (
 	github.com/ugorji/go/codec v1.1.7
 	github.com/yanyiwu/gojieba v1.1.2
 	go.uber.org/zap v1.17.0
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
 	golang.org/x/sys v0.0.0-20210816183151-1e6c022a8912 // indirect
 	google.golang.org/protobuf v1.27.1

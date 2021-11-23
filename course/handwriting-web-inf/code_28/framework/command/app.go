@@ -25,8 +25,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/erikdubbelboer/gspt"
-
 	"github.com/sevlyar/go-daemon"
 )
 
@@ -175,7 +173,7 @@ var appStartCommand = &cobra.Command{
 
 			// 子进程执行真正的app启动操作
 			fmt.Println("daemon started")
-			gspt.SetProcTitle("hade app")
+			//gspt.SetProcTitle("hade app")
 			if err := startAppServe(server, container); err != nil {
 				fmt.Println(err)
 			}
@@ -189,7 +187,7 @@ var appStartCommand = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		gspt.SetProcTitle("hade app")
+		//gspt.SetProcTitle("hade app")
 
 		fmt.Println("app serve url:", appAddress)
 		if err := startAppServe(server, container); err != nil {
@@ -209,6 +207,13 @@ var appRestartCommand = &cobra.Command{
 
 		// GetPid
 		serverPidFile := filepath.Join(appService.RuntimeFolder(), "app.pid")
+
+		if !util.Exists(serverPidFile) {
+			// pid文件不存在
+			appDaemon = true
+			// 直接daemon方式启动apps
+			return appStartCommand.RunE(c, args)
+		}
 
 		content, err := ioutil.ReadFile(serverPidFile)
 		if err != nil {
