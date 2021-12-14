@@ -13,8 +13,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "bluevhelper",
-	Short: "bluev helper",
+	Use:   "helper",
+	Short: "helper",
 }
 
 func Execute() error {
