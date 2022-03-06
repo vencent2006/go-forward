@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"go-examples/course/go-im-cloud/chatdemo/client"
+	"go-examples/course/go-im-cloud/chatdemo/server"
 
 	"github.com/sirupsen/logrus"
 
@@ -24,6 +25,7 @@ func main() {
 
 	ctx := context.Background()
 	root.AddCommand(client.RunCmd(ctx))
+	root.AddCommand(server.RunCmd(ctx))
 
 	err := root.Execute()
 	if err != nil {
