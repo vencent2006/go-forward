@@ -37,6 +37,7 @@ require (
 	github.com/pkg/sftp v1.13.4
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.0
+	github.com/rs/zerolog v1.15.0
 	github.com/segmentio/ksuid v1.0.4
 	github.com/sevlyar/go-daemon v0.1.5
 	//github.com/sirupsen/logrus v1.2.0
