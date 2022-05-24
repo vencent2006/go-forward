@@ -1,8 +1,0 @@
-timeout: 1s
-network: tcp
-web-01:
-  host: 114.115.147.249 # ip地址
-  port: 22 # 端口
-  username: root # 用户名
-  rsa_key: "/tmp/id_rsa"
-  known_hosts: "/tmp/known_hosts"
