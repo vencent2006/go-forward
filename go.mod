@@ -7,6 +7,7 @@ require (
 	github.com/ClickHouse/clickhouse-go v1.5.1
 	github.com/cpuguy83/go-md2man/v2 v2.0.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/e421083458/gateway_demo v0.0.0-20201203134404-5a1814369ddf
 	github.com/erikdubbelboer/gspt v0.0.0-20210805194459-ce36a5128377
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-contrib/cors v1.3.1
