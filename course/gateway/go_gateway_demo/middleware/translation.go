@@ -3,7 +3,7 @@ package middleware
 import (
 	"reflect"
 
-	"ggo-examples/course/gateway/go_gateway_demo/public"
+	"go-examples/course/gateway/go_gateway_demo/public"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/locales/en"

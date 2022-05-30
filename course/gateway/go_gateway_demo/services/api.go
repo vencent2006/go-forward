@@ -1,9 +1,9 @@
 package services
 
 import (
-	"ggo-examples/course/gateway/go_gateway_demo/dao"
-	"ggo-examples/course/gateway/go_gateway_demo/dto"
-	"ggo-examples/course/gateway/go_gateway_demo/middleware"
+	"go-examples/course/gateway/go_gateway_demo/dao"
+	"go-examples/course/gateway/go_gateway_demo/dto"
+	"go-examples/course/gateway/go_gateway_demo/middleware"
 
 	"github.com/e421083458/golang_common/lib"
 	"github.com/gin-gonic/gin"
