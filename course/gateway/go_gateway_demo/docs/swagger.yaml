@@ -30,6 +30,22 @@ info:
   contact: {}
   license: {}
 paths:
+  /admin/admin_info:
+    get:
+      consumes:
+      - application/json
+      description: 管理员信息
+      operationId: /admin/admin_info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 管理员信息
+      tags:
+      - 管理员接口
   /admin_login/login:
     post:
       consumes:

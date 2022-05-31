@@ -77,6 +77,7 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 	})
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	// adminLoginRouter
 	adminLoginRouter := router.Group("/admin_login")
 	store, err := sessions.NewRedisStore(10, "tcp", "192.168.56.108:6379", "", []byte("secrete"))
 	if err != nil {
@@ -90,5 +91,18 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 	{
 		controller.AdminLoginRegister(adminLoginRouter)
 	}
+
+	// adminRouter
+	adminRouter := router.Group("/admin")
+	adminRouter.Use(
+		sessions.Sessions("mysession", store),
+		middleware.RecoveryMiddleware(),
+		middleware.RequestLog(),
+		middleware.SessionAuthMiddleware(),
+		middleware.TranslationMiddleware())
+	{
+		controller.AdminRegister(adminRouter)
+	}
+
 	return router
 }
