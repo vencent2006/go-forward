@@ -69,4 +69,20 @@ paths:
       summary: 管理员登录
       tags:
       - 管理员接口
+  /admin_login/logout:
+    get:
+      consumes:
+      - application/json
+      description: 管理员退出
+      operationId: /admin_login/logout
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 管理员退出
+      tags:
+      - 管理员接口
 swagger: "2.0"
