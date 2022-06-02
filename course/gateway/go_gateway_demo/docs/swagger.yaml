@@ -117,4 +117,35 @@ paths:
       summary: 管理员退出
       tags:
       - 管理员接口
+  /service/service_list:
+    get:
+      consumes:
+      - application/json
+      description: 服务列表
+      operationId: /service/service_list
+      parameters:
+      - description: 关键词
+        in: query
+        name: info
+        type: string
+      - description: 每页个数
+        in: query
+        name: page_size
+        required: true
+        type: string
+      - description: 当前页数
+        in: query
+        name: page_no
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 服务列表
+      tags:
+      - 服务管理
 swagger: "2.0"
