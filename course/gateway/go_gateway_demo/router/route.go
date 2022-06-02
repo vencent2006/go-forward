@@ -83,6 +83,7 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 	if err != nil {
 		log.Fatalf("sessions.NewRedisStore err:%v", err)
 	}
+	//store := sessions.NewCookieStore([]byte("secret"))
 	adminLoginRouter.Use(
 		sessions.Sessions("mysession", store),
 		middleware.RecoveryMiddleware(),

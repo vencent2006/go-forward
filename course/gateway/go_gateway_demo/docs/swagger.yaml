@@ -13,6 +13,15 @@ definitions:
     - password
     - username
     type: object
+  dto.ChangePwdInput:
+    properties:
+      password:
+        description: 密码
+        example: "123456"
+        type: string
+    required:
+    - password
+    type: object
   middleware.Response:
     properties:
       data:
@@ -44,6 +53,29 @@ paths:
           schema:
             $ref: '#/definitions/middleware.Response'
       summary: 管理员信息
+      tags:
+      - 管理员接口
+  /admin/change_pwd:
+    post:
+      consumes:
+      - application/json
+      description: 修改密码
+      operationId: /admin/change_pwd
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ChangePwdInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 修改密码
       tags:
       - 管理员接口
   /admin_login/login:
