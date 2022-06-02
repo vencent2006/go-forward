@@ -10,6 +10,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/e421083458/gateway_demo v0.0.0-20201203134404-5a1814369ddf
 	github.com/e421083458/gin_scaffold v0.0.0-20211226015300-616fc31c0400
+	github.com/e421083458/go_gateway v0.0.0-20200620084504-d602eb8bc883 // indirect
 	github.com/e421083458/golang_common v1.2.1
 	github.com/erikdubbelboer/gspt v0.0.0-20210805194459-ce36a5128377
 	github.com/fsnotify/fsnotify v1.4.9
@@ -18,7 +19,7 @@ require (
 	// gin
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-contrib/static v0.0.1
-	github.com/gin-gonic/contrib v0.0.0-20190526021735-7fb7810ed2a0
+	github.com/gin-gonic/contrib v0.0.0-20191209060500-d6e26eeaa607
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/go-playground/locales v0.14.0
