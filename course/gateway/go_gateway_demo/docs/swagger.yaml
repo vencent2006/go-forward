@@ -117,6 +117,28 @@ paths:
       summary: 管理员退出
       tags:
       - 管理员接口
+  /service/service_delete:
+    get:
+      consumes:
+      - application/json
+      description: 服务删除
+      operationId: /service/service_delete
+      parameters:
+      - description: 服务ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 服务删除
+      tags:
+      - 服务管理
   /service/service_list:
     get:
       consumes:

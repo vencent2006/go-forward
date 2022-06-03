@@ -123,6 +123,39 @@
                 }
             }
         },
+        "/service/service_delete": {
+            "get": {
+                "description": "服务删除",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "服务管理"
+                ],
+                "summary": "服务删除",
+                "operationId": "/service/service_delete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "服务ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/service/service_list": {
             "get": {
                 "description": "服务列表",
