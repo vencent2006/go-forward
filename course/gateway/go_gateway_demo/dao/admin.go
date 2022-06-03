@@ -15,8 +15,8 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/e421083458/gorm"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 type Admin struct {
@@ -48,7 +48,8 @@ func (t *Admin) LoginCheck(c *gin.Context, tx *gorm.DB, param *dto.AdminLoginInp
 
 func (t *Admin) Find(c *gin.Context, tx *gorm.DB, search *Admin) (*Admin, error) {
 	out := &Admin{}
-	err := tx.WithContext(c).Where(search).Find(out).Error
+	err := tx.SetCtx(public.GetGinTraceContext(c)).Where(search).Find(out).Error
+	//err := tx.WithContext(c).Where(search).Find(out).Error
 	if err != nil {
 		return nil, err
 	}
@@ -56,5 +57,5 @@ func (t *Admin) Find(c *gin.Context, tx *gorm.DB, search *Admin) (*Admin, error)
 }
 
 func (t *Admin) Save(c *gin.Context, tx *gorm.DB) error {
-	return tx.WithContext(c).Save(t).Error
+	return tx.SetCtx(public.GetGinTraceContext(c)).Save(t).Error
 }

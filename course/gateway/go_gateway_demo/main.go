@@ -7,11 +7,11 @@ import (
 
 	"go-examples/course/gateway/go_gateway_demo/router"
 
-	"github.com/e421083458/golang_common/lib"
+	"go-examples/course/gateway/go_gateway_demo/golang_common/lib"
 )
 
 func main() {
-	lib.InitModule("./conf/dev/", []string{"base", "mysql", "redis"})
+	lib.InitModule("./conf/dev/")
 	defer lib.Destroy()
 	router.HttpServerRun()
 

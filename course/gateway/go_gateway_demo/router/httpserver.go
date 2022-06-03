@@ -6,7 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/e421083458/golang_common/lib"
+	"go-examples/course/gateway/go_gateway_demo/golang_common/lib"
+
 	"github.com/gin-gonic/gin"
 )
 

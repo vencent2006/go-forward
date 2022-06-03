@@ -10,10 +10,12 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/e421083458/gateway_demo v0.0.0-20201203134404-5a1814369ddf
 	github.com/e421083458/gin_scaffold v0.0.0-20211226015300-616fc31c0400
-	github.com/e421083458/go_gateway v0.0.0-20200620084504-d602eb8bc883 // indirect
+	github.com/e421083458/go_gateway v0.0.0-20200620084504-d602eb8bc883
 	github.com/e421083458/golang_common v1.2.1
+	github.com/e421083458/gorm v1.0.1
 	github.com/erikdubbelboer/gspt v0.0.0-20210805194459-ce36a5128377
 	github.com/fsnotify/fsnotify v1.4.9
+	github.com/garyburd/redigo v1.6.0
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-contrib/sessions v0.0.4
 	// gin

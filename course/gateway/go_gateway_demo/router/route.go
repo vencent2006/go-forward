@@ -8,7 +8,8 @@ import (
 
 	"github.com/gin-gonic/contrib/sessions"
 
-	"github.com/e421083458/golang_common/lib"
+	"go-examples/course/gateway/go_gateway_demo/golang_common/lib"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
