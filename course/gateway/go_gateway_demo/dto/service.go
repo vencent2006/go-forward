@@ -112,6 +112,11 @@ func (param *ServiceUpdateHTTPInput) BindValidParam(c *gin.Context) error {
 	return public.DefaultGetValidParams(c, param)
 }
 
+type ServiceStatOutput struct {
+	Today     []int64 `json:"today" form:"today" comment:"今日流量" example:"" validate:""`         //列表
+	Yesterday []int64 `json:"yesterday" form:"yesterday" comment:"昨日流量" example:"" validate:""` //列表
+}
+
 type ServiceAddGrpcInput struct {
 	ServiceName       string `json:"service_name" form:"service_name" comment:"服务名称" validate:"required,valid_service_name"`
 	ServiceDesc       string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
