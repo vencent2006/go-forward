@@ -1,4 +1,43 @@
 definitions:
+  dto.APPAddHttpInput:
+    properties:
+      app_id:
+        type: string
+      name:
+        type: string
+      qpd:
+        type: integer
+      qps:
+        type: integer
+      secret:
+        type: string
+      white_ips:
+        type: string
+    required:
+    - app_id
+    - name
+    type: object
+  dto.APPUpdateHttpInput:
+    properties:
+      app_id:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      qpd:
+        type: integer
+      qps:
+        type: integer
+      secret:
+        type: string
+      white_ips:
+        type: string
+    required:
+    - id
+    - name
+    - secret
+    type: object
   dto.AdminLoginInput:
     properties:
       password:
@@ -423,6 +462,149 @@ paths:
       summary: 管理员退出
       tags:
       - 管理员接口
+  /app/app_add:
+    post:
+      consumes:
+      - application/json
+      description: 租户添加
+      operationId: /app/app_add
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.APPAddHttpInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 租户添加
+      tags:
+      - 租户管理
+  /app/app_delete:
+    get:
+      consumes:
+      - application/json
+      description: 租户删除
+      operationId: /app/app_delete
+      parameters:
+      - description: 租户ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 租户删除
+      tags:
+      - 租户管理
+  /app/app_detail:
+    get:
+      consumes:
+      - application/json
+      description: 租户详情
+      operationId: /app/app_detail
+      parameters:
+      - description: 租户ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 租户详情
+      tags:
+      - 租户管理
+  /app/app_list:
+    get:
+      consumes:
+      - application/json
+      description: 租户列表
+      operationId: /app/app_list
+      parameters:
+      - description: 关键词
+        in: query
+        name: info
+        type: string
+      - description: 每页多少条
+        in: query
+        name: page_size
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page_no
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 租户列表
+      tags:
+      - 租户管理
+  /app/app_stat:
+    get:
+      consumes:
+      - application/json
+      description: 租户统计
+      operationId: /app/app_stat
+      parameters:
+      - description: 租户ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 租户统计
+      tags:
+      - 租户管理
+  /app/app_update:
+    post:
+      consumes:
+      - application/json
+      description: 租户更新
+      operationId: /app/app_update
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.APPUpdateHttpInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 租户更新
+      tags:
+      - 租户管理
   /service/service_add_grpc:
     post:
       consumes:
