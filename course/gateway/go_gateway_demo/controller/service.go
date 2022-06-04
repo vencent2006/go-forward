@@ -29,6 +29,7 @@ func ServiceRegister(group *gin.RouterGroup) {
 	group.GET("/service_list", service.ServiceList)
 	group.GET("/service_delete", service.ServiceDelete)
 	group.POST("/service_add_http", service.ServiceAddHTTP)
+	group.POST("/service_update_http", service.ServiceUpdateHTTP)
 }
 
 // ServiceList godoc
@@ -254,6 +255,97 @@ func (service *ServiceController) ServiceAddHTTP(c *gin.Context) {
 		UpstreamIdleTimeout:    params.UpstreamIdleTimeout,
 		UpstreamMaxIdle:        params.UpstreamMaxIdle,
 	}
+	if err := loadbalance.Save(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2008, err)
+		return
+	}
+	tx.Commit()
+	middleware.ResponseSuccess(c, "")
+}
+
+// ServiceUpdateHTTP godoc
+// @Summary 修改HTTP服务
+// @Description 修改HTTP服务
+// @Tags 服务管理
+// @ID /service/service_update_http
+// @Accept  json
+// @Produce  json
+// @Param body body dto.ServiceUpdateHTTPInput true "body"
+// @Success 200 {object} middleware.Response{data=string} "success"
+// @Router /service/service_update_http [post]
+func (service *ServiceController) ServiceUpdateHTTP(c *gin.Context) {
+	params := &dto.ServiceUpdateHTTPInput{}
+	if err := params.BindValidParam(c); err != nil {
+		middleware.ResponseError(c, 2000, err)
+		return
+	}
+
+	if len(strings.Split(params.IpList, ",")) != len(strings.Split(params.WeightList, ",")) {
+		middleware.ResponseError(c, 2001, errors.New("IP列表与权重列表数量不一致"))
+		return
+	}
+
+	tx, err := lib.GetGormPool("default")
+	if err != nil {
+		middleware.ResponseError(c, 2002, err)
+		return
+	}
+	tx = tx.Begin()
+	serviceInfo := &dao.ServiceInfo{ServiceName: params.ServiceName}
+	serviceInfo, err = serviceInfo.Find(c, tx, serviceInfo)
+	if err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2003, errors.New("服务不存在"))
+		return
+	}
+	serviceDetail, err := serviceInfo.ServiceDetail(c, tx, serviceInfo)
+	if err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2004, errors.New("服务不存在"))
+		return
+	}
+
+	info := serviceDetail.Info
+	info.ServiceDesc = params.ServiceDesc
+	if err := info.Save(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2005, err)
+		return
+	}
+
+	httpRule := serviceDetail.HTTPRule
+	httpRule.NeedHttps = params.NeedHttps
+	httpRule.NeedStripUri = params.NeedStripUri
+	httpRule.NeedWebsocket = params.NeedWebsocket
+	httpRule.UrlRewrite = params.UrlRewrite
+	httpRule.HeaderTransfor = params.HeaderTransfor
+	if err := httpRule.Save(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2006, err)
+		return
+	}
+
+	accessControl := serviceDetail.AccessControl
+	accessControl.OpenAuth = params.OpenAuth
+	accessControl.BlackList = params.BlackList
+	accessControl.WhiteList = params.WhiteList
+	accessControl.ClientIPFlowLimit = params.ClientipFlowLimit
+	accessControl.ServiceFlowLimit = params.ServiceFlowLimit
+	if err := accessControl.Save(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2007, err)
+		return
+	}
+
+	loadbalance := serviceDetail.LoadBalance
+	loadbalance.RoundType = params.RoundType
+	loadbalance.IpList = params.IpList
+	loadbalance.WeightList = params.WeightList
+	loadbalance.UpstreamConnectTimeout = params.UpstreamConnectTimeout
+	loadbalance.UpstreamHeaderTimeout = params.UpstreamHeaderTimeout
+	loadbalance.UpstreamIdleTimeout = params.UpstreamIdleTimeout
+	loadbalance.UpstreamMaxIdle = params.UpstreamMaxIdle
 	if err := loadbalance.Save(c, tx); err != nil {
 		tx.Rollback()
 		middleware.ResponseError(c, 2008, err)
