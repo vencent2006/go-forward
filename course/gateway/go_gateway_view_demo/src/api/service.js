@@ -8,3 +8,10 @@ export function serviceList(query) {
   })
 }
 
+export function serviceDelete(query) {
+  return request({
+    url: '/service/service_delete',
+    method: 'get',
+    params: query
+  })
+}
