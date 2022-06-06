@@ -8,6 +8,14 @@ export function login(data) {
   })
 }
 
+export function changePwd(data) {
+  return request({
+    url: '/admin/change_pwd',
+    method: 'post',
+    data
+  })
+}
+
 export function getInfo(token) {
   return request({
     url: '/admin/admin_info',
