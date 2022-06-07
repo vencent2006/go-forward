@@ -93,6 +93,20 @@ export const constantRoutes = [
         component: () => import('@/views/service/list'),
         name: '服务列表',
         meta: { title: '服务列表', icon: 'component', affix: true }
+      },
+      {
+        path: 'service_create_http',
+        component: () => import('@/views/service/http'),
+        name: '创建HTTP服务',
+        meta: { title: '创建HTTP服务', icon: 'component', affix: false },
+        hidden: true
+      },
+      {
+        path: 'service_edit_http',
+        component: () => import('@/views/service/http'),
+        name: '修改HTTP服务',
+        meta: { title: '修改HTTP服务', icon: 'component', affix: false },
+        hidden: true
       }
     ]
   }

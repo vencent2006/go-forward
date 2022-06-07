@@ -5,9 +5,11 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        Add
-      </el-button>
+      <router-link :to="'/service/service_create_http'">
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+          Add
+        </el-button>
+      </router-link>
     </div>
 
     <el-table
@@ -64,9 +66,11 @@
           <el-button type="primary" size="mini">
             统计
           </el-button>
-          <el-button type="primary" size="mini">
-            修改
-          </el-button>
+          <router-link :to="'/service/service_edit_http/'+row.id">
+            <el-button type="primary" size="mini">
+              修改
+            </el-button>
+          </router-link>
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
             删除
           </el-button>
