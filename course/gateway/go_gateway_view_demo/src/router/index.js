@@ -102,7 +102,7 @@ export const constantRoutes = [
         hidden: true
       },
       {
-        path: 'service_edit_http',
+        path: 'service_edit_http/:id(\\d+)',
         component: () => import('@/views/service/http'),
         name: '修改HTTP服务',
         meta: { title: '修改HTTP服务', icon: 'component', affix: false },

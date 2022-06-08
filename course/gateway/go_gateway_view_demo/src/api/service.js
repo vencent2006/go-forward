@@ -23,3 +23,19 @@ export function serviceAddHttp(data) {
     data
   })
 }
+
+export function serviceDetail(query) {
+  return request({
+    url: '/service/service_detail',
+    method: 'get',
+    params: query
+  })
+}
+
+export function serviceUpdateHttp(data) {
+  return request({
+    url: '/service/service_update_http',
+    method: 'post',
+    data
+  })
+}
