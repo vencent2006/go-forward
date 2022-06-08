@@ -73,9 +73,11 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini">
-            统计
-          </el-button>
+          <router-link :to="'/service/service_stat/'+row.id">
+            <el-button type="primary" size="mini">
+              统计
+            </el-button>
+          </router-link>
           <router-link :to="'/service/service_edit_http/'+row.id">
             <el-button type="primary" size="mini">
               修改

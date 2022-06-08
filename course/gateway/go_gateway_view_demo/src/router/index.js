@@ -107,6 +107,13 @@ export const constantRoutes = [
         name: '修改HTTP服务',
         meta: { title: '修改HTTP服务', icon: 'component', affix: false },
         hidden: true
+      },
+      {
+        path: 'service_stat/:id(\\d+)',
+        component: () => import('@/views/service/stat'),
+        name: '服务统计',
+        meta: { title: '服务统计', icon: 'component', affix: false },
+        hidden: true
       }
     ]
   }
