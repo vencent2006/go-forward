@@ -9,6 +9,16 @@ import resize from './mixins/resize'
 export default {
   mixins: [resize],
   props: {
+    data: {
+      type: Object,
+      default() {
+        return {
+          'title': '服务流量统计',
+          'today': [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122],
+          'yesterday': [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
+        }
+      }
+    },
     className: {
       type: String,
       default: 'chart'
