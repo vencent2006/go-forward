@@ -39,3 +39,11 @@ export function serviceUpdateHttp(data) {
     data
   })
 }
+
+export function serviceStat(query) {
+  return request({
+    url: '/service/service_stat',
+    method: 'get',
+    params: query
+  })
+}

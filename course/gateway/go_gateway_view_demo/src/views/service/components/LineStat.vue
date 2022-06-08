@@ -14,8 +14,8 @@ export default {
       default() {
         return {
           'title': '服务流量统计',
-          'today': [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122],
-          'yesterday': [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
+          'today': [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122, 120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150],
+          'yesterday': [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150, 220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122]
         }
       }
     },
@@ -41,6 +41,13 @@ export default {
       chart: null
     }
   },
+  watch: {
+    data: {
+      handler: function(newData, oldData) {
+        this.initChart()
+      }
+    }
+  },
   mounted() {
     this.initChart()
   },
@@ -59,7 +66,7 @@ export default {
         backgroundColor: '#394056',
         title: {
           top: 20,
-          text: 'Requests',
+          text: this.data.title,
           textStyle: {
             fontWeight: 'normal',
             fontSize: 16,
@@ -81,7 +88,7 @@ export default {
           itemWidth: 14,
           itemHeight: 5,
           itemGap: 13,
-          data: ['CMCC', 'CTCC', 'CUCC'],
+          data: ['今日', '昨日'],
           right: '4%',
           textStyle: {
             fontSize: 12,
@@ -103,11 +110,14 @@ export default {
               color: '#57617B'
             }
           },
-          data: ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55']
+          data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
+            '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00',
+            '13:00', '14:00', ' 15:00', '16:00', '17:00', '18:00', '19:00',
+            '20:00', '21:00', '22:00', '23:00']
         }],
         yAxis: [{
           type: 'value',
-          name: '(%)',
+          name: 'pv',
           axisTick: {
             show: false
           },
@@ -129,7 +139,7 @@ export default {
           }
         }],
         series: [{
-          name: 'CMCC',
+          name: '今日',
           type: 'line',
           smooth: true,
           symbol: 'circle',
@@ -161,9 +171,9 @@ export default {
 
             }
           },
-          data: [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122]
+          data: this.data.today
         }, {
-          name: 'CTCC',
+          name: '昨日',
           type: 'line',
           smooth: true,
           symbol: 'circle',
@@ -195,40 +205,7 @@ export default {
 
             }
           },
-          data: [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
-        }, {
-          name: 'CUCC',
-          type: 'line',
-          smooth: true,
-          symbol: 'circle',
-          symbolSize: 5,
-          showSymbol: false,
-          lineStyle: {
-            normal: {
-              width: 1
-            }
-          },
-          areaStyle: {
-            normal: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0,
-                color: 'rgba(219, 50, 51, 0.3)'
-              }, {
-                offset: 0.8,
-                color: 'rgba(219, 50, 51, 0)'
-              }], false),
-              shadowColor: 'rgba(0, 0, 0, 0.1)',
-              shadowBlur: 10
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: 'rgb(219,50,51)',
-              borderColor: 'rgba(219,50,51,0.2)',
-              borderWidth: 12
-            }
-          },
-          data: [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122]
+          data: this.data.yesterday
         }]
       })
     }
