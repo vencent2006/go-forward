@@ -75,6 +75,13 @@ export default {
       }
     }
   },
+  watch: {
+    data: {
+      handler: function(newData, oldData) {
+        this.data = newData
+      }
+    }
+  },
   methods: {}
 }
 </script>
