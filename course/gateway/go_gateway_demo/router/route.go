@@ -4,7 +4,6 @@ import (
 	"go-examples/course/gateway/go_gateway_demo/controller"
 	"go-examples/course/gateway/go_gateway_demo/docs"
 	"go-examples/course/gateway/go_gateway_demo/middleware"
-	"log"
 
 	"github.com/gin-gonic/contrib/sessions"
 
@@ -80,11 +79,12 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 
 	// adminLoginRouter
 	adminLoginRouter := router.Group("/admin_login")
-	store, err := sessions.NewRedisStore(10, "tcp", "192.168.56.108:6379", "", []byte("secrete"))
-	if err != nil {
-		log.Fatalf("sessions.NewRedisStore err:%v", err)
-	}
-	//store := sessions.NewCookieStore([]byte("secret"))
+	//store, err := sessions.NewRedisStore(10, "tcp", "192.168.56.108:6379", "", []byte("secrete"))
+	//if err != nil {
+	//	log.Fatalf("sessions.NewRedisStore err:%v", err)
+	//}
+	// todo 未来使用redis
+	store := sessions.NewCookieStore([]byte("secret"))
 	adminLoginRouter.Use(
 		sessions.Sessions("mysession", store),
 		middleware.RecoveryMiddleware(),
