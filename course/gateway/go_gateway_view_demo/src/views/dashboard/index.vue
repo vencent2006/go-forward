@@ -11,7 +11,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <pie-chart />
+          <pie-chart :chart-data="pieChartData" />
         </div>
       </el-col>
     </el-row>
@@ -22,7 +22,7 @@
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
 import PieChart from './components/PieChart'
-import { panelGroupData, flowStat } from '@/api/dashboard'
+import { panelGroupData, flowStat, serviceStat } from '@/api/dashboard'
 
 export default {
   name: 'DashboardAdmin',
@@ -41,14 +41,20 @@ export default {
       },
       lineChartData: {
         'title': '今日流量统计',
-        'today': [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122, 120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150],
-        'yesterday': [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150, 220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122]
+        'today': [],
+        'yesterday': []
+      },
+      pieChartData: {
+        'title': '服务占比',
+        'legend': [],
+        'series': []
       }
     }
   },
   created() {
     this.fetchPanelGroupData()
     this.fetchFlowStat()
+    this.serviceStat()
   },
   methods: {
     fetchPanelGroupData() {
@@ -62,6 +68,14 @@ export default {
       flowStat({}).then(response => {
         this.lineChartData.today = response.data.today
         this.lineChartData.yesterday = response.data.yesterday
+      }).catch(() => {
+
+      })
+    },
+    serviceStat() {
+      serviceStat({}).then(response => {
+        this.pieChartData.legend = response.data.legend
+        this.pieChartData.series = response.data.data
       }).catch(() => {
 
       })
