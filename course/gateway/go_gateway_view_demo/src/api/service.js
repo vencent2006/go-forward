@@ -63,3 +63,19 @@ export function serviceUpdateTcp(data) {
     data
   })
 }
+
+export function serviceAddGrpc(data) {
+  return request({
+    url: '/service/service_add_grpc',
+    method: 'post',
+    data
+  })
+}
+
+export function serviceUpdateGrpc(data) {
+  return request({
+    url: '/service/service_update_grpc',
+    method: 'post',
+    data
+  })
+}

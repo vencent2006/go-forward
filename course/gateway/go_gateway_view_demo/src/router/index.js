@@ -131,6 +131,28 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: 'service_create_grpc',
+        component: () => import('@/views/service/grpc'),
+        name: '创建GRPC服务',
+        meta: {
+          title: '创建GRPC服务',
+          icon: 'component',
+          affix: false
+        },
+        hidden: true
+      },
+      {
+        path: 'service_edit_grpc/:id(\\d+)',
+        component: () => import('@/views/service/grpc'),
+        name: '修改GRPC服务',
+        meta: {
+          title: '修改GRPC服务',
+          icon: 'component',
+          affix: false
+        },
+        hidden: true
+      },
+      {
         path: 'service_stat/:id(\\d+)',
         component: () => import('@/views/service/stat'),
         name: '服务统计',
