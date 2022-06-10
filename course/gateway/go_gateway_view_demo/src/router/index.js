@@ -109,6 +109,28 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: 'service_create_tcp',
+        component: () => import('@/views/service/tcp'),
+        name: '创建TCP服务',
+        meta: {
+          title: '创建TCP服务',
+          icon: 'component',
+          affix: false
+        },
+        hidden: true
+      },
+      {
+        path: 'service_edit_tcp/:id(\\d+)',
+        component: () => import('@/views/service/tcp'),
+        name: '修改TCP服务',
+        meta: {
+          title: '修改TCP服务',
+          icon: 'component',
+          affix: false
+        },
+        hidden: true
+      },
+      {
         path: 'service_stat/:id(\\d+)',
         component: () => import('@/views/service/stat'),
         name: '服务统计',

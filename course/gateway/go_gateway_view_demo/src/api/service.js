@@ -47,3 +47,19 @@ export function serviceStat(query) {
     params: query
   })
 }
+
+export function serviceAddTcp(data) {
+  return request({
+    url: '/service/service_add_tcp',
+    method: 'post',
+    data
+  })
+}
+
+export function serviceUpdateTcp(data) {
+  return request({
+    url: '/service/service_update_tcp',
+    method: 'post',
+    data
+  })
+}

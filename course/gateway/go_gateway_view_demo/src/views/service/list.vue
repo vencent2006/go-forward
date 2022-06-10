@@ -10,12 +10,12 @@
           添加HTTP服务
         </el-button>
       </router-link>
-      <router-link :to="'/service/service_create_http'">
+      <router-link :to="'/service/service_create_tcp'">
         <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">
-          添加TCP服务AA
+          添加TCP服务
         </el-button>
       </router-link>
-      <router-link :to="'/service/service_create_http'">
+      <router-link :to="'/service/service_create_grpc'">
         <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">
           添加GRPC服务
         </el-button>
