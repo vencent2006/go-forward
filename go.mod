@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.2
 	github.com/ClickHouse/clickhouse-go v1.5.1
+	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/cpuguy83/go-md2man/v2 v2.0.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -13,6 +14,7 @@ require (
 	github.com/e421083458/go_gateway v0.0.0-20200620084504-d602eb8bc883
 	github.com/e421083458/golang_common v1.2.1
 	github.com/e421083458/gorm v1.0.1
+	github.com/e421083458/grpc-proxy v0.2.0
 	github.com/erikdubbelboer/gspt v0.0.0-20210805194459-ce36a5128377
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/garyburd/redigo v1.6.0
@@ -68,6 +70,7 @@ require (
 	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
 	golang.org/x/sys v0.0.0-20210816183151-1e6c022a8912 // indirect
 	golang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1
+	google.golang.org/grpc v1.38.0
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/go-playground/validator.v9 v9.29.1
 	gopkg.in/yaml.v2 v2.4.0
