@@ -45,4 +45,10 @@ func TestMaxEnvelopes(t *testing.T) {
 		fmt.Printf("【input】:%v       【output】:%v\n", p, maxEnvelopes(p.one))
 	}
 	fmt.Printf("\n\n\n")
+
+	for _, q := range qs {
+		_, p := q.ans, q.para
+		fmt.Printf("【input】:%v       【output】:%v\n", p, maxEnvelopes2(p.one))
+	}
+	fmt.Printf("\n\n\n")
 }

@@ -19,7 +19,7 @@ func maxEnvelopes(envelopes [][]int) int {
 	var res int
 	for i := range envelopes {
 		dp[i] = 1
-		for j := 0; j <= 1; j++ {
+		for j := 0; j <= i; j++ {
 			if envelopes[j][1] < envelopes[i][1] {
 				dp[i] = max(dp[i], dp[j]+1)
 			}
@@ -36,4 +36,23 @@ func max(a, b int) int {
 	} else {
 		return b
 	}
+}
+
+func maxEnvelopes2(envelops [][]int) int {
+	sort.Slice(envelops, func(i, j int) bool {
+		return envelops[i][0] < envelops[j][0] || (envelops[i][0] == envelops[j][0] && envelops[i][1] > envelops[j][1])
+	})
+
+	dp := make([]int, len(envelops))
+	var res int
+	for i := range envelops {
+		dp[i] = 1
+		for j := 0; j <= i; j++ {
+			if envelops[j][1] < envelops[i][1] {
+				dp[i] = max(dp[i], dp[j]+1)
+			}
+			res = max(res, dp[i])
+		}
+	}
+	return res
 }
