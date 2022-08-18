@@ -2,7 +2,7 @@
 import data.stock as st
 
 # 初始化变量
-code = '000001.XSHG'
+code = '000001.XSHE' # 平安银行
 frequency = 'daily'
 start_date = '2021-02-01'
 end_date = '2021-03-01'
