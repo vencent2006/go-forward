@@ -27,8 +27,8 @@ def calculate_prof_pct(df):
     :param df: dataFrame，带signal的行情数据
     :return: dataFrame，带收益率profit_pct
     """
-    df = df[df['signal'] != 0]
-    df['profit_pct'] = (df['close'] - df['close'].shift(1)) / df['close'].shift(1)
+    # 筛选信号不为0的，并且计算涨跌幅
+    df.loc[df['signal'] != 0, 'profit_pct'] = df['close'].pct_change()
     df = df[df['signal'] == -1]  # 只看平仓的
     return df
 
@@ -65,7 +65,5 @@ if __name__ == '__main__':
     # signal: 1=>buy, -1=>sell
     # print(data[['close', 'weekday', 'buy_signal', 'sell_signal', 'signal']])
     print(data[['close', 'signal', 'profit_pct']])
-    print(data.describe())
     data['profit_pct'].plot()
     plt.show()
-
