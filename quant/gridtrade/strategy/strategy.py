@@ -63,6 +63,28 @@ def calculate_max_drawdown(df):
     return df
 
 
+def calculate_sharpe(df):
+    """
+    计算夏普比率，返回的是年化的夏普比率
+    :param df: 行情数据 dataFrame( stock )
+    :return: float 夏普比例，年夏普比率
+    """
+    # 夏普比率：投资者额外承受的每一单位风险所获得的额外收益
+    # 公式: sharpe = (回报率的均值 - 无风险利率)/回报率的标准差
+    # 因子项
+    daily_return = df['close'].pct_change()  # 回报率
+    # 1.回报率的均值 = 回报率.mean = 日涨跌幅.mean
+    avg_return = daily_return.mean()
+    # 2.无风险利率 = 这里就直接取0，国债3%/252就约等于0了
+    # 3.回报率的标准层 = 日涨跌幅.std
+    std_return = daily_return.std()
+    # 计算夏普: sharpe = 回报率的均值 / 回报率的标准差
+    sharpe = avg_return / std_return
+    # 年化夏普比率
+    sharpe_year = sharpe * np.sqrt(252)
+    return sharpe, sharpe_year
+
+
 def week_period_strategy(code, frequency, start_date, end_date):
     """
     以"周"为周期的策略，周四买入，周一卖出
@@ -102,8 +124,13 @@ if __name__ == '__main__':
     # plt.show()
 
     # 平安银行的最大回撤
+    # data = st.get_single_price('000001.XSHE', 'daily', '2006-01-01', '2021-01-01')
+    # data = calculate_max_drawdown(data)
+    # print(data[['close', 'roll_max', 'daily_dd', 'max_dd']])
+    # data[['daily_dd', 'max_dd']].plot()
+    # plt.show()
+
+    # 计算夏普比率
     data = st.get_single_price('000001.XSHE', 'daily', '2006-01-01', '2021-01-01')
-    data = calculate_max_drawdown(data)
-    print(data[['close', 'roll_max', 'daily_dd', 'max_dd']])
-    data[['daily_dd', 'max_dd']].plot()
-    plt.show()
+    sharpe = calculate_sharpe(data)
+    print(sharpe)  # (0.041039348310310066, 0.6514794575834355)
