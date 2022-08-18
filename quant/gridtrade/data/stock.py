@@ -10,14 +10,12 @@ auth(JQ_ACCOUNT, JQ_PASSWORD)
 
 '''设置行列显示不忽略'''
 pd.set_option('display.max_rows', 10000)  # 显示的行数最大值
-pd.set_option('display.max_columns', 100) # 显示的列数最大值
-
+pd.set_option('display.max_columns', 100)  # 显示的列数最大值
 
 '''交易所的code
 # 上海证券交易所 .XSHG '600519.XSHG' 贵州茅台
 # 深圳证券交易所 .XSHE '000001.XSHE' 平安银行
 '''
-
 
 
 def get_stock_list():
@@ -27,6 +25,7 @@ def get_stock_list():
     '''
     stock_list = list(get_all_securities(types=['stock']))
     return stock_list
+
 
 def get_single_price(code, frequency, start_date, end_date):
     '''
@@ -42,6 +41,7 @@ def get_single_price(code, frequency, start_date, end_date):
     df = get_price(security=code, start_date=start_date, end_date=end_date, frequency=frequency, panel=False)
     return df
 
+
 def export_data(df, filename, type):
     '''
     导出股票相关数据
@@ -55,6 +55,7 @@ def export_data(df, filename, type):
     df.index.names = ['date']
     df.to_csv(file_root)
     print('已成功存储至', file_root)
+
 
 def get_csv_data(code, type):
     file_root = PRICE_CSV_DIR + type + '/' + code + '.csv'
@@ -80,6 +81,7 @@ def transfer_price_freq(df, freq):
 
     return df_trans
 
+
 def get_single_finance(code, date, statDate):
     '''
     获取单个股票财务指标
@@ -97,6 +99,7 @@ def get_single_finance(code, date, statDate):
     df = get_fundamentals(query(indicator).filter(indicator.code == code), date=date, statDate=statDate)
     return df
 
+
 def get_single_valuation(code, date, statDate):
     '''
     获取单个股票估值指标
@@ -110,13 +113,14 @@ def get_single_valuation(code, date, statDate):
     df = get_fundamentals(query(valuation).filter(valuation.code == code), date=date, statDate=statDate)
     return df
 
+
 def calculate_change_pct(df):
     '''
     涨跌幅 = (当期收盘价-前期收盘价）/前期收盘价
     :param df: dataFrame，带有收盘价
     :return: dataFrame, 带有涨跌幅
     '''
-    df['close_pct'] = (df['close'] - df['close'].shift(1))/df['close'].shift(1)
+    df['close_pct'] = (df['close'] - df['close'].shift(1)) / df['close'].shift(1)
     return df
 
 # if __name__ == '__main__':
