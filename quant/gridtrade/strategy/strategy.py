@@ -28,8 +28,19 @@ def calculate_prof_pct(df):
     :return: dataFrame，带收益率profit_pct
     """
     # 筛选信号不为0的，并且计算涨跌幅
-    df.loc[df['signal'] != 0, 'profit_pct'] = df['close'].pct_change()
+    df['profit_pct'] = df.loc[df['signal'] != 0, 'close'].pct_change()
     df = df[df['signal'] == -1]  # 只看平仓的
+    return df
+
+
+def calculate_cum_prof(df):
+    """
+    计算累加收益率
+    :param df: dataFrame
+    :return: dataFrame
+    """
+    # 累计收益
+    df['cum_profit'] = (1 + df['profit_pct']).cumprod() - 1
     return df
 
 
@@ -57,6 +68,9 @@ def week_period_strategy(code, frequency, start_date, end_date):
     # 计算单次收益率: 开仓、平仓（开仓的全部股数）
     df = calculate_prof_pct(df)
 
+    # 计算累计收益率
+    df = calculate_cum_prof(df)
+
     return df
 
 
@@ -64,6 +78,6 @@ if __name__ == '__main__':
     data = week_period_strategy('000001.XSHE', 'daily', None, datetime.datetime.today())
     # signal: 1=>buy, -1=>sell
     # print(data[['close', 'weekday', 'buy_signal', 'sell_signal', 'signal']])
-    print(data[['close', 'signal', 'profit_pct']])
-    data['profit_pct'].plot()
+    print(data[['close', 'signal', 'profit_pct', 'cum_profit']])
+    data[['profit_pct', 'cum_profit']].plot()
     plt.show()
