@@ -44,6 +44,25 @@ def calculate_cum_prof(df):
     return df
 
 
+def calculate_max_drawdown(df):
+    """
+    计算最大回撤比
+    :param df: dataFrame
+    :return: dataFrame
+    """
+
+    # 选取时间周期（时间窗口）
+    window = 252  # 一年的工作日是252天
+    # 计算时间周期中的最大净值
+    df['roll_max'] = df['close'].rolling(window=window, min_periods=1).max()
+    # 计算当天的回撤比 = (谷值 - 峰值) / 峰值 = 谷值/峰值 - 1
+    df['daily_dd'] = df['close'] / df['roll_max'] - 1
+    # 选取时间周期内最大的回撤比，即最大回撤;min因为是负值
+    df['max_dd'] = df['daily_dd'].rolling(window=window, min_periods=1).min()
+
+    return df
+
+
 def week_period_strategy(code, frequency, start_date, end_date):
     """
     以"周"为周期的策略，周四买入，周一卖出
@@ -75,9 +94,16 @@ def week_period_strategy(code, frequency, start_date, end_date):
 
 
 if __name__ == '__main__':
-    data = week_period_strategy('000001.XSHE', 'daily', None, datetime.datetime.today())
-    # signal: 1=>buy, -1=>sell
-    # print(data[['close', 'weekday', 'buy_signal', 'sell_signal', 'signal']])
-    print(data[['close', 'signal', 'profit_pct', 'cum_profit']])
-    data[['profit_pct', 'cum_profit']].plot()
+    # data = week_period_strategy('000001.XSHE', 'daily', None, datetime.datetime.today())
+    # # signal: 1=>buy, -1=>sell
+    # # print(data[['close', 'weekday', 'buy_signal', 'sell_signal', 'signal']])
+    # print(data[['close', 'signal', 'profit_pct', 'cum_profit']])
+    # data[['profit_pct', 'cum_profit']].plot()
+    # plt.show()
+
+    # 平安银行的最大回撤
+    data = st.get_single_price('000001.XSHE', 'daily', '2006-01-01', '2021-01-01')
+    data = calculate_max_drawdown(data)
+    print(data[['close', 'roll_max', 'daily_dd', 'max_dd']])
+    data[['daily_dd', 'max_dd']].plot()
     plt.show()
