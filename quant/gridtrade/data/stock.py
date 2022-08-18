@@ -1,7 +1,8 @@
 import pandas as pd
 
-from pass_joinquant import JQ_ACCOUNT
-from pass_joinquant import JQ_PASSWORD
+from data.pass_joinquant import JQ_ACCOUNT
+from data.pass_joinquant import JQ_PASSWORD
+from data.var_def import PRICE_CSV_DIR
 from jqdatasdk import *
 import datetime
 
@@ -38,7 +39,7 @@ def get_single_price(code, frequency, start_date, end_date):
     '''
     # fq:复权(fuquan)，默认是前复权(pre)
     # 聚宽的数据，和东方财富比较match，不知道为啥和同花顺对不上
-    df = get_price(code, start_date=start_date, end_date=end_date, frequency=frequency, panel=False)
+    df = get_price(security=code, start_date=start_date, end_date=end_date, frequency=frequency, panel=False)
     return df
 
 def export_data(df, filename, type):
@@ -50,9 +51,14 @@ def export_data(df, filename, type):
     :return: 无
     '''
     # todo: file_root要正确填写
-    file_root = 'absolute_path' + type + '/' + filename + '.csv'
+    file_root = PRICE_CSV_DIR + type + '/' + filename + '.csv'
+    df.index.names = ['date']
     df.to_csv(file_root)
     print('已成功存储至', file_root)
+
+def get_csv_data(code, type):
+    file_root = PRICE_CSV_DIR + type + '/' + code + '.csv'
+    return pd.read_csv(file_root)
 
 
 def transfer_price_freq(df, freq):
@@ -103,3 +109,22 @@ def get_single_valuation(code, date, statDate):
     # pe_ratio	市盈率(PE, TTM)	每股市价为每股收益的倍数，反映投资人对每元净利润所愿支付的价格，用来估计股票的投资报酬和风险	市盈率（PE，TTM）=（股票在指定交易日期的收盘价 * 截止当日公司总股本）/归属于母公司股东的净利润TTM。
     df = get_fundamentals(query(valuation).filter(valuation.code == code), date=date, statDate=statDate)
     return df
+
+def calculate_change_pct(df):
+    '''
+    涨跌幅 = (当期收盘价-前期收盘价）/前期收盘价
+    :param df: dataFrame，带有收盘价
+    :return: dataFrame, 带有涨跌幅
+    '''
+    df['close_pct'] = (df['close'] - df['close'].shift(1))/df['close'].shift(1)
+    return df
+
+# if __name__ == '__main__':
+#     code = '000001.XSHG'
+#     start_date = '2021-02-01'
+#     end_date = '2021-03-1'
+#     frequency = 'daily'
+#     df = get_price(security=code, start_date=start_date, end_date=end_date, frequency=frequency, panel=False)
+#     print(df)
+#     df2 = get_single_price(code=code,frequency=frequency,start_date=start_date,end_date=end_date)
+#     print(df2)
