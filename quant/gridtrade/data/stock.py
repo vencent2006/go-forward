@@ -38,6 +38,11 @@ def get_single_price(code, frequency, start_date, end_date):
     '''
     # fq:复权(fuquan)，默认是前复权(pre)
     # 聚宽的数据，和东方财富比较match，不知道为啥和同花顺对不上
+
+    # 如果start_date is None, 默认从上市日期开始
+    if start_date is None:
+        start_date = get_security_info(code).start_date
+    # 获取行情数据
     df = get_price(security=code, start_date=start_date, end_date=end_date, frequency=frequency, panel=False)
     return df
 
