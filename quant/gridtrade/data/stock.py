@@ -90,9 +90,25 @@ def export_data(df, filename, data_type, mode=None):
     print('已成功存储至', file_root)
 
 
-def get_csv_data(code, type):
+def get_csv_data(code, start_date, end_date, type='price'):
+    """
+    获取本地数据，且顺便完成数据更新工作
+    :param code: str，股票代码
+    :param start_date: 起始日期（包含）
+    :param end_date: 结束日期（包含）
+    :param type: 默认"price"
+    :return: dataFrame
+    """
+    # 使用update直接更新
+    update_daily_price(code, type)
+
+    # 读取数据库对应的股票csv文件
     file_root = DATA_DIR + type + '/' + code + '.csv'
-    return pd.read_csv(file_root)
+    df = pd.read_csv(file_root, index_col='date')
+
+    # 根据日期参数筛选数据
+    # 注意：要加括号，不然会以为是运算而不是条件判断
+    return df[(df.index >= start_date) & (df.index <= end_date)]
 
 
 def transfer_price_freq(df, freq):
@@ -162,6 +178,12 @@ def calculate_change_pct(df):
 
 
 def update_daily_price(stock_code, stock_type):
+    """
+    更新每日股票行情
+    :param stock_code: 股票代码
+    :param stock_type: price（股票行情），finance（财务数据）
+    :return:
+    """
     # 3.1是否存在文件：不存在（重新获取），存在（执行3.2）
     file_root = DATA_DIR + stock_type + '/' + stock_code + '.csv'
     if os.path.exists(file_root):  # 如果存在对应文件
