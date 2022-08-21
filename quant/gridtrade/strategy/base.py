@@ -28,6 +28,8 @@ def calculate_prof_pct(df):
     :return: dataFrame，带收益率profit_pct
     """
     # 筛选信号不为0的，并且计算涨跌幅
+    # df = df[df['signal'] != 0]
+    # df['profit_pct'] = df['close'].pct_change() 这种写法有warning
     df['profit_pct'] = df.loc[df['signal'] != 0, 'close'].pct_change()
     df = df[df['signal'] == -1]  # 只看平仓的
     return df
