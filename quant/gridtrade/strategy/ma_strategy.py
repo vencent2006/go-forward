@@ -15,6 +15,9 @@ def ma_strategy(df, short_window=5, long_window=20):
     :param long_window: 长期n日移动平均线，默认20
     :return:
     """
+
+    print("==========当前周期参数:", short_window, long_window)
+
     df = pd.DataFrame(df)
 
     # 计算技术指标：ma短期，ma长期
@@ -39,6 +42,9 @@ def ma_strategy(df, short_window=5, long_window=20):
 
     # 删除多余的column
     df.drop(labels=['buy_signal', 'sell_signal'], axis=1)
+
+    # 数据预览
+    print(df[['close', 'short_ma', 'long_ma', 'signal', 'cum_profit']])
 
     return df
 
