@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hdt3213/godis/lib/logger"
+	"go-examples/course/go-redis-rewrite/go-redis/lib/logger"
 )
 
 // ServerProperties defines global config properties
