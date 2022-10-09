@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+  # 注册中心集群版本设置
+  consul1:
+    # cap老师的镜像，当然直接使用官方的也可以
+    image: cap1573/consul
+    container_name: node1
+    command: agent -server -bootstrap-expect=3 -node=node1 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+  consul2:
+    # cap老师的镜像，当然直接使用官方的也可以
+    image: cap1573/consul
+    container_name: node2
+    command: agent -server -retry-join=node1 -bootstrap-expect=3 -node=node2 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+      - consul1
+  consul3:
+    # cap老师的镜像，当然直接使用官方的也可以
+    image: cap1573/consul
+    container_name: node3
+    command: agent -server -retry-join=node1 -bootstrap-expect=3 -node=node3 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+      - consul1
+  consul4:
+    # 这里用的是官方的镜像
+    image: consul
+    container_name: node4
+    command: agent -retry-join=node1 -node=node4 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1 -ui
+    ports:
+      - 8500:8500
+    depends_on:
+      - consul2
+      - consul3
