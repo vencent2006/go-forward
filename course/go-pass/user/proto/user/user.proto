@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "./proto/user;user";
+
+service User {
+	//对外提供添加服务
+	rpc AddUser(UserInfo) returns (Response) {}
+	rpc DeleteUser(UserId) returns (Response) {}
+	rpc UpdateUser(UserInfo) returns (Response) {}
+	rpc FindUserByID(UserId) returns (UserInfo) {}
+	rpc FindAllUser(FindAll) returns (AllUser) {}
+}
+message UserInfo {
+	int64 id = 1;
+}
+
+message UserId {
+	int64 id = 1;
+}
+
+message FindAll {
+
+}
+
+message Response {
+	string msg =1 ;
+}
+
+message AllUser {
+	repeated UserInfo user_info = 1;
+}
+
+

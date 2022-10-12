@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package base;
+
+option go_package = "./proto/base;base";
+
+service Base {
+	//对外提供添加服务
+	rpc AddBase(BaseInfo) returns (Response) {}
+	rpc DeleteBase(BaseId) returns (Response) {}
+	rpc UpdateBase(BaseInfo) returns (Response) {}
+	rpc FindBaseByID(BaseId) returns (BaseInfo) {}
+	rpc FindAllBase(FindAll) returns (AllBase) {}
+}
+message BaseInfo {
+	int64 id = 1;
+}
+
+message BaseId {
+	int64 id = 1;
+}
+
+message FindAll {
+
+}
+
+message Response {
+	string msg =1 ;
+}
+
+message AllBase {
+	repeated BaseInfo base_info = 1;
+}
+
+
