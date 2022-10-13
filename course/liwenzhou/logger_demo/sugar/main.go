@@ -7,21 +7,23 @@ import (
 )
 
 var logger *zap.Logger
+var sugarLogger *zap.SugaredLogger
 
 func InitLogger() {
-	logger, _ = zap.NewProduction()
+	logger, _ = zap.NewDevelopment()
+	sugarLogger = logger.Sugar()
 }
 
 func simpleHttpGet(url string) {
 	resp, err := http.Get(url)
 	if err != nil {
-		logger.Error(
+		sugarLogger.Error(
 			"Error fetching url..",
 			zap.String("url", url),
 			zap.Error(err),
 		)
 	} else {
-		logger.Info(
+		sugarLogger.Info(
 			"Success...",
 			zap.String("statusCode", resp.Status),
 			zap.String("url", url),
@@ -32,7 +34,7 @@ func simpleHttpGet(url string) {
 
 func main() {
 	InitLogger()
-	defer logger.Sync()
+	defer sugarLogger.Sync()
 
 	simpleHttpGet("www.sogou.com")
 	simpleHttpGet("http://www.sogou.com")

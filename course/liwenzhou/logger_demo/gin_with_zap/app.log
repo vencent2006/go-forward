@@ -1,0 +1,2 @@
+{"level":"DEBUG","time":"2022-10-13T20:59:50.102+0800","caller":"gin_with_zap/main.go:43","msg":"this is hello func","user":"q1mi","age":18}
+{"level":"INFO","time":"2022-10-13T20:59:50.103+0800","caller":"logger/logger.go:66","msg":"/hello","status":200,"method":"GET","path":"/hello","query":"","ip":"127.0.0.1","user-agent":"curl/7.82.0","errors":"","cost":0.000936669}
