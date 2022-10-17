@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"liwenzhou/web_app/dao/redis"
-	"liwenzhou/web_app/routes"
-	"liwenzhou/web_app/settings"
+	"liwenzhou/web_app2/dao/redis"
+	"liwenzhou/web_app2/routes"
+	"liwenzhou/web_app2/settings"
 	"log"
 	"net/http"
 	"os"
@@ -17,8 +17,8 @@ import (
 
 	"github.com/spf13/viper"
 
-	"liwenzhou/web_app/dao/mysql"
-	"liwenzhou/web_app/logger"
+	"liwenzhou/web_app2/dao/mysql"
+	"liwenzhou/web_app2/logger"
 )
 
 // Go Web开发较通用的脚手架模板
@@ -30,20 +30,20 @@ func main() {
 		return
 	}
 	//	2. 初始化日子
-	if err := logger.Init(); err != nil {
+	if err := logger.Init(settings.Conf.LogConfig); err != nil {
 		fmt.Printf("init logger failed, err:%v\n", err)
 		return
 	}
 	defer zap.L().Sync()
 	zap.L().Debug("logger init success...")
 	//	3. 初始化MySQL连接
-	if err := mysql.Init(); err != nil {
+	if err := mysql.Init(settings.Conf.MySQLConfig); err != nil {
 		fmt.Printf("init mysql failed, err:%v\n", err)
 		return
 	}
 	defer mysql.Close()
 	//	4. 初始化Redis连接
-	if err := redis.Init(); err != nil {
+	if err := redis.Init(settings.Conf.RedisConfig); err != nil {
 		fmt.Printf("init mysql failed, err:%v\n", err)
 		return
 	}

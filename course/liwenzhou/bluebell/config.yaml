@@ -1,7 +1,9 @@
-app:
-  name: "web_app"
-  mode: "dev"
-  port: 8080
+name: "web_app"
+mode: "dev"
+port: 8080
+version: "v0.0.1"
+start_time: "2022-10-01"
+machine_id: 1
 
 log:
   level: "debug"
@@ -15,7 +17,7 @@ mysql:
   port: 3306
   user: "root"
   password: "root"
-  dbname: "liwenzhou"
+  db_name: "bluebell"
   max_open_conns: 200
   max_idle_conns: 20
 

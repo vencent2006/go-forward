@@ -3,9 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"liwenzhou/web_app2/dao/redis"
-	"liwenzhou/web_app2/routes"
-	"liwenzhou/web_app2/settings"
+	"liwenzhou/bluebell/dao/redis"
+	"liwenzhou/bluebell/pkg/snowflake"
+	"liwenzhou/bluebell/routes"
+	"liwenzhou/bluebell/settings"
 	"log"
 	"net/http"
 	"os"
@@ -15,10 +16,8 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/spf13/viper"
-
-	"liwenzhou/web_app2/dao/mysql"
-	"liwenzhou/web_app2/logger"
+	"liwenzhou/bluebell/dao/mysql"
+	"liwenzhou/bluebell/logger"
 )
 
 // Go Web开发较通用的脚手架模板
@@ -34,8 +33,9 @@ func main() {
 		fmt.Printf("init logger failed, err:%v\n", err)
 		return
 	}
+
 	defer zap.L().Sync()
-	zap.L().Debug("logger init success...")
+	zap.L().Info("config is ", zap.Any("config", settings.Conf))
 	//	3. 初始化MySQL连接
 	if err := mysql.Init(settings.Conf.MySQLConfig); err != nil {
 		fmt.Printf("init mysql failed, err:%v\n", err)
@@ -48,11 +48,16 @@ func main() {
 		return
 	}
 	defer redis.Close()
+	// snowflake
+	if err := snowflake.Init(settings.Conf.StartTime, settings.Conf.MachineID); err != nil {
+		fmt.Printf("init snowflake failed, err:%v\n", err)
+		return
+	}
 	//	5. 注册路由
 	r := routes.Setup()
 	//	6. 启动服务（优雅关机）
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", viper.GetInt("app.port")),
+		Addr:    fmt.Sprintf(":%d", settings.Conf.Port),
 		Handler: r}
 
 	go func() {

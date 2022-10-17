@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"liwenzhou/web_app/logger"
+	"liwenzhou/web_app2/logger"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

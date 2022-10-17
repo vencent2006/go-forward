@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"liwenzhou/web_app2/settings"
+	"liwenzhou/bluebell/settings"
 	"net"
 	"net/http"
 	"net/http/httputil"
