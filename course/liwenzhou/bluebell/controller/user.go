@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"liwenzhou/bluebell/logic"
 	"liwenzhou/bluebell/models"
 	"net/http"
@@ -33,9 +32,17 @@ func SignUpHandler(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(p)
 	// 2. 业务处理
-	logic.SignUp(p)
+	if err := logic.SignUp(p); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"msg": "注册失败",
+		})
+		return
+	}
+
 	// 3. 返回响应
-	c.JSON(http.StatusOK, "ok")
+	c.JSON(http.StatusOK, gin.H{
+		"msg": "success",
+	})
+	return
 }
