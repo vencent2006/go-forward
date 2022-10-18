@@ -18,6 +18,7 @@ func Setup(mode string) *gin.Engine {
 
 	// 注册业务路由
 	r.POST("/signup", controller.SignUpHandler)
+	r.POST("/login", controller.LoginHandler)
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
