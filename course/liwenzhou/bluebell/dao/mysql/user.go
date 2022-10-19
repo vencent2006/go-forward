@@ -1,22 +1,15 @@
 package mysql
 
 import (
+	"bluebell/models"
 	"crypto/md5"
 	"database/sql"
 	"encoding/hex"
-	"errors"
-	"bluebell/models"
 )
 
 // 把每一步数据库操作封装成函数
 
 const secret = "liwenzhou.com"
-
-var (
-	ErrorUserExist       = errors.New("用户已存在")
-	ErrorUserNotExist    = errors.New("用户不存在")
-	ErrorInvalidPassword = errors.New("用户密码错误")
-)
 
 // CheckUserExist 检查指定用户是否存在
 func CheckUserExist(username string) error {

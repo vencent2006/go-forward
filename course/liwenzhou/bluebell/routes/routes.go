@@ -23,6 +23,7 @@ func Setup(mode string) *gin.Engine {
 	v1.Use(middlewares.JWTAuthMiddleware())      // 中间件
 	{
 		v1.GET("/community", controller.CommunityHandler)
+		v1.GET("/community/:cid", controller.CommunityDetailHandler)
 	}
 
 	//r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
