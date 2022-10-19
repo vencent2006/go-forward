@@ -2,7 +2,7 @@ package redis
 
 import (
 	"fmt"
-	"liwenzhou/bluebell/settings"
+	"bluebell/settings"
 
 	"github.com/go-redis/redis"
 )

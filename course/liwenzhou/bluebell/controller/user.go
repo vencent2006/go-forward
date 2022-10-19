@@ -2,9 +2,9 @@ package controller
 
 import (
 	"errors"
-	"liwenzhou/bluebell/dao/mysql"
-	"liwenzhou/bluebell/logic"
-	"liwenzhou/bluebell/models"
+	"bluebell/dao/mysql"
+	"bluebell/logic"
+	"bluebell/models"
 
 	"go.uber.org/zap"
 

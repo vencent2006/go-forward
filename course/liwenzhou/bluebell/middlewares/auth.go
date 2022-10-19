@@ -1,8 +1,8 @@
 package middlewares
 
 import (
-	"liwenzhou/bluebell/controller"
-	"liwenzhou/bluebell/pkg/jwt"
+	"bluebell/controller"
+	"bluebell/pkg/jwt"
 	"net/http"
 	"strings"
 

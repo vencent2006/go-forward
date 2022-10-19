@@ -1,10 +1,10 @@
 package logic
 
 import (
-	"liwenzhou/bluebell/dao/mysql"
-	"liwenzhou/bluebell/models"
-	"liwenzhou/bluebell/pkg/jwt"
-	"liwenzhou/bluebell/pkg/snowflake"
+	"bluebell/dao/mysql"
+	"bluebell/models"
+	"bluebell/pkg/jwt"
+	"bluebell/pkg/snowflake"
 )
 
 // 存放业务逻辑的代码

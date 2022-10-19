@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"encoding/hex"
 	"errors"
-	"liwenzhou/bluebell/models"
+	"bluebell/models"
 )
 
 // 把每一步数据库操作封装成函数

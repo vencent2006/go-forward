@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"fmt"
-	"liwenzhou/bluebell/settings"
+	"bluebell/settings"
 
 	"go.uber.org/zap"
 

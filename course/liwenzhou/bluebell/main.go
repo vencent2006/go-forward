@@ -1,13 +1,13 @@
 package main
 
 import (
+	"bluebell/controller"
+	"bluebell/dao/redis"
+	"bluebell/pkg/snowflake"
+	"bluebell/routes"
+	"bluebell/settings"
 	"context"
 	"fmt"
-	"liwenzhou/bluebell/controller"
-	"liwenzhou/bluebell/dao/redis"
-	"liwenzhou/bluebell/pkg/snowflake"
-	"liwenzhou/bluebell/routes"
-	"liwenzhou/bluebell/settings"
 	"log"
 	"net/http"
 	"os"
@@ -17,8 +17,8 @@ import (
 
 	"go.uber.org/zap"
 
-	"liwenzhou/bluebell/dao/mysql"
-	"liwenzhou/bluebell/logger"
+	"bluebell/dao/mysql"
+	"bluebell/logger"
 )
 
 // Go Web开发较通用的脚手架模板
