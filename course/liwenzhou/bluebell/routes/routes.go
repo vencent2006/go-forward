@@ -22,8 +22,11 @@ func Setup(mode string) *gin.Engine {
 	v1.POST("/login", controller.LoginHandler)   // 登录
 	v1.Use(middlewares.JWTAuthMiddleware())      // 中间件
 	{
+		// community 社区
 		v1.GET("/community", controller.CommunityHandler)
 		v1.GET("/community/:cid", controller.CommunityDetailHandler)
+		// post 帖子
+		v1.POST("/post", controller.CreatePostHandler)
 	}
 
 	//r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
