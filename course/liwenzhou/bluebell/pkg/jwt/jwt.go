@@ -4,6 +4,8 @@ import (
 	"errors"
 	"time"
 
+	"github.com/spf13/viper"
+
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -27,11 +29,13 @@ type MyClaims struct {
 // GenToken 生成JWT
 func GenToken(userID int64, username string) (string, error) {
 	// 创建一个我们自己的声明
+	// todo pkg 引用auth的直接读config auth不合适
+	tokenExpireDuration := time.Duration(viper.GetInt("auth.jwt_expire")) * time.Hour
 	c := MyClaims{
 		UserID:   userID,
 		Username: username, // 自定义字段
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(TokenExpireDuration).Unix(), // 过期时间
+			ExpiresAt: time.Now().Add(tokenExpireDuration).Unix(), // 过期时间
 			Issuer:    issuerName,                                 // 签发人
 		},
 	}
