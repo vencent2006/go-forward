@@ -91,3 +91,19 @@ func PostDetailHandler(c *gin.Context) {
 	// 3. 返回影响
 	ResponseSuccess(c, post)
 }
+
+func PostListHandler(c *gin.Context) {
+	// 1. 获取参数和检查参数
+	page, size := getPageInfo(c)
+
+	// 2. 获取数据
+	postList, err := logic.GetPostList(page, size)
+	if err != nil {
+		zap.L().Error("logic.GetPostList()", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+
+	// 3. 返回响应
+	ResponseSuccess(c, postList)
+}

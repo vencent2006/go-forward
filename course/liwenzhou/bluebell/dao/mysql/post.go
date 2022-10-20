@@ -31,3 +31,18 @@ func GetPostDetailByID(id int64) (p *models.Post, err error) {
 	}
 	return
 }
+
+func GetPostList(page int64, size int64) (postList []*models.Post, err error) {
+	sqlStr := `select 
+				post_id, title, content, author_id, community_id, status, create_time, update_time 
+				from post
+				limit ?,?`
+	if err = db.Select(&postList, sqlStr, (page-1)*size, size); err != nil {
+		if err == sql.ErrNoRows {
+			zap.L().Warn("there is no post in db")
+			err = nil
+			return
+		}
+	}
+	return
+}
