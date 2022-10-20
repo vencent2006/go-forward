@@ -27,6 +27,7 @@ func Setup(mode string) *gin.Engine {
 		v1.GET("/community/:cid", controller.CommunityDetailHandler)
 		// post 帖子
 		v1.POST("/post", controller.CreatePostHandler)
+		v1.GET("/post/:pid", controller.PostDetailHandler)
 	}
 
 	//r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {

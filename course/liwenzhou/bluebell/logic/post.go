@@ -13,3 +13,7 @@ func CreatePost(p *models.Post) error {
 	// 3. 保存进数据库
 	return mysql.InsertPost(p)
 }
+
+func GetPostDetailByID(id int64) (p *models.Post, err error) {
+	return mysql.GetPostDetailByID(id)
+}

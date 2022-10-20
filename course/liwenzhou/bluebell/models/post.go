@@ -11,4 +11,5 @@ type Post struct {
 	Title       string    `json:"title" db:"title" binding:"required"`
 	Content     string    `json:"content" db:"content" binding:"required"`
 	CreateTime  time.Time `json:"create_time" db:"create_time"`
+	UpdateTime  time.Time `json:"update_time" db:"update_time"`
 }

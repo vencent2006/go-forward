@@ -5,6 +5,7 @@ import (
 	"bluebell/logic"
 	"bluebell/models"
 	"errors"
+	"strconv"
 
 	"go.uber.org/zap"
 
@@ -61,4 +62,32 @@ func CreatePostHandler(c *gin.Context) {
 	// 3. 返回响应
 	ResponseSuccess(c, nil)
 	return
+}
+
+// PostDetailHandler 获取帖子详情
+func PostDetailHandler(c *gin.Context) {
+	// 1. 获取参数和校验参数
+	idStr := c.Param("pid")
+	postId, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		zap.L().Warn("get post detail with invalid param", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+
+	// 2. 逻辑处理
+	post, err := logic.GetPostDetailByID(postId)
+	if err != nil {
+		if err == mysql.ErrorInvalidID {
+			zap.L().Warn("get post detail with invalid param", zap.Error(err))
+			ResponseError(c, CodeInvalidParam)
+			return
+		}
+		zap.L().Error("logic.GetPostDetailByID(postId) failed", zap.Int64("postId", postId), zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+
+	// 3. 返回影响
+	ResponseSuccess(c, post)
 }
