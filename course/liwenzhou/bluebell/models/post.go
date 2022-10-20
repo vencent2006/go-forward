@@ -13,3 +13,10 @@ type Post struct {
 	CreateTime  time.Time `json:"create_time" db:"create_time"`
 	UpdateTime  time.Time `json:"update_time" db:"update_time"`
 }
+
+// ApiPostDetail 帖子详情接口的结构体
+type ApiPostDetail struct {
+	AuthorName       string             `json:"author_name"`
+	*Post                               // 嵌入帖子结构体
+	*CommunityDetail `json:"community"` // 嵌入社区信息
+}

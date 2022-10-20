@@ -57,3 +57,15 @@ func Login(user *models.User) error {
 	}
 	return nil
 }
+
+func GetUserById(id int64) (user *models.ApiUser, err error) {
+	user = new(models.ApiUser)
+	sqlStr := `select user_id, username, email, gender from user where user_id = ?`
+	if err = db.Get(user, sqlStr, id); err != nil {
+		if err == sql.ErrNoRows {
+			err = ErrorUserNotExist
+		}
+		return
+	}
+	return
+}
