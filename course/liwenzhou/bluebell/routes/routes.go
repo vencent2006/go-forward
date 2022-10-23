@@ -29,6 +29,8 @@ func Setup(mode string) *gin.Engine {
 		v1.POST("/post", controller.CreatePostHandler)
 		v1.GET("/post/:pid", controller.PostDetailHandler)
 		v1.GET("/post", controller.PostListHandler)
+		// vote 投票
+		v1.POST("/vote", controller.PostVoteHandler)
 	}
 
 	//r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
