@@ -37,7 +37,7 @@ func GetPostIDsInOrder(p *models.ParamPostList) ([]string, error) {
 }
 
 // GetCommunityPostIDsInOrder 按社区查询帖子的id列表
-func GetCommunityPostIDsInOrder(p *models.ParamCommunityPostList) ([]string, error) {
+func GetCommunityPostIDsInOrder(p *models.ParamPostList) ([]string, error) {
 	// ZInterStore 把区分的帖子set与帖子分数的ZSet 生成一个新的ZSet
 	// 针对新的ZSet按之前的逻辑取数据
 

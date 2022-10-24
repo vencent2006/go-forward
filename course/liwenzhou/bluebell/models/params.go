@@ -24,9 +24,10 @@ type ParamVoteData struct {
 
 // ParamPostList 获取帖子列表的query string参数
 type ParamPostList struct {
-	Page  int64  `form:"page"`
-	Size  int64  `form:"size"`
-	Order string `form:"order"`
+	Page        int64  `form:"page"`
+	Size        int64  `form:"size"`
+	Order       string `form:"order"`
+	CommunityID int64  `form:"community_id"`
 }
 
 // ParamCommunityPostList 按照社区获取帖子列表的query string参数

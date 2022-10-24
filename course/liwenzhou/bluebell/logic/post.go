@@ -80,7 +80,7 @@ func GetPostList(page int64, size int64) (postList []*models.ApiPostDetail, err 
 	return
 }
 
-func GetPostList2(p *models.ParamPostList) (postList []*models.ApiPostDetail, err error) {
+func GetPostListWithoutCommunityID(p *models.ParamPostList) (postList []*models.ApiPostDetail, err error) {
 	// 2.去redis查询id列表
 	ids, err := redis.GetPostIDsInOrder(p)
 	if err != nil {
@@ -130,8 +130,8 @@ func GetPostList2(p *models.ParamPostList) (postList []*models.ApiPostDetail, er
 	return
 }
 
-// GetPostList3 跟进Community来获取帖子列表
-func GetPostList3(p *models.ParamCommunityPostList) (postList []*models.ApiPostDetail, err error) {
+// GetPostListWithCommunityID 跟进Community来获取帖子列表
+func GetPostListWithCommunityID(p *models.ParamPostList) (postList []*models.ApiPostDetail, err error) {
 	zap.L().Debug("models.ParamCommunityPostList is ", zap.Any("ParamCommunityPostList", p))
 	// 2.去redis查询id列表
 	ids, err := redis.GetCommunityPostIDsInOrder(p)
@@ -181,4 +181,14 @@ func GetPostList3(p *models.ParamCommunityPostList) (postList []*models.ApiPostD
 	}
 
 	return
+}
+
+func GetPostListNew(p *models.ParamPostList) (postList []*models.ApiPostDetail, err error) {
+	if p.CommunityID == 0 {
+		// 无配置社区id
+		return GetPostListWithoutCommunityID(p)
+	} else {
+		// 有配置社区id
+		return GetPostListWithCommunityID(p)
+	}
 }
