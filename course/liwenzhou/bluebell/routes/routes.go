@@ -5,7 +5,12 @@ import (
 	"bluebell/logger"
 	"bluebell/middlewares"
 
+	swaggerFiles "github.com/swaggo/files"
+
+	_ "bluebell/docs" // 千万不要忘了导入把你上一步生成的docs
+
 	"github.com/gin-gonic/gin"
+	gs "github.com/swaggo/gin-swagger"
 )
 
 func Setup(mode string) *gin.Engine {
@@ -15,6 +20,7 @@ func Setup(mode string) *gin.Engine {
 	r := gin.New()
 	// middleware
 	r.Use(logger.GinLogger(), logger.GinRecovery(true))
+	r.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
 
 	// 注册业务路由
 	v1 := r.Group("/api/v1")
