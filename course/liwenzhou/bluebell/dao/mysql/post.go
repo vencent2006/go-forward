@@ -73,3 +73,24 @@ func GetPostListByIDs(ids []string) (postList []*models.Post, err error) {
 	err = db.Select(&postList, query, args...) // args要加...
 	return
 }
+
+// GetPostListByCommunityID 根据指定的CommunityID列表查询帖子列表
+func GetPostListByCommunityID(ids []string) (postList []*models.Post, err error) {
+	// FIND_IN_SET 保证顺序
+	sqlStr := `select 
+				post_id, title, content, author_id, community_id, status, create_time, update_time 
+				from post 
+				where community_id = ?
+				order by FIND_IN_SET(post_id, ?)
+				`
+	// 学习参考： https://www.liwenzhou.com/posts/Go/sqlx/
+	query, args, err := sqlx.In(sqlStr, ids, strings.Join(ids, ","))
+	if err != nil {
+		zap.L().Error("sqlx.In failed", zap.Error(err))
+		return nil, err
+	}
+	query = db.Rebind(query)
+	// postList要加&
+	err = db.Select(&postList, query, args...) // args要加...
+	return
+}

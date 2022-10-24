@@ -28,3 +28,9 @@ type ParamPostList struct {
 	Size  int64  `form:"size"`
 	Order string `form:"order"`
 }
+
+// ParamCommunityPostList 按照社区获取帖子列表的query string参数
+type ParamCommunityPostList struct {
+	*ParamPostList
+	CommunityID int64 `form:"community_id"`
+}
