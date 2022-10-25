@@ -49,9 +49,9 @@ type RedisConfig struct {
 	PoolSize int    `mapstructure:"pool_size"`
 }
 
-func Init() error {
+func Init(configFile string) error {
 	// 读取配置文件
-	viper.SetConfigFile("config.yaml")
+	viper.SetConfigFile(configFile)
 	//viper.SetConfigName("config") // 指定配置文件名 (不带后缀名)
 	//viper.SetConfigType("yaml") // 专用于从远程获取配置信息时指定配置文件类型
 	viper.AddConfigPath(".")
