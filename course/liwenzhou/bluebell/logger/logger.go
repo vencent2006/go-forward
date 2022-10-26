@@ -87,6 +87,9 @@ func GinLogger() gin.HandlerFunc {
 			zap.String("errors", c.Errors.ByType(gin.ErrorTypePrivate).String()),
 			zap.Duration("cost", cost),
 		)
+		// print response on debug level
+		responseData, _ := c.Get("responseData")
+		zap.L().Debug("response data is ", zap.Any("response", responseData))
 	}
 }
 

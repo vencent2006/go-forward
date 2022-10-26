@@ -21,25 +21,36 @@ type ResponseData struct {
 }
 
 func ResponseError(c *gin.Context, code ResCode) {
-	c.JSON(http.StatusOK, &ResponseData{
-		Code: code,
-		Msg:  code.Msg(),
-		Data: nil,
-	})
+	c.JSON(http.StatusOK, packResponseInCtx(
+		c,
+		code,
+		code.Msg(),
+		nil))
 }
 
 func ResponseErrorWithMsg(c *gin.Context, code ResCode, msg interface{}) {
-	c.JSON(http.StatusOK, &ResponseData{
-		Code: code,
-		Msg:  msg,
-		Data: nil,
-	})
+	c.JSON(http.StatusOK, packResponseInCtx(
+		c,
+		code,
+		msg,
+		nil))
 }
 
 func ResponseSuccess(c *gin.Context, data interface{}) {
-	c.JSON(http.StatusOK, &ResponseData{
-		Code: CodeSuccess,
-		Msg:  CodeSuccess.Msg(),
+	c.JSON(http.StatusOK, packResponseInCtx(
+		c,
+		CodeSuccess,
+		CodeSuccess.Msg(),
+		data))
+}
+
+func packResponseInCtx(c *gin.Context, code ResCode, msg, data interface{}) *ResponseData {
+	r := &ResponseData{
+		Code: code,
+		Msg:  msg,
 		Data: data,
-	})
+	}
+	// todo 可能会造成性能问题
+	c.Set("responseData", r)
+	return r
 }

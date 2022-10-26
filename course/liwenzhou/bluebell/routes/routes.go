@@ -3,6 +3,7 @@ package routes
 import (
 	"bluebell/controller"
 	"bluebell/logger"
+	"bluebell/middlewares"
 
 	swaggerFiles "github.com/swaggo/files"
 
@@ -26,18 +27,19 @@ func Setup(mode string) *gin.Engine {
 	v1 := r.Group("/api/v1")
 	v1.POST("/signup", controller.SignUpHandler) // 注册
 	v1.POST("/login", controller.LoginHandler)   // 登录
-	//v1.Use(middlewares.JWTAuthMiddleware())      // 中间件
-	v1.Use() // 中间件
+
+	// 根据时间或分数获取帖子列表
+	v1.GET("/posts", controller.GetPostListSimpleHandler)
+	v1.GET("/posts2", controller.GetPostListHandler)
+	// community 社区
+	v1.GET("/community", controller.CommunityHandler)
+	v1.GET("/community/:cid", controller.CommunityDetailHandler)
+	v1.GET("/post/:pid", controller.PostDetailHandler)
+
+	v1.Use(middlewares.JWTAuthMiddleware()) // 认证中间件
 	{
-		// community 社区
-		v1.GET("/community", controller.CommunityHandler)
-		v1.GET("/community/:cid", controller.CommunityDetailHandler)
 		// post 帖子
 		v1.POST("/post", controller.CreatePostHandler)
-		v1.GET("/post/:pid", controller.PostDetailHandler)
-		v1.GET("/posts", controller.GetPostListSimpleHandler)
-		v1.GET("/posts2", controller.GetPostListHandler)
-		//v1.GET("/posts2/community", controller.GetCommunityPostListHandler)
 		// vote 投票
 		v1.POST("/vote", controller.PostVoteHandler)
 	}

@@ -1,10 +1,11 @@
 package controller
 
 import (
-	"errors"
 	"bluebell/dao/mysql"
 	"bluebell/logic"
 	"bluebell/models"
+	"errors"
+	"fmt"
 
 	"go.uber.org/zap"
 
@@ -66,7 +67,7 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	// 2. 业务逻辑处理
-	token, err := logic.Login(p)
+	user, err := logic.Login(p)
 	if err != nil {
 		zap.L().Error("logic.Login failed", zap.Error(err))
 		if errors.Is(err, mysql.ErrorUserNotExist) {
@@ -77,6 +78,10 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	// 3. 返回响应
-	ResponseSuccess(c, token)
+	ResponseSuccess(c, gin.H{
+		"user_id":   fmt.Sprintf("%d", user.UserID), // id值大于1<<53-1  int64类型的最大值是1<<63-1
+		"user_name": user.Username,
+		"token":     user.Token,
+	})
 	return
 }

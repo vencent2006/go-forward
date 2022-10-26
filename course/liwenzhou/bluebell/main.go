@@ -76,8 +76,10 @@ func main() {
 	//	5. 注册路由
 	r := routes.Setup(settings.Conf.Mode)
 	//	6. 启动服务（优雅关机）
+	addr := fmt.Sprintf(":%d", settings.Conf.Port)
+	zap.L().Info("prepare listen addr", zap.String("addr", addr))
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", settings.Conf.Port),
+		Addr:    addr,
 		Handler: r}
 
 	go func() {
