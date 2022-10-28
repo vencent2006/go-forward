@@ -4,20 +4,25 @@ go 1.17
 
 require (
 	github.com/arl/statsviz v0.5.1
+	github.com/eddycjy/opentracing-gorm v0.0.0-20200209122056-516a807d2182
 	github.com/fsnotify/fsnotify v1.5.4
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/jinzhu/gorm v1.9.16
 	github.com/jmoiron/sqlx v1.3.5
+	github.com/juju/ratelimit v1.0.2
 	github.com/natefinch/lumberjack v2.0.0+incompatible
+	github.com/opentracing/opentracing-go v1.2.0
 	github.com/spf13/viper v1.13.0
+	github.com/uber/jaeger-client-go v2.30.0+incompatible
 	go.uber.org/ratelimit v0.1.0
 	go.uber.org/zap v1.23.0
 )
 
 require (
 	github.com/BurntSushi/toml v1.2.0 // indirect
-	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
+	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
@@ -25,8 +30,8 @@ require (
 	github.com/goccy/go-json v0.9.7 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/juju/ratelimit v1.0.2 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
@@ -35,11 +40,14 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.5 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	github.com/smacker/opentracing-gorm v0.0.0-20181207094635-cd4974441042 // indirect
 	github.com/spf13/afero v1.8.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.1 // indirect
+	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
