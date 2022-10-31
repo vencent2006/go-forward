@@ -2,6 +2,7 @@ package logger
 
 import (
 	"bluebell/settings"
+	"bytes"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -68,15 +69,33 @@ func getLogWriter(filename string, maxSize, maxBackup, maxAge int) zapcore.Write
 	return zapcore.AddSync(lumberJackLogger)
 }
 
+type AccessLogWriter struct {
+	gin.ResponseWriter
+	body *bytes.Buffer
+}
+
+func (w AccessLogWriter) Write(p []byte) (int, error) {
+	if _, err := w.body.Write(p); err != nil {
+		return 0, err
+	}
+	return w.ResponseWriter.Write(p)
+}
+
 // GinLogger 接收gin框架默认的日志
 func GinLogger() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		bodyWriter := &AccessLogWriter{
+			ResponseWriter: c.Writer,
+			body:           bytes.NewBufferString(""),
+		}
+		c.Writer = bodyWriter
+
 		start := time.Now()
+		c.Next()
+		cost := time.Since(start)
+
 		path := c.Request.URL.Path
 		query := c.Request.URL.RawQuery
-		c.Next()
-
-		cost := time.Since(start)
 		zap.L().Info(path,
 			zap.Int("status", c.Writer.Status()),
 			zap.String("method", c.Request.Method),
@@ -86,10 +105,12 @@ func GinLogger() gin.HandlerFunc {
 			zap.String("user-agent", c.Request.UserAgent()),
 			zap.String("errors", c.Errors.ByType(gin.ErrorTypePrivate).String()),
 			zap.Duration("cost", cost),
+			zap.Any("request", c.Request.PostForm.Encode()),
+			zap.Any("response", bodyWriter.body.String()),
 		)
-		// print response on debug level
-		responseData, _ := c.Get("responseData")
-		zap.L().Debug("response data is ", zap.Any("response", responseData))
+		//// print response on debug level
+		//responseData, _ := c.Get("responseData")
+		//zap.L().Debug("response data is ", zap.Any("response", responseData))
 	}
 }
 
