@@ -105,6 +105,8 @@ func GinLogger() gin.HandlerFunc {
 			zap.String("user-agent", c.Request.UserAgent()),
 			zap.String("errors", c.Errors.ByType(gin.ErrorTypePrivate).String()),
 			zap.Duration("cost", cost),
+			// todo: 注意c.Request.PostForm.Encode()，只能解析"Content-Type : application/x-www-form-urlencoded"
+			// 所以，对于body里放json的方式，c.Request.PostForm.Encode()是无法取到信息的
 			zap.Any("request", c.Request.PostForm.Encode()),
 			zap.Any("response", bodyWriter.body.String()),
 		)
