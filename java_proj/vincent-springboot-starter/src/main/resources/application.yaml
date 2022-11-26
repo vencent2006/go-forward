@@ -16,6 +16,8 @@ self:
       host: https://www.vincent.com
       port: ${server.port}
 spring:
+#  mvc:
+#    static-path-pattern: /abc/**
   banner:
     location: classpath:banner/banner.txt
 #    image:
