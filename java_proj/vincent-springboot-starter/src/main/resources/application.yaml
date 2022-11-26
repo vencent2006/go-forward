@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+
+# 自定义配置
+app:
+  name:
+    xxx:
+      yyy:
+        zzz: vincent
+
+self:
+  custom:
+    config:
+      sdkSecret: abc123
+      host: https://www.vincent.com
+      port: ${server.port}
+spring:
+  banner:
+    location: classpath:banner/banner.txt
+#    image:
+#      location: classpath:banner/365.png
+#      pixelmode: text
