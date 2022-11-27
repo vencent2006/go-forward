@@ -42,3 +42,17 @@ spring:
 #    image:
 #      location: classpath:banner/365.png
 #      pixelmode: text
+
+# Mybatis相关的配置
+mybatis:
+  type-aliases-package: com.vincent.pojo    # 所有数据库表逆向后所一一映射的实体类 Entity/Bean/POJO
+  mapper-locations: classpath:mappers/*.xml # 所有mapper映射的文件所在目录位置
+# 通用的mapper配置
+mapper:
+  mappers: com.vincent.my.mapper.MyMapper   # 所有mapper都需要实现的接口
+  not-empty: false                          # 在进行数据库操作的时候，判断一个属性是否为空的时候，是否需要自动追加不为空字符串的判断;# not-empty = false 的意思: username != null 后面 不需要 username != ''
+  identity: MYSQL
+# 分页插件助手的配置
+pagehelper:
+  helper-dialect: mysql
+  support-methods-arguments: true
