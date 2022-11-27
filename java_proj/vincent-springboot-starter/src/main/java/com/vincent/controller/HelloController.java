@@ -3,6 +3,7 @@ package com.vincent.controller;
 import com.vincent.pojo.MyConfig;
 import com.vincent.pojo.Stu;
 import com.vincent.pojo.Student;
+import com.vincent.utils.JSONResult;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,11 +55,9 @@ public class HelloController {
         return sdkSecret + ";\t" + host + ";\t" + xyz + ";\t" + port;
     }
 
-    // lombok annotation
-    // @Autowired
-    public Student student;
+
     @GetMapping("student")
-    public Object getStudent(){
+    public JSONResult getStudent(){
         Student stu = new Student();
         stu.setAge(11);
         stu.setName("michael");
@@ -68,6 +67,6 @@ public class HelloController {
         log.warn(stu.toString());
         log.error(stu.toString());
 
-        return stu;
+        return JSONResult.ok(stu);
     }
 }
