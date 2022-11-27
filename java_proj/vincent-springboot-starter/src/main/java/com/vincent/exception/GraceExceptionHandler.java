@@ -1,4 +1,4 @@
-package com.vincent.controller;
+package com.vincent.exception;
 
 import com.vincent.utils.JSONResult;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
@@ -17,5 +17,11 @@ public class GraceExceptionHandler {
     @ResponseBody
     public JSONResult returnMaxFileSizeLimit(FileSizeLimitExceededException e){
         return JSONResult.errorMsg("文件大小不能超过500KB");
+    }
+
+    @ExceptionHandler(MyCustomException.class)
+    @ResponseBody
+    public JSONResult returnMyCustomException(MyCustomException e){
+        return JSONResult.errorMsg(e.getMessage());
     }
 }

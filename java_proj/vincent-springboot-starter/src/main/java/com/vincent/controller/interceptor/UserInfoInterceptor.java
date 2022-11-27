@@ -1,5 +1,6 @@
 package com.vincent.controller.interceptor;
 
+import com.vincent.exception.GraceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +28,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 
         if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(userToken)) {
             log.error("用户校验不通过，信息不完整");
+            GraceException.display("用户校验不通过，信息不完整");
             return false;
         }
 
@@ -34,6 +36,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
         if (!userId.equalsIgnoreCase("1001")
                 ||!userToken.equalsIgnoreCase("abcxyz")){
             log.error("用户权限不通过");
+            GraceException.display("用户权限不通过");
             return false;
         }
 
