@@ -16,24 +16,29 @@
         <relativePath/><!-- lookup parent from repository -->
     </parent>
     <dependencies>
-        <!-- springboot的web依赖 -->
+        <!-- SpringBoot 的web依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- SpringBoot 官方推荐的模板 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <!-- lombok插件 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!-- springboot 提供的开发者工具 -->
+        <!-- SpringBoot 提供的开发者工具 -->
         <!--<dependency>-->
         <!--    <groupId>org.springframework.boot</groupId>-->
         <!--    <artifactId>spring-boot-devtools</artifactId>-->
         <!--    <optional>true</optional>-->
         <!--</dependency>-->
 
-        <!-- springboot的配置处理器 -->
+        <!-- SpringBoot的配置处理器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>

@@ -18,6 +18,10 @@ self:
 spring:
 #  mvc:
 #    static-path-pattern: /abc/**
+  servlet:
+    multipart:
+      max-file-size: 500KB # 文件上传大小的限制，设置最大值，不能超过，否则报错
+      max-request-size: 2MB # 文件最大请求限制，用于批量
   banner:
     location: classpath:banner/banner.txt
 #    image:
