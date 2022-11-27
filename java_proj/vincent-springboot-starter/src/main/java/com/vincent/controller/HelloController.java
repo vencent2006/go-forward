@@ -1,9 +1,11 @@
 package com.vincent.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vincent.pojo.MyConfig;
 import com.vincent.pojo.Stu;
 import com.vincent.pojo.Student;
 import com.vincent.utils.JSONResult;
+import com.vincent.utils.MyAsyncTask;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,16 @@ public class HelloController {
     @GetMapping("myconfig")
     public Object myConfig(){
         return myConfig;
+    }
+
+    // asyncTask demo
+    @Autowired
+    private MyAsyncTask myAsyncTask;
+    @GetMapping("asynctask")
+    public JSONResult asyncTask() {
+        myAsyncTask.publicMsg();
+        log.info("这是跳过异步任务的执行");
+        return JSONResult.ok(myConfig);
     }
 
     // 从application.yml中读取

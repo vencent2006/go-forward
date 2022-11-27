@@ -7,8 +7,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDateTime;
 
-@Configuration // 1. 标记配置类，使得springboot容器可以扫描到
-@EnableScheduling // 2. 开启定时任务
+// @Configuration // 1. 标记配置类，使得springboot容器可以扫描到
+// @EnableScheduling // 2. 开启定时任务
 @Slf4j
 public class MyTask {
     // 3. 添加一个任务，并且注明任务的运行表达式
