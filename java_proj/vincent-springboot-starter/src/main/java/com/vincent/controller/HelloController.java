@@ -10,7 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @RestController
 @Slf4j
@@ -68,5 +72,12 @@ public class HelloController {
         log.error(stu.toString());
 
         return JSONResult.ok(stu);
+    }
+
+
+    @PostMapping("upload")
+    public String upload(MultipartFile file) throws Exception {
+        file.transferTo(new File("/tmp/java_upload/" + file.getOriginalFilename()));
+        return "上传成功";
     }
 }
