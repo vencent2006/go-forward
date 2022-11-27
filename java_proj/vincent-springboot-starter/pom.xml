@@ -31,6 +31,20 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+        <!-- 引入SpringBoot 默认的数据源 (HicariCP) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!-- 引入数据库MySQL和MariaDB的驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.41</version> <!-- 与mysql v5.6和v5.7匹配 -->
+        </dependency>
+
         <!-- SpringBoot 提供的开发者工具 -->
         <!--<dependency>-->
         <!--    <groupId>org.springframework.boot</groupId>-->

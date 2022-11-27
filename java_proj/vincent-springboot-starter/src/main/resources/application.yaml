@@ -18,6 +18,21 @@ self:
 spring:
 #  mvc:
 #    static-path-pattern: /abc/**
+  datasource: # 数据源相关的配置节点
+    type: com.zaxxer.hikari.HikariDataSource # 指定数据源的类型 HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver # mysql/MariaDB 驱动
+    url: jdbc:mysql://localhost:8889/imooc-springboot-learn?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    username: root
+    password: root
+    hikari:
+      connection-timeout: 30000         # 等待连接池分配连接的最大时长(毫秒），超过这个时长还没可用的连接则发生SQLException，默认：30秒
+      minimum-idle: 5                   # 最小连接数
+      maximum-pool-size: 20             # 最大连接数
+      auto-commit: true                 # 自动提交
+      idle-timeout: 600000              # 连接超时的最大时长(毫秒)，超时则被释放(retired)，默认：10分钟
+      pool-name: DateSourceHikariCP     # 连接池名字
+      max-lifetime: 1800000             # 连接的生命时长(毫秒)，超时而且没被使用则被释放（retired），默认：30分钟 1800000ms
+      connection-test-query: SELECT 1
   servlet:
     multipart:
       max-file-size: 500KB # 文件上传大小的限制，设置最大值，不能超过，否则报错
