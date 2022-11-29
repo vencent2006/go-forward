@@ -63,6 +63,12 @@
             <version>1.2.12</version>
         </dependency>
 
+        <!-- 引入 hibernate 校验 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <!-- SpringBoot 提供的开发者工具 -->
         <!--<dependency>-->
         <!--    <groupId>org.springframework.boot</groupId>-->

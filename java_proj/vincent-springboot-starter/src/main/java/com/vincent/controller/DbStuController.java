@@ -7,9 +7,14 @@ import com.vincent.utils.JSONResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -50,8 +55,13 @@ public class DbStuController {
     }
 
     @PostMapping("create2")
-    public JSONResult createStu2(@RequestBody DbStuBO stuBO){
-
+    public JSONResult createStu2(@Valid @RequestBody DbStuBO stuBO,
+                                 BindingResult result){
+        // 判断BindingResult是否有错误，错误信息会包含在里面，如果有则直接return
+        if (result.hasErrors()){
+            Map<String, String> map = getErrors(result);
+            return JSONResult.errorMap(map);
+        }
         DbStu stu = new DbStu();
         BeanUtils.copyProperties(stuBO, stu);
         String sid = UUID.randomUUID().toString();
@@ -60,5 +70,16 @@ public class DbStuController {
         stuService.saveStu(stu);
 
         return JSONResult.ok();
+    }
+
+    public Map<String, String> getErrors(BindingResult result) {
+        Map<String, String> map = new HashMap<>();
+        List<FieldError> errorList = result.getFieldErrors();
+        for (FieldError error : errorList){
+            String field = error.getField();
+            String msg = error.getDefaultMessage();
+            map.put(field, msg);
+        }
+        return map;
     }
 }
