@@ -1,9 +1,11 @@
 package com.vincent.controller;
 
 import com.vincent.pojo.DbStu;
+import com.vincent.pojo.bo.DbStuBO;
 import com.vincent.service.StuService;
 import com.vincent.utils.JSONResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,13 +49,16 @@ public class DbStuController {
         return JSONResult.ok();
     }
 
-    @PutMapping("put")
-    public Object put(){
-        return "插入";
-    }
+    @PostMapping("create2")
+    public JSONResult createStu2(@RequestBody DbStuBO stuBO){
 
-    @DeleteMapping("delete")
-    public Object delete(){
-        return "删除";
+        DbStu stu = new DbStu();
+        BeanUtils.copyProperties(stuBO, stu);
+        String sid = UUID.randomUUID().toString();
+        stu.setId(sid);
+
+        stuService.saveStu(stu);
+
+        return JSONResult.ok();
     }
 }
