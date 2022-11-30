@@ -97,6 +97,20 @@ public class DbStuController {
         return JSONResult.ok();
     }
 
+
+    @PostMapping("update")
+    public JSONResult update(){
+        DbStu stu = new DbStu();
+        stu.setId("af789438-b2d0-4679-9693-a2459f7f79d1");
+        stu.setName("michelle");
+        stu.setSex(0);
+
+        stuService.updateStu(stu);
+
+        return JSONResult.ok();
+    }
+
+
     public Map<String, String> getErrors(BindingResult result) {
         Map<String, String> map = new HashMap<>();
         List<FieldError> errorList = result.getFieldErrors();

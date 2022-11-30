@@ -44,4 +44,10 @@ public class StuServiceImpl implements StuService {
     //     List<DbStu> list = stuMapper.select(stu);
     //     return list;
     // }
+
+
+    @Override
+    public void updateStu(DbStu stu) {
+        stuMapper.updateByPrimaryKey(stu);
+    }
 }

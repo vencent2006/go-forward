@@ -25,4 +25,10 @@ public interface StuService {
      * @return List<DbStu>
      */
     public List<DbStu> queryByCondition(String name, Integer sex);
+
+    /**
+     * 修改stu到数据库
+     * @param stu
+     */
+    public void updateStu(DbStu stu);
 }
