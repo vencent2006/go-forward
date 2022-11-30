@@ -110,6 +110,16 @@ public class DbStuController {
         return JSONResult.ok();
     }
 
+    @PostMapping("delete")
+    public JSONResult delete(){
+        DbStu stu = new DbStu();
+        // stu.setId("fdc21cf8-7908-434c-91b5-227b3dcb1adc");
+        // stu.setSex(2);
+        stu.setName("lewis");
+        stuService.deleteStu(stu);
+        return JSONResult.ok();
+    }
+
 
     public Map<String, String> getErrors(BindingResult result) {
         Map<String, String> map = new HashMap<>();

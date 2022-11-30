@@ -50,4 +50,19 @@ public class StuServiceImpl implements StuService {
     public void updateStu(DbStu stu) {
         stuMapper.updateByPrimaryKey(stu);
     }
+
+    @Override
+    public void deleteStu(DbStu stu) {
+        // 删除对象/数据的三种方式
+        // 1. 根据主键删除
+        // stuMapper.deleteByPrimaryKey(stu);
+        // 2. 根据对象中的属性值匹配做条件删除
+        // stuMapper.delete(stu);
+        // 3. 根据构建的example进行条件删除
+        Example example = new Example(DbStu.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("name", stu.getName());
+        stuMapper.deleteByExample(example);
+    }
+
 }

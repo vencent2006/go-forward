@@ -31,4 +31,10 @@ public interface StuService {
      * @param stu
      */
     public void updateStu(DbStu stu);
+
+    /**
+     * 根据条件删除stu
+     * @param stu
+     */
+    public void deleteStu(DbStu stu);
 }
