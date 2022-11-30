@@ -41,6 +41,18 @@ public class DbStuController {
         return "查询";
     }
 
+    @GetMapping("get")
+    public JSONResult get(@RequestParam String stuId){
+        DbStu stu = stuService.queryById(stuId);
+        return JSONResult.ok(stu);
+    }
+
+    @GetMapping("list")
+    public JSONResult list(@RequestParam String name, @RequestParam Integer sex){
+        List<DbStu> stuList = stuService.queryByCondition(name, sex);
+        return JSONResult.ok(stuList);
+    }
+
     @PostMapping("create")
     public JSONResult createStu(){
         String sid = UUID.randomUUID().toString();
@@ -53,6 +65,19 @@ public class DbStuController {
 
         return JSONResult.ok();
     }
+
+//curl --location --request POST 'http://localhost:8090/dbstu/create2' \
+// --header 'Content-Type: application/json' \
+// --header 'Cookie: clientId=123456' \
+// --data-raw '{
+//     "name": "lucas",
+//     "sex": 0,
+//     "grade": "0",
+//     "classroom": "19",
+//     "skill": ["java", "html", "ios", "大数据", "jsp", "html"],
+//     "englishName": "ab",
+//     "email": "dfasfdsfdsa"
+// }'
 
     @PostMapping("create2")
     public JSONResult createStu2(@Valid @RequestBody DbStuBO stuBO,
