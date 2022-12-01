@@ -22,6 +22,9 @@ public class ThymeleafController {
         Date birthday = new Date();
         model.addAttribute("birthday", birthday);
 
+        Integer sex = 2;// 0 female; 1 male; 2 unknown
+        model.addAttribute("sex", sex);
+
         return "teacher";
     }
 }

@@ -37,5 +37,26 @@
     <br/>
     指定格式化日期：<span th:text="${#dates.format(birthday, 'yyyy-MM-dd hh:mm:ss')}" ></span>
     <br/>
+    <br/>
+    <br/>
+    <span th:if="${sex == 0}">
+        女
+    </span>
+    <span th:if="${sex != 0}">
+        男
+    </span>
+    <br/>
+    <br/>
+    <span th:switch="${sex}">
+        <span th:case="0">
+            女
+        </span>
+        <span th:case="01">
+            男
+        </span>
+        <span th:case="*">
+            未知
+        </span>
+    </span>
 </body>
 </html>
