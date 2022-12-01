@@ -62,9 +62,15 @@
     <br/>
     <br/>
     <br/>
-    <span th:each="str : ${myList}">
-        <span th:text="${str}">
-        </span>
+    <span th:each="str,status : ${myList}">
+        输出:<span th:text="${str}"></span>
+        count:<span th:text="${status.count}"></span><br/>
+        index:<span th:text="${status.index}"></span><br/>
+        size:<span th:text="${status.size}"></span><br/>
+        first:<span th:text="${status.first}"></span><br/>
+        last:<span th:text="${status.last}"></span><br/>
+        odd:<span th:text="${status.odd}"></span><br/>
+        even:<span th:text="${status.even}"></span><br/>
         <br/>
     </span>
     <br/>
