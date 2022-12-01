@@ -19,6 +19,13 @@ public interface StuService {
     public DbStu queryById(String id);
 
     /**
+     * 根据主键查询对象信息，使用自定义mapper
+     * @param id
+     * @return
+     */
+    public DbStu queryByIdCustom(String id);
+
+    /**
      * 根据条件查询stu的list结果集
      * @param name
      * @param sex

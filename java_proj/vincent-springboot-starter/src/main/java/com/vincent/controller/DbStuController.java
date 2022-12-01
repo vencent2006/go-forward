@@ -47,6 +47,12 @@ public class DbStuController {
         return JSONResult.ok(stu);
     }
 
+    @GetMapping("getbycustom")
+    public JSONResult getByCustom(@RequestParam String stuId){
+        DbStu stu = stuService.queryByIdCustom(stuId);
+        return JSONResult.ok(stu);
+    }
+
     @GetMapping("list")
     public JSONResult list(@RequestParam String name, @RequestParam Integer sex){
         List<DbStu> stuList = stuService.queryByCondition(name, sex);

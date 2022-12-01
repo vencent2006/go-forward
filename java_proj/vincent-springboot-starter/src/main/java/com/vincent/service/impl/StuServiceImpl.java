@@ -1,6 +1,7 @@
 package com.vincent.service.impl;
 
 import com.vincent.mapper.DbStuMapper;
+import com.vincent.mapper.DbStuMapperCustom;
 import com.vincent.pojo.DbStu;
 import com.vincent.service.StuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class StuServiceImpl implements StuService {
     @Autowired
     private DbStuMapper stuMapper;
 
+    @Autowired
+    private DbStuMapperCustom stuMapperCustom;
+
     @Override
     public void saveStu(DbStu stu) {
         stuMapper.insert(stu);
@@ -26,6 +30,15 @@ public class StuServiceImpl implements StuService {
     public DbStu queryById(String id) {
         DbStu stu = stuMapper.selectByPrimaryKey(id);
         return stu;
+    }
+
+    @Override
+    public DbStu queryByIdCustom(String id) {
+        List<DbStu> list = stuMapperCustom.getStuById(id);
+        if (list != null && !list.isEmpty()){
+            return list.get(0);
+        }
+        return null;
     }
 
     @Override

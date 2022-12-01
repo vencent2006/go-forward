@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vincent.mapper.DbStuMapperCustom">
+  <select id="getStuById" parameterType="string" resultType="com.vincent.pojo.DbStu">
+    SELECT
+        id,
+        `name`,
+        sex
+    FROM
+        db_stu
+    WHERE
+        id = #{sid}
+  </select>
+</mapper>
