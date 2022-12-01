@@ -120,6 +120,13 @@ public class DbStuController {
         return JSONResult.ok();
     }
 
+    @GetMapping("testTrans")
+    public JSONResult testTrans(){
+        stuService.testTransaction();
+
+        return JSONResult.ok();
+    }
+
 
     public Map<String, String> getErrors(BindingResult result) {
         Map<String, String> map = new HashMap<>();

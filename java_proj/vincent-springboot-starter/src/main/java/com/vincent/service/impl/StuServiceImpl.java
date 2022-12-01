@@ -5,9 +5,12 @@ import com.vincent.pojo.DbStu;
 import com.vincent.service.StuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class StuServiceImpl implements StuService {
@@ -65,4 +68,33 @@ public class StuServiceImpl implements StuService {
         stuMapper.deleteByExample(example);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void testTransaction() {
+        // 1. 新增数据
+        String sid = UUID.randomUUID().toString();
+        DbStu stu = new DbStu();
+        stu.setId(sid);
+        stu.setName(sid);
+        stu.setSex(2);
+
+        stuMapper.insert(stu);
+
+        // 异常
+        int a = 100/0;
+
+        // 2. 修改数据
+        DbStu stuUpdate = new DbStu();
+        stuUpdate.setId("1001");
+        stuUpdate.setName("1001修改");
+        stuUpdate.setSex(3);
+        stuMapper.updateByPrimaryKeySelective(stuUpdate);// 只对修改的值进行修改
+
+
+        // 3. 模拟发生异常
+        // 4. 观察1和2步骤所发生的数据变动，有没有影响到数据库
+        // 5. 处理事务，实现事务回滚，不让先前的数据入库
+
+
+    }
 }

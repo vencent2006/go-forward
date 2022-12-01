@@ -37,4 +37,10 @@ public interface StuService {
      * @param stu
      */
     public void deleteStu(DbStu stu);
+
+    /**
+     * 用于演示事务
+     */
+    public void testTransaction();
+
 }
