@@ -26,6 +26,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
+        <!-- 引入阿里的druid数据源 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
         <!-- lombok插件 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
