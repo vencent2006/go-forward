@@ -43,6 +43,9 @@ spring:
 #    image:
 #      location: classpath:banner/365.png
 #      pixelmode: text
+  thymeleaf:
+    prefix: classpath:/templates/html/
+    suffix: .html
 
 # Mybatis相关的配置
 mybatis:
