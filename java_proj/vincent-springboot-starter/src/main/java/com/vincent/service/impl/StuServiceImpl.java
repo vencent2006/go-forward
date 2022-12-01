@@ -34,6 +34,12 @@ public class StuServiceImpl implements StuService {
 
     @Override
     public DbStu queryByIdCustom(String id) {
+        // try {
+        //     Thread.sleep(3500);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
+
         List<DbStu> list = stuMapperCustom.getStuById(id);
         if (list != null && !list.isEmpty()){
             return list.get(0);

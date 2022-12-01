@@ -27,6 +27,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+        <!-- SpringBoot的AOP实现 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
         <!-- 引入阿里的druid数据源 -->
         <dependency>
             <groupId>com.alibaba</groupId>
