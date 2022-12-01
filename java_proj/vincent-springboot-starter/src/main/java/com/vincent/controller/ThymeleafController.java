@@ -14,7 +14,7 @@ import java.util.*;
 public class ThymeleafController {
 
     @GetMapping("hello")
-    public String hello(Model model){
+    public String hello(Model model, HttpServletRequest request){
         String stranger = "jack";
         model.addAttribute("there", stranger);
 
@@ -39,6 +39,10 @@ public class ThymeleafController {
 
         model.addAttribute("myList", myList);
         model.addAttribute("myMap", myMap);
+
+        // HttpServletRequest
+        request.setAttribute("englishName", "xyzabc");
+        request.getSession().setAttribute("userToken", "bala-bala-alla-lala");
 
 
 

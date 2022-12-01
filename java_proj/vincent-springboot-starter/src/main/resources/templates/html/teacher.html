@@ -76,13 +76,16 @@
     <br/>
     <br/>
     <span th:each="attr : ${myMap}">
-        <span th:text="${attr}">
-        <span th:text="${attr.key}">
-        <span th:text="${attr.value}">
-        </span>
-        <br/>
+        <span th:text="${attr}"></span><br/>
+        <span th:text="${attr.key}"></span><br/>
+        <span th:text="${attr.value}"></span><br/>
     </span>
     <br/>
+    <br/>
+
+    <span th:text="${#request.getAttribute('englishName')}"></span>
+    <br/>
+    <span th:text="${#session.getAttribute('userToken')}"></span>
     <br/>
 </body>
 </html>
