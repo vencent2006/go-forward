@@ -9,5 +9,33 @@
     Hello <span th:text="vincent"></span>
     <br/>
     Hello <span th:text="${there}"></span>
+    <br/>
+    <br/>
+    <input th:value="${there}">
+    <br/>
+    <!-- 判断字符串是否为空 -->
+    <span th:text="${#strings.isEmpty(there)}" ></span>
+    <br/>
+    <!-- 判断字符串是否包含指定的字符 -->
+    <span th:text="${#strings.contains(there,'ac')}" ></span>
+    <br/>
+    <!-- 打印参数字符串的长度 -->
+    <span th:text="${#strings.length(there)}" ></span>
+    <br/>
+    <!-- 判断字符串以什么开头 -->
+    <span th:text="${#strings.startsWith(there, 'J')}" ></span>
+    <br/>
+    <!-- 判断字符串以什么结尾 -->
+    <span th:text="${#strings.endsWith(there, 'k')}" ></span>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    默认展示时间日期：<span th:text="${birthday}" ></span>
+    <br/>
+    默认格式化日期：<span th:text="${#dates.format(birthday)}" ></span>
+    <br/>
+    指定格式化日期：<span th:text="${#dates.format(birthday, 'yyyy-MM-dd hh:mm:ss')}" ></span>
+    <br/>
 </body>
 </html>
