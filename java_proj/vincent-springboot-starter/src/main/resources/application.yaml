@@ -48,6 +48,8 @@ spring:
 mybatis:
   type-aliases-package: com.vincent.pojo    # 所有数据库表逆向后所一一映射的实体类 Entity/Bean/POJO
   mapper-locations: classpath:mapper/*.xml # 所有mapper映射的文件所在目录位置
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 开启mybatis的日志实现，可以在控制台打印输出sql语句
 # 通用的mapper配置
 mapper:
   mappers: com.vincent.my.mapper.MyMapper   # 所有mapper都需要实现的接口
