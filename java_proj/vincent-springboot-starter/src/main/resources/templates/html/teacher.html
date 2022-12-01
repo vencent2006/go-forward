@@ -58,5 +58,25 @@
             未知
         </span>
     </span>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <span th:each="str : ${myList}">
+        <span th:text="${str}">
+        </span>
+        <br/>
+    </span>
+    <br/>
+    <br/>
+    <span th:each="attr : ${myMap}">
+        <span th:text="${attr}">
+        <span th:text="${attr.key}">
+        <span th:text="${attr.value}">
+        </span>
+        <br/>
+    </span>
+    <br/>
+    <br/>
 </body>
 </html>
