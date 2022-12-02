@@ -8,6 +8,8 @@
     <artifactId>vincent-springboot-starter</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <packaging>jar</packaging>
+
     <!-- 引入父工程springboot（启动器starter），他里面包含了很多springboot的子工程   -->
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -83,9 +85,15 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!-- junit依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <!-- SpringBoot 健康检测 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- SpringBoot 提供的开发者工具 -->
@@ -101,6 +109,15 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>
