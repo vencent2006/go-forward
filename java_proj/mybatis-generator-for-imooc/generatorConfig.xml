@@ -14,7 +14,7 @@
         </plugin>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/foodie-shop-dev"
+                        connectionURL="jdbc:mysql://localhost:8889/foodie-shop-dev"
                         userId="root"
                         password="root">
         </jdbcConnection>
@@ -29,7 +29,17 @@
         <javaClientGenerator targetPackage="com.imooc.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
 
         <!-- 数据库表 -->
-		<table tableName=""></table>
-
+		<table tableName="category"></table>
+		<table tableName="items"></table>
+		<table tableName="items_comments"></table>
+		<table tableName="items_img"></table>
+		<table tableName="items_param"></table>
+		<table tableName="items_spec"></table>
+		<table tableName="order_items"></table>
+		<table tableName="order_status"></table>
+		<table tableName="orders"></table>
+		<table tableName="stu"></table>
+		<table tableName="user_address"></table>
+		<table tableName="users"></table>
     </context>
 </generatorConfiguration>
