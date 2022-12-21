@@ -1,5 +1,8 @@
 package com.imooc.service;
 
+import com.imooc.pojo.Users;
+import com.imooc.pojo.bo.UserBO;
+
 public interface UserService {
     /**
      * 用户名是否存在
@@ -7,4 +10,12 @@ public interface UserService {
      * @return boolean true:已经存在;false,不存在
      */
     public boolean queryUsernameIsExist(String username);
+
+    /**
+     * 创建用户
+     * @param userBO 创建用户的客户端参数
+     * @return Users
+     */
+    public Users createUser(UserBO userBO);
+
 }
