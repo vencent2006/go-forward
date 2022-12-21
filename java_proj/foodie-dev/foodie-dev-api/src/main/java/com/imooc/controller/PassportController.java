@@ -3,13 +3,18 @@ package com.imooc.controller;
 import com.imooc.pojo.Users;
 import com.imooc.pojo.bo.UserBO;
 import com.imooc.service.UserService;
+import com.imooc.utils.CookieUtils;
 import com.imooc.utils.IMOOCJSONResult;
+import com.imooc.utils.JsonUtils;
 import com.imooc.utils.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Api(value = "注册登录", tags = {"用于注册登录的相关接口"})
 @RestController
@@ -39,7 +44,9 @@ public class PassportController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("regist")
-    public IMOOCJSONResult register(@RequestBody UserBO userBO) {
+    public IMOOCJSONResult register(@RequestBody UserBO userBO,
+                                    HttpServletRequest request,
+                                    HttpServletResponse response) {
         String username = userBO.getUsername();
         String password = userBO.getPassword();
         String confirmPassword = userBO.getConfirmPassword();
@@ -68,14 +75,21 @@ public class PassportController {
         }
 
         // 4. 实现注册
-        userService.createUser(userBO);
+        Users userResult = userService.createUser(userBO);
+
+        userResult = setNullProperty(userResult);
+
+        // 设置cookie
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(userResult), true);
 
         return IMOOCJSONResult.ok();
     }
 
     @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     @PostMapping("login")
-    public IMOOCJSONResult login(@RequestBody UserBO userBO) throws Exception {
+    public IMOOCJSONResult login(@RequestBody UserBO userBO,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) throws Exception {
         String username = userBO.getUsername();
         String password = userBO.getPassword();
 
@@ -92,7 +106,23 @@ public class PassportController {
             return IMOOCJSONResult.errorMsg("用户或密码不正确");
         }
 
+        userResult = setNullProperty(userResult);
+
+        // 设置cookie
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(userResult), true);
+
 
         return IMOOCJSONResult.ok(userResult);
+    }
+
+
+    private Users setNullProperty(Users user) {
+        user.setPassword(null);
+        user.setMobile(null);
+        user.setEmail(null);
+        user.setCreatedTime(null);
+        user.setUpdatedTime(null);
+        user.setBirthday(null);
+        return user;
     }
 }
