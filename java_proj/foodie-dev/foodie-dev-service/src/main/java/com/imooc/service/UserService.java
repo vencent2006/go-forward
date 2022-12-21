@@ -18,4 +18,12 @@ public interface UserService {
      */
     public Users createUser(UserBO userBO);
 
+    /**
+     * 检索用户名和密码是否匹配，用于登录
+     * @param username 用户名
+     * @param password 密码
+     * @return Users
+     */
+    public Users queryUserForLogin(String username, String password);
+
 }
