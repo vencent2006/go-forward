@@ -7,7 +7,9 @@ import com.imooc.mapper.*;
 import com.imooc.pojo.*;
 import com.imooc.pojo.vo.CommentLevelCountsVO;
 import com.imooc.pojo.vo.ItemCommentVO;
+import com.imooc.pojo.vo.SearchItemsVO;
 import com.imooc.service.ItemService;
+import com.imooc.utils.DesensitizationUtil;
 import com.imooc.utils.PagedGridResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,6 +110,10 @@ public class ItemServiceImpl implements ItemService {
         // pageSize: 每页显示条数
         PageHelper.startPage(page, pageSize);
         List<ItemCommentVO> list = itemsMapperCustom.queryItemComments(map);
+        for (ItemCommentVO vo : list) {
+            // nickname 脱敏
+            vo.setNickName(DesensitizationUtil.commonDisplay(vo.getNickName()));
+        }
         return setterPagedGrid(list, page);
     }
 
@@ -121,5 +127,16 @@ public class ItemServiceImpl implements ItemService {
         grid.setRecords(pageList.getTotal());// 总记录数
 
         return grid;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("keywords", keywords);
+        map.put("sort", sort) ;
+        PageHelper.startPage(page, pageSize);
+        List<SearchItemsVO> list = itemsMapperCustom.searchItems(map);
+        return setterPagedGrid(list, page);
     }
 }
