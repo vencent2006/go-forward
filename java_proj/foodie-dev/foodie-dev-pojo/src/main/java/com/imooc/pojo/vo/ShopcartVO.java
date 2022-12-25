@@ -6,7 +6,6 @@ public class ShopcartVO {
     private String itemName;
     private String specId;
     private String specName;
-    private Integer buyCounts;
     private String priceDiscount;
     private String priceNormal;
 
@@ -50,14 +49,6 @@ public class ShopcartVO {
         this.specName = specName;
     }
 
-    public Integer getBuyCounts() {
-        return buyCounts;
-    }
-
-    public void setBuyCounts(Integer buyCounts) {
-        this.buyCounts = buyCounts;
-    }
-
     public String getPriceDiscount() {
         return priceDiscount;
     }
@@ -72,19 +63,5 @@ public class ShopcartVO {
 
     public void setPriceNormal(String priceNormal) {
         this.priceNormal = priceNormal;
-    }
-
-    @Override
-    public String toString() {
-        return "ShopcartBO{" +
-                "ItemId='" + ItemId + '\'' +
-                ", itemImgUrl='" + itemImgUrl + '\'' +
-                ", itemName='" + itemName + '\'' +
-                ", specId='" + specId + '\'' +
-                ", specName='" + specName + '\'' +
-                ", buyCounts=" + buyCounts +
-                ", priceDiscount='" + priceDiscount + '\'' +
-                ", priceNormal='" + priceNormal + '\'' +
-                '}';
     }
 }

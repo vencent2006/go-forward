@@ -1,13 +1,16 @@
 package com.imooc.controller;
 
 import com.imooc.pojo.bo.ShopcartBO;
+import com.imooc.service.ItemService;
 import com.imooc.utils.IMOOCJSONResult;
+import com.imooc.utils.PagedGridResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class ShopCartController {
     static final Logger logger = LoggerFactory.getLogger(ShopCartController.class);
+
+    @Autowired
+    private ItemService itemService;
 
     @ApiOperation(value = "添加商品到购物车", notes = "添加商品到购物车", httpMethod = "POST")
     @PostMapping("/add")
@@ -39,4 +45,5 @@ public class ShopCartController {
 
         return IMOOCJSONResult.ok();
     }
+
 }
