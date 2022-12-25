@@ -67,4 +67,46 @@
   <!--k: keywords, 默认，代表默认排序，根据name -->
   <!--c: 根据销量排序-->
   <!--p: 根据价格排序-->
+
+    <select id="searchItemsByThirdCat" parameterType="Map" resultType="com.imooc.pojo.vo.SearchItemsVO">
+        SELECT
+            i.id as itemId,
+            i.item_name as itemName,
+            i.sell_counts as sellCounts,
+            ii.url as imgUrl,
+            tempSpec.price_discount as price
+        FROM
+            items i
+        LEFT JOIN
+            items_img ii
+        on
+            i.id = ii.item_id
+        LEFT JOIN
+            (
+                SELECT
+                item_id,MIN(price_discount) as price_discount
+                FROM
+                items_spec
+                GROUP BY
+                item_id
+            ) tempSpec
+        ON
+            i.id = tempSpec.item_id
+        WHERE
+            ii.is_main = 1
+            AND
+            i.cat_id = #{paramsMap.catId}
+        ORDER BY
+        <choose>
+            <when test=" paramsMap.sort == &quot;c&quot; ">
+                i.sell_counts DESC
+            </when>
+            <when test=" paramsMap.sort == &quot;p&quot; ">
+                tempSpec.price_discount ASC
+            </when>
+            <otherwise>
+                i.item_name ASC
+            </otherwise>
+        </choose>
+    </select>
 </mapper>
