@@ -137,4 +137,24 @@ public class AddressController extends BaseController {
 
         return IMOOCJSONResult.ok();
     }
+
+    @ApiOperation(value = "用户修改默认地址", notes = "用户修改默认地址", httpMethod = "POST")
+    @PostMapping("/setDefalut") //前端自己就写错了，这里为了适配，就也错着
+    public IMOOCJSONResult setDefault(
+            @ApiParam(name = "userId", value = "用户id", required = true)
+            @RequestParam String userId,
+            @ApiParam(name = "addressId", value = "用户收货地址id", required = true)
+            @RequestParam String addressId
+            ) {
+        if (StringUtils.isBlank(addressId)) {
+            return IMOOCJSONResult.errorMsg("删除地址错误: addressId不能为空");
+        }
+        if (StringUtils.isBlank(userId)) {
+            return IMOOCJSONResult.errorMsg("删除地址错误: userId不能为空");
+        }
+
+        addressService.updateUserAddressToBeDefault(userId, addressId);
+
+        return IMOOCJSONResult.ok();
+    }
 }
