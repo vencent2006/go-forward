@@ -25,4 +25,11 @@ public interface AddressService {
      * @param addressBO addressId要填写
      */
     public void updateUserAddress(AddressBO addressBO);
+
+    /**
+     * 根据用户id和地址id，用户删除地址
+     * @param userId 用户id
+     * @param addressId 地址id
+     */
+    public void deleteUserAddress(String userId, String addressId);
 }

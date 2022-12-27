@@ -68,4 +68,13 @@ public class AddressServiceImpl implements AddressService {
         // 不要使用updateByPrimaryKey，差异在空的属性的赋值上
         userAddressMapper.updateByPrimaryKeySelective(pendingAddress);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteUserAddress(String userId, String addressId) {
+        UserAddress address = new UserAddress();
+        address.setId(addressId);
+        address.setUserId(userId);
+        userAddressMapper.delete(address);
+    }
 }
