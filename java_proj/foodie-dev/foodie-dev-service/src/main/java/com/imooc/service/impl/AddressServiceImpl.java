@@ -54,7 +54,18 @@ public class AddressServiceImpl implements AddressService {
         newAddress.setUpdatedTime(new Date());// 设定为当前时间
 
         userAddressMapper.insert(newAddress);
+    }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateUserAddress(AddressBO addressBO) {
+        String addressId = addressBO.getAddressId();
+        UserAddress pendingAddress = new UserAddress();
+        BeanUtils.copyProperties(addressBO, pendingAddress); // 这个方法要学会
+        pendingAddress.setId(addressId);
+        pendingAddress.setUpdatedTime(new Date());// 设定为当前时间
 
+        // 不要使用updateByPrimaryKey，差异在空的属性的赋值上
+        userAddressMapper.updateByPrimaryKeySelective(pendingAddress);
     }
 }

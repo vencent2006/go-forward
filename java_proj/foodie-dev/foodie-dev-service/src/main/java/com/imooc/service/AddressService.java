@@ -19,4 +19,10 @@ public interface AddressService {
      * @param addressBO 新增地址BO
      */
     public void addNewUserAddress(AddressBO addressBO);
+
+    /**
+     * 用户修改地址
+     * @param addressBO addressId要填写
+     */
+    public void updateUserAddress(AddressBO addressBO);
 }

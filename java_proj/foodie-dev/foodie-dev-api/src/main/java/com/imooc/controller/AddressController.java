@@ -97,4 +97,24 @@ public class AddressController extends BaseController {
 
         return IMOOCJSONResult.ok();
     }
+
+    @ApiOperation(value = "用户修改地址", notes = "用户修改地址", httpMethod = "POST")
+    @PostMapping("/update")
+    public IMOOCJSONResult update(
+            @ApiParam(name = "addressBO", value = "用户收货地址", required = true)
+            @RequestBody AddressBO addressBO) {
+        if (StringUtils.isBlank(addressBO.getAddressId())) {
+            return IMOOCJSONResult.errorMsg("修改地址错误: addressId不能为空");
+        }
+
+
+        IMOOCJSONResult checkRes = checkAddress(addressBO);
+        if (checkRes.getStatus() != 200) {
+            return checkRes;
+        }
+
+        addressService.updateUserAddress(addressBO);
+
+        return IMOOCJSONResult.ok();
+    }
 }
