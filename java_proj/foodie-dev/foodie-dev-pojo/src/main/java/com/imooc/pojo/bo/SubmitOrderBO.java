@@ -4,34 +4,21 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 用户新增或修改地址的BO
+ * 用于创建订单的BO对象
  */
-@ApiModel(value = "收货地址对象BO", description = "收货地址对象BO")
-public class AddressBO {
-    @ApiModelProperty(value = "地址id", name = "addressId", example = "1", required = false)
-    private String addressId;
+@ApiModel(value = "提交订单对象BO", description = "提交订单对象BO")
+public class SubmitOrderBO {
+
     @ApiModelProperty(value = "用户id", name = "userId", example = "imooc1234", required = true)
     private String userId;
-    @ApiModelProperty(value = "收件人", name = "receiver", example = "张三", required = false)
-    private String receiver;
-    @ApiModelProperty(value = "电话号码", name = "mobile", example = "13888888888", required = false)
-    private String mobile;
-    @ApiModelProperty(value = "省", name = "province", example = "辽宁省", required = false)
-    private String province;
-    @ApiModelProperty(value = "市", name = "city", example = "沈阳市", required = false)
-    private String city;
-    @ApiModelProperty(value = "区", name = "district", example = "和平区", required = false)
-    private String district;
-    @ApiModelProperty(value = "详细地址", name = "detail", example = "xx楼xx号", required = false)
-    private String detail;
-
-    public String getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
-    }
+    @ApiModelProperty(value = "规格id", name = "itemSpecIds", example = "bingan-1001-spec-1,bingan-1001-spec-2", required = true)
+    private String itemSpecIds;
+    @ApiModelProperty(value = "地址id", name = "addressId", example = "2212270KC97T79AW", required = true)
+    private String addressId;
+    @ApiModelProperty(value = "支付方式", name = "payMethod", example = "1", required = true)
+    private Integer payMethod;
+    @ApiModelProperty(value = "买家留言", name = "leftMsg", example = "需要包装盒", required = true)
+    private String leftMsg;
 
     public String getUserId() {
         return userId;
@@ -41,51 +28,46 @@ public class AddressBO {
         this.userId = userId;
     }
 
-    public String getReceiver() {
-        return receiver;
+    public String getItemSpecIds() {
+        return itemSpecIds;
     }
 
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
+    public void setItemSpecIds(String itemSpecIds) {
+        this.itemSpecIds = itemSpecIds;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
-    public String getProvince() {
-        return province;
+    public Integer getPayMethod() {
+        return payMethod;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setPayMethod(Integer payMethod) {
+        this.payMethod = payMethod;
     }
 
-    public String getCity() {
-        return city;
+    public String getLeftMsg() {
+        return leftMsg;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLeftMsg(String leftMsg) {
+        this.leftMsg = leftMsg;
     }
 
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
+    @Override
+    public String toString() {
+        return "SubmitOrderBO{" +
+                "userId='" + userId + '\'' +
+                ", itemSpecIds='" + itemSpecIds + '\'' +
+                ", addressId='" + addressId + '\'' +
+                ", payMethod=" + payMethod +
+                ", leftMsg='" + leftMsg + '\'' +
+                '}';
     }
 }
