@@ -1,5 +1,6 @@
 package com.imooc.controller;
 
+import com.imooc.enums.PayMethod;
 import com.imooc.pojo.bo.SubmitOrderBO;
 import com.imooc.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
@@ -21,9 +22,14 @@ public class OrdersController extends BaseController {
 
     @ApiOperation(value = "用户下单", notes = "用户下单", httpMethod = "POST")
     @PostMapping("/create")
-    public IMOOCJSONResult list(
+    public IMOOCJSONResult create(
             @ApiParam(name = "submitOrderBO", value = "创建订单的BO对象", required = true)
             @RequestBody SubmitOrderBO submitOrderBO) {
+
+        if (submitOrderBO.getPayMethod() != PayMethod.WEIXIN.type
+            && submitOrderBO.getPayMethod() != PayMethod.ALIPAY.type) {
+
+        }
 
         logger.info("submitOrderBO is {}", submitOrderBO.toString());
 
