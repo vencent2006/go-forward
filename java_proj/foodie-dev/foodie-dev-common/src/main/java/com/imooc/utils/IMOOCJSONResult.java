@@ -134,4 +134,13 @@ public class IMOOCJSONResult {
         this.ok = ok;
     }
 
+    @Override
+    public String toString() {
+        return "IMOOCJSONResult{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                ", ok='" + ok + '\'' +
+                '}';
+    }
 }

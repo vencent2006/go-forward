@@ -2,6 +2,7 @@ package com.imooc.controller;
 
 import com.imooc.enums.OrderStatusEnum;
 import com.imooc.enums.PayMethod;
+import com.imooc.pojo.OrderStatus;
 import com.imooc.pojo.bo.SubmitOrderBO;
 import com.imooc.pojo.vo.MerchantOrdersVO;
 import com.imooc.pojo.vo.OrderVO;
@@ -60,17 +61,19 @@ public class OrdersController extends BaseController {
         // 3. 向支付中心发送当前订单，用于保存支付中心的订单数据
         MerchantOrdersVO merchantOrdersVO = orderVO.getMerchantOrdersVO();
         merchantOrdersVO.setReturnUrl(payReturnUrl);
+        merchantOrdersVO.setAmount(1);// 为了方便测试购买，所有的支付金额统一改为1分钱
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("imoocUserId", "imooc");
-        headers.add("password", "imooc");
+        headers.add("imoocUserId", "5300201-176962058");
+        headers.add("password", "3402-89uj-o4ir-joj1");
 
         HttpEntity<MerchantOrdersVO> entity = new HttpEntity<>(merchantOrdersVO, headers);
 
         ResponseEntity<IMOOCJSONResult> responseEntity = restTemplate.postForEntity(paymentUrl, entity, IMOOCJSONResult.class);
         IMOOCJSONResult paymentResult = responseEntity.getBody();
         if (paymentResult.getStatus() != 200) {
+            logger.error("支付中心订单创建失败，请联系管理员! merchantOrdersVO = {} paymentResult = {}", merchantOrdersVO, paymentResult);
             return IMOOCJSONResult.errorMsg("支付中心订单创建失败，请联系管理员!");
         }
 
@@ -85,5 +88,15 @@ public class OrdersController extends BaseController {
         orderService.updateOrderStatus(merchantOrderId, OrderStatusEnum.WAIT_DELIVER.type);
 
         return HttpStatus.OK.value();
+    }
+
+
+    @ApiOperation(value = "查询支付订单", notes = "查询支付订单", httpMethod = "POST")
+    @PostMapping("/getPaidOrderInfo")
+    public IMOOCJSONResult getPaidOrderInfo(@RequestParam String orderId) {
+
+        OrderStatus orderStatus = orderService.queryOrderStatusInfo(orderId);
+
+        return IMOOCJSONResult.ok(orderStatus);
     }
 }

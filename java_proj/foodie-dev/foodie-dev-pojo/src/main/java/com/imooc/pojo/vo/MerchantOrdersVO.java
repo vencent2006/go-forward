@@ -47,4 +47,15 @@ public class MerchantOrdersVO {
     public void setReturnUrl(String returnUrl) {
         this.returnUrl = returnUrl;
     }
+
+    @Override
+    public String toString() {
+        return "MerchantOrdersVO{" +
+                "merchantOrderId='" + merchantOrderId + '\'' +
+                ", merchantUserId='" + merchantUserId + '\'' +
+                ", amount=" + amount +
+                ", payMethod=" + payMethod +
+                ", returnUrl='" + returnUrl + '\'' +
+                '}';
+    }
 }
