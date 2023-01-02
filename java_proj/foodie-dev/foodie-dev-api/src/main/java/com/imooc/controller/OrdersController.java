@@ -1,5 +1,6 @@
 package com.imooc.controller;
 
+import com.imooc.enums.OrderStatusEnum;
 import com.imooc.enums.PayMethod;
 import com.imooc.pojo.bo.SubmitOrderBO;
 import com.imooc.service.OrderService;
@@ -10,10 +11,8 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,5 +56,12 @@ public class OrdersController extends BaseController {
         return IMOOCJSONResult.ok(orderId);
     }
 
+    @ApiOperation(value = "支付回调地址", notes = "支付回调地址", httpMethod = "POST")
+    @PostMapping("/notifyMerchantOrderPaid")
+    public Integer notifyMerchantOrderPaid(@RequestParam String merchantOrderId) {
 
+        orderService.updateOrderStatus(merchantOrderId, OrderStatusEnum.WAIT_DELIVER.type);
+
+        return HttpStatus.OK.value();
+    }
 }
