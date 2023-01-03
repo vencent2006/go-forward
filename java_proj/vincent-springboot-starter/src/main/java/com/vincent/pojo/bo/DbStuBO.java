@@ -2,6 +2,7 @@ package com.vincent.pojo.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class DbStuBO {
     private String id;
     @NotBlank
