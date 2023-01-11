@@ -80,6 +80,13 @@ public class CenterUserController extends BaseController {
 
                     // 获取文件的后缀名
                     String suffix = fileNameArr[fileNameArr.length - 1];
+                    if (!suffix.equalsIgnoreCase("png")
+                        && !suffix.equalsIgnoreCase("jpg")
+                        && !suffix.equalsIgnoreCase("jpeg")){
+                        // 后缀名不是 png/jpg/jpeg
+                        logger.error("suffix is invalid, upload fileName is {}", fileName);
+                        return IMOOCJSONResult.errorMsg("图片格式不正确");
+                    }
 
                     // face-{userId}.png
                     // 文件名称重组 覆盖式上传；如果是增量式，需要额外拼接当前时间
