@@ -7,14 +7,17 @@ server:
   port: 8088
   tomcat:
     uri-encoding: UTF-8
+    max-swallow-size: -1 # 放开tomcat的限制
   max-http-header-size: 80KB
 
-############################################################
-#
-# 配置数据源信息
-#
-############################################################
+
+
 spring:
+  ############################################################
+  #
+  # 配置数据源信息
+  #
+  ############################################################
   datasource:                                           # 数据源的相关配置
     type: com.zaxxer.hikari.HikariDataSource          # 数据源类型：HikariCP
     driver-class-name: com.mysql.jdbc.Driver          # mysql驱动
@@ -30,7 +33,11 @@ spring:
       pool-name: DateSourceHikariCP     # 连接池名字
       max-lifetime: 1800000           # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms
       connection-test-query: SELECT 1
-
+  # 限制文件大小
+  servlet:
+    multipart:
+      max-file-size: 51200    # 文件上传大小限制为500KB
+      max-request-size: 51200 # 请求大小限制为500KB
 ############################################################
 #
 # mybatis 配置
