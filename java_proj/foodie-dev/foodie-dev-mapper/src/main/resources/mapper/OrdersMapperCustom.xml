@@ -14,7 +14,10 @@
       property：对应三级分类的list属性名
       ofType：集合的类型，三级分类的vo
     -->
-    <collection property="subOrderItemVOList" ofType="com.imooc.pojo.vo.MySubOrderItemVO" >
+    <collection property="subOrderItemVOList"
+                select="getSubItems"
+                column="orderId"
+                ofType="com.imooc.pojo.vo.MySubOrderItemVO" >
       <id column="itemId" property="itemId" />
       <result column="itemImg" property="itemImg" />
       <result column="itemName" property="itemName" />
@@ -26,6 +29,46 @@
   </resultMap>
 
   <select id="queryMyOrders" resultMap="myOrdersVO" parameterType="int">
+    SELECT
+        od.id as orderId,
+        od.created_time as createdTime,
+        od.pay_method as payMethod,
+        od.real_pay_amount as realPayAmount,
+        od.post_amount as postAmount,
+        os.order_status as orderStatus
+    FROM
+      orders od
+    LEFT JOIN
+      order_status os
+    ON od.id = os.order_id
+    WHERE
+      od.user_id = #{paramsMap.userId}
+    AND
+      od.is_delete = 0
+      <if test="paramsMap.orderStatus != null">
+        and os.order_status = #{paramsMap.orderStatus}
+      </if>
+    ORDER BY
+      od.updated_time ASC
+  </select>
+
+  <select id="getSubItems" parameterType="String" resultType="com.imooc.pojo.vo.MySubOrderItemVO">
+    SELECT
+        oi.item_id as itemId,
+        oi.item_name as itemName,
+        oi.item_img as itemImg,
+        oi.item_spec_id as itemSpecId,
+        oi.item_spec_name as itemSpecName,
+        oi.buy_counts as buyCounts,
+        oi.price as price
+    FROM
+        order_items oi
+    WHERE
+        oi.order_id = #{orderId}
+  </select>
+
+
+  <select id="queryMyOrdersDoNotUse" resultMap="myOrdersVO" parameterType="int">
     SELECT
         od.id as orderId,
         od.created_time as createdTime,
