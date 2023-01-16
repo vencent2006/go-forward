@@ -14,7 +14,7 @@
       property：对应三级分类的list属性名
       ofType：集合的类型，三级分类的vo
     -->
-    <collection property="subOrderItemVOList"
+    <collection property="subOrderItemList"
                 select="getSubItems"
                 column="orderId"
                 ofType="com.imooc.pojo.vo.MySubOrderItemVO" >

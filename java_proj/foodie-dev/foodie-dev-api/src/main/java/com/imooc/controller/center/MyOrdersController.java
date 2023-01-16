@@ -9,7 +9,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @Api(value = "用户中心之我的订单", tags = {"用户中心之我的订单相关接口"})
@@ -47,5 +50,23 @@ public class MyOrdersController extends BaseController {
         PagedGridResult gridResult = myOrdersService.queryMyOrders(userId, orderStatus, page, pageSize);
 
         return IMOOCJSONResult.ok(gridResult);
+    }
+
+
+    // 商家发货没有后端， 所以这个接口仅仅只是模拟
+    @ApiOperation(value = "查询订单列表", notes = "查询订单列表", httpMethod = "POST")
+    @PostMapping("/deliver")
+    public IMOOCJSONResult deliver(
+            @ApiParam(name = "orderId", value = "订单id", required = true)
+            @RequestParam String orderId) {
+
+        if (StringUtils.isBlank(orderId)) {
+            return IMOOCJSONResult.errorMsg("订单ID不能为空");
+        }
+
+
+        myOrdersService.updateDeliverOrderStatus(orderId);
+
+        return IMOOCJSONResult.ok();
     }
 }

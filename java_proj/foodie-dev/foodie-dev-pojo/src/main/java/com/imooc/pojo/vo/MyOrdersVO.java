@@ -15,7 +15,7 @@ public class MyOrdersVO {
     private Integer postAmount;
     private Integer isComment;
     private Integer orderStatus;
-    private List<MySubOrderItemVO> subOrderItemVOList;
+    private List<MySubOrderItemVO> subOrderItemList;
 
     public String getOrderId() {
         return orderId;
@@ -73,11 +73,11 @@ public class MyOrdersVO {
         this.orderStatus = orderStatus;
     }
 
-    public List<MySubOrderItemVO> getSubOrderItemVOList() {
-        return subOrderItemVOList;
+    public List<MySubOrderItemVO> getSubOrderItemList() {
+        return subOrderItemList;
     }
 
-    public void setSubOrderItemVOList(List<MySubOrderItemVO> subOrderItemVOList) {
-        this.subOrderItemVOList = subOrderItemVOList;
+    public void setSubOrderItemList(List<MySubOrderItemVO> subOrderItemList) {
+        this.subOrderItemList = subOrderItemList;
     }
 }
