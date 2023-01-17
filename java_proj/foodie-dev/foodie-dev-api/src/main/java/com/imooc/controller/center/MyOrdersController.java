@@ -1,8 +1,7 @@
 package com.imooc.controller.center;
 
 import com.imooc.controller.BaseController;
-import com.imooc.pojo.Orders;
-import com.imooc.service.MyOrdersService;
+import com.imooc.service.center.MyOrdersService;
 import com.imooc.utils.IMOOCJSONResult;
 import com.imooc.utils.PagedGridResult;
 import io.swagger.annotations.Api;
@@ -113,20 +112,4 @@ public class MyOrdersController extends BaseController {
         return IMOOCJSONResult.ok();
     }
 
-
-    /**
-     * 检查用户订单
-     * @param userId 用户id
-     * @param orderId 订单id
-     * @return IMOOCJSONResult
-     */
-    private IMOOCJSONResult checkUserOrder(String userId, String orderId) {
-
-        Orders order = myOrdersService.queryMyOrder(userId, orderId);
-        if (null == order) {
-            return IMOOCJSONResult.errorMsg("订单不存在");
-        }
-
-        return IMOOCJSONResult.ok();
-    }
 }

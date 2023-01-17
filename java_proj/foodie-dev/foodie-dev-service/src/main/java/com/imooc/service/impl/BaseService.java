@@ -15,7 +15,7 @@ public class BaseService {
      * @param page 第几页
      * @return PagedGridResult
      */
-    PagedGridResult setterPagedGrid(List<?> list, Integer page) {
+    protected PagedGridResult setterPagedGrid(List<?> list, Integer page) {
         PageInfo<?> pageList = new PageInfo<>(list);
         PagedGridResult grid = new PagedGridResult();
         grid.setPage(page);// 当前第几页

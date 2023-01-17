@@ -1,5 +1,9 @@
 package com.imooc.controller;
 
+import com.imooc.pojo.Orders;
+import com.imooc.service.center.MyOrdersService;
+import com.imooc.utils.IMOOCJSONResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
@@ -11,6 +15,9 @@ public class BaseController {
     public static final Integer PAGE_SIZE = 20;
 
     public static final String FOODIE_SHOPCAT = "shopcart"; // 前端购物车的cookie的key
+
+    @Autowired
+    private MyOrdersService myOrdersService;
 
     // 支付中心创建订单的调用地址
     String paymentUrl = "http://payment.t.mukewang.com/foodie-payment/payment/createMerchantOrder";
@@ -28,4 +35,21 @@ public class BaseController {
                                                             File.separator + "images" +
                                                             File.separator + "foodie" +
                                                             File.separator + "faces";
+
+
+    /**
+     * 检查用户订单
+     * @param userId 用户id
+     * @param orderId 订单id
+     * @return IMOOCJSONResult
+     */
+    protected IMOOCJSONResult checkUserOrder(String userId, String orderId) {
+
+        Orders order = myOrdersService.queryMyOrder(userId, orderId);
+        if (null == order) {
+            return IMOOCJSONResult.errorMsg("订单不存在");
+        }
+
+        return IMOOCJSONResult.ok(order);
+    }
 }
