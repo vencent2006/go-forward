@@ -9,6 +9,7 @@
     <result column="realPayAmount" property="realPayAmount" />
     <result column="postAmount" property="postAmount" />
     <result column="orderStatus" property="orderStatus" />
+    <result column="isComment" property="isComment" />
     <!--
       collection 标签：用于定义关联的list集合类型的封装规则
       property：对应三级分类的list属性名
@@ -35,7 +36,8 @@
         od.pay_method as payMethod,
         od.real_pay_amount as realPayAmount,
         od.post_amount as postAmount,
-        os.order_status as orderStatus
+        os.order_status as orderStatus,
+        od.is_comment as isComment
     FROM
       orders od
     LEFT JOIN
