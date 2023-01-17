@@ -1,6 +1,7 @@
 package com.imooc.controller.center;
 
 import com.imooc.controller.BaseController;
+import com.imooc.pojo.Orders;
 import com.imooc.service.MyOrdersService;
 import com.imooc.utils.IMOOCJSONResult;
 import com.imooc.utils.PagedGridResult;
@@ -9,10 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 
 @Api(value = "用户中心之我的订单", tags = {"用户中心之我的订单相关接口"})
@@ -53,9 +52,9 @@ public class MyOrdersController extends BaseController {
     }
 
 
-    // 商家发货没有后端， 所以这个接口仅仅只是模拟
-    @ApiOperation(value = "查询订单列表", notes = "查询订单列表", httpMethod = "POST")
-    @PostMapping("/deliver")
+    // 商家发货没有后端， 所以这个接口仅仅只是模拟，暂时使用的是GET
+    @ApiOperation(value = "商家发货", notes = "商家发货", httpMethod = "GET")
+    @GetMapping("/deliver")
     public IMOOCJSONResult deliver(
             @ApiParam(name = "orderId", value = "订单id", required = true)
             @RequestParam String orderId) {
@@ -64,8 +63,69 @@ public class MyOrdersController extends BaseController {
             return IMOOCJSONResult.errorMsg("订单ID不能为空");
         }
 
-
         myOrdersService.updateDeliverOrderStatus(orderId);
+
+        return IMOOCJSONResult.ok();
+    }
+
+
+
+    @ApiOperation(value = "用户确认收货", notes = "用户确认收货", httpMethod = "POST")
+    @PostMapping("/confirmReceive")
+    public IMOOCJSONResult confirmReceive(
+            @ApiParam(name = "userId", value = "用户id", required = true)
+            @RequestParam String userId,
+            @ApiParam(name = "orderId", value = "订单id", required = true)
+            @RequestParam String orderId) {
+
+        IMOOCJSONResult checkResult = checkUserOrder(userId, orderId);
+        if (checkResult.getStatus() != HttpStatus.OK.value()) {
+            return checkResult;
+        }
+
+        boolean res = myOrdersService.updateReceiveOrderStatus(orderId);
+        if (!res) {
+            return IMOOCJSONResult.errorMsg("订单确认收货失败");
+        }
+
+        return IMOOCJSONResult.ok();
+    }
+
+
+    @ApiOperation(value = "用户确认收货", notes = "用户确认收货", httpMethod = "POST")
+    @PostMapping("/delete")
+    public IMOOCJSONResult delete(
+            @ApiParam(name = "userId", value = "用户id", required = true)
+            @RequestParam String userId,
+            @ApiParam(name = "orderId", value = "订单id", required = true)
+            @RequestParam String orderId) {
+
+        IMOOCJSONResult checkResult = checkUserOrder(userId, orderId);
+        if (checkResult.getStatus() != HttpStatus.OK.value()) {
+            return checkResult;
+        }
+
+        boolean res = myOrdersService.deleteOrder(userId, orderId);
+        if (!res) {
+            return IMOOCJSONResult.errorMsg("订单取消失败");
+        }
+
+        return IMOOCJSONResult.ok();
+    }
+
+
+    /**
+     * 检查用户订单
+     * @param userId 用户id
+     * @param orderId 订单id
+     * @return IMOOCJSONResult
+     */
+    private IMOOCJSONResult checkUserOrder(String userId, String orderId) {
+
+        Orders order = myOrdersService.queryMyOrder(userId, orderId);
+        if (null == order) {
+            return IMOOCJSONResult.errorMsg("订单不存在");
+        }
 
         return IMOOCJSONResult.ok();
     }
