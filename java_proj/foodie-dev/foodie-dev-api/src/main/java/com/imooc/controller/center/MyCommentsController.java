@@ -4,6 +4,7 @@ import com.imooc.controller.BaseController;
 import com.imooc.enums.YesOrNo;
 import com.imooc.pojo.OrderItems;
 import com.imooc.pojo.Orders;
+import com.imooc.pojo.bo.center.OrderItemsCommentBO;
 import com.imooc.service.center.MyCommentsService;
 import com.imooc.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
@@ -11,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class MyCommentsController extends BaseController {
     @Autowired
     private MyCommentsService myCommentsService;
 
-    @ApiOperation(value = "查询评价列表", notes = "查询订单列表", httpMethod = "GET")
+    @ApiOperation(value = "查询评价列表", notes = "查询评价列表", httpMethod = "GET")
     @GetMapping("/query")
     public IMOOCJSONResult query(
             @ApiParam(name = "userId", value = "用户id", required = true)
@@ -50,6 +48,40 @@ public class MyCommentsController extends BaseController {
         List<OrderItems> list = myCommentsService.queryPendingComment(orderId);
 
         return IMOOCJSONResult.ok(list);
+    }
+
+
+    @ApiOperation(value = "保存评价列表", notes = "保存评价列表", httpMethod = "POST")
+    @GetMapping("/saveList")
+    public IMOOCJSONResult saveList(
+            @ApiParam(name = "userId", value = "用户id", required = true)
+            @RequestParam String userId,
+            @ApiParam(name = "orderId", value = "订单id", required = true)
+            @RequestParam String orderId,
+            @ApiParam(name = "commentList", value = "评论列表", required = true)
+            @RequestBody List<OrderItemsCommentBO> commentList
+            ) {
+
+        // 判断用户和订单是否关联
+        IMOOCJSONResult checkResult = checkUserOrder(userId, orderId);
+        if (checkResult.getStatus() != HttpStatus.OK.value()) {
+            return checkResult;
+        }
+
+        // 判断评论内容list不能为空
+        if (null == commentList || commentList.isEmpty()) {
+            return IMOOCJSONResult.errorMsg("评论内容不能为空");
+        }
+
+        // 判断该笔订单是否已经评价过，
+        Orders myOrder = (Orders)checkResult.getData();
+        if (myOrder.getIsComment() == YesOrNo.YES.type) {
+            return IMOOCJSONResult.errorMsg("该笔订单已经评价");
+        }
+
+        myCommentsService.saveComments(orderId, userId, commentList);
+
+        return IMOOCJSONResult.ok();
     }
 
 }
