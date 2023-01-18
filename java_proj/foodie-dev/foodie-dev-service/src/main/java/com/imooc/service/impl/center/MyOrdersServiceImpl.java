@@ -9,6 +9,7 @@ import com.imooc.mapper.OrdersMapperCustom;
 import com.imooc.pojo.OrderStatus;
 import com.imooc.pojo.Orders;
 import com.imooc.pojo.vo.MyOrdersVO;
+import com.imooc.pojo.vo.OrderStatusCountsVO;
 import com.imooc.service.center.MyOrdersService;
 import com.imooc.service.impl.BaseService;
 import com.imooc.utils.PagedGridResult;
@@ -112,5 +113,40 @@ public class MyOrdersServiceImpl extends BaseService implements MyOrdersService 
 
         int result = ordersMapper.updateByExampleSelective(order, example);
         return result == 1;
+    }
+
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public OrderStatusCountsVO getOrderStatusCounts(String userId) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+
+        // WAIT_PAY 待付款
+        map.put("orderStatus", OrderStatusEnum.WAIT_PAY.type);
+        int waitPayCounts = ordersMapperCustom.getMyOrderStatusCounts(map);
+
+        // WAIT_DELIVER 待发货
+        map.put("orderStatus", OrderStatusEnum.WAIT_DELIVER.type);
+        int waitDeliverCounts = ordersMapperCustom.getMyOrderStatusCounts(map);
+
+        // WAIT_RECEIVE 待收货
+        map.put("orderStatus", OrderStatusEnum.WAIT_RECEIVE.type);
+        int waitReceiveCounts = ordersMapperCustom.getMyOrderStatusCounts(map);
+
+        // 交易成功 待评价的状态
+        map.put("orderStatus", OrderStatusEnum.SUCCESS.type);
+        map.put("isComment", YesOrNo.YES.type);
+        int waitCommentCounts = ordersMapperCustom.getMyOrderStatusCounts(map);
+
+        // 返回 OrderStatusCountsVO
+        OrderStatusCountsVO countsVO = new OrderStatusCountsVO(
+                                                    waitPayCounts,
+                                                    waitDeliverCounts,
+                                                    waitReceiveCounts,
+                                                    waitCommentCounts);
+
+        return countsVO;
     }
 }

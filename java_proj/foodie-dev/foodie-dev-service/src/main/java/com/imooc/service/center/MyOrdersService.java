@@ -1,6 +1,7 @@
 package com.imooc.service.center;
 
 import com.imooc.pojo.Orders;
+import com.imooc.pojo.vo.OrderStatusCountsVO;
 import com.imooc.utils.PagedGridResult;
 
 public interface MyOrdersService {
@@ -45,5 +46,10 @@ public interface MyOrdersService {
      * @return boolean true: 成功; false: 失败
      */
     public boolean deleteOrder(String userId, String orderId);
+
+
+
+    public OrderStatusCountsVO getOrderStatusCounts(String userId);
+
 
 }
