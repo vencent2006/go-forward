@@ -1,5 +1,6 @@
 package com.imooc.mapper;
 
+import com.imooc.pojo.OrderStatus;
 import com.imooc.pojo.vo.MyOrdersVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,4 +12,6 @@ public interface OrdersMapperCustom {
     public List<MyOrdersVO> queryMyOrders(@Param("paramsMap") Map<String, Object> map);
 
     public int getMyOrderStatusCounts(@Param("paramsMap") Map<String, Object> map);
+
+    public List<OrderStatus> getMyOrderTrend(@Param("paramsMap") Map<String, Object> map);
 }

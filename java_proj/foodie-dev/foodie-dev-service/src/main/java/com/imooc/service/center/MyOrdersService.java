@@ -48,8 +48,20 @@ public interface MyOrdersService {
     public boolean deleteOrder(String userId, String orderId);
 
 
-
+    /**
+     * 获取不同状态订单数量
+     * @param userId 用户id
+     * @return OrderStatusCountsVO
+     */
     public OrderStatusCountsVO getOrderStatusCounts(String userId);
 
 
+    /**
+     * 获得分页的订单动向
+     * @param userId 用户id
+     * @param page 第几页
+     * @param pageSize 每页数量
+     * @return 分页结果
+     */
+    public PagedGridResult getOrdersTrend(String userId, Integer page, Integer pageSize);
 }
