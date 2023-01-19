@@ -1,5 +1,8 @@
 package com.imooc.pojo.vo;
 
+import lombok.Data;
+
+@Data
 public class OrderStatusCountsVO {
 
     private Integer waitPayCounts;
@@ -17,35 +20,4 @@ public class OrderStatusCountsVO {
         this.waitCommentCounts = waitCommentCounts;
     }
 
-    public Integer getWaitPayCounts() {
-        return waitPayCounts;
-    }
-
-    public void setWaitPayCounts(Integer waitPayCounts) {
-        this.waitPayCounts = waitPayCounts;
-    }
-
-    public Integer getWaitDeliverCounts() {
-        return waitDeliverCounts;
-    }
-
-    public void setWaitDeliverCounts(Integer waitDeliverCounts) {
-        this.waitDeliverCounts = waitDeliverCounts;
-    }
-
-    public Integer getWaitReceiveCounts() {
-        return waitReceiveCounts;
-    }
-
-    public void setWaitReceiveCounts(Integer waitReceiveCounts) {
-        this.waitReceiveCounts = waitReceiveCounts;
-    }
-
-    public Integer getWaitCommentCounts() {
-        return waitCommentCounts;
-    }
-
-    public void setWaitCommentCounts(Integer waitCommentCounts) {
-        this.waitCommentCounts = waitCommentCounts;
-    }
 }
