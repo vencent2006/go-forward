@@ -1,0 +1,33 @@
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    url: jdbc:mysql://127.0.0.1:8889/im-core?serverTimezone=UTC&useSSL=false&characterEncoding=UTF8
+    username: root
+
+  application:
+    name: im-core
+
+
+# logger 配置
+logging:
+  config: classpath:logback-spring.xml
+
+server:
+  port: 8000
+
+
+
+mybatis-plus:
+
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mapper/*.xml
+  global-config:
+    db-config:
+      update-strategy: NOT_EMPTY
+
+
