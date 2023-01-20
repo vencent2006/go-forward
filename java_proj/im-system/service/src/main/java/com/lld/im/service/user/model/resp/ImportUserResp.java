@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ImportUserRes {
+public class ImportUserResp {
 
     private List<String> successId;
     private List<String> errorId;
