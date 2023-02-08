@@ -30,7 +30,6 @@ public class ImUserServiceImpl implements ImUserService {
     @Autowired
     private ImUserDataMapper imUserDataMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public ResponseVO importUser(ImportUserReq req) {
 

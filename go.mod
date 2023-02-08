@@ -3,81 +3,53 @@ module go-examples
 go 1.14
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.3.2
 	github.com/ClickHouse/clickhouse-go v1.5.1
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
-	github.com/cpuguy83/go-md2man/v2 v2.0.0
+	github.com/beego/beego/v2 v2.0.7
+	github.com/denisenkom/go-mssqldb v0.11.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/e421083458/gateway_demo v0.0.0-20201203134404-5a1814369ddf
-	github.com/e421083458/gin_scaffold v0.0.0-20211226015300-616fc31c0400
 	github.com/e421083458/go_gateway v0.0.0-20200620084504-d602eb8bc883
-	github.com/e421083458/golang_common v1.2.1
 	github.com/e421083458/gorm v1.0.1
 	github.com/e421083458/grpc-proxy v0.2.0
-	github.com/erikdubbelboer/gspt v0.0.0-20210805194459-ce36a5128377
-	github.com/fsnotify/fsnotify v1.4.9
 	github.com/garyburd/redigo v1.6.0
-	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-contrib/sessions v0.0.4
-	// gin
-	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-contrib/static v0.0.1
 	github.com/gin-gonic/contrib v0.0.0-20191209060500-d6e26eeaa607
 	github.com/gin-gonic/gin v1.7.7
-	github.com/go-git/go-git/v5 v5.4.2
 	github.com/go-playground/locales v0.14.0
 	github.com/go-playground/universal-translator v0.18.0
 	github.com/go-playground/validator/v10 v10.9.0
-	github.com/go-redis/redis/v8 v8.11.4
-	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gobwas/ws v1.1.0
-	github.com/gohade/hade v0.0.3
 	github.com/golang/mock v1.6.0
 	github.com/golang/protobuf v1.5.2
 	github.com/google/gops v0.3.19
-	github.com/google/uuid v1.3.0
-	github.com/inconshreveable/mousetrap v1.0.0
-	github.com/jianfengye/collection v1.3.2
 	github.com/jinzhu/gorm v1.9.16
+	github.com/jinzhu/now v1.1.3 // indirect
 	github.com/jmoiron/sqlx v1.2.0
-	github.com/json-iterator/go v1.1.11
+	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
-	github.com/mattn/go-isatty v0.0.12
-	github.com/mitchellh/mapstructure v1.4.1
+	github.com/lestrrat-go/strftime v1.0.5 // indirect
+	github.com/mattn/go-sqlite3 v1.14.9 // indirect
+	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkg/errors v0.9.1
-	github.com/pkg/sftp v1.13.4
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
-	github.com/robfig/cron/v3 v3.0.0
-	github.com/rs/zerolog v1.15.0
 	github.com/segmentio/ksuid v1.0.4
-	github.com/sevlyar/go-daemon v0.1.5
 	//github.com/sirupsen/logrus v1.2.0
-	github.com/sirupsen/logrus v1.7.0
-	github.com/smartystreets/goconvey v1.6.4
-	github.com/spf13/cast v1.4.0
+	github.com/sirupsen/logrus v1.8.1
+	github.com/spf13/cast v1.4.0 // indirect
 	github.com/spf13/cobra v1.2.1
-	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.8.1
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.8.0
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.3.3
 	github.com/swaggo/swag v1.7.4
-	github.com/ugorji/go/codec v1.1.7
+	github.com/tidwall/gjson v1.14.4
 	github.com/yanyiwu/gojieba v1.1.2
-	go.uber.org/zap v1.17.0
-	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
-	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
-	golang.org/x/sys v0.0.0-20210816183151-1e6c022a8912 // indirect
-	golang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1
-	google.golang.org/grpc v1.38.0
-	google.golang.org/protobuf v1.27.1
+	go.uber.org/zap v1.19.1
+	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11
+	google.golang.org/grpc v1.40.0
+	google.golang.org/protobuf v1.28.1
 	gopkg.in/go-playground/validator.v9 v9.29.1
-	gopkg.in/yaml.v2 v2.4.0
-	gorm.io/driver/clickhouse v0.2.1
-	gorm.io/driver/mysql v1.2.1
-	gorm.io/driver/postgres v1.2.2
-	gorm.io/driver/sqlite v1.2.4
-	gorm.io/driver/sqlserver v1.2.1
-	gorm.io/gorm v1.22.4
 )

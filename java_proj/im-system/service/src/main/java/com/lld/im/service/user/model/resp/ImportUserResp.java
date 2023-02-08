@@ -8,5 +8,6 @@ import java.util.List;
 public class ImportUserResp {
 
     private List<String> successId;
+
     private List<String> errorId;
 }
