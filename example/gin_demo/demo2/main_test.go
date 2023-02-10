@@ -7,23 +7,6 @@ import (
 	"github.com/beego/beego/v2/client/httplib"
 )
 
-type NotifyChargeInfo struct {
-	ToAddr         string `json:"to_addr"`
-	TxHash         string `json:"txHash"`
-	Time           int64  `json:"time"`
-	Confirmations  int64  `json:"confirmations"`
-	Value          string `json:"value"`
-	ChainName      string `json:"chainName"`
-	BlockNumber    int64  `json:"block_number"`
-	ContactAddr    string `json:"contactAddr"`
-	TokenSymbol    string `json:"tokenSymbol"`
-	TokenValue     string `json:"tokenValue"`
-	UserId         string `json:"userId"`
-	AssetAccountId int    `json:"assetAccountId"`
-	AssetId        int    `json:"assetId"`
-	AssetTokenId   int    `json:"assetTokenId"`
-}
-
 type NotifyChargeRes struct {
 	Message string `json:"message"`
 }
