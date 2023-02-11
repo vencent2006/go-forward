@@ -8,6 +8,7 @@ import (
 )
 
 type NotifyChargeInfo struct {
+	RecordId       int    `json:"record_id"`
 	ToAddr         string `json:"to_addr"`
 	TxHash         string `json:"txHash"`
 	Time           int64  `json:"time"`
@@ -24,10 +25,19 @@ type NotifyChargeInfo struct {
 	AssetTokenId   int    `json:"assetTokenId"`
 }
 
+type NotifyChargeRes struct {
+	Code    int    `json:"code"`
+	Message string `json:"msg"`
+}
+
 func main() {
 	r := gin.Default()
-	response := `{"message":"ok"}`
-	r.POST("/notify", func(c *gin.Context) {
+
+	response := &NotifyChargeRes{
+		Code:    10000,
+		Message: "succ",
+	}
+	r.POST("/wallet/notify/chain/charge", func(c *gin.Context) {
 		//body, _ := ioutil.ReadAll(c.Request.Body)
 		//if body != nil {
 		//	logger.Printf("body is %+v", string(body))
@@ -41,7 +51,7 @@ func main() {
 		}
 
 		logger.Infof("req is %+v", info)
-		c.String(200, response)
+		c.JSON(500, response)
 	})
 
 	r.Run(":8080")
