@@ -5,24 +5,18 @@
 import time
 import turtle
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-def qiuhe(a, b):
-    return a + b
-
-
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    turtle.color("red", "yellow")
-    turtle.begin_fill()
-    for _ in range(100):
-        turtle.forward(200)
-        turtle.left(170)
-    turtle.end_fill()
-
+    lucas = turtle.Pen()
+    lucas.color("red", "yellow")
+    lucas.begin_fill()
+    lucas.circle(100)
+    lucas.right(90)
+    lucas.circle(100)
+    lucas.right(90)
+    lucas.circle(100)
+    lucas.right(90)
+    lucas.circle(100)
+    lucas.end_fill()
     turtle.mainloop()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

@@ -2,7 +2,7 @@
 
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
+import time
 import turtle
 
 
@@ -17,7 +17,12 @@ def qiuhe(a, b):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    turtle.pen()
-    turtle.circle(80, steps=5)
+    turtle.color("red", "yellow")
+    turtle.begin_fill()
+    for _ in range(100):
+        turtle.forward(200)
+        turtle.left(170)
+    turtle.end_fill()
 
+    turtle.mainloop()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
