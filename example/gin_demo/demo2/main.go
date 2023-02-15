@@ -19,7 +19,7 @@ type NotifyChargeInfo struct {
 	ContactAddr    string `json:"contactAddr"`
 	TokenSymbol    string `json:"tokenSymbol"`
 	TokenValue     string `json:"tokenValue"`
-	UserId         string `json:"userId"`
+	UserId         int    `json:"userId"`
 	AssetAccountId int    `json:"assetAccountId"`
 	AssetId        int    `json:"assetId"`
 	AssetTokenId   int    `json:"assetTokenId"`
@@ -51,7 +51,7 @@ func main() {
 		}
 
 		logger.Infof("req is %+v", info)
-		c.JSON(500, response)
+		c.JSON(http.StatusOK, response)
 	})
 
 	r.Run(":8080")
