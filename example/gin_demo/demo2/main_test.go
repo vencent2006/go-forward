@@ -1,15 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
 	"github.com/beego/beego/v2/client/httplib"
 )
-
-type NotifyChargeRes struct {
-	Message string `json:"message"`
-}
 
 func post(url string, info *NotifyChargeInfo) (*NotifyChargeRes, error) {
 	var err error
@@ -32,7 +29,7 @@ func post(url string, info *NotifyChargeInfo) (*NotifyChargeRes, error) {
 func TestPost(t *testing.T) {
 
 	notify := &NotifyChargeInfo{
-		UserId:         "123",
+		UserId:         123,
 		AssetAccountId: 1,
 		AssetId:        2,
 		AssetTokenId:   3,
@@ -46,4 +43,12 @@ func TestPost(t *testing.T) {
 	}
 
 	t.Logf("res is %+v", res)
+}
+
+func Test_PrintBool(t *testing.T) {
+	var a bool = true
+	fmt.Printf("%v\n", a)
+	fmt.Printf("%+v\n", a)
+	fmt.Printf("%#v\n", a)
+	fmt.Printf("%t\n", a)
 }
