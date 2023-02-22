@@ -1,0 +1,6 @@
+pandas
+pandas_ta
+yfinance
+numpy
+plotly
+backtesting
