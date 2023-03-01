@@ -19,7 +19,7 @@ type conf struct {
 
 type MySQLConfig struct {
 	Host   string `mapstructure:"host"`
-	DbName string `mapstructure:"dbname"`
+	DbName string `mapstructure:"dbname" validate:"required"`
 	Port   string `mapstructure:"port"`
 }
 

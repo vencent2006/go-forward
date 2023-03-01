@@ -2,30 +2,15 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"testing"
 
 	"github.com/fsnotify/fsnotify"
+	"github.com/go-playground/validator/v10"
 
 	"github.com/spf13/viper"
 )
 
-type conf struct {
-	Port        int    `mapstructrure:"port"`
-	Version     string `mapstructure:"version"`
-	MySQLConfig `mapstructure:"mysql"`
-}
-
-type MySQLConfig struct {
-	Host   string `mapstructure:"host"`
-	DbName string `mapstructure:"dbname"`
-	Port   string `mapstructure:"port"`
-}
-
-var C conf
-
-func main() {
+func TestReadConf(t *testing.T) {
 	viper.SetDefault("fileDir", "/")
 	// 读取配置文件
 	viper.SetConfigName("config")
@@ -47,18 +32,44 @@ func main() {
 		fmt.Println("Config file changed:", e.Name)
 	})
 
-	r := gin.Default()
-	r.GET("/version", func(c *gin.Context) {
-		sub := viper.Sub("mysql")
-		fmt.Printf("mysql conf is %#v\n", sub)
+	sub := viper.Sub("mysql")
+	fmt.Printf("mysql conf is %#v\n", sub)
 
-		err := viper.Unmarshal(&C)
-		if err != nil {
+	err = viper.Unmarshal(&C)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("conf is %#v\n", C)
+
+	validate := validator.New()
+	err = validate.Struct(&C)
+	if err != nil {
+		fmt.Println("=== error msg ====")
+		fmt.Println(err)
+
+		if _, ok := err.(*validator.InvalidValidationError); ok {
 			fmt.Println(err)
+			return
 		}
-		fmt.Printf("conf is %#v\n", C)
 
-		c.String(http.StatusOK, viper.GetString("version"))
-	})
-	r.Run()
+		fmt.Println("\r\n=========== error field info ====================")
+		for _, err := range err.(validator.ValidationErrors) {
+			// 列出效验出错字段的信息
+			fmt.Println("Namespace: ", err.Namespace())
+			fmt.Println("Fild: ", err.Field())
+			fmt.Println("StructNamespace: ", err.StructNamespace())
+			fmt.Println("StructField: ", err.StructField())
+			fmt.Println("Tag: ", err.Tag())
+			fmt.Println("ActualTag: ", err.ActualTag())
+			fmt.Println("Kind: ", err.Kind())
+			fmt.Println("Type: ", err.Type())
+			fmt.Println("Value: ", err.Value())
+			fmt.Println("Param: ", err.Param())
+			fmt.Println()
+		}
+
+		// from here you can create your own error messages in whatever language you wish
+		return
+	}
+
 }
