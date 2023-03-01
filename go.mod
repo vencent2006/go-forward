@@ -33,6 +33,7 @@ require (
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
 	github.com/mattn/go-sqlite3 v1.14.9 // indirect
 	github.com/mitchellh/mapstructure v1.5.0
+	github.com/panjf2000/ants/v2 v2.7.1
 	github.com/pkg/errors v0.9.1
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/segmentio/ksuid v1.0.4
@@ -41,7 +42,7 @@ require (
 	github.com/spf13/cast v1.4.0 // indirect
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.3.3
 	github.com/swaggo/swag v1.7.4
