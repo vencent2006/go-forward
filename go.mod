@@ -25,6 +25,7 @@ require (
 	github.com/golang/mock v1.6.0
 	github.com/golang/protobuf v1.5.2
 	github.com/google/gops v0.3.19
+	github.com/google/uuid v1.2.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jinzhu/now v1.1.3 // indirect
 	github.com/jmoiron/sqlx v1.2.0
@@ -33,6 +34,7 @@ require (
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
 	github.com/mattn/go-sqlite3 v1.14.9 // indirect
 	github.com/mitchellh/mapstructure v1.5.0
+	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/panjf2000/ants/v2 v2.7.1
 	github.com/pkg/errors v0.9.1
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
@@ -53,4 +55,5 @@ require (
 	google.golang.org/grpc v1.40.0
 	google.golang.org/protobuf v1.28.1
 	gopkg.in/go-playground/validator.v9 v9.29.1
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )

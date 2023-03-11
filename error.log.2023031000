@@ -1,0 +1,6 @@
+2023-03-10 00:09:55	ERROR	demo/main.go:93	sugarLogger name:修华师3
+2023-03-10 00:09:55	WARN	demo/main.go:95	sugarLogger name:修华师5
+2023-03-10 00:09:55	ERROR	demo/main.go:98	logger	{"name": "修华师7"}
+2023-03-10 01:32:58	ERROR	demo/main.go:143	sugarLogger name:修华师3
+2023-03-10 01:32:58	WARN	demo/main.go:145	sugarLogger name:修华师5
+2023-03-10 01:32:58	ERROR	demo/main.go:149	logger	{"name": "修华师7"}

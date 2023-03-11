@@ -1,0 +1,10 @@
+2023-03-10 00:09:55	INFO	demo/main.go:91	sugarLogger name:修华师1
+2023-03-10 00:09:55	INFO	demo/main.go:92	sugarLogger	{"name": "修华师2"}
+2023-03-10 00:09:55	INFO	demo/main.go:97	logger	{"name": "修华师6"}
+2023-03-10 01:32:58	INFO	demo/main.go:141	sugarLogger name:修华师1
+2023-03-10 01:32:58	INFO	demo/main.go:142	sugarLogger	{"name": "修华师2"}
+2023-03-10 01:32:58	ERROR	demo/main.go:143	sugarLogger name:修华师3
+2023-03-10 01:32:58	WARN	demo/main.go:145	sugarLogger name:修华师5
+2023-03-10 01:32:58	INFO	demo/main.go:148	logger	{"name": "修华师6"}
+2023-03-10 01:32:58	ERROR	demo/main.go:149	logger	{"name": "修华师7"}
+2023-03-10 01:32:58	INFO	demo/main.go:129	hello, vincent	{"trace_id": "3e7d8095-a7d3-409f-95ff-a1c26578f49f"}
