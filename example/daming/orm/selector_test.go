@@ -49,6 +49,51 @@ func TestSelector_Build(t *testing.T) {
 			},
 			wantErr: nil,
 		},
+		{
+			name:    "empty where",
+			builder: (&Selector[TestModel]{}),
+			wantQuery: &Query{
+				SQL:  "SELECT * FROM `TestModel`;",
+				Args: nil,
+			},
+			wantErr: nil,
+		},
+		{
+			name:    "where",
+			builder: (&Selector[TestModel]{}).Where(C("Age").Eq(18)),
+			wantQuery: &Query{
+				SQL:  "SELECT * FROM `TestModel` WHERE `Age` = ?;",
+				Args: []any{18},
+			},
+			wantErr: nil,
+		},
+		{
+			name:    "not",
+			builder: (&Selector[TestModel]{}).Where(Not(C("Age").Eq(18))),
+			wantQuery: &Query{
+				SQL:  "SELECT * FROM `TestModel` WHERE  NOT (`Age` = ?);",
+				Args: []any{18},
+			},
+			wantErr: nil,
+		},
+		{
+			name:    "and",
+			builder: (&Selector[TestModel]{}).Where(C("Age").Eq(18).And(C("FirstName").Eq("Tom"))),
+			wantQuery: &Query{
+				SQL:  "SELECT * FROM `TestModel` WHERE (`Age` = ?) AND (`FirstName` = ?);",
+				Args: []any{18, "Tom"},
+			},
+			wantErr: nil,
+		},
+		{
+			name:    "or",
+			builder: (&Selector[TestModel]{}).Where(C("Age").Eq(18).Or(C("FirstName").Eq("Tom"))),
+			wantQuery: &Query{
+				SQL:  "SELECT * FROM `TestModel` WHERE (`Age` = ?) OR (`FirstName` = ?);",
+				Args: []any{18, "Tom"},
+			},
+			wantErr: nil,
+		},
 	}
 
 	for _, tc := range testCases {
