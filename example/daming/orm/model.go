@@ -27,7 +27,7 @@ func parseModel(entity any) (*model, error) {
 	for i := 0; i < numField; i++ {
 		fd := typ.Field(i)
 		fieldMap[fd.Name] = &field{
-			colName: underscoreName(fd.Name),
+			colName: underscoreName(fd.Name), // fd是field的缩写
 		}
 
 	}

@@ -3,12 +3,12 @@ package orm
 import (
 	"context"
 	"example/daming/orm/internal/errs"
-	"reflect"
 	"strings"
 )
 
 type Selector[T any] struct {
 	table string
+	model *model
 	where []Predicate
 	// builder时需要
 	sb   *strings.Builder
@@ -16,14 +16,17 @@ type Selector[T any] struct {
 }
 
 func (s *Selector[T]) Build() (*Query, error) {
+	var err error
+	s.model, err = parseModel(new(T))
+	if err != nil {
+		return nil, err
+	}
 	s.sb = &strings.Builder{}
 	sb := s.sb
 	sb.WriteString("SELECT * FROM ")
 	if s.table == "" {
-		var t T
-		typ := reflect.TypeOf(t)
 		sb.WriteByte('`')
-		sb.WriteString(typ.Name())
+		sb.WriteString(s.model.tableName)
 		sb.WriteByte('`')
 	} else {
 		sb.WriteString(s.table)
@@ -81,8 +84,12 @@ func (s *Selector[T]) buildExpression(expr Expression) error {
 			s.sb.WriteByte(')')
 		}
 	case Column:
+		fd, ok := s.model.fields[exp.name]
+		if !ok { // 字段不对，或者说列不对
+			return errs.NewErrUnknownField(exp.name)
+		}
 		s.sb.WriteByte('`')
-		s.sb.WriteString(exp.name)
+		s.sb.WriteString(fd.colName)
 		s.sb.WriteByte('`')
 	case value:
 		s.sb.WriteByte('?')
