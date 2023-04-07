@@ -39,3 +39,16 @@ func IterateFields(entity any) (map[string]any, error) {
 	}
 	return res, nil
 }
+
+func SetField(entity any, field string, newValue any) error {
+	val := reflect.ValueOf(entity)
+	for val.Type().Kind() == reflect.Pointer {
+		val = val.Elem()
+	}
+	fieldVal := val.FieldByName(field)
+	if !fieldVal.CanSet() {
+		return errors.New("不可修改字段")
+	}
+	fieldVal.Set(reflect.ValueOf(newValue))
+	return nil
+}
