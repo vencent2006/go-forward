@@ -2,7 +2,7 @@ package orm
 
 import (
 	"context"
-	"fmt"
+	"example/daming/orm/internal/errs"
 	"reflect"
 	"strings"
 )
@@ -88,7 +88,7 @@ func (s *Selector[T]) buildExpression(expr Expression) error {
 		s.sb.WriteByte('?')
 		s.addArgs(exp.val)
 	default:
-		return fmt.Errorf("orm: 不支持的表达式类型:%v", expr)
+		return errs.NewErrUnsupportedExpression(expr)
 	}
 	return nil
 }
