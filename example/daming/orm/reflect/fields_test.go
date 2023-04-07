@@ -2,7 +2,7 @@ package reflect
 
 import (
 	"errors"
-	"example/daming/orm/user"
+	"example/daming/orm/reflect/types"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -101,7 +101,7 @@ func TestIterateFields_FromAnotherPkg(t *testing.T) {
 	}{
 		{
 			name: "struct",
-			entity: user.User{
+			entity: types.User{
 				Name: "Tom",
 				//age:  18,
 			},
@@ -112,7 +112,7 @@ func TestIterateFields_FromAnotherPkg(t *testing.T) {
 		},
 		{
 			name: "pointer",
-			entity: &user.User{
+			entity: &types.User{
 				Name: "Tom",
 				//age:  18,
 			},
@@ -128,8 +128,8 @@ func TestIterateFields_FromAnotherPkg(t *testing.T) {
 		},
 		{
 			name: "multiple pointer",
-			entity: func() **user.User {
-				res := &user.User{
+			entity: func() **types.User {
+				res := &types.User{
 					Name: "Tom",
 					//age:  18,
 				}
@@ -147,7 +147,7 @@ func TestIterateFields_FromAnotherPkg(t *testing.T) {
 		},
 		{
 			name:    "user nil",
-			entity:  (*user.User)(nil),
+			entity:  (*types.User)(nil),
 			wantErr: errors.New("不支持零值"),
 		},
 	}
