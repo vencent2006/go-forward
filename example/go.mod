@@ -14,6 +14,7 @@ require (
 	github.com/golang/protobuf v1.5.3
 	github.com/google/gops v0.3.27
 	github.com/google/uuid v1.3.0
+	github.com/gotomicro/ekit v0.0.6
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
