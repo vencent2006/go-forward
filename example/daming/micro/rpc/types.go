@@ -2,8 +2,6 @@ package rpc
 
 import "context"
 
-const numOfLengthBytes = 8
-
 type Service interface {
 	Name() string
 }
