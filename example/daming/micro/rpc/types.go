@@ -2,6 +2,8 @@ package rpc
 
 import "context"
 
+const numOfLengthBytes = 8
+
 type Service interface {
 	Name() string
 }
@@ -13,8 +15,9 @@ type Proxy interface {
 type Request struct {
 	ServiceName string
 	MethodName  string
-	Arg         any
+	Arg         []byte
 }
 
 type Response struct {
+	Data []byte
 }
