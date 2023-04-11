@@ -1,18 +1,26 @@
-package main
+package filter_uid
 
 import (
 	"bufio"
+	"context"
 	"fmt"
+	"golang.org/x/sync/errgroup"
 	"math/rand"
 	"os"
 	"strings"
-	"sync"
 	"time"
 )
 
+const (
+	WORKER_NUM = 10
+	inputFile  = "order.csv"
+)
+
 var (
-	chJob    = make(chan *job, 10)
-	writeJob = make(chan string, 10)
+	chJob    = make(chan *job, WORKER_NUM)
+	writeJob = make(chan string, WORKER_NUM)
+	eg       *errgroup.Group
+	ctx      context.Context
 )
 
 type job struct {
@@ -20,32 +28,24 @@ type job struct {
 	orders []string
 }
 
-const (
-	//inputFile = "order_export.txt"
-	inputFile = "order.csv"
-)
-
-func main() {
-	doFilter()
-}
-
 func doFilter() {
-	wg := sync.WaitGroup{}
-	wg.Add(3)
-	go produceJob(&wg)
-	go consumeJob(&wg)
-	go writeFile(&wg)
-	wg.Wait()
+	eg, ctx = errgroup.WithContext(context.Background())
+	eg.Go(produceJob)
+	eg.Go(consumeJob)
+	eg.Go(writeFile)
+
+	if err := eg.Wait(); err != nil {
+		panic(err)
+	}
 }
 
-func produceJob(wg *sync.WaitGroup) {
-	defer wg.Done()
+func produceJob() error {
+	defer close(chJob)
 	var newJob *job
 	// read file
 	f, err := os.Open(inputFile)
 	if err != nil {
-		panic(err)
-		return
+		return err
 	}
 	defer f.Close()
 
@@ -54,6 +54,14 @@ func produceJob(wg *sync.WaitGroup) {
 	uid := "" // initial value
 	i := 0
 	for scanner.Scan() {
+		select {
+		case <-ctx.Done():
+			fmt.Println("produceJob ctx.Done")
+			return ctx.Err()
+		default:
+
+		}
+
 		i++
 		fmt.Printf("%d | line: %s\n", i, scanner.Text())
 		// uid order_id pid start_time end_time
@@ -79,67 +87,66 @@ func produceJob(wg *sync.WaitGroup) {
 
 	if err = scanner.Err(); err != nil {
 		fmt.Println(err)
+		return err
 	} else {
 		// 发最后一个
 		chJob <- newJob
 	}
-	close(chJob)
+	return nil
 }
 
-func consumeJob(wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	var wgTmp sync.WaitGroup
-	for j := range chJob {
-		wgTmp.Add(1)
-		go func(item *job, wg *sync.WaitGroup) {
-			defer wg.Done()
-			// 给一个时间复杂度, 当前是 [0,20ms）内随机一个值
-			time.Sleep(time.Duration(rand.Intn(20)+10) * time.Millisecond)
-			writeJob <- item.uid
-		}(j, &wgTmp)
+func consumeJob() error {
+	defer close(writeJob)
+	tmpEg, tmpCtx := errgroup.WithContext(ctx)
+EXIT:
+	for {
+		select {
+		case <-tmpCtx.Done():
+			fmt.Println("consumeJob ctx.Done")
+			return tmpCtx.Err()
+		case j, ok := <-chJob:
+			if !ok {
+				break EXIT
+			}
+			tmpEg.Go(func() error {
+				time.Sleep(time.Duration(rand.Intn(20)+10) * time.Millisecond)
+				writeJob <- j.uid
+				return nil
+			})
+		}
 	}
-	wgTmp.Wait()
+	if err := tmpEg.Wait(); err != nil {
+		fmt.Println("consumeJob err:", err)
+		return err
+	}
 	fmt.Println("consumeJob finished")
-	close(writeJob)
+
+	return nil
 }
 
-func writeFile(wg *sync.WaitGroup) {
-	defer wg.Done()
+func writeFile() error {
 	fileName := "huomian_uid.txt"
 	f, err := os.OpenFile(fileName, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
 	if err != nil {
-		panic(err)
-		return
-	}
-	defer f.Close()
-	for uid := range writeJob {
-		_, err = f.WriteString(uid + "\n")
-	}
-	fmt.Println("writeFile finished")
-}
-
-func generateFile() {
-	f, err := os.OpenFile(inputFile, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
-	if err != nil {
-		panic(err)
-		return
+		return err
 	}
 	defer f.Close()
 
-	uid := time.Now().Unix()
-	for i := 0; i < 100000; i++ {
-		for j := 0; j < rand.Intn(10); j++ {
-			// uid order_id pid start_time end_time
-			order_id := uid
-			pid := 3
-			startTime := uid
-			endTime := uid + 36000
-			_, err = f.WriteString(fmt.Sprintf("%d %d %d %d %d\n", uid, order_id, pid, startTime, endTime))
-			if err != nil {
-				panic(err)
+EXIT:
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Println("writeFile ctx.Done")
+			return ctx.Err()
+		case uid, ok := <-writeJob:
+			if !ok {
+				break EXIT
 			}
+			fmt.Printf("-------------- huomian|uid|%s\n", uid)
+			_, err = f.WriteString(uid + "\n")
 		}
-		uid++
 	}
+
+	fmt.Println("writeFile finished")
+	return nil
 }
