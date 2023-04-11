@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	chJob    = make(chan *job, 100)
-	writeJob = make(chan string, 100)
+	chJob    = make(chan *job, 10)
+	writeJob = make(chan string, 10)
 )
 
 type job struct {
@@ -21,7 +21,8 @@ type job struct {
 }
 
 const (
-	inputFile = "order_export.txt"
+	//inputFile = "order_export.txt"
+	inputFile = "order.csv"
 )
 
 func main() {
@@ -56,7 +57,7 @@ func produceJob(wg *sync.WaitGroup) {
 		i++
 		fmt.Printf("%d | line: %s\n", i, scanner.Text())
 		// uid order_id pid start_time end_time
-		line := strings.SplitN(scanner.Text(), " ", 2)
+		line := strings.SplitN(scanner.Text(), ",", 2)
 		tmpUid := line[0]
 		if uid == "" {
 			uid = tmpUid
@@ -78,6 +79,9 @@ func produceJob(wg *sync.WaitGroup) {
 
 	if err = scanner.Err(); err != nil {
 		fmt.Println(err)
+	} else {
+		// 发最后一个
+		chJob <- newJob
 	}
 	close(chJob)
 }
@@ -85,13 +89,17 @@ func produceJob(wg *sync.WaitGroup) {
 func consumeJob(wg *sync.WaitGroup) {
 	defer wg.Done()
 
+	var wgTmp sync.WaitGroup
 	for j := range chJob {
-		go func(item *job) {
-			if len(item.orders) > 3 {
-				writeJob <- item.uid
-			}
-		}(j)
+		wgTmp.Add(1)
+		go func(item *job, wg *sync.WaitGroup) {
+			defer wg.Done()
+			// 给一个时间复杂度, 当前是 [0,20ms）内随机一个值
+			time.Sleep(time.Duration(rand.Intn(20)+10) * time.Millisecond)
+			writeJob <- item.uid
+		}(j, &wgTmp)
 	}
+	wgTmp.Wait()
 	fmt.Println("consumeJob finished")
 	close(writeJob)
 }
