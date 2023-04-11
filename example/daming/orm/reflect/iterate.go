@@ -43,7 +43,7 @@ func IterateMap2(entity any) ([]any, []any, error) {
 	}
 	resKeys := make([]any, 0, val.Len())
 	resValues := make([]any, 0, val.Len())
-	it := val.MapRange()
+	it := val.MapRange() // 专门为map准备的迭代器
 	for it.Next() {
 		resKeys = append(resKeys, it.Key().Interface())
 		resValues = append(resValues, it.Value().Interface())
