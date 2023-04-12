@@ -10,4 +10,9 @@ import (
 func Test_doFilter(t *testing.T) {
 	runtime.GOMAXPROCS(2)
 	doFilter()
+	//wc -l huomian_uid.txt
+	// 99425
+	// awk -F, '{print $1}' order.csv | sort -n | uniq | wc -l
+	// 99425
+	// 都是99425，就对了
 }
