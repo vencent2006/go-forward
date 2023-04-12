@@ -17,22 +17,15 @@ const (
 )
 
 var (
-	chJob       = make(chan *job, WORKER_NUM)
-	writeJob    = make(chan string, WORKER_NUM)
-	workerToken = make(chan struct{}, WORKER_NUM)
-	eg          *errgroup.Group
-	ctx         context.Context
+	chJob    = make(chan *job, WORKER_NUM)
+	writeJob = make(chan string, WORKER_NUM)
+	eg       *errgroup.Group
+	ctx      context.Context
 )
 
 type job struct {
 	uid    string
 	orders []string
-}
-
-func init() {
-	for i := 0; i < WORKER_NUM; i++ {
-		workerToken <- struct{}{}
-	}
 }
 
 func doFilter() {
@@ -105,6 +98,7 @@ func produceJob() error {
 func consumeJob() error {
 	defer close(writeJob)
 	tmpEg, tmpCtx := errgroup.WithContext(ctx)
+	tmpEg.SetLimit(WORKER_NUM)
 EXIT:
 	for {
 		select {
@@ -115,9 +109,7 @@ EXIT:
 			if !ok {
 				break EXIT
 			}
-			<-workerToken
 			tmpEg.Go(func() error {
-				defer func() { workerToken <- struct{}{} }()
 				time.Sleep(time.Duration(rand.Intn(20)+10) * time.Millisecond)
 				writeJob <- j.uid
 				return nil
