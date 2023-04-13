@@ -14,5 +14,5 @@ func Test_doFilter(t *testing.T) {
 	// 99425
 	// awk -F, '{print $1}' order.csv | sort -n | uniq | wc -l
 	// 99425
-	// 都是99425，就对了
+	// 二者数据一样，就是对了，当前的执行就是把所有的uid去重，放入到huomian_uid.txt中，所以是一样的
 }
