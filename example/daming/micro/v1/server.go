@@ -92,7 +92,7 @@ func (s *Server) Invoke(ctx context.Context, req *Request) (*Response, error) {
 	// 暂时我们不知道怎么传这个 context，所以我们就直接写死
 	in[0] = reflect.ValueOf(context.Background())
 	inReq := reflect.New(method.Type().In(1).Elem()) // reflect.New返回的是一个指针; 注意这里Elem()的位置，必须得放入到reflect.New里才能分配内存
-	err := json.Unmarshal(req.Data, inReq.Interface())
+	err := json.Unmarshal(req.Arg, inReq.Interface())
 	if err != nil {
 		return nil, err
 	}

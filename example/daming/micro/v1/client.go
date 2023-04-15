@@ -53,7 +53,7 @@ func setFuncField(service Service, p Proxy) error {
 				req := &Request{
 					ServiceName: service.Name(),
 					MethodName:  fieldTyp.Name,
-					Data:        reqData,
+					Arg:         reqData,
 				}
 
 				// 要真的发起调用
