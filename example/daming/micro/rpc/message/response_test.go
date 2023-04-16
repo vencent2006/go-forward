@@ -32,6 +32,15 @@ func Test_RespEncodeDecode(t *testing.T) {
 			},
 		},
 		{
+			name: "no data",
+			resp: &Response{
+				RequestID:  123,
+				Version:    12,
+				Compresser: 13,
+				Serializer: 14,
+			},
+		},
+		{
 			name: "data with \n",
 			resp: &Response{
 				RequestID:  123,
