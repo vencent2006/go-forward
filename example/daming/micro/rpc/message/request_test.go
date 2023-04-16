@@ -61,6 +61,19 @@ func Test_EncodeDecode(t *testing.T) {
 				Data:        []byte("hello \n world"),
 			},
 		},
+		// 你可以禁止开发者(框架使用者)在 meta 里面使用 \n 和 \r, 所以不会出现这种情况
+		//{
+		//	name: "meta with \n",
+		//	req: &Request{
+		//		RequestID:   123,
+		//		Version:     12,
+		//		Compresser:  13,
+		//		Serializer:  14,
+		//		ServiceName: "user-\nservice",
+		//		MethodName:  "GetById",
+		//		Data:        []byte("hello \n world"),
+		//	},
+		//},
 	}
 
 	for _, tc := range testCases {
@@ -68,7 +81,8 @@ func Test_EncodeDecode(t *testing.T) {
 			tc.req.calculateHeaderLength()
 			tc.req.calculateBodyLength()
 			data := EncodeReq(tc.req)
-			assert.Equal(t, tc.req, DecodeReq(data))
+			decodeReq := DecodeReq(data)
+			assert.Equal(t, tc.req, decodeReq)
 		})
 
 	}
