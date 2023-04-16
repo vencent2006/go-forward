@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"example/daming/micro/rpc/message"
 	"net"
 	"reflect"
 )
@@ -56,7 +57,7 @@ func (s *Server) handleConn(conn net.Conn) error {
 		}
 
 		// 还原调用信息
-		req := &Request{}
+		req := &message.Request{}
 		err = json.Unmarshal(reqBs, req)
 		if err != nil {
 			return err
@@ -78,7 +79,7 @@ func (s *Server) handleConn(conn net.Conn) error {
 	}
 }
 
-func (s *Server) Invoke(ctx context.Context, req *Request) (*Response, error) {
+func (s *Server) Invoke(ctx context.Context, req *message.Request) (*message.Response, error) {
 	// 还原了调用信息， 你已经知道：service name, method name 和 args了
 	// 发起业务调用了
 	service, ok := s.services[req.ServiceName]
@@ -107,7 +108,7 @@ func (s *Server) Invoke(ctx context.Context, req *Request) (*Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Response{Data: resp}, nil
+	return &message.Response{Data: resp}, nil
 }
 
 //
