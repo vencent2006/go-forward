@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_EncodeDecode(t *testing.T) {
+func Test_ReqEncodeDecode(t *testing.T) {
 	testCases := []struct {
 		name string
 		req  *Request
@@ -81,8 +81,8 @@ func Test_EncodeDecode(t *testing.T) {
 			tc.req.calculateHeaderLength()
 			tc.req.calculateBodyLength()
 			data := EncodeReq(tc.req)
-			decodeReq := DecodeReq(data)
-			assert.Equal(t, tc.req, decodeReq)
+			req := DecodeReq(data)
+			assert.Equal(t, tc.req, req)
 		})
 
 	}
