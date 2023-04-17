@@ -17,11 +17,11 @@ type Response struct {
 	Data []byte
 }
 
-func (r *Response) calculateHeaderLength() {
+func (r *Response) CalculateHeaderLength() {
 	r.HeadLength = uint32(15 + len(r.Error))
 }
 
-func (r *Response) calculateBodyLength() {
+func (r *Response) CalculateBodyLength() {
 	r.BodyLength = uint32(len(r.Data))
 }
 

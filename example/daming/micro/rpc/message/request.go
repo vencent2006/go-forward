@@ -21,7 +21,7 @@ type Request struct {
 	Data []byte
 }
 
-func (r *Request) calculateHeaderLength() {
+func (r *Request) CalculateHeaderLength() {
 	// 不要忘了分隔符
 	headerLength := 15 + len(r.ServiceName) + 1 + len(r.MethodName) + 1
 	for key, value := range r.Meta {
@@ -33,7 +33,7 @@ func (r *Request) calculateHeaderLength() {
 	r.HeadLength = uint32(headerLength)
 }
 
-func (r *Request) calculateBodyLength() {
+func (r *Request) CalculateBodyLength() {
 	r.BodyLength = uint32(len(r.Data))
 }
 
