@@ -1,9 +1,10 @@
-package rpc
+package v1
 
 import (
 	"context"
 	"encoding/json"
 	"errors"
+	"example/daming/micro/v1/message"
 	"github.com/silenceper/pool"
 	"net"
 	"reflect"
@@ -50,10 +51,10 @@ func setFuncField(service Service, p Proxy) error {
 				if err != nil {
 					return []reflect.Value{retVal, reflect.ValueOf(err)}
 				}
-				req := &Request{
+				req := &message.Request{
 					ServiceName: service.Name(),
 					MethodName:  fieldTyp.Name,
-					Arg:         reqData,
+					Data:        reqData,
 				}
 
 				// 要真的发起调用
@@ -105,7 +106,7 @@ func NewClient(addr string) (*Client, error) {
 	return &Client{pool: p}, nil
 }
 
-func (c *Client) Invoke(ctx context.Context, req *Request) (*Response, error) {
+func (c *Client) Invoke(ctx context.Context, req *message.Request) (*message.Response, error) {
 	data, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
@@ -115,7 +116,7 @@ func (c *Client) Invoke(ctx context.Context, req *Request) (*Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Response{Data: resp}, nil
+	return &message.Response{Data: resp}, nil
 }
 
 func (c *Client) Send(data []byte) ([]byte, error) {

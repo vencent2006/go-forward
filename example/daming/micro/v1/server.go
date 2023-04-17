@@ -1,26 +1,30 @@
-package rpc
+package v1
 
 import (
 	"context"
 	"encoding/json"
 	"errors"
+	"example/daming/micro/v1/message"
 	"net"
 	"reflect"
 )
 
 // Server可以是一个Proxy，在服务端的proxy
 type Server struct {
-	services map[string]Service
+	services map[string]reflectionStub
 }
 
 func NewServer() *Server {
 	return &Server{
-		services: make(map[string]Service, 16), // 先预估个容量，比如16
+		services: make(map[string]reflectionStub, 16), // 先预估个容量，比如16
 	}
 }
 
 func (s *Server) RegisterService(service Service) {
-	s.services[service.Name()] = service
+	s.services[service.Name()] = reflectionStub{
+		s:     service,
+		value: reflect.ValueOf(service),
+	}
 }
 
 func (s *Server) Start(network, addr string) error {
@@ -56,7 +60,7 @@ func (s *Server) handleConn(conn net.Conn) error {
 		}
 
 		// 还原调用信息
-		req := &Request{}
+		req := &message.Request{}
 		err = json.Unmarshal(reqBs, req)
 		if err != nil {
 			return err
@@ -78,21 +82,38 @@ func (s *Server) handleConn(conn net.Conn) error {
 	}
 }
 
-func (s *Server) Invoke(ctx context.Context, req *Request) (*Response, error) {
+func (s *Server) Invoke(ctx context.Context, req *message.Request) (*message.Response, error) {
 	// 还原了调用信息， 你已经知道：service name, method name 和 args了
 	// 发起业务调用了
 	service, ok := s.services[req.ServiceName]
 	if !ok { // 不存在
 		return nil, errors.New("你要调用的服务不存在")
 	}
+
+	resp, err := service.invoke(ctx, req.MethodName, req.Data)
+	if err != nil {
+		return nil, err
+	}
+
+	return &message.Response{Data: resp}, nil
+}
+
+// 使用 reflectionStub做了一个和client对称的proxy
+// 即：server和client都是通过proxy来实现rpc的调用代理
+// 当前的代理是reflection(反射)的代理，如果未来要用unsafe的代理，就直接改stub就行了
+type reflectionStub struct {
+	s     Service
+	value reflect.Value
+}
+
+func (s *reflectionStub) invoke(ctx context.Context, methodName string, data []byte) ([]byte, error) {
 	// 反射找到方法，并且执行调用
-	val := reflect.ValueOf(service)
-	method := val.MethodByName(req.MethodName)
+	method := s.value.MethodByName(methodName)
 	in := make([]reflect.Value, 2) // 一共2个参数，一个是context，一个是request
 	// 暂时我们不知道怎么传这个 context，所以我们就直接写死
 	in[0] = reflect.ValueOf(context.Background())
 	inReq := reflect.New(method.Type().In(1).Elem()) // reflect.New返回的是一个指针; 注意这里Elem()的位置，必须得放入到reflect.New里才能分配内存
-	err := json.Unmarshal(req.Arg, inReq.Interface())
+	err := json.Unmarshal(data, inReq.Interface())
 	if err != nil {
 		return nil, err
 	}
@@ -103,11 +124,8 @@ func (s *Server) Invoke(ctx context.Context, req *Request) (*Response, error) {
 	if results[1].Interface() != nil {
 		return nil, results[1].Interface().(error)
 	}
-	resp, err := json.Marshal(results[0].Interface())
-	if err != nil {
-		return nil, err
-	}
-	return &Response{Data: resp}, nil
+
+	return json.Marshal(results[0].Interface())
 }
 
 //

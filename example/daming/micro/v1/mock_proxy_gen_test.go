@@ -2,10 +2,11 @@
 // Source: micro/rpc/types.go
 
 // Package rpc is a generated GoMock package.
-package rpc
+package v1
 
 import (
 	context "context"
+	"example/daming/micro/v1/message"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
@@ -72,10 +73,10 @@ func (m *MockProxy) EXPECT() *MockProxyMockRecorder {
 }
 
 // Invoke mocks base method.
-func (m *MockProxy) Invoke(ctx context.Context, req *Request) (*Response, error) {
+func (m *MockProxy) Invoke(ctx context.Context, req *message.Request) (*message.Response, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Invoke", ctx, req)
-	ret0, _ := ret[0].(*Response)
+	ret0, _ := ret[0].(*message.Response)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

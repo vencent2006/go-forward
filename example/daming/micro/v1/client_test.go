@@ -1,8 +1,9 @@
-package rpc
+package v1
 
 import (
 	"context"
 	"errors"
+	"example/daming/micro/v1/message"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -37,11 +38,11 @@ func Test_setFuncField(t *testing.T) {
 			service: &UserService{},
 			mock: func(ctrl *gomock.Controller) Proxy {
 				p := NewMockProxy(ctrl)
-				p.EXPECT().Invoke(gomock.Any(), &Request{
+				p.EXPECT().Invoke(gomock.Any(), &message.Request{
 					ServiceName: "user-service",
 					MethodName:  "GetById",
-					Arg:         []byte(`{"Id":123}`),
-				}).Return(&Response{}, nil)
+					Data:        []byte(`{"Id":123}`),
+				}).Return(&message.Response{}, nil)
 				return p
 			},
 		},
