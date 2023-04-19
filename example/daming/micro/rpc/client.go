@@ -56,22 +56,42 @@ func setFuncField(service Service, p Proxy) error {
 					MethodName:  fieldTyp.Name,
 					Data:        reqData,
 				}
+				req.CalculateHeaderLength()
+				req.CalculateBodyLength()
 
 				// 要真的发起调用
 				resp, err := p.Invoke(ctx, req)
 				if err != nil {
+					// 反序列化的error
 					return []reflect.Value{retVal, reflect.ValueOf(err)}
 				}
 
-				err = json.Unmarshal(resp.Data, retVal.Interface())
-				if err != nil {
-					return []reflect.Value{retVal, reflect.ValueOf(err)}
+				var retErr error
+				if len(resp.Error) > 0 {
+					// 服务端传过来的 error
+					retErr = errors.New(string(resp.Error))
+				}
+
+				if len(resp.Data) > 0 {
+					err = json.Unmarshal(resp.Data, retVal.Interface())
+					if err != nil {
+						// 反序列化的 error
+						return []reflect.Value{retVal, reflect.ValueOf(err)}
+					}
+				}
+
+				var retErrVal reflect.Value
+				if retErr == nil {
+					retErrVal = reflect.Zero(reflect.TypeOf(new(error)).Elem())
+				} else {
+					retErrVal = reflect.ValueOf(retErr)
 				}
 
 				// 这里怎么办
 				//fmt.Println(resp)
-				return []reflect.Value{retVal, reflect.Zero(reflect.TypeOf(new(error)).Elem())}
+				return []reflect.Value{retVal, retErrVal}
 			}
+			// 我要设置值给 GetById
 			fnVal := reflect.MakeFunc(fieldTyp.Type, fn)
 			fieldVal.Set(fnVal)
 		}
@@ -107,16 +127,13 @@ func NewClient(addr string) (*Client, error) {
 }
 
 func (c *Client) Invoke(ctx context.Context, req *message.Request) (*message.Response, error) {
-	data, err := json.Marshal(req)
-	if err != nil {
-		return nil, err
-	}
+	data := message.EncodeReq(req)
 	// 正儿八经地把请求发过去服务端
 	resp, err := c.Send(data)
 	if err != nil {
 		return nil, err
 	}
-	return &message.Response{Data: resp}, nil
+	return message.DecodeResp(resp), nil
 }
 
 func (c *Client) Send(data []byte) ([]byte, error) {
@@ -130,8 +147,8 @@ func (c *Client) Send(data []byte) ([]byte, error) {
 		_ = conn.Close()
 	}()
 
-	res := EncodeMsg(data)
-	_, err = conn.Write(res)
+	//res := EncodeMsg(data)
+	_, err = conn.Write(data) // 已经encode过了
 	if err != nil {
 		return nil, err
 	}

@@ -3,7 +3,6 @@ package rpc
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"example/daming/micro/rpc/message"
 	"net"
 	"reflect"
@@ -60,21 +59,16 @@ func (s *Server) handleConn(conn net.Conn) error {
 		}
 
 		// 还原调用信息
-		req := &message.Request{}
-		err = json.Unmarshal(reqBs, req)
-		if err != nil {
-			return err
-		}
-
+		req := message.DecodeReq(reqBs)
 		resp, err := s.Invoke(context.Background(), req)
 		if err != nil {
 			// 这个可能是你的业务 error
-			// todo 暂时不知道怎么回传error， 所以我们简单记录一下
-			return err
+			resp.Error = []byte(err.Error())
 		}
-
-		res := EncodeMsg(resp.Data)
-		_, err = conn.Write(res)
+		resp.CalculateHeaderLength()
+		resp.CalculateBodyLength()
+		//res := EncodeMsg(resp.Data)
+		_, err = conn.Write(message.EncodeResp(resp))
 		if err != nil {
 			return err
 		}
@@ -86,16 +80,25 @@ func (s *Server) Invoke(ctx context.Context, req *message.Request) (*message.Res
 	// 还原了调用信息， 你已经知道：service name, method name 和 args了
 	// 发起业务调用了
 	service, ok := s.services[req.ServiceName]
+	resp := &message.Response{
+		RequestID:  req.RequestID,
+		Version:    req.Version,
+		Compresser: req.Compresser,
+		Serializer: req.Serializer,
+	}
+
 	if !ok { // 不存在
-		return nil, errors.New("你要调用的服务不存在")
+		resp.Error = []byte("你要调用的服务不存在")
+		return resp, nil
 	}
 
-	resp, err := service.invoke(ctx, req.MethodName, req.Data)
+	respData, err := service.invoke(ctx, req.MethodName, req.Data)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
+	resp.Data = respData
 
-	return &message.Response{Data: resp}, nil
+	return resp, nil
 }
 
 // 使用 reflectionStub做了一个和client对称的proxy

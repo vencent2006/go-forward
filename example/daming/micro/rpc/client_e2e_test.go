@@ -16,7 +16,7 @@ func TestInitClientProxy(t *testing.T) {
 		err := server.Start("tcp", serverAddr)
 		t.Log(err)
 	}()
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second * 2)
 	usClient := &UserService{}
 	err := InitClientProxy(serverAddr, usClient)
 	require.NoError(t, err)
