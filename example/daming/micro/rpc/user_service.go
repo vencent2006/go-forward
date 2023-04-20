@@ -25,13 +25,16 @@ type GetByIdResp struct {
 }
 
 type UserServiceServer struct {
+	Err error
+	Msg string
 }
 
 func (u *UserServiceServer) Name() string {
 	return "user-service"
 }
 
+// 约束：req是指针，返回值的第一个是指针，必须符合要求
 func (u *UserServiceServer) GetById(ctx context.Context, req *GetByIdReq) (*GetByIdResp, error) {
 	log.Println(req)
-	return &GetByIdResp{Msg: "Hello, world"}, nil
+	return &GetByIdResp{Msg: u.Msg}, u.Err
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"example/daming/micro/rpc/message"
+	"example/daming/micro/rpc/serialize/json"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -47,11 +48,12 @@ func Test_setFuncField(t *testing.T) {
 			},
 		},
 	}
+	serializer := &json.Serializer{} // serializer
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			err := setFuncField(tc.service, tc.mock(ctrl))
+			err := setFuncField(tc.service, tc.mock(ctrl), serializer)
 			assert.Equal(t, tc.wantErr, err)
 			if err != nil {
 				return
