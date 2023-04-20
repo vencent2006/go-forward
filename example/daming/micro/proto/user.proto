@@ -1,0 +1,17 @@
+syntax="proto3";
+package users;
+option go_package = "/gen";
+// cd micro/proto
+// protoc --go_out=. user.proto
+message GetByIdReq {
+    int64 id = 1;
+}
+
+message GetByIdResp {
+    User user = 1;
+}
+
+message User {
+    int64 id = 1;
+    string name = 2;
+}
