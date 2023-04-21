@@ -5,6 +5,11 @@ import (
 	"example/daming/micro/rpc/message"
 )
 
+const (
+	META_KEY_ONEWAY      = "one-way"
+	META_VAL_ONEWAY_TRUE = "true"
+)
+
 type Service interface {
 	Name() string
 }
