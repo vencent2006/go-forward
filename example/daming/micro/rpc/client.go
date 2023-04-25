@@ -149,6 +149,29 @@ func NewClient(addr string, opts ...ClientOption) (*Client, error) {
 }
 
 func (c *Client) Invoke(ctx context.Context, req *message.Request) (*message.Response, error) {
+	if ctx.Err() != nil {
+		return nil, ctx.Err()
+	}
+	ch := make(chan struct{})
+	var (
+		resp *message.Response
+		err  error
+	)
+	go func() {
+		defer close(ch)
+		resp, err = c.doInvoke(ctx, req)
+		ch <- struct{}{}
+	}()
+
+	select {
+	case <-ctx.Done():
+		return nil, ctx.Err()
+	case <-ch:
+		return resp, err
+	}
+}
+
+func (c *Client) doInvoke(ctx context.Context, req *message.Request) (*message.Response, error) {
 	data := message.EncodeReq(req)
 	// 正儿八经地把请求发过去服务端
 	resp, err := c.send(ctx, data)
