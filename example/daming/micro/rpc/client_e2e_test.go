@@ -207,3 +207,54 @@ func TestOneway(t *testing.T) {
 		})
 	}
 }
+
+func TestTimeout(t *testing.T) {
+	// server
+	server := NewServer()
+	service := &UserServiceServerTimeout{t: t}
+	server.RegisterService(service)
+	serverAddr := ":8081"
+	go func() {
+		err := server.Start("tcp", serverAddr)
+		t.Log(err)
+	}()
+	time.Sleep(time.Second * 2)
+
+	// client
+	usClient := &UserService{}
+	client, err := NewClient(serverAddr)
+	require.NoError(t, err)
+	err = client.InitService(usClient)
+	require.NoError(t, err)
+
+	testCases := []struct {
+		name string
+		mock func() context.Context
+
+		wantErr  error
+		wantResp *GetByIdResp
+	}{
+		{
+			name: "timeout",
+			mock: func() context.Context {
+				service.Err = errors.New("mock error")
+				service.Msg = "hello, world"
+				// 服务睡眠2s，但是客户端超时设置了1s, 所以客户端预期收到 ontext.DeadlineExceeded
+				service.sleep = time.Second * 2
+				ctx, _ := context.WithTimeout(context.Background(), service.sleep)
+				return ctx
+			},
+			wantResp: &GetByIdResp{},
+			wantErr:  context.DeadlineExceeded,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx := tc.mock()
+			resp, er := usClient.GetById(ctx, &GetByIdReq{Id: 123})
+			assert.Equal(t, tc.wantErr, er)
+			assert.Equal(t, tc.wantResp, resp)
+		})
+	}
+}

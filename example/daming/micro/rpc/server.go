@@ -8,6 +8,8 @@ import (
 	"example/daming/micro/rpc/serialize/json"
 	"net"
 	"reflect"
+	"strconv"
+	"time"
 )
 
 // Server可以是一个Proxy，在服务端的proxy
@@ -72,11 +74,19 @@ func (s *Server) handleConn(conn net.Conn) error {
 		// 还原调用信息
 		req := message.DecodeReq(reqBs)
 		ctx := context.Background()
+		cancel := func() {}
+		if deadlineStr, ok := req.Meta[META_KEY_DEADLINE]; ok {
+			// todo 如果er != nil， 那么是要返回默认超时时间还是直接返回客户端错误呢
+			if deadline, er := strconv.ParseInt(deadlineStr, 10, 64); er == nil {
+				ctx, cancel = context.WithDeadline(ctx, time.UnixMilli(deadline))
+			}
+		}
 		oneway, ok := req.Meta[META_KEY_ONEWAY]
 		if ok && oneway == META_VAL_ONEWAY_TRUE {
 			ctx = CtxWithOneWay(ctx)
 		}
-		resp, err := s.Invoke(context.Background(), req)
+		resp, err := s.Invoke(ctx, req)
+		cancel() // 用完了(ctx)，就马上cancel掉
 		if err != nil {
 			// 这个可能是你的业务 error
 			resp.Error = []byte(err.Error())
@@ -138,8 +148,7 @@ func (s *reflectionStub) invoke(ctx context.Context, req *message.Request) ([]by
 	// 反射找到方法，并且执行调用
 	method := s.value.MethodByName(req.MethodName)
 	in := make([]reflect.Value, 2) // 一共2个参数，一个是context，一个是request
-	// 暂时我们不知道怎么传这个 context，所以我们就直接写死
-	in[0] = reflect.ValueOf(context.Background())
+	in[0] = reflect.ValueOf(ctx)
 	inReq := reflect.New(method.Type().In(1).Elem()) // reflect.New返回的是一个指针; 注意这里Elem()的位置，必须得放入到reflect.New里才能分配内存
 	serializer, ok := s.serializers[req.Serializer]
 	if !ok {

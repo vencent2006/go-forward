@@ -7,6 +7,7 @@ import (
 
 const (
 	META_KEY_ONEWAY      = "one-way"
+	META_KEY_DEADLINE    = "deadline"
 	META_VAL_ONEWAY_TRUE = "true"
 )
 

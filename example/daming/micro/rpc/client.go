@@ -9,6 +9,7 @@ import (
 	"github.com/silenceper/pool"
 	"net"
 	"reflect"
+	"strconv"
 	"time"
 )
 
@@ -50,10 +51,14 @@ func setFuncField(service Service, p Proxy, s serialize.Serializer) error {
 					return []reflect.Value{retVal, reflect.ValueOf(err)}
 				}
 
+				meta := make(map[string]string, 2)
+				// 我确实设置了超时
+				if deadline, ok := ctx.Deadline(); ok {
+					meta[META_KEY_DEADLINE] = strconv.FormatInt(deadline.UnixMilli(), 10)
+				}
 				// one way
-				var meta map[string]string
 				if isOneway(ctx) {
-					meta = map[string]string{META_KEY_ONEWAY: META_VAL_ONEWAY_TRUE}
+					meta[META_KEY_ONEWAY] = META_VAL_ONEWAY_TRUE
 				}
 				req := &message.Request{
 					ServiceName: service.Name(),
