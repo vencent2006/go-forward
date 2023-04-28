@@ -52,11 +52,15 @@ func main() {
 	// Contact the server and print out its response.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
+
+	// say hello
 	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
 	log.Printf("Greeting: %s", r.GetMessage())
+
+	// say hello again
 	r, err = c.SayHelloAgain(ctx, &pb.HelloRequest{Name: *name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
