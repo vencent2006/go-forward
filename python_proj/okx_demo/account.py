@@ -11,7 +11,7 @@ def get_all_account_balance():
     :return:
     """
     result = accountAPI.get_account_balance()
-    print(json.dumps(result, indent=2))
+    print_pretty_json(result)
     return result
 
 
@@ -21,7 +21,7 @@ def get_one_account_balance(ccy):
     :return:
     """
     result = accountAPI.get_account_balance(ccy)
-    print(json.dumps(result, indent=2))
+    print_pretty_json(result)
     return result
 
 

@@ -13,7 +13,7 @@ def get_instruments():
     result = publicDataAPI.get_instruments(
         instType="SPOT"
     )
-    print(json.dumps(result, indent=2))
+    print_pretty_json(result)
     return result
 
 

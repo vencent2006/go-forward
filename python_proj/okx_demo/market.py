@@ -38,7 +38,7 @@ def get_ticker(instId):
     }
     """
     result = marketDataAPI.get_ticker(instId=instId)
-    print(json.dumps(result, indent=2))
+    print_pretty_json(result)
     return result
 
 
@@ -47,8 +47,8 @@ def get_tickers():
     获取现货报价
     :return: 列表
     """
-    result = marketDataAPI.get_tickers(instType="SPOT")
-    print(json.dumps(result, indent=2))
+    result = marketDataAPI.get_tickers(instType=INST_TYPE_SPOT)
+    print_pretty_json(result)
     return result
 
 
