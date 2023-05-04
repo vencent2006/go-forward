@@ -1,0 +1,5 @@
+.idea
+_trial_temp
+venv
+__pycache__
+constant/key.py
