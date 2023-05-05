@@ -15,10 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import market
+
+import controller
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('tickers/', market.get_tickers),
-    path('ticker/', market.get_ticker)
+    # market
+    path('market/tickers/', controller.get_tickers),
+    path('market/ticker/', controller.get_ticker),
+    # account balance
+    path('account/balance/all', controller.get_all_account_balance),
+    path('account/balance/one', controller.get_one_account_balance),
+    # public data
+    path('public/instruments', controller.get_instruments),
 ]
