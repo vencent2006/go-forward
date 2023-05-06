@@ -2,3 +2,5 @@ constant/key.py
 __pycache__
 constant/__pycache__
 okx_django/__pycache__
+okx_sdk/_trial_temp
+_trial_temp
