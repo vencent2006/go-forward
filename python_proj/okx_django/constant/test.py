@@ -17,7 +17,3 @@ TRADE_MODE_CASH = "cash"
 # order
 ORDER_TYPE_LIMIT = "limit"
 ORDER_TYPE_MARKET = "market"
-
-
-def print_pretty_json(jsonStr):
-    print(json.dumps(jsonStr, indent=2))

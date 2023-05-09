@@ -1,5 +1,6 @@
 import okx.MarketData as MarketData
 from constant import *
+from utils import *
 
 # 主要参考这个 https://www.okx.com/learn/spot-trading-with-jupyter-notebook
 

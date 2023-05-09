@@ -1,6 +1,6 @@
 import okx.Account as Account
-import json
 from constant import *
+from utils import *
 
 accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
 
