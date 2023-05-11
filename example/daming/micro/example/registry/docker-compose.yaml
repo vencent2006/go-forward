@@ -1,0 +1,20 @@
+services:
+  etcd:
+    image: 'bitnami/etcd:latest'
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      #      客户端通信接口
+      - 2379:2379
+      #      集群节点通信端口
+      - 2380:2380
+    etcdkeeper:
+      image: evildecay/etcdkeeper:latest
+      container_name: "etcdkeeper"
+      #    environment:
+      #      HOST: "0.0.0.0"
+      ports:
+        - 12000:8080
+      depends_on:
+        - etcd
