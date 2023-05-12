@@ -1,4 +1,4 @@
-package grpc_resolver
+package registry
 
 import (
 	"context"
@@ -20,11 +20,11 @@ func TestServer(t *testing.T) {
 	r, err := etcd.NewRegistry(etcdClient)
 	require.NoError(t, err)
 	us := &UserServiceServer{}
-	server, err := micro.NewServer("user-service", micro.ServerWithRegistry(r), micro.ServerWithTimeout(time.Second*10))
+	server, err := micro.NewServer(service_name, micro.ServerWithRegistry(r), micro.ServerWithTimeout(time.Second*10))
 	require.NoError(t, err)
 	gen.RegisterUserServiceServer(server, us)
 	// 我在这里调用 Start 方法，就意味着 us 已经完全准备好了
-	err = server.Start("8081")
+	err = server.Start(":8081")
 	t.Log(err)
 }
 

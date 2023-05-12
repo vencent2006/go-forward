@@ -23,4 +23,6 @@ type ServiceInstance struct {
 }
 
 type Event struct {
+	// ADD, DELETE, UPDATE ...
+	Type string // 当前，我是不想去了解具体的event 类型，而是有通知就拉取全部的resolve，虽然给注册中心增加压力，但是减少时序造成的问题
 }

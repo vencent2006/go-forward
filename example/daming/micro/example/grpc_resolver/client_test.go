@@ -11,6 +11,7 @@ import (
 
 func TestClient(t *testing.T) {
 	// grpc.WithInsecure, 表示不使用证书(https)
+	// 格式是："scheme://[authority]/endpoint", scheme=registry, authority=空, endpoint=localhost:8081
 	cc, err := grpc.Dial("registry:///localhost:8081", grpc.WithInsecure(), grpc.WithResolvers(&Builder{}))
 	require.NoError(t, err)
 	client := gen.NewUserServiceClient(cc)

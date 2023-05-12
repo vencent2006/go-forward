@@ -9,12 +9,12 @@ services:
       - 2379:2379
       #      集群节点通信端口
       - 2380:2380
-    etcdkeeper:
-      image: evildecay/etcdkeeper:latest
-      container_name: "etcdkeeper"
-      #    environment:
-      #      HOST: "0.0.0.0"
-      ports:
-        - 12000:8080
-      depends_on:
-        - etcd
+  etcdkeeper:
+    image: evildecay/etcdkeeper:latest
+    container_name: "etcdkeeper"
+    #    environment:
+    #      HOST: "0.0.0.0"
+    ports:
+      - 12000:8080
+    depends_on:
+      - etcd
