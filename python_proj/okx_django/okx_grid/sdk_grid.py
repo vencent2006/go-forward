@@ -31,6 +31,7 @@ def calculate_return(balance):
 
 # 网格交易主函数
 def grid_trading():
+    # todo 还没有加止盈止损线
     current_price = get_latest_price()
     # “//”是一个算术运算符，表示整数除法，它可以返回商的整数部分（向下取整）
     buy_price = current_price - (grid_size // 2) * grid_interval
