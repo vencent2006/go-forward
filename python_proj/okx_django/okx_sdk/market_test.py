@@ -15,6 +15,16 @@ class MyTestCase(unittest.TestCase):
         res = get_tickers()
         self.assertEqual(res["code"], CODE_SUCCESS)
 
+    def test_get_klines(self):
+        instId = "BTC-USDT"
+        res = get_klines(instId)
+        self.assertEqual(res["code"], CODE_SUCCESS)
+
+    def test_get_history_klines(self):
+        instId = "BTC-USDT"
+        res = get_history_klines(instId)
+        self.assertEqual(res["code"], CODE_SUCCESS)
+
 
 if __name__ == '__main__':
     unittest.main()
