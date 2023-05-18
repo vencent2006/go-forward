@@ -78,19 +78,19 @@ def print_hi(name):
     # grid = 0.025
     grid = 0.05
     count = 100
-    max_consume_money = Decimal(0)
-    consume_money = Decimal(0)
+    max_consume_money = Decimal(0)  # 花费的钱的最大值，也就是你要准备的最大资金
+    consume_money = Decimal(0)  # 花费的钱, buy会增加，sell会减少
     opt = []
     # [日期, 价格, -1/1] 用于画点
     # 历史
-    opt_b = []
-    opt_s = []
+    opt_b = []  # operation buy
+    opt_s = []  # operation sell
     # 利润
     profit = 0
 
     # 建仓
-    first = data.iloc[0]
-    while benchmark * (1 - grid) > first['open']:
+    first = data.iloc[0]  # iloc是从0开始计数
+    while benchmark * (1 - grid) > first['open']:  # 比较开盘价
         # 一手买入 或者 倍数买入
         # 买入
         # 基准价变更
@@ -107,6 +107,7 @@ def print_hi(name):
 
     max_consume_money = consume_money
 
+    # 获取index，再使用loc进行遍历
     for day_up_down in data.index:
         open = data.loc[day_up_down].values[0]
         high = data.loc[day_up_down].values[1]
@@ -116,7 +117,7 @@ def print_hi(name):
         # 盘前
         # 如果 opt 为空，没有任何操作， 基准价 > 开盘价，触发买入
         # if len(opt) == 0 and benchmark > open:
-        if benchmark * (1 - grid) > open:
+        if benchmark * (1 - grid) > open:  # 比较开盘价
             # 一手买入 或者 倍数买入
             # 买入
             # 基准价变更
@@ -125,14 +126,14 @@ def print_hi(name):
 
             # 计算的操作
             consume_money += Decimal(benchmark) * Decimal(count)
-            if consume_money.compare(max_consume_money) > 0:
+            if consume_money.compare(max_consume_money) > 0:  # 更新最大花费值
                 max_consume_money = consume_money
 
             # 添加记录
             h = history.History(stock_code, 1, open, count)
             opt.append(h)
             opt_b.append([day_up_down, benchmark, 1])
-        elif benchmark * (1 + grid) <= open:
+        elif benchmark * (1 + grid) <= open:  # 比较开盘价
             if len(opt) > 0:
                 # 卖出
                 # 基准价变更
@@ -148,10 +149,10 @@ def print_hi(name):
                 print(day_up_down, "开盘卖出", benchmark, opt[len(opt) - 1].price, "收益", temp)
                 # 修改记录
                 h = history.History(stock_code, -1, benchmark, count)
-                opt.pop()  # todo 为啥要pop呢
+                opt.pop()  # todo 为啥要pop呢，是要保证有买才能卖吗？
                 opt_s.append([day_up_down, benchmark, -1])
 
-        while benchmark * (1 - grid) >= low:
+        while benchmark * (1 - grid) >= low:  # 比较最低价
             # 盘中
             # 一手买入 或者 倍数买入
             # 买入
@@ -172,7 +173,7 @@ def print_hi(name):
         # open = high开盘价就是最高价的情况 到时候再触发 low 会多买，这是一个假收益
         # 不会那么巧吧开盘价跟最高价一样
         if len(opt) > 0 and open != high:
-            while len(opt) > 0 and benchmark * (1 + grid) <= high:
+            while len(opt) > 0 and benchmark * (1 + grid) <= high:  # 比较最高价
                 # 卖出
                 # 基准价变更
                 benchmark = float(Decimal(benchmark * (1 + grid)).quantize(Decimal('0.000')))
