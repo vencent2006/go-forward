@@ -31,8 +31,14 @@ def print_hi(name):
 
     data = pd.DataFrame(data, columns=['timestamp', 'open', 'high', 'low', 'close'])
     # data['timestamp'] = pd.to_datetime(data['timestamp'])
+
+    # keys：这个参数可以是单个列键、与调用DataFrame相同长度的单个数组，或者包含列键和数组的任意组合的列表。在这里，数组包括Series、Index、np.ndarray
+    # drop：删除要用作新索引的列。
+    # append：是否向现有索引追加列。
+    # inplace： 如果为True，则就地修改DataFrame(不创建新对象)。
+    # verify_integrity：检查新索引是否有副本。
     data.set_index('timestamp', drop=True, inplace=True)
-    data.sort_index()
+    data.sort_index()  # 根据index的值进行排序
 
     # 时间区间
     data = data['2018-06-01':'2021-06-01']
@@ -47,7 +53,7 @@ def print_hi(name):
     plt.xticks(size=7)
     # 设置标签
     plt.xlabel('day')
-    plt.ylabel('close')
+    plt.ylabel('close')  # 画的是收盘价
     plt.title(stock_code)
 
     from matplotlib.pyplot import MultipleLocator
@@ -142,7 +148,7 @@ def print_hi(name):
                 print(day_up_down, "开盘卖出", benchmark, opt[len(opt) - 1].price, "收益", temp)
                 # 修改记录
                 h = history.History(stock_code, -1, benchmark, count)
-                opt.pop()
+                opt.pop()  # todo 为啥要pop呢
                 opt_s.append([day_up_down, benchmark, -1])
 
         while benchmark * (1 - grid) >= low:
@@ -174,7 +180,7 @@ def print_hi(name):
                 # 计算的操作
                 temp = float(
                     ((Decimal(benchmark) - Decimal(opt[len(opt) - 1].price)) * count)
-                        .quantize(Decimal('0.00')))
+                    .quantize(Decimal('0.00')))
                 profit += temp
                 consume_money -= Decimal(benchmark) * Decimal(count)
 
@@ -200,6 +206,7 @@ def print_hi(name):
     # plt.scatter(x2, y2, marker='^', label="triangle")
     plt.show()
     print("总收益", Decimal(profit).quantize(Decimal('0.000')))
+    # todo 这个总资金消耗，没看懂
     print("总资金消耗", Decimal(max_consume_money).quantize(Decimal("0.000")))
 
 

@@ -11,3 +11,14 @@ class History:
         self.opt_type = opt_type
         self.price = price
         self.count = count
+
+    def __str__(self):
+        return str(self.__class__) + ":" + str(self.__dict__)
+
+    def __repr__(self):
+        return str(self.__class__) + ":" + str(self.__dict__)
+
+
+if __name__ == '__main__':
+    h = History("123", 1, 1.1, 100)
+    print(h)
