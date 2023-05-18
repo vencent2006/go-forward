@@ -17,3 +17,5 @@ TRADE_MODE_CASH = "cash"
 # order
 ORDER_TYPE_LIMIT = "limit"
 ORDER_TYPE_MARKET = "market"
+
+print_json = False

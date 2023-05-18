@@ -93,7 +93,7 @@ def get_klines(instId):
     return result
 
 
-def get_history_klines(instId):
+def get_history_klines(instId, bar="1m"):
     """
     获取交易产品历史K线数据
     https://www.okx.com/docs-v5/zh/#rest-api-market-data-get-candlesticks-history
@@ -140,7 +140,7 @@ def get_history_klines(instId):
     }
 
     """
-    result = marketDataAPI.get_history_candlesticks(instId=instId)
+    result = marketDataAPI.get_history_candlesticks(instId=instId, bar=bar)
     print_pretty_json(result)
     return result
 

@@ -20,6 +20,7 @@ def print_hi(name):
     # to_date = lambda row: row[0] = time.strftime("%Y-%m-%d", time.localtime(row[0] / 1000))
     # date = np.zeros(data.size)
 
+    # 获取所有行，部分列(0到5),然后再删除第1列，
     data = np.delete(data[:, 0:6], 1, axis=1)
     # 日期
     for row in data:

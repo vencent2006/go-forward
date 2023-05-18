@@ -1,5 +1,8 @@
 import json
 
+import constant
+
 
 def print_pretty_json(json_str):
-    print(json.dumps(json_str, indent=2))
+    if constant.print_json:
+        print(json.dumps(json_str, indent=2))
