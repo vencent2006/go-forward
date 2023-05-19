@@ -206,9 +206,9 @@ def print_hi(name):
     plt.plot(df_s.index, df_s['price'], 'og')
     # plt.scatter(x1, y1, marker='o', label="circle")
     # plt.scatter(x2, y2, marker='^', label="triangle")
+    plt.tight_layout()
     plt.show()
     print("总收益", Decimal(profit).quantize(Decimal('0.000')))
-    # todo 这个总资金消耗，没看懂
     print("总资金消耗", Decimal(max_consume_money).quantize(Decimal("0.000")))
 
 
