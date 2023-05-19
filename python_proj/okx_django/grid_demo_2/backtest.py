@@ -12,26 +12,21 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 
-def backtest_grid_trading(df: pd.DataFrame) -> {}:
+def backtest_grid_trading(df: pd.DataFrame) -> dict:
     """
     回测网格交易数据
     :param df: 行情数据
     :return:
     """
-    df_buy = df
-    df_sell = df
 
     # 3. 变量设定
     max = df['high'].max()  # high的max
     min = df['low'].min()  # low的min
     benchmark = float(Decimal((max + min) / 2 * 1.2).quantize(Decimal('0.000')))  # 基准价
-    print('max=%.2f, min=%.2f, benchmark=%.2f' % (max, min, benchmark))
-    # print(df.loc[df['high'].idxmax()]) # 查看是哪一行是最大
-    # open      24118.9
-    # high     510000.0
-    # low       23550.4
-    # close     76000.0
-    # Name: 2023-03-14, dtype: float64
+    print('high.max=%.2f, low.min=%.2f, benchmark=%.2f' % (max, min, benchmark))
+    print('high.max的那一行:\n', df.loc[df['high'].idxmax()])  # 查看是哪一行是最大
+    print('low.min的那一行:\n', df.loc[df['low'].idxmin()])  # 查看是哪一行是最大
+
     grid = 0.05  # 网格大小比例
     count = 1  # 一手买多少
     max_consume_money = Decimal(0)  # 花费的钱的最大值，也就是你要准备的最大资金
@@ -156,17 +151,17 @@ def backtest_grid_trading(df: pd.DataFrame) -> {}:
     return {'df_b': df_b, 'df_s': df_s, 'profit': profit, 'max_consume_money': max_consume_money}
 
 
-def get_df(instId: str) -> pd.DataFrame:
+def get_df(instId: str, start='', end='') -> pd.DataFrame:
     """
-    获取dataframe
+    根据instId获取行情数据的dataframe
     :return: dataframe
     """
-    bar = "1Dutc"
-    res = market.get_history_klines(instId, bar=bar)
+    bar = "1Dutc"  # utc的1天
+    res = market.get_history_klines(instId, bar=bar, start=start, end=end)
     # print(res)
     data = np.array(res["data"])
     data = data[:, 0:5]
-    print(data)
+    # print(data)
     for row in data:
         row[0] = time.strftime("%Y-%m-%d", time.localtime(int(row[0]) / 1000))
 
@@ -184,7 +179,7 @@ def draw_pic(df: DataFrame, dic: dict):
     plt.xlabel('day')
     plt.ylabel('close')  # 画的是收盘价
     plt.title(instId)
-    plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(18))
+    plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(len(df) // 5))
     # plt.show()
 
     # 6. 作图
@@ -207,12 +202,14 @@ def draw_pic(df: DataFrame, dic: dict):
 
 # 1. 读取sdk数据，并格式化数据
 instId = "BTC-USDT"
-df = get_df(instId)
+start = "1669824000000"  # 2022-12-01 00:00:00
+end = "1672502400000"  # 2023-01-01 00:00:00
+df = get_df(instId, start, end)
 print(df)
-print(df.dtypes)  # 打印df的各个column的类型
+# print(df.dtypes)  # 打印df的各个column的类型
 
 # 2. backtest
 dic = backtest_grid_trading(df)
 
-# 2. plot
+# 3. plot
 draw_pic(df, dic)

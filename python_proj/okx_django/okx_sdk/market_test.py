@@ -25,6 +25,13 @@ class MyTestCase(unittest.TestCase):
         res = get_history_klines(instId)
         self.assertEqual(res["code"], CODE_SUCCESS)
 
+    def test_get_history_klines_start_end(self):
+        instId = "BTC-USDT"
+        start = "1669824000000"  # 2022-12-01 00:00:00
+        end = "1672502400000"  # 2023-01-01 00:00:00
+        res = get_history_klines(instId, bar="1Dutc", start=start, end=end)
+        self.assertEqual(res["code"], CODE_SUCCESS)
+
 
 if __name__ == '__main__':
     unittest.main()

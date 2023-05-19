@@ -18,4 +18,5 @@ TRADE_MODE_CASH = "cash"
 ORDER_TYPE_LIMIT = "limit"
 ORDER_TYPE_MARKET = "market"
 
-print_json = False
+print_json = False  # 关闭日志
+# print_json = True # 开启日志
