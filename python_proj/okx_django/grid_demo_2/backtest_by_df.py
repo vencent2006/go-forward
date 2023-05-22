@@ -11,11 +11,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
+"""
+通过输入dataframe进行回测
+本质上输入的dataframe，只需要timestamp(index)和close(收盘价）即可
+"""
 
-def backtest_grid_trading(df: pd.DataFrame) -> dict:
+
+def backtest_grid_trading(df: pd.DataFrame, instId: str) -> dict:
     """
     回测网格交易数据
     :param df: 行情数据
+    :param instId: 交易对
     :return: dict {'df_b': df_b, 'df_s': df_s, 'profit': profit, 'max_consume_money': max_consume_money}
     """
 
@@ -169,16 +175,19 @@ def draw_pic(df: DataFrame, dic: dict):
     print("最大资金消耗", Decimal(max_consume_money).quantize(Decimal("0.000")))
 
 
-# 1. 读取sdk数据，并格式化数据
-instId = "BTC-USDT"
-start = "1667232000000"  # 2022-11-01 00:00:00
-end = "1672502400000"  # 2023-01-01 00:00:00
-df = get_df(instId, start, end)
-print(df)
-# print(df.dtypes)  # 打印df的各个column的类型
+if __name__ == '__main__':
+    # 1. 读取sdk数据，并格式化数据
+    instId = "BTC-USDT"
+    start = "1667232000000"  # 2022-11-01 00:00:00
+    end = "1672502400000"  # 2023-01-01 00:00:00
+    df = get_df(instId, start, end)
+    print(df)
+    # df.to_csv(instId+'.csv')
+    # print(df.dtypes)  # 打印df的各个column的类型
+    exit(0)
 
-# 2. backtest
-dic = backtest_grid_trading(df)
+    # 2. backtest
+    dic = backtest_grid_trading(df)
 
-# 3. plot
-draw_pic(df, dic)
+    # 3. plot
+    draw_pic(df, dic)
