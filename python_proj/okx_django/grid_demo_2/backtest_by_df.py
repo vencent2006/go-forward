@@ -25,7 +25,7 @@ def backtest_grid_trading(df: pd.DataFrame, instId: str) -> dict:
     :return: dict {'df_b': df_b, 'df_s': df_s, 'profit': profit, 'max_consume_money': max_consume_money}
     """
 
-    # 3. 变量设定
+    # 1. 变量设定
     max = df['close'].max()  # high的max
     min = df['close'].min()  # low的min
     benchmark = float(Decimal((max + min) / 2).quantize(Decimal('0.000')))  # 基准价
@@ -42,7 +42,7 @@ def backtest_grid_trading(df: pd.DataFrame, instId: str) -> dict:
     opt_b = []  # operation buy
     opt_s = []  # operation sell
 
-    # 4. 建仓
+    # 2. 建仓
     first = df.iloc[0]  # iloc是从0开始计数
     while benchmark * (1 - grid) > first['close']:  # 比较开盘价
         # todo 可以合并一次买入
@@ -64,7 +64,7 @@ def backtest_grid_trading(df: pd.DataFrame, instId: str) -> dict:
 
     print("**************************")
 
-    # 5. 根据行情进行交易
+    # 3. 根据行情进行交易
     for day_up_down in df.index:  # 获取index，再使用loc进行遍历
         print("processing", day_up_down)
         # open = df.loc[day_up_down].values[0]

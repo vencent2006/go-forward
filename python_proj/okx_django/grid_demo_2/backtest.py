@@ -200,16 +200,17 @@ def draw_pic(df: DataFrame, dic: dict):
     print("总资金消耗", Decimal(max_consume_money).quantize(Decimal("0.000")))
 
 
-# 1. 读取sdk数据，并格式化数据
-instId = "BTC-USDT"
-start = "1669824000000"  # 2022-12-01 00:00:00
-end = "1672502400000"  # 2023-01-01 00:00:00
-df = get_df(instId, start, end)
-print(df)
-# print(df.dtypes)  # 打印df的各个column的类型
+if __name__ == '__main__':
+    # 1. 读取sdk数据，并格式化数据
+    instId = "BTC-USDT"
+    start = "1669824000000"  # 2022-12-01 00:00:00
+    end = "1672502400000"  # 2023-01-01 00:00:00
+    df = get_df(instId, start, end)
+    print(df)
+    # print(df.dtypes)  # 打印df的各个column的类型
 
-# 2. backtest
-dic = backtest_grid_trading(df)
+    # 2. backtest
+    dic = backtest_grid_trading(df)
 
-# 3. plot
-draw_pic(df, dic)
+    # 3. plot
+    draw_pic(df, dic)
