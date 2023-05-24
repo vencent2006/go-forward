@@ -1,6 +1,5 @@
-import logging
-
 import okx.Trade as Trade
+
 from constant import *
 from utils import *
 
@@ -95,3 +94,52 @@ def sell_limit_order(instId: str, price, size, clientOrderId=""):
               result["data"][0]["sMsg"])
 
     return result
+
+
+def get_order_by_exchange_order(instId: str, exchange_order_id: str) -> {}:
+    """
+    https://www.okx.com/docs-v5/zh/#rest-api-trade-get-order-details
+    :param instId: 交易对
+    :param exchange_order_id: 交易所订单id
+    :param my_order_id: 自己的订单id
+    :return: 订单详情dict
+        def get_order(self, instId, ordId='', clOrdId=''):
+        params = {'instId': instId, 'ordId': ordId, 'clOrdId': clOrdId}
+        return self._request_with_params(GET, ORDER_INFO, params)
+    """
+    result = tradeAPI.get_order(
+        instId=instId,
+        ordId=exchange_order_id
+    )
+    print_pretty_json(result)
+
+    if result["code"] == CODE_SUCCESS:
+        print("Successful get_order_by_exchange_order，order_id = ", result["data"][0])
+    else:
+        print("Unsuccessful get_order_by_exchange_order，error_code = ", result["code"], ", Error_message = ",
+              result["msg"])
+
+    return result
+    pass
+
+
+def get_order_by_client_order(instId: str, client_order_id: str) -> {}:
+    """
+    https://www.okx.com/docs-v5/zh/#rest-api-trade-get-order-details
+    :param instId: 交易对
+    :param client_order_id: 业务订单id
+    :return: 订单详情dict
+    """
+    # order_id =  581538103723147264
+    # "clOrdId": "myorder1684921487"
+    result = tradeAPI.get_order(instId=instId, clOrdId=client_order_id)
+    print_pretty_json(result)
+
+    if result["code"] == CODE_SUCCESS:
+        print("Successful get_order_by_client_order，get_order = ", result["data"][0])
+    else:
+        print("Unsuccessful get_order_by_client_order，error_code = ", result["code"], ", Error_message = ",
+              result["msg"])
+
+    return result
+    pass
