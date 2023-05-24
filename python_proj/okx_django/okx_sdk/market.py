@@ -9,6 +9,7 @@ marketDataAPI = MarketData.MarketAPI(flag=flag)
 
 def get_ticker(instId):
     """
+    https://www.okx.com/docs-v5/zh/#rest-api-market-data-get-ticker
     获取指定交易对的报价行情
     :param instId: 交易对
     :return:
@@ -44,6 +45,7 @@ def get_ticker(instId):
 
 def get_tickers():
     """
+    https://www.okx.com/docs-v5/zh/#rest-api-market-data-get-tickers
     获取现货报价
     :return: 列表
     """
