@@ -120,7 +120,6 @@ def get_order_by_exchange_order(instId: str, exchange_order_id: str) -> {}:
               result["msg"])
 
     return result
-    pass
 
 
 def get_order_by_client_order(instId: str, client_order_id: str) -> {}:
@@ -130,8 +129,6 @@ def get_order_by_client_order(instId: str, client_order_id: str) -> {}:
     :param client_order_id: 业务订单id
     :return: 订单详情dict
     """
-    # order_id =  581538103723147264
-    # "clOrdId": "myorder1684921487"
     result = tradeAPI.get_order(instId=instId, clOrdId=client_order_id)
     print_pretty_json(result)
 
@@ -142,4 +139,59 @@ def get_order_by_client_order(instId: str, client_order_id: str) -> {}:
               result["msg"])
 
     return result
-    pass
+
+
+def cancel_order_by_exchange_order(instId: str, exchange_order_id: str):
+    """
+    取消订单
+    https://www.okx.com/docs-v5/zh/#rest-api-trade-cancel-order
+    :return:
+    {
+        "code":"0",
+        "msg":"",
+        "data":[
+            {
+                "clOrdId":"oktswap6",
+                "ordId":"12345689",
+                "sCode":"0",# 撤单返回sCode等于0不能严格认为该订单已经被撤销，只表示您的撤单请求被系统服务器所接受，撤单结果以订单频道推送的状态或者查询订单状态为准
+                "sMsg":""
+            }
+        ]
+    }
+    """
+    result = tradeAPI.cancel_order(instId=instId, ordId=exchange_order_id)
+    print_pretty_json(result)
+
+    if result["code"] == CODE_SUCCESS:
+        print("Successful cancel_order_by_exchange_order，get_order = ", result["data"][0])
+    else:
+        print("Unsuccessful cancel_order_by_exchange_order，error_code = ", result["code"], ", Error_message = ",
+              result["msg"])
+
+
+def cancel_order_by_client_order(instId: str, client_order_id: str):
+    """
+    取消订单
+    https://www.okx.com/docs-v5/zh/#rest-api-trade-cancel-order
+    :return:
+    {
+        "code":"0",
+        "msg":"",
+        "data":[
+            {
+                "clOrdId":"oktswap6",
+                "ordId":"12345689",
+                "sCode":"0",# 撤单返回sCode等于0不能严格认为该订单已经被撤销，只表示您的撤单请求被系统服务器所接受，撤单结果以订单频道推送的状态或者查询订单状态为准
+                "sMsg":""
+            }
+        ]
+    }
+    """
+    result = tradeAPI.cancel_order(instId=instId, clOrdId=client_order_id)
+    print_pretty_json(result)
+
+    if result["code"] == CODE_SUCCESS:
+        print("Successful cancel_order_by_client_order，get_order = ", result["data"][0])
+    else:
+        print("Unsuccessful cancel_order_by_client_order，error_code = ", result["code"], ", Error_message = ",
+              result["msg"])
