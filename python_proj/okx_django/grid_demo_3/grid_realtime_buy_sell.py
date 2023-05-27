@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 from decimal import Decimal
 
 import matplotlib.pyplot as plt
@@ -6,7 +7,9 @@ import numpy as np
 import pandas as pd
 from matplotlib import ticker
 
+import constant
 import okx_sdk
+import utils
 from okx_sdk import get_ticker
 
 
@@ -72,9 +75,8 @@ def get_latest_close(instId: str):
         time_array = time.localtime(timestamp)
         ts = time.strftime("%Y-%m-%d %H:%M:%S", time_array)
         close = float(res['data'][0]['last'])
-        # close = random.randint(16250, 17250) # 假数据
-        res = {'ts': ts, 'close': close}
-        print(res)
+        res = {'ts': ts, 'close': close, 'local_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}
+        print('get_ticker', instId, res)
         return res
 
 
@@ -90,63 +92,110 @@ def get_balance(instId: str):
         return {}
 
 
-"""
-{
-  "code": "0",
-  "data": [
-    {
-      "adjEq": "",
-      "details": [
-        {
-          "availBal": "8604.73203",
-          "availEq": "",
-          "cashBal": "8984.73203",
-          "ccy": "USDT",
-          "crossLiab": "",
-          "disEq": "8986.331042094142",
-          "eq": "8985.342654402157",
-          "eqUsd": "8986.331042094142",
-          "fixedBal": "0",
-          "frozenBal": "380.6106244021568",
-          "interest": "",
-          "isoEq": "",
-          "isoLiab": "",
-          "isoUpl": "",
-          "liab": "",
-          "maxLoan": "",
-          "mgnRatio": "",
-          "notionalLever": "",
-          "ordFrozen": "380",
-          "spotInUseAmt": "",
-          "stgyEq": "0.6106244021568",
-          "twap": "0",
-          "uTime": "1684921492973",
-          "upl": "",
-          "uplLiab": ""
-        }
-      ],
-      "imr": "",
-      "isoEq": "",
-      "mgnRatio": "",
-      "mmr": "",
-      "notionalUsd": "",
-      "ordFroz": "",
-      "totalEq": "187794.6998519608",
-      "uTime": "1684979659450"
-    }
-  ],
-  "msg": ""
-}
-"""
+def gen_client_order_id():
+    return utils.get_uuid()
 
 
-def buy():
-    # todo 为防止超买的话，应该要设置独立的子账户，或者该账户的钱是独立
-    pass
+def try_buy(instId: str, price, size, client_order_id):
+    """
+    尝试着去buy, 是要拿到确切结果的
+    :return: successful, exchange_order_id; failed, False
+    """
+    return place_order('buy', instId=instId, price=price, size=size, client_order_id=client_order_id)
 
 
-def sell():
-    pass
+def try_sell(instId: str, price, size, client_order_id):
+    """
+    尝试着去sell, 是要拿到确切结果的
+    :return: successful, exchange_order_id; failed, False
+    """
+    return place_order('sell', instId=instId, price=price, size=size, client_order_id=client_order_id)
+
+
+def place_order(side: str, instId: str, price, size, client_order_id):
+    """
+    尝试着去buy, 是要拿到确切结果的
+    :return: successful, exchange_order_id; failed, False
+    """
+
+    # 1. 下单，并获取下单结果
+    if side == 'buy':
+        res = okx_sdk.buy_limit_order(instId=instId, price=price, size=size, clientOrderId=client_order_id)
+    elif side == 'sell':
+        res = okx_sdk.sell_limit_order(instId=instId, price=price, size=size, clientOrderId=client_order_id)
+    else:
+        raise NameError("invalid side(%s)" % side)
+
+    # 判定结果
+    if res["code"] != '0':
+        # sdk返回错误
+        print('buy_limit_order failed |', 'instId', instId, 'price', price, 'size', size, 'clientOrderId',
+              client_order_id, 'return code', res['code'], 'return msg', res['msg'])
+        return False
+    elif res['data']['sCode'] != '0':
+        # sdk返回错误
+        print('buy_limit_order failed |', 'instId', instId, 'price', price, 'size', size, 'clientOrderId',
+              client_order_id, 'return sCode', res['data']['sCode'], 'return sMsg', res['data']['sMsg'])
+        return False
+
+    # place buy limit order, successfully
+    exchange_order_id = res['data']['ordId']
+    print('buy_limit_order successfully |', 'instId', instId, 'price', price, 'size', size, 'clientOrderId',
+          client_order_id, 'return exchange_order_id', exchange_order_id)
+
+    # 2. 每隔5s，获取订单结果，最长等待5min，
+    time_sleep_cnt = 0
+    interval = 5
+    while time_sleep_cnt < 60 * interval:
+        time.sleep(interval)
+        time_sleep_cnt += interval
+        res = okx_sdk.get_order_by_client_order(instId, client_order_id)
+        if res["code"] != '0':
+            # sdk 返回异常
+            print('get_order_by_client_order failed | code: %s | msg: %s' % (res['code'], res['msg']))
+            continue
+        else:
+            data = res['data'][0]
+            state = data['state']
+            if state == constant.ORDER_STATUS_FILLED:
+                # 已经成交，终态
+                return exchange_order_id
+            elif state == constant.ORDER_STATUS_CANCELED:
+                # 已经取消，终态
+                return False
+            else:
+                # 非终态，继续查询
+                continue
+
+    # 如果还没交易成功，那么就取消订单，并返回false
+    res = okx_sdk.cancel_order_by_client_order(instId=instId, client_order_id=client_order_id)
+    if res["code"] != '0':
+        print('cancel_order_by_client_order failed | code: %s | msg: %s' % (res['code'], res['msg']))
+    elif res['data']['sCode'] != '0':
+        # sdk返回错误
+        print('cancel_order_by_client_order failed |', 'instId', instId, 'price', price, 'size', size, 'clientOrderId',
+              client_order_id, 'return sCode', res['data']['sCode'], 'return sMsg', res['data']['sMsg'])
+        return False
+
+    # 取消可能成功, 再查询下
+    res = okx_sdk.get_order_by_client_order(instId=instId, client_order_id=client_order_id)
+    if res["code"] != '0':
+        # sdk 返回异常
+        print('after cancel order | get_order_by_client_order failed | code: %s | msg: %s' % (res['code'], res['msg']))
+    else:
+        data = res['data'][0]
+        state = data['state']
+        if state == constant.ORDER_STATUS_FILLED:
+            # 已经成交，终态
+            return exchange_order_id
+        elif state == constant.ORDER_STATUS_CANCELED:
+            # 已经取消，终态
+            return False
+        else:
+            # 非终态，继续查询
+            print(
+                'after cancel order | invalid state | get_order_by_client_order return state = %s(not final state)' % state)
+            return False
 
 
 def realtime_grid_trading(instId: str, highest: float, lowest: float, grid: float, grid_num: int,
@@ -205,10 +254,11 @@ def realtime_grid_trading(instId: str, highest: float, lowest: float, grid: floa
         # ticker_cnt 计数
         ticker_cnt += 1
         if ticker_cnt > max_ticker_cnt:
+            print('reach %s times, so stop' % ticker_cnt)
             break
 
         # sleep
-        time.sleep(2)
+        time.sleep(10)
 
         # 实时获取 close
         ticker = get_latest_close(instId)
@@ -217,7 +267,7 @@ def realtime_grid_trading(instId: str, highest: float, lowest: float, grid: floa
         tickers.append([ts, close])
 
         if last_price_index == None:
-            print('processing %s | close %.2f | last_price_index=%s, target=%.2f' % (
+            print('建仓过程 | processing %s | close %.2f | last_price_index=%s, target=%.2f' % (
                 ts, close, last_price_index, target))
             # 2. 开仓
             for i in range(len(price_levels)):
@@ -227,17 +277,31 @@ def realtime_grid_trading(instId: str, highest: float, lowest: float, grid: floa
                     print('\tstart with i = ', i, ', target = ', target)
                     break
             if target is not None and target > 0:
-                print('\t建仓: close=%.2f, buy, percent=%.2f, target=%.2f, last_price_index=%d' % (
-                    close, target, target, last_price_index))
-                # 添加记录
+                # try buy
                 money = balance * target
-                h = History(instId, 1, close, float(money / close), money)
-                opt_b_stack.append(h)
-                opt_b.append([ts, close, 1])
-                balance -= money
-                continue
+                size = float(money / close)
+                client_order_id = gen_client_order_id()
+                res = try_buy(instId=instId, price=close, size=size, client_order_id=client_order_id)
+                if res == False:
+                    # 建仓失败
+                    print("建仓失败 | try_buy failed | ")
+                    raise NameError("建仓失败")
+                else:
+                    # 建仓成功
+                    exchange_order_id = res  # 交易所的订单id
+                    print('\t建仓: close=%.2f, buy, percent=%.2f, target=%.2f, last_price_index=%d' % (
+                        close, target, target, last_price_index))
+                    # 添加记录
+                    h = History(instId, 1, close, size, money)
+                    opt_b_stack.append(h)
+                    opt_b.append([ts, close, 1])
+                    balance -= money
+                    continue
+            # 没有建到仓
+            print('建仓过程 | 达不到建仓的位置')
+            continue
         else:
-            print('processing %s | close %.2f | last_price_index=%s, price=%.2f, target=%.2f' % (
+            print('普通过程 | processing %s | close %.2f | last_price_index=%s, price=%.2f, target=%.2f' % (
                 ts, close, last_price_index, price_levels[last_price_index], target))
             # 3. 实时行情
             signal = False
@@ -257,19 +321,33 @@ def realtime_grid_trading(instId: str, highest: float, lowest: float, grid: floa
                         target = last_price_index / (len(price_levels) - 1)
                         signal = True
                         # sell的逻辑
-                        # todo 如为了避免滑点，可以分别sell
-                        print('\tupper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, target=%.2f' % (
-                            upper, close, price_levels[last_price_index], grid, target))
-                        # 计算profit
-                        count = opt_b_stack[len(opt_b_stack) - 1].count
-                        temp = float(
-                            ((Decimal(close) - Decimal(opt_b_stack[len(opt_b_stack) - 1].price)) * Decimal(
-                                count)).quantize(
-                                Decimal('0.00')))
-                        profit += temp
-                        money = float(Decimal(close) * Decimal(count))
-                        balance += money
-                        opt_s.append([ts, price_levels[last_price_index], -1])
+                        money = balance * target
+                        size = float(money / close)
+                        client_order_id = gen_client_order_id()
+                        res = try_sell(instId=instId, price=close, size=size, client_order_id=client_order_id)
+                        if res == False:
+                            # sell失败
+                            print(
+                                '\ttry_sell failed | upper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, '
+                                'target=%.2f' % (
+                                    upper, close, price_levels[last_price_index], grid, target))
+                            break
+                        else:
+                            # sell成功
+                            exchange_order_id = res  # 交易所的订单id
+                            # todo 如为了避免滑点，可以分别sell
+                            print('\tupper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, target=%.2f' % (
+                                upper, close, price_levels[last_price_index], grid, target))
+                            # 计算profit
+                            count = opt_b_stack[len(opt_b_stack) - 1].count
+                            temp = float(
+                                ((Decimal(close) - Decimal(opt_b_stack[len(opt_b_stack) - 1].price)) * Decimal(
+                                    count)).quantize(
+                                    Decimal('0.00')))
+                            profit += temp
+                            money = float(Decimal(close) * Decimal(count))
+                            balance += money
+                            opt_s.append([ts, price_levels[last_price_index], -1])
 
                     continue
                 # 还不是最重仓，继续跌，再买一档
@@ -278,18 +356,32 @@ def realtime_grid_trading(instId: str, highest: float, lowest: float, grid: floa
                     last_price_index = last_price_index + 1
                     signal = True
                     # buy的逻辑
-                    # todo 如为了避免滑点，可以分别buy
+                    # try buy
                     target = last_price_index / (len(price_levels) - 1)
-                    print(
-                        '\tclose=%.2f, buy, percent=%.3f, target=%.2f' % (price_levels[last_price_index], grid, target))
-                    # 添加记录
                     money = balance * target
-                    h = History(instId, 1, close, float(money / close), money)
-                    opt_b_stack.append(h)
-                    opt_b.append([ts, price_levels[last_price_index], 1])
-                    balance -= money
+                    size = float(money / close)
+                    client_order_id = gen_client_order_id()
+                    res = try_buy(instId=instId, price=close, size=size, client_order_id=client_order_id)
+                    if res == False:
+                        # 建仓失败
+                        print(
+                            '\ttry_buy failed | upper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, '
+                            'target=%.2f' % (
+                                upper, close, price_levels[last_price_index], grid, target))
+                    else:
+                        # buy成功
+                        exchange_order_id = res  # 交易所的订单id
+                        print('\tclose=%.2f, buy, percent=%.2f, target=%.2f, last_price_index=%d' % (
+                            close, target, target, last_price_index))
+                        # 添加记录
+                        h = History(instId, 1, close, size, money)
+                        opt_b_stack.append(h)
+                        opt_b.append([ts, close, 1])
+                        balance -= money
 
                     continue
+
+                # 没到要交易的区间，退出循环
                 break
 
     # ticker df
@@ -333,14 +425,14 @@ def draw_pic(df_ticker: pd.DataFrame, df_b: pd.DataFrame, df_s: pd.DataFrame, ti
 if __name__ == '__main__':
     # 1. var
     instId = 'BTC-USDT'
-    highest = 17250
-    lowest = 16250
+    lowest = 25000
+    highest = 30000
     grid = 0.005
     grid_num = 10
     balance = 100000.0  # 余额
 
     # 2. call realtime_grid_trading
-    dic = realtime_grid_trading(instId=instId, highest=17250, lowest=16250, grid=0.005, grid_num=10,
+    dic = realtime_grid_trading(instId=instId, highest=highest, lowest=lowest, grid=0.005, grid_num=10,
                                 balance=balance)
     df_ticker = dic['df_ticker']
     df_b = dic['df_b']
