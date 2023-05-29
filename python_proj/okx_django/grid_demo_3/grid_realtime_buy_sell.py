@@ -347,6 +347,7 @@ def realtime_grid_trading(instId: str, highest: float, lowest: float, grid: floa
                             profit += temp
                             money = float(Decimal(close) * Decimal(count))
                             balance += money
+                            opt_b_stack.pop()  # 弹栈
                             opt_s.append([ts, price_levels[last_price_index], -1])
 
                     continue
