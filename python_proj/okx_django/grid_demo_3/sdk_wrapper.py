@@ -50,16 +50,22 @@ def get_latest_close(instId: str):
         return res
 
 
-def get_balance(instId: str):
+def get_balance(instId: str) -> {}:
+    """
+    获取余额
+    :param instId: 交易对
+    :return: {'avail_balance': avail_balance, 'cash_balance': cash_balance, 'order_frozen': order_frozen}
+    """
     ccy = 'USDT'
     res = okx_sdk.get_one_account_balance(ccy=ccy)
     if res["code"] != '0':
         return False
     else:
-        detail = res['data']['details'][0]
+        detail = res['data'][0]['details'][0]
         avail_balance = detail['availBal']  # 可用余额
         cash_balance = detail['cashBal']  # 可用余额
-        return {}
+        order_frozen = detail['ordFrozen']  # 订单冻结
+        return {'avail_balance': avail_balance, 'cash_balance': cash_balance, 'order_frozen': order_frozen}
 
 
 def gen_client_order_id():
@@ -102,21 +108,23 @@ def place_order(side: str, instId: str, price, size, client_order_id):
         print('buy_limit_order failed |', 'instId', instId, 'price', price, 'size', size, 'clientOrderId',
               client_order_id, 'return code', res['code'], 'return msg', res['msg'])
         return False
-    elif res['data']['sCode'] != '0':
+    elif res['data'][0]['sCode'] != '0':
         # sdk返回错误
         print('buy_limit_order failed |', 'instId', instId, 'price', price, 'size', size, 'clientOrderId',
-              client_order_id, 'return sCode', res['data']['sCode'], 'return sMsg', res['data']['sMsg'])
+              client_order_id, 'return sCode', res['data'][0]['sCode'], 'return sMsg', res['data'][0]['sMsg'])
         return False
 
     # place buy limit order, successfully
-    exchange_order_id = res['data']['ordId']
+    exchange_order_id = res['data'][0]['ordId']
     print('buy_limit_order successfully |', 'instId', instId, 'price', price, 'size', size, 'clientOrderId',
           client_order_id, 'return exchange_order_id', exchange_order_id)
 
-    # 2. 每隔5s，获取订单结果，最长等待5min，
+    # 2. 每隔5s，获取订单结果，最长等待10 * interval，
     time_sleep_cnt = 0
     interval = 5
-    while time_sleep_cnt < 60 * interval:
+    max_time_sleep_cnt = 10 * interval
+    while time_sleep_cnt < max_time_sleep_cnt:
+        print("****** 监听订单交易结果, time_sleep_cnt", time_sleep_cnt, "max_time_sleep_cnt", max_time_sleep_cnt)
         time.sleep(interval)
         time_sleep_cnt += interval
         res = okx_sdk.get_order_by_client_order(instId, client_order_id)
@@ -141,10 +149,10 @@ def place_order(side: str, instId: str, price, size, client_order_id):
     res = okx_sdk.cancel_order_by_client_order(instId=instId, client_order_id=client_order_id)
     if res["code"] != '0':
         print('cancel_order_by_client_order failed | code: %s | msg: %s' % (res['code'], res['msg']))
-    elif res['data']['sCode'] != '0':
+    elif res['data'][0]['sCode'] != '0':
         # sdk返回错误
         print('cancel_order_by_client_order failed |', 'instId', instId, 'price', price, 'size', size, 'clientOrderId',
-              client_order_id, 'return sCode', res['data']['sCode'], 'return sMsg', res['data']['sMsg'])
+              client_order_id, 'return sCode', res['data'][0]['sCode'], 'return sMsg', res['data'][0]['sMsg'])
         return False
 
     # 取消可能成功, 再查询下
