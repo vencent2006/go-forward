@@ -1,6 +1,8 @@
+import logging
 import time
 from decimal import Decimal
 
+import colorlog as colorlog
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import numpy as np
@@ -9,18 +11,56 @@ import pandas as pd
 import sdk_wrapper
 from history import History
 
+log_colors_config = {
+    'DEBUG': 'white',  # cyan white
+    'INFO': 'green',
+    'WARNING': 'yellow',
+    'ERROR': 'red',
+    'CRITICAL': 'bold_red',
+}
 
-def print_list(name: str, li: []):
+# # 初始化
+# logging.basicConfig(level=logging.INFO,
+#                     format='%(asctime)s | %(filename)s:%(lineno)d | %(funcName)s | %(levelname)s | %(message)s')
+# 生成日志句柄
+logger = logging.getLogger("grid")
+
+# 输出到控制台
+console_handler = logging.StreamHandler()
+# 日志级别，logger 和 handler以最高级别为准，不同handler之间可以不一样，不相互影响
+logger.setLevel(logging.DEBUG)
+console_handler.setLevel(logging.DEBUG)
+console_formatter = colorlog.ColoredFormatter(
+    fmt='%(log_color)s%(asctime)s | %(filename)s:%(lineno)d | %(funcName)s | %(levelname)s | %(message)s',
+    datefmt='%Y-%m-%d  %H:%M:%S',
+    log_colors=log_colors_config
+)
+console_handler.setFormatter(console_formatter)
+if not logger.handlers:
+    logger.addHandler(console_handler)
+console_handler.close()
+
+
+def get_logger():
     """
-    打印list
-    :param name:
-    :param li:
+    获取logger
     :return:
     """
-    print(name)
+    global logger
+    return logger
+
+
+def print_list(list_name: str, list_obj: []):
+    """
+    打印list
+    :param list_name: 列表名称
+    :param list_obj: 列表对象
+    :return:
+    """
+    get_logger().info('**** %s ****' % list_name)
     i = 0
-    for p in li:  # 百分比区间
-        print('%d %.2f' % (i, p))
+    for p in list_obj:
+        get_logger().info('%s[%d] %.4f' % (list_name, i, p))
         i += 1
 
 
@@ -84,13 +124,13 @@ class GridStrategy:
         self.df_ticker = None  # 行情的dataframe
 
         # print param
-        print('**** param ****')
-        print('instId', instId)
-        print('highest', highest)
-        print('lowest', lowest)
-        print('grid', grid)
-        print('grid_num', grid_num)
-        print('highest:%.2f, lowest:%.2f, mid:%.2f' % (highest, lowest, (highest + lowest) / 2))
+        get_logger().info('**** param ****')
+        get_logger().warning('instId:%s' % instId)
+        get_logger().error('highest:%s' % highest)
+        get_logger().info('lowest:%s' % lowest)
+        get_logger().info('grid:%s' % grid)
+        get_logger().info('grid_num:%d' % grid_num)
+        get_logger().info('highest:%s, lowest:%s, mid:%s' % (highest, lowest, (highest + lowest) / 2))
         print_list('perc_levels', self.perc_levels)  # 百分比区间
         print_list('price_levels', self.price_levels)  # 价格区间
 
@@ -110,7 +150,7 @@ class GridStrategy:
 
     def add_consume(self, delta: float):
         """
-        计算消费数值, 并同步计算最大消费值
+        计算消费数值/balance, 并同步计算最大消费值
         :param delta: 变化量
         :return:
         """
@@ -119,6 +159,8 @@ class GridStrategy:
         # 更新max_consume
         if self.consume > self.max_consume:
             self.max_consume = self.consume
+        # 更新 balance
+        self.balance -= self.consume
 
     def open_a_position(self, ticker: {}):
         """
@@ -130,23 +172,23 @@ class GridStrategy:
         ts = ticker['ts']
         if self.last_price_index is not None:
             # 已经有了价格索引了，不是建仓的必要条件，直接返回
-            print("不满足建仓条件 | last_price_index = ", self.last_price_index, ", not None")
+            get_logger().error("不满足建仓条件 | last_price_index = %s, not None" % self.last_price_index)
             return
 
-        print('尝试建仓 | processing %s | close %.2f' % (ts, close))
+        get_logger().info('尝试建仓 | processing %s | close %.2f' % (ts, close))
 
         # 1.寻找开仓的位置
         price_levels = self.price_levels
         target = 0.0
-        last_price_index_tmp = 0
-        opt_b_stack_tmp = []
+        last_price_index_tmp = 0  # 临时的价格位置索引
+        # opt_b_stack_tmp = []  # 临时的buy stack
         for i in range(len(price_levels)):
             # price_levels, 是从大到小排列的
             if close > price_levels[i]:
-                opt_b_stack_tmp.append(i)
+                # opt_b_stack_tmp.append(i)
                 last_price_index_tmp = i
-                target = i / (len(price_levels) - 1)  # 计算目标建仓的比例
-                print('\tstart with i = ', i, ', target = ', self.target)
+                target = i / (len(price_levels) - 1)  # 计算新的目标建仓的比例
+                get_logger().debug('计算建仓比例 | start with i = %s, target = %s' % (i, target))
                 break
 
         # 2.判断是否找到开仓的位置
@@ -158,23 +200,26 @@ class GridStrategy:
             res = sdk_wrapper.try_buy(instId=instId, price=close, size=size, client_order_id=client_order_id)
             if not res:
                 # 建仓失败
-                print("建仓失败 | try_buy failed | close %.2f | client_order_id %s" % (close, client_order_id))
+                get_logger().error(
+                    "建仓失败 | try_buy failed | close %.2f | client_order_id %s" % (close, client_order_id))
                 return
             else:
                 # 建仓成功
                 exchange_order_id = res  # 交易所的订单id
                 self.last_price_index = last_price_index_tmp  # 建仓成功，把last_price_index设置下
                 self.target = target  # 记录下目标仓位信息
-                print(
+                get_logger().info(
                     '\t建仓成功: close=%.2f, buy, percent=%.2f, target=%.2f, last_price_index=%d, exchange_order_id = %s'
                     % (close, target, target, self.last_price_index, exchange_order_id))
                 # 添加记录
                 h = History(instId, 1, close, size, money)
                 self.opt_b.append([ts, close, 1])
                 self.add_consume(money)  # 消费值要累加下
-                for i in range(len(opt_b_stack_tmp)):
-                    # 这个stack的比例可能不是一个grid，就是会是多个grid
-                    self.opt_b_stack.append(h)  # buy stack 要记录下
+                # todo 可以多思考下，这个stack的比例可能不是一个grid，就是会是多个grid
+                self.opt_b_stack.append(h)  # buy stack 要记录下
+                # for i in range(len(opt_b_stack_tmp)):
+                #     self.opt_b_stack.append(h)  # buy stack 要记录下
+
         else:
             # 没有建到仓
             print('不满足建仓条件 | 达不到建仓的位置')
@@ -188,19 +233,19 @@ class GridStrategy:
         close = ticker['close']
         ts = ticker['ts']
 
-        # 1. 判定是普通ticker处理过程
+        # 1. 判定是普通ticker处理过程吗?
         if self.last_price_index is None:
-            # 不是建仓
-            print("不满足建仓条件 | last_price_index = ", self.last_price_index, ", is None")
+            # 还没建仓
+            get_logger().error("普通ticker失败 | 还没建仓 | last_price_index is None")
             return
-        price_levels = self.price_levels
-        print('普通过程 | processing %s | close %.2f | last_price_index=%s, price=%.2f, target=%.2f' % (
-            ts, close, self.last_price_index, price_levels[self.last_price_index], self.target))
 
         # 2. 实时行情
-        signal = False
-        while True:
+        price_levels = self.price_levels
+        get_logger().info(
+            '普通ticker过程 | processing %s | close %.2f | last_price_index=%s, price=%.2f, target=%.2f' % (
+                ts, close, self.last_price_index, price_levels[self.last_price_index], self.target))
 
+        while True:  # loop
             # 1. 初始化 upper 和 lower
             upper = None
             lower = None
@@ -210,43 +255,51 @@ class GridStrategy:
                 lower = price_levels[self.last_price_index + 1]
 
             # 2 判断:还不是最轻仓，继续涨，就再卖一档
-            if upper != None and close > upper:
+            if upper is not None and close > upper:
                 if len(self.opt_b_stack) > 0:  # 必须得先buy才能卖
 
                     # 游标变化
-                    last_price_index_tmp = self.last_price_index - 1
-                    target = last_price_index_tmp / (len(price_levels) - 1)
-                    signal = True
+                    last_price_index_tmp = self.last_price_index - 1  # index往上升1个grid
+                    new_target = last_price_index_tmp / (len(price_levels) - 1)  # 新的目标持仓
+
+                    # 加个保护
+                    if last_price_index_tmp < 0:
+                        get_logger().error('error | last_price_index_tmp = %s' % last_price_index_tmp)
+                        raise NameError('last_price_index_tmp < 0')
+
+                    if self.target <= new_target:
+                        get_logger().error(
+                            'error | on sell | self.target(%.2f) <= new_target(%.2f)' % (self.target, new_target))
+                        raise NameError('last_price_index_tmp < 0')
+
                     # sell的逻辑
-                    money = self.budget * target
-                    size = float(money / close)
+                    count = self.opt_b_stack[len(self.opt_b_stack) - 1].count
                     client_order_id = sdk_wrapper.gen_client_order_id()
-                    res = sdk_wrapper.try_sell(instId=instId, price=close, size=size, client_order_id=client_order_id)
+                    res = sdk_wrapper.try_sell(instId=instId, price=close, size=count, client_order_id=client_order_id)
                     if res == False:
                         # sell 异常，输出日志
-                        print(
-                            '\ttry_sell failed | upper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, '
-                            'target=%.2f' % (
-                                upper, close, price_levels[last_price_index_tmp], grid, target))
+                        get_logger().error(
+                            '\terror | try_sell failed | upper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, '
+                            'new_target=%.2f' % (
+                                upper, close, price_levels[last_price_index_tmp], grid, new_target))
+                        # 直接退出函数
+                        return
                     else:
                         # sell 成功
                         self.last_price_index = last_price_index_tmp  # 更新last_price_index
+                        self.target = new_target
                         exchange_order_id = res  # 交易所的订单id
-                        # todo 如为了避免滑点, 分别sell
-                        print(
-                            '\tupper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, target=%.2f, exchange_order_id=%s' % (
-                                upper, close, price_levels[self.last_price_index], grid, target, exchange_order_id))
-                        # 计算profit
-                        count = self.opt_b_stack[len(self.opt_b_stack) - 1].count
-                        temp = float(
-                            ((Decimal(close) - Decimal(self.opt_b_stack[len(self.opt_b_stack) - 1].price)) * Decimal(
-                                count)).quantize(
-                                Decimal('0.00')))
-                        self.profit += temp
-                        money = float(Decimal(close) * Decimal(count))
+                        get_logger().info(
+                            '\tsell succ | upper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, target=%.2f, '
+                            'exchange_order_id=%s' % (
+                                upper, close, price_levels[self.last_price_index], grid, self.target,
+                                exchange_order_id))
+
+                        self.profit += self.get_profit_change(sell_price=close, sell_count=count)  # 计算profit
                         self.opt_b_stack.pop()  # buy stack 要弹栈
-                        self.add_consume(-money)
-                        self.opt_s.append([ts, price_levels[self.last_price_index], -1])
+                        self.opt_s.append([ts, price_levels[self.last_price_index], -1])  # 记录sell
+                        money = float(Decimal(close) * Decimal(count))
+                        self.add_consume(-money)  # sell下的consume
                 # 结束本次循环
                 continue
 
@@ -254,26 +307,28 @@ class GridStrategy:
             if lower != None and close < lower:
                 # 游标变化
                 last_price_index_tmp = self.last_price_index + 1
-                signal = True
+                new_target = last_price_index_tmp / (len(price_levels) - 1)  # 要补仓到目标仓位
+
                 # buy的逻辑
                 # try buy
-                target = last_price_index_tmp / (len(price_levels) - 1)
-                money = self.budget * target
+
+                money = self.budget * (new_target - self.target)
                 size = float(money / close)
                 client_order_id = sdk_wrapper.gen_client_order_id()
                 res = sdk_wrapper.try_buy(instId=instId, price=close, size=size, client_order_id=client_order_id)
                 if res == False:
                     # 建仓失败
-                    print(
+                    get_logger().error(
                         '\ttry_buy failed | upper=%.2f, close=%.2f, price=%.2f, sell, percent=%.3f, '
-                        'target=%.2f' % (
-                            upper, close, price_levels[last_price_index_tmp], grid, target))
+                        'new_target=%.2f' % (
+                            upper, close, price_levels[last_price_index_tmp], grid, new_target))
                 else:
                     # buy成功
                     self.last_price_index = last_price_index_tmp
                     exchange_order_id = res  # 交易所的订单id
-                    print('\tclose=%.2f, buy, percent=%.2f, target=%.2f, last_price_index=%d, exchange_order_id=%s' % (
-                        close, target, target, self.last_price_index, exchange_order_id))
+                    get_logger().info(
+                        '\tclose=%.2f, buy, percent=%.2f, new_target=%.2f, last_price_index=%d, exchange_order_id=%s' % (
+                            close, (new_target - self.target), new_target, self.last_price_index, exchange_order_id))
                     # 添加记录
                     h = History(instId, 1, close, size, money)
                     self.opt_b_stack.append(h)
@@ -282,8 +337,18 @@ class GridStrategy:
 
                 continue
 
-            # 没到要交易的区间，退出循环
+            # buy和sell, 没到要交易的区间，退出循环
             break
+
+    def get_profit_change(self, sell_price: float, sell_count: float) -> float:
+        """
+        sell后，比buy的收益变化
+        :param sell_price: sell时的价格
+        :param sell_count: sell时的数量
+        :return: 变化的收益
+        """
+        buy_price = self.opt_b_stack[len(self.opt_b_stack) - 1].price
+        return float(((Decimal(sell_price) - Decimal(buy_price)) * Decimal(sell_count)).quantize(Decimal('0.00')))
 
     def run(self):
         """
@@ -292,13 +357,14 @@ class GridStrategy:
         """
         # main loop
         ticker_cnt = 0  # ticker 计数
-        max_ticker_cnt = 100
+        max_ticker_cnt = 10
         sleep_seconds = 10
         while True:
             # 判定结束条件
+            get_logger().debug('******* ticker_cnt %s, max_ticker_cnt %s' % (ticker_cnt, max_ticker_cnt))
             ticker_cnt += 1
             if ticker_cnt > max_ticker_cnt:
-                print('reach %d times(max=%d), so stop' % (ticker_cnt, max_ticker_cnt))
+                get_logger().debug('reach %d times(max=%d), so stop' % (ticker_cnt, max_ticker_cnt))
                 break
 
             # sleep
@@ -364,30 +430,30 @@ class GridStrategy:
         plt.show()
 
     def print_tickers(self):
-        print("***** df_ticker ******")
-        print(self.df_ticker)
+        get_logger().info("***** df_ticker ******")
+        get_logger().info(self.df_ticker)
 
     def print_op_buy(self):
-        print("***** df_buy ******")
-        print(self.df_b)
+        get_logger().info("***** df_buy ******")
+        get_logger().info(self.df_b)
 
     def print_op_sell(self):
-        print("***** df_sell ******")
-        print(self.df_s)
+        get_logger().info("***** df_sell ******")
+        get_logger().info(self.df_s)
 
     def print_profit(self):
-        print("***** profit ******")
-        print('profit: %.2f' % self.profit)
-        print('profit_ratio: %.2f' % self.profit_ratio)
+        get_logger().info("***** profit ******")
+        get_logger().info('profit: %.2f' % self.profit)
+        get_logger().info('profit_ratio: %.2f' % self.profit_ratio)
 
     def print_asset(self):
-        print("***** asset ******")
-        print('consume: %.2f' % self.consume)
-        print('max_consume: %.2f' % self.max_consume)
-        print('balance: %.2f' % self.balance)
-        print('budget: %.2f' % self.budget)
-        print('profit: %.2f' % self.profit)
-        print('profit_ratio: %.2f' % self.profit_ratio)
+        get_logger().info("***** asset ******")
+        get_logger().info('consume: %.2f' % self.consume)
+        get_logger().info('max_consume: %.2f' % self.max_consume)
+        get_logger().info('balance: %.2f' % self.balance)
+        get_logger().info('budget: %.2f' % self.budget)
+        get_logger().info('profit: %.2f' % self.profit)
+        get_logger().info('profit_ratio: %.2f' % self.profit_ratio)
 
     def stat(self):
         self.print_tickers()
@@ -403,7 +469,13 @@ if __name__ == '__main__':
     highest = 30000
     grid = 0.005
     grid_num = 10
-    budget = 100000.0  # 余额
+    budget = 1000.0  # 余额
+
+    logger.debug('debug')
+    logger.info('info')
+    logger.warning('warning')
+    logger.error('error')
+    logger.critical('critical')
 
     # 2. run strategy
     strategy = GridStrategy(instId=instId, highest=highest, lowest=lowest, grid=0.005, grid_num=10, budget=budget)
