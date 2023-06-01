@@ -133,6 +133,58 @@ def get_order_by_exchange_order(instId: str, exchange_order_id: str) -> {}:
         def get_order(self, instId, ordId='', clOrdId=''):
         params = {'instId': instId, 'ordId': ordId, 'clOrdId': clOrdId}
         return self._request_with_params(GET, ORDER_INFO, params)
+
+    {
+        "code":"0",
+        "msg":"",
+        "data":[
+            {
+                "instType":"FUTURES",
+                "instId":"BTC-USD-200329",
+                "ccy":"",
+                "ordId":"123445",
+                "clOrdId":"b1",
+                "tag":"",
+                "px":"999",
+                "sz":"3",
+                "pnl":"5",
+                "ordType":"limit",
+                "side":"buy",
+                "posSide":"long",
+                "tdMode":"isolated",
+                "accFillSz":"0",
+                "fillPx":"0",
+                "tradeId":"0",
+                "fillSz":"0",
+                "fillTime":"0",
+                "source": "",
+                "state":"live",
+                "avgPx":"0",
+                "lever":"20",
+                "tpTriggerPx":"",
+                "tpTriggerPxType":"last",
+                "tpOrdPx":"",
+                "slTriggerPx":"",
+                "slTriggerPxType":"last",
+                "slOrdPx":"",
+                "feeCcy":"",
+                "fee":"",
+                "rebateCcy":"",
+                "rebate":"",
+                "tgtCcy":"",
+                "category":"",
+                "reduceOnly": "false",
+                "cancelSource": "20",
+                "cancelSourceReason": "Cancel all after triggered",
+                "quickMgnType": "",
+                "algoClOrdId": "",
+                "algoId": "",
+                "uTime":"1597026383085", # 订单更新时间
+                "cTime":"1597026383085" # 订单创建时间
+            }
+        ]
+    }
+
     """
     result = tradeAPI.get_order(
         instId=instId,
