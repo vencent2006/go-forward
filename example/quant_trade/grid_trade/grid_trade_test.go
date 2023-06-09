@@ -82,9 +82,9 @@ func Test_GetIndex(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			res := GetIndex(tc.close, tc.priceLevels)
+			res := GetIndexByPrice(tc.close, tc.priceLevels)
 			target := float64(res) / float64(len(tc.priceLevels)-1)
-			t.Logf("GetIndex(%.1f) gridNum:%d index:%d target:%.1f", tc.close, len(tc.priceLevels)-1, res, target)
+			t.Logf("GetIndexByPrice(%.1f) gridNum:%d index:%d target:%.1f", tc.close, len(tc.priceLevels)-1, res, target)
 			assert.Equal(t, tc.wantRes, res)
 		})
 	}
