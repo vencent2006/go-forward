@@ -1,13 +1,14 @@
 package grid_trade
 
 import (
+	"example/quant_trade/utils"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func Test_CalPercentLevels(t *testing.T) {
 	gridNum := 1
-	levels := CalPercentLevels(gridNum)
+	levels := utils.CalPercentLevels(gridNum)
 	for i, level := range levels {
 		t.Logf("%d %.2f", i, level)
 	}
@@ -17,13 +18,13 @@ func Test_CalCalPriceLevels(t *testing.T) {
 	highest := float64(30000)
 	lowest := float64(25000)
 	gridNum := 1
-	levels := CalPriceLevels(highest, lowest, gridNum)
+	levels := utils.CalPriceLevels(highest, lowest, gridNum)
 	for i, level := range levels {
 		t.Logf("%d %.2f", i, level)
 	}
 }
 
-func Test_GetIndex(t *testing.T) {
+func Test_GetIndexByPrice(t *testing.T) {
 	testCases := []struct {
 		name        string
 		priceLevels []float64
