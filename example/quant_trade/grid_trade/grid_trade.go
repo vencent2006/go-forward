@@ -14,10 +14,6 @@ const (
 	SLEEP_SECONDS = 10 * time.Second
 	MIN_GRID_NUM  = 2 // 最小网格数量
 
-	// side def
-	SIDE_BUY  = "buy"
-	SIDE_SELL = "sell"
-
 	TIME_WAIT_ORDER_RESULT  = 5 * 60 * time.Second
 	TIME_SLEET_ORDER_RESULT = 2 * time.Second
 )
@@ -38,12 +34,12 @@ type GridTrade struct {
 	PercentLevels []float64 // 持仓比例区间
 	PriceLevels   []float64 // 价格区间
 
-	client         *okx.Client
+	client         sdk.Exchange
 	lastIndexCache *cache.LastIndex
 	buyStackCache  *cache.BuyStack
 }
 
-func NewGridTrade(strategy string, instId string, highest float64, lowest float64, gridNum int, budget float64) *GridTrade {
+func NewGridTrade(strategy string, instId string, highest float64, lowest float64, gridNum int, budget float64, client sdk.Exchange) *GridTrade {
 	if gridNum < MIN_GRID_NUM {
 		panic(fmt.Sprintf("gridNum(%d) is invalid", gridNum))
 	}
@@ -58,28 +54,29 @@ func NewGridTrade(strategy string, instId string, highest float64, lowest float6
 		PriceLevels:   utils.CalPriceLevels(highest, lowest, gridNum),
 		PercentLevels: utils.CalPercentLevels(gridNum),
 	}
-	g.client = okx.NewOkxClient()
+	g.client = client
 	g.lastIndexCache = cache.NewLastIndex(strategy)
 	g.buyStackCache = cache.NewBuyStack(strategy)
 
 	return g
 }
 
-func (g *GridTrade) GetTickerWithSave() (*sdk.Ticker, error) {
+func (g *GridTrade) GetTickerWithSave(instId string) (*sdk.GetTickerRes, error) {
 	// get close
-	ticker, err := g.client.GetLatestClose()
+	req := &sdk.GetTickerReq{InstId: instId}
+	ticker, err := g.client.GetTicker(req)
 	if err != nil {
 		logrus.Errorf("client.GetLatestClose() failed | err:%v", err)
 		return nil, err
 	}
 
 	// todo save close
-	return &ticker, nil
+	return ticker, nil
 }
 
 func (g *GridTrade) RealtimeTrade() error {
 	var (
-		ticker *sdk.Ticker
+		ticker *sdk.GetTickerRes
 		err    error
 	)
 	for {
@@ -87,7 +84,7 @@ func (g *GridTrade) RealtimeTrade() error {
 		time.Sleep(SLEEP_SECONDS)
 
 		// 1. get ticker
-		ticker, err = g.GetTickerWithSave()
+		ticker, err = g.GetTickerWithSave(g.InstId)
 		if err != nil {
 			logrus.Errorf("GetTickerWithSave failed | err:%v", err)
 			continue
@@ -104,11 +101,7 @@ func (g *GridTrade) RealtimeTrade() error {
 
 }
 
-func (g *GridTrade) OpenPosition(ticker *sdk.Ticker) error {
-	return nil
-}
-
-func (g *GridTrade) ProcessOneTicker(ticker *sdk.Ticker) error {
+func (g *GridTrade) ProcessOneTicker(ticker *sdk.GetTickerRes) error {
 
 	newIndex := GetIndexByPrice(ticker.Close, g.PriceLevels)
 	oldIndex := g.lastIndexCache.Get()
@@ -121,21 +114,23 @@ func (g *GridTrade) SetPositionLevel(oldIndex, newIndex int, closePrice float64)
 	if newIndex == oldIndex {
 		// no operation
 		return nil
-	} else if newIndex > oldIndex {
+	}
+
+	clientOrderId := utils.GetUUID()
+	if newIndex > oldIndex {
 		// sell
 		money := g.Budget * float64((newIndex-oldIndex)/g.GridNum)
-		size := money / closePrice
-		price := g.PriceLevels[newIndex] // 取较地的价格 sell
-		clientOrderId := utils.GetUUID()
+		price := g.PriceLevels[newIndex] // 取较低的价格 sell
+		size := money / price
 		return g.TrySell(g.InstId, price, size, clientOrderId)
 	} else {
 		// buy, newIndex < oldIndex
 		money := g.Budget * float64((oldIndex-newIndex)/g.GridNum)
-		size := money / closePrice
 		price := g.PriceLevels[newIndex-1] // 取较高的价格 buy
-		clientOrderId := utils.GetUUID()
+		size := money / closePrice
 		return g.TryBuy(g.InstId, price, size, clientOrderId)
 	}
+
 }
 
 func GetIndexByPrice(close float64, priceLevels []float64) int {
@@ -154,66 +149,73 @@ func GetIndexByPrice(close float64, priceLevels []float64) int {
 }
 
 func (g *GridTrade) TryBuy(instId string, price float64, size float64, clientOrderId string) error {
-	return g.TryPlaceOrder(SIDE_BUY, instId, price, size, clientOrderId)
+	return g.TryPlaceOrder(sdk.SIDE_BUY, instId, price, size, clientOrderId)
 }
 
 func (g *GridTrade) TrySell(instId string, price float64, size float64, clientOrderId string) error {
-	return g.TryPlaceOrder(SIDE_SELL, instId, price, size, clientOrderId)
+	return g.TryPlaceOrder(sdk.SIDE_SELL, instId, price, size, clientOrderId)
 }
 
-func (g *GridTrade) TryPlaceOrder(side string, instId string, price float64, size float64, clientOrderId string) error {
+func (g *GridTrade) TryPlaceOrder(side string, instId string, price float64, size float64, clOrdId string) error {
 
-	var res *okx.PlaceOrderData
+	var res *sdk.PlaceOrderRes
 	var err error
-	var exchangeOrderId string
+	var ordId string
 
-	switch side {
-	case SIDE_BUY:
-		res, err = g.client.BuyLimit()
-	case SIDE_SELL:
-		res, err = g.client.SellLimit()
-	default:
+	if side != sdk.SIDE_BUY && side != sdk.SIDE_SELL {
 		panic(fmt.Sprintf("invalid side %s", side))
 	}
 
+	res, err = g.client.PlaceOrder(&sdk.PlaceOrderReq{
+		Side:    side,
+		InstId:  g.InstId,
+		ClOrdId: clOrdId,
+		Price:   price,
+		Size:    size,
+	})
+
 	// 1. 判定结果
 	if err != nil {
-		fmt.Printf("%s | instId:%s | price:%f | size:%f | clientOrderId:%s | place order failed | err:%v",
-			side, instId, price, size, clientOrderId, err)
+		fmt.Printf("%s | instId:%s | price:%f | size:%f | clOrdId:%s | place order failed | err:%v",
+			side, instId, price, size, clOrdId, err)
 		return err
 	}
 
 	// place order successfully
-	exchangeOrderId = res.OrdId
-	fmt.Printf("%s | instId:%s | price:%f | size:%f | clientOrderId:%s | exchangeOrderId:%s | place order successful",
-		side, instId, price, size, clientOrderId, exchangeOrderId)
+	ordId = res.OrdId
+	fmt.Printf("%s | instId:%s | price:%f | size:%f | clOrdId:%s | ordId:%s | place order successful",
+		side, instId, price, size, clOrdId, ordId)
 	// todo 记录到数据库中
 
 	// 2. 查询订单
 	deadline := time.Now().Add(TIME_WAIT_ORDER_RESULT)
-	var orderData *okx.GetOrderData
+	var orderData *sdk.GetOrderRes
 	for time.Now().Before(deadline) {
 
 		// 先 sleep
 		time.Sleep(TIME_SLEET_ORDER_RESULT)
 
 		// 获取订单信息
-		orderData, err = g.client.GetOrderByClientOrderId(clientOrderId)
+		reqGetOrderByClOrdId := &sdk.GetOrderByClOrdIdReq{
+			InstId:  g.InstId,
+			ClOrdId: clOrdId,
+		}
+		orderData, err = g.client.GetOrderByClOrdId(reqGetOrderByClOrdId)
 		if err != nil {
-			fmt.Printf("GetOrderByClientOrderId(clientOrderId: %s) failed | err:%v", clientOrderId, err)
+			fmt.Printf("GetOrderByClOrdId(req: %+v) failed | err:%v", reqGetOrderByClOrdId, err)
 			continue
 		}
 
 		// 取得了订单信息
-		switch orderData.State {
-		case okx.ORDER_STATUS_FILLED:
+		switch orderData.Status {
+		case sdk.ORDER_STATUS_FILLED:
 			// 已经成交，终态
 			// todo 更新数据库状态
 			return nil
-		case okx.ORDER_STATUS_CANCELED:
+		case sdk.ORDER_STATUS_CANCELED:
 			// 已经取消，终态
 			// todo 更新数据库状态
-			return fmt.Errorf("order(clientOrderId:%s, exchangeOrderId:%s) already canceled", clientOrderId, exchangeOrderId)
+			return fmt.Errorf("order(clOrdId:%s, ordId:%s) already canceled", clOrdId, ordId)
 		default:
 			// 非终态
 			continue
@@ -221,16 +223,24 @@ func (g *GridTrade) TryPlaceOrder(side string, instId string, price float64, siz
 	}
 
 	// 如果还没交易成功，那么就取消订单，并返回false
-	_, err = g.client.CancelOrderByClientOrderId(clientOrderId)
+	reqCancelOrder := &sdk.CancelOrderByClOrdIdReq{
+		InstId:  g.InstId,
+		ClOrdId: clOrdId,
+	}
+	_, err = g.client.CancelOrderByClOrdId(reqCancelOrder)
 	if err != nil {
-		fmt.Printf("GetOrderByClientOrderId(clientOrderId: %s) failed | err:%v", clientOrderId, err)
+		fmt.Printf("CancelOrderByClOrdId(req: %+v) failed | err:%v", reqCancelOrder, err)
 	}
 
 	// 获取订单信息
+	reqGetOrder := &sdk.GetOrderByClOrdIdReq{
+		InstId:  g.InstId,
+		ClOrdId: clOrdId,
+	}
 	for i := 0; i < 3; i++ {
-		orderData, err = g.client.GetOrderByClientOrderId(clientOrderId)
+		orderData, err = g.client.GetOrderByClOrdId(reqGetOrder)
 		if err != nil {
-			fmt.Printf("GetOrderByClientOrderId(clientOrderId: %s) failed | err:%v", clientOrderId, err)
+			fmt.Printf("GetOrderByClOrdId(req: %+v) failed | err:%v", reqGetOrder, err)
 		}
 	}
 	if err != nil {
@@ -239,18 +249,18 @@ func (g *GridTrade) TryPlaceOrder(side string, instId string, price float64, siz
 	}
 
 	// 取得了订单信息
-	switch orderData.State {
+	switch orderData.Status {
 	case okx.ORDER_STATUS_FILLED:
 		// 已经成交，终态
 		return nil
 	case okx.ORDER_STATUS_CANCELED:
 		// 已经取消，终态
-		return fmt.Errorf("clientOrderId(%s) already canceled", clientOrderId)
+		return fmt.Errorf("clOrdId(%s) already canceled", clOrdId)
 	default:
 		// 非终态
 		// todo 暂时不知道怎么处理
 		// todo 更新数据库状态
-		panic(fmt.Sprintf("status = %s | dont know how to handle"))
+		panic(fmt.Sprintf("status = %s | dont know how to handle", orderData.Status))
 	}
 
 }

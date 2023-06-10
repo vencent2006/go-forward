@@ -5,6 +5,7 @@ const (
 	ORDER_STATUS_LIVE        = "live"             // 等待成交
 	ORDER_STATUS_PART_FILLED = "partially_filled" // 部分成交
 	ORDER_STATUS_FILLED      = "filled"           // 完全成交
+
 )
 
 // place order

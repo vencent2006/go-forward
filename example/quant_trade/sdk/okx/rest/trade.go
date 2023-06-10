@@ -2,9 +2,8 @@ package rest
 
 import (
 	"encoding/json"
-	"github.com/amir-the-h/okex"
-	requests "github.com/amir-the-h/okex/requests/rest/trade"
-	responses "github.com/amir-the-h/okex/responses/trade"
+	requests "example/quant_trade/sdk/okx/rest/request/trade"
+	responses "example/quant_trade/sdk/okx/rest/responses/trade"
 	"net/http"
 )
 
@@ -24,15 +23,9 @@ func NewTrade(c *ClientRest) *Trade {
 // You can place an order only if you have sufficient funds.
 //
 // https://www.okex.com/docs-v5/en/#rest-api-trade-get-positions
-func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceOrder, err error) {
+func (c *Trade) PlaceOrder(req requests.PlaceOrder) (response responses.PlaceOrder, err error) {
 	p := "/api/v5/trade/order"
-	var tmp interface{}
-	tmp = req[0]
-	if len(req) > 1 {
-		tmp = req
-		p = "/api/trade/batch-orders"
-	}
-	m := okex.S2M(tmp)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -40,6 +33,7 @@ func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceO
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 
 	return
 }
@@ -50,7 +44,7 @@ func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceO
 // https://www.okex.com/docs-v5/en/#rest-api-trade-place-multiple-orders
 func (c *Trade) PlaceMultipleOrders(req []requests.PlaceOrder) (response responses.PlaceOrder, err error) {
 	p := "/api/v5/trade/batch-order"
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -58,6 +52,7 @@ func (c *Trade) PlaceMultipleOrders(req []requests.PlaceOrder) (response respons
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 
 	return
 }
@@ -70,15 +65,9 @@ func (c *Trade) PlaceMultipleOrders(req []requests.PlaceOrder) (response respons
 // Cancel incomplete orders in batches. Maximum 20 orders can be canceled at a time. Request parameters should be passed in the form of an array.
 //
 // https://www.okex.com/docs-v5/en/#rest-api-trade-cancel-multiple-orders
-func (c *Trade) CandleOrder(req []requests.CancelOrder) (response responses.PlaceOrder, err error) {
+func (c *Trade) CandleOrder(req requests.CancelOrder) (response responses.CancelOrder, err error) {
 	p := "/api/v5/trade/cancel-order"
-	var tmp interface{}
-	tmp = req[0]
-	if len(req) > 1 {
-		tmp = req
-		p = "/api/trade/cancel-batch-orders"
-	}
-	m := okex.S2M(tmp)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -86,6 +75,7 @@ func (c *Trade) CandleOrder(req []requests.CancelOrder) (response responses.Plac
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 	return
 }
 
@@ -105,7 +95,7 @@ func (c *Trade) AmendOrder(req []requests.OrderList) (response responses.AmendOr
 		tmp = req
 		p = "/api/trade/amend-batch-orders"
 	}
-	m := okex.S2M(tmp)
+	m := S2M(tmp)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -113,6 +103,7 @@ func (c *Trade) AmendOrder(req []requests.OrderList) (response responses.AmendOr
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 	return
 }
 
@@ -122,7 +113,7 @@ func (c *Trade) AmendOrder(req []requests.OrderList) (response responses.AmendOr
 // https://www.okex.com/docs-v5/en/#rest-api-trade-close-positions
 func (c *Trade) ClosePosition(req requests.ClosePosition) (response responses.ClosePosition, err error) {
 	p := "/api/v5/trade/close-position"
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -130,6 +121,7 @@ func (c *Trade) ClosePosition(req requests.ClosePosition) (response responses.Cl
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 	return
 }
 
@@ -139,7 +131,7 @@ func (c *Trade) ClosePosition(req requests.ClosePosition) (response responses.Cl
 // https://www.okex.com/docs-v5/en/#rest-api-trade-get-order-details
 func (c *Trade) GetOrderDetail(req requests.OrderDetails) (response responses.OrderList, err error) {
 	p := "/api/v5/trade/order"
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -147,6 +139,7 @@ func (c *Trade) GetOrderDetail(req requests.OrderDetails) (response responses.Or
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 	return
 }
 
@@ -156,7 +149,7 @@ func (c *Trade) GetOrderDetail(req requests.OrderDetails) (response responses.Or
 // https://www.okex.com/docs-v5/en/#rest-api-trade-get-order-list
 func (c *Trade) GetOrderList(req requests.OrderList) (response responses.OrderList, err error) {
 	p := "/api/v5/trade/orders-pending"
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -164,6 +157,7 @@ func (c *Trade) GetOrderList(req requests.OrderList) (response responses.OrderLi
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 	return
 }
 
@@ -179,7 +173,7 @@ func (c *Trade) GetOrderHistory(req requests.OrderList, arch bool) (response res
 	if arch {
 		p = "/api/trade/orders-history-archive"
 	}
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -187,6 +181,7 @@ func (c *Trade) GetOrderHistory(req requests.OrderList, arch bool) (response res
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 	return
 }
 
@@ -203,7 +198,7 @@ func (c *Trade) GetTransactionDetails(req requests.TransactionDetails, arch bool
 	if arch {
 		p = "/api/trade/fills-history"
 	}
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -211,6 +206,7 @@ func (c *Trade) GetTransactionDetails(req requests.TransactionDetails, arch bool
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 	return
 }
 
@@ -222,7 +218,7 @@ func (c *Trade) GetTransactionDetails(req requests.TransactionDetails, arch bool
 // https://www.okex.com/docs-v5/en/#rest-api-trade-place-algo-order
 func (c *Trade) PlaceAlgoOrder(req requests.PlaceAlgoOrder) (response responses.PlaceAlgoOrder, err error) {
 	p := "/api/v5/trade/order-algo"
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -230,6 +226,7 @@ func (c *Trade) PlaceAlgoOrder(req requests.PlaceAlgoOrder) (response responses.
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 
 	return
 }
@@ -240,7 +237,7 @@ func (c *Trade) PlaceAlgoOrder(req requests.PlaceAlgoOrder) (response responses.
 // https://www.okex.com/docs-v5/en/#rest-api-trade-cancel-algo-order
 func (c *Trade) CancelAlgoOrder(req requests.CancelAlgoOrder) (response responses.CancelAlgoOrder, err error) {
 	p := "/api/v5/trade/cancel-algos"
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -248,6 +245,7 @@ func (c *Trade) CancelAlgoOrder(req requests.CancelAlgoOrder) (response response
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 
 	return
 }
@@ -260,7 +258,7 @@ func (c *Trade) CancelAlgoOrder(req requests.CancelAlgoOrder) (response response
 // https://www.okex.com/docs-v5/en/#rest-api-trade-cancel-advance-algo-order
 func (c *Trade) CancelAdvanceAlgoOrder(req requests.CancelAlgoOrder) (response responses.CancelAlgoOrder, err error) {
 	p := "/api/v5/trade/cancel-advance-algos"
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -268,6 +266,7 @@ func (c *Trade) CancelAdvanceAlgoOrder(req requests.CancelAlgoOrder) (response r
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 
 	return
 }
@@ -289,7 +288,7 @@ func (c *Trade) GetAlgoOrderList(req requests.AlgoOrderList, arch bool) (respons
 	if arch {
 		p = "/api/trade/orders-algo-history"
 	}
-	m := okex.S2M(req)
+	m := S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -297,6 +296,7 @@ func (c *Trade) GetAlgoOrderList(req requests.AlgoOrderList, arch bool) (respons
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	err = checkBasic(err, &response.Basic)
 
 	return
 }

@@ -1,8 +1,8 @@
 package trade
 
 import (
-	"github.com/amir-the-h/okex/models/trade"
-	"github.com/amir-the-h/okex/responses"
+	"example/quant_trade/sdk/okx/rest/models/trade"
+	"example/quant_trade/sdk/okx/rest/responses"
 )
 
 type (
