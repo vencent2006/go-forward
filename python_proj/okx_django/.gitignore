@@ -5,3 +5,4 @@ okx_django/__pycache__
 okx_sdk/_trial_temp
 _trial_temp
 .ipynb_checkpoints
+*.png
