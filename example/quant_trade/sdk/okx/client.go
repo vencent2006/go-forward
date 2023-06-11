@@ -32,9 +32,10 @@ func (c *Client) GetTicker(r *sdk.GetTickerReq) (*sdk.GetTickerRes, error) {
 		return nil, fmt.Errorf("len(res.Tickers) = %d, not 1", len(res.Tickers))
 	}
 	resp := &sdk.GetTickerRes{
-		InstId: r.InstId,
-		Ts:     res.Tickers[0].TS,
-		Close:  res.Tickers[0].Last,
+		Channel: c.GetName(),
+		InstId:  r.InstId,
+		Ts:      res.Tickers[0].TS,
+		Close:   res.Tickers[0].Last,
 	}
 	return resp, nil
 }
@@ -87,13 +88,27 @@ func (c *Client) GetOrderByClOrdId(r *sdk.GetOrderByClOrdIdReq) (*sdk.GetOrderRe
 	if len(res.Orders) != 1 {
 		return nil, fmt.Errorf("len(res.PlaceOrders) = %d, not 1", len(res.Orders))
 	}
-	resp := &sdk.GetOrderRes{
-		InstId:  res.Orders[0].InstID,
-		OrdId:   res.Orders[0].OrdID,
-		ClOrdId: res.Orders[0].ClOrdID,
-		Status:  res.Orders[0].State,
+	resp := &sdk.GetOrderRes{}
+	resp.InstId = res.Orders[0].InstID
+	resp.OrdId = res.Orders[0].OrdID
+	resp.ClOrdId = res.Orders[0].ClOrdID
+	resp.Status, err = c.MappingOrderStatus(res.Orders[0].State)
+	return resp, err
+}
+
+func (c *Client) MappingOrderStatus(orderStatus string) (int, error) {
+	switch orderStatus {
+	case ORDER_STATUS_CANCELED:
+		return sdk.ORDER_STATUS_CANCELED, nil
+	case ORDER_STATUS_FILLED:
+		return sdk.ORDER_STATUS_FILLED, nil
+	case ORDER_STATUS_LIVE:
+		return sdk.ORDER_STATUS_LIVE, nil
+	case ORDER_STATUS_PART_FILLED:
+		return sdk.ORDER_STATUS_PART_FILLED, nil
+	default:
+		return 0, fmt.Errorf("unknown orderStatus(%s) for channel(%s)", orderStatus, c.GetName())
 	}
-	return resp, nil
 }
 
 func (c *Client) GetOrderByOrdId(r *sdk.GetOrderByOrdIdReq) (*sdk.GetOrderRes, error) {
@@ -108,13 +123,12 @@ func (c *Client) GetOrderByOrdId(r *sdk.GetOrderByOrdIdReq) (*sdk.GetOrderRes, e
 	if len(res.Orders) != 1 {
 		return nil, fmt.Errorf("len(res.PlaceOrders) = %d, not 1", len(res.Orders))
 	}
-	resp := &sdk.GetOrderRes{
-		InstId:  res.Orders[0].InstID,
-		OrdId:   res.Orders[0].OrdID,
-		ClOrdId: res.Orders[0].ClOrdID,
-		Status:  res.Orders[0].State,
-	}
-	return resp, nil
+	resp := &sdk.GetOrderRes{}
+	resp.InstId = res.Orders[0].InstID
+	resp.OrdId = res.Orders[0].OrdID
+	resp.ClOrdId = res.Orders[0].ClOrdID
+	resp.Status, err = c.MappingOrderStatus(res.Orders[0].State)
+	return resp, err
 }
 
 func (c *Client) CancelOrderByClOrdId(r *sdk.CancelOrderByClOrdIdReq) (*sdk.CancelOrderRes, error) {
@@ -122,7 +136,7 @@ func (c *Client) CancelOrderByClOrdId(r *sdk.CancelOrderByClOrdIdReq) (*sdk.Canc
 	var req trade.CancelOrder
 	req.InstID = r.InstId
 	req.ClOrdID = r.ClOrdId
-	res, err := c.restClient.Trade.CandleOrder(req)
+	res, err := c.restClient.Trade.CancelOrder(req)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +163,7 @@ func (c *Client) CancelOrderByOrdId(r *sdk.CancelOrderByOrdIdReq) (*sdk.CancelOr
 	var req trade.CancelOrder
 	req.InstID = r.InstId
 	req.ClOrdID = r.OrdId
-	res, err := c.restClient.Trade.CandleOrder(req)
+	res, err := c.restClient.Trade.CancelOrder(req)
 	if err != nil {
 		return nil, err
 	}

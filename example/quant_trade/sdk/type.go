@@ -8,10 +8,10 @@ const (
 	SIDE_SELL = "sell"
 
 	// status
-	ORDER_STATUS_CANCELED    = "canceled"         // 撤单成功
-	ORDER_STATUS_LIVE        = "live"             // 等待成交
-	ORDER_STATUS_PART_FILLED = "partially_filled" // 部分成交
-	ORDER_STATUS_FILLED      = "filled"           // 完全成交
+	ORDER_STATUS_LIVE        = 0 // 等待成交
+	ORDER_STATUS_PART_FILLED = 1 // 部分成交
+	ORDER_STATUS_FILLED      = 2 // 完全成交
+	ORDER_STATUS_CANCELED    = 3 // 撤单成功
 )
 
 // todo 加个interface，可以接收不同交易所
@@ -30,9 +30,10 @@ type GetTickerReq struct {
 }
 
 type GetTickerRes struct {
-	InstId string    `json:"instId"`
-	Ts     time.Time `json:"ts"`
-	Close  float64   `json:"close"`
+	Channel string    `json:"channel"`
+	InstId  string    `json:"instId"`
+	Ts      time.Time `json:"ts"`
+	Close   float64   `json:"close"`
 }
 
 type PlaceOrderReq struct {
@@ -63,7 +64,7 @@ type GetOrderRes struct {
 	InstId  string
 	OrdId   string
 	ClOrdId string
-	Status  string
+	Status  int
 }
 
 type CancelOrderByClOrdIdReq struct {
