@@ -13,6 +13,8 @@ type OrderModel struct {
 	InstId     string    `gorm:"column:instId"`
 	OrdId      string    `gorm:"column:ord_id"`
 	ClOrdId    string    `gorm:"column:cl_ord_id"`
+	price      float64   `gorm:"column:price"`
+	size       float64   `gorm:"column:size"`
 	Status     int       `gorm:"column:status"`
 	CreateTime time.Time `gorm:"column:create_time"`
 	UpdateTime time.Time `gorm:"column:update_time"`
