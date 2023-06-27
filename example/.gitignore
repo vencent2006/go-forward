@@ -3,3 +3,4 @@ filter_uid/order_export.txt
 filter_uid/order.csv
 /quant_trade/sdk/okx/conf.go
 /quant_trade/model/conf.go
+webhook.log
