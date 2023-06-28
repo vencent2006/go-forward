@@ -19,4 +19,5 @@ func init() {
 	if err != nil {
 		panic("failed to connect mysql.")
 	}
+	fmt.Printf("连接成功：%v\n", db)
 }
