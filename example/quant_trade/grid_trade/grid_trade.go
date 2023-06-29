@@ -3,7 +3,6 @@ package grid_trade
 import (
 	"example/quant_trade/cache"
 	"example/quant_trade/sdk"
-	"example/quant_trade/sdk/okx"
 	"example/quant_trade/utils"
 	"fmt"
 	"github.com/sirupsen/logrus"
@@ -250,17 +249,17 @@ func (g *GridTrade) TryPlaceOrder(side string, instId string, price float64, siz
 
 	// 取得了订单信息
 	switch orderData.Status {
-	case okx.ORDER_STATUS_FILLED:
+	case sdk.ORDER_STATUS_FILLED:
 		// 已经成交，终态
 		return nil
-	case okx.ORDER_STATUS_CANCELED:
+	case sdk.ORDER_STATUS_CANCELED:
 		// 已经取消，终态
 		return fmt.Errorf("clOrdId(%s) already canceled", clOrdId)
 	default:
 		// 非终态
 		// todo 暂时不知道怎么处理
 		// todo 更新数据库状态
-		panic(fmt.Sprintf("status = %s | dont know how to handle", orderData.Status))
+		panic(fmt.Sprintf("status = %d | dont know how to handle", orderData.Status))
 	}
 
 }
