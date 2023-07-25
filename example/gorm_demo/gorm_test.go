@@ -6,7 +6,7 @@
  * @Date: 2021/9/27 19:54
  */
 
-package gorm_demo
+package main
 
 import (
 	"fmt"
@@ -59,5 +59,23 @@ func TestGorm(t *testing.T) {
 
 	var o BusinessToolOrder
 	db.Find(&o, "id=?", 3223418)
+	fmt.Printf("%#v\n", o)
+}
+
+func Test_luanma(t *testing.T) {
+	db, err := gorm.Open("mysql", "test:123456@(10.41.41.203:3306)/zero?charset=utf8mb4&parseTime=True&loc=Local")
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	db.SingularTable(true)
+	// 查询
+	var blog = new(VipUserAiBlog)
+	db.First(blog)
+	fmt.Printf("%#v\n", blog)
+
+	var o VipUserAiBlog
+	db.Find(&o, "id=?", 4)
 	fmt.Printf("%#v\n", o)
 }
