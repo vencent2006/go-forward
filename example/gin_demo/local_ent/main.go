@@ -1,42 +1,47 @@
 package main
 
 import (
-	"io/ioutil"
-	"log"
-	"net/http"
-	"os"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
-var logger *log.Logger
-
-type NotifyChargeRes struct {
-	Code    int    `json:"code"`
-	Message string `json:"msg"`
+type LocalEntReq struct {
+	Uid      int64 `json:"uid" form:"uid"`
+	CityId   int   `json:"city_id" form:"city_id" binding:"required"`
+	PageNo   int   `json:"page_no" form:"page_no" binding:"required"`
+	PageSize int   `json:"page_size" form:"page_size" binding:"required"`
 }
 
-func init() {
-	logFile, err := os.OpenFile("./webhook.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-	if err != nil {
-		log.Panic("打开日志文件异常")
-	}
-	logger = log.New(logFile, "", log.Ldate|log.Ltime|log.Lshortfile)
+type LocalEntRes struct {
+	CityId      int      `json:"city_id"`
+	List        []string `json:"list"`
+	TotalNumber int      `json:"total_number"`
+	PageNo      int      `json:"page_no"`
+	PageSize    int      `json:"page_size"`
+}
+
+type response struct {
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data"`
 }
 
 func main() {
 	r := gin.Default()
 
-	r.POST("/wallet/nofify/chain/chage", func(c *gin.Context) {
-		body, _ := ioutil.ReadAll(c.Request.Body)
-		if body != nil {
-			logger.Printf("body is %+v", string(body))
+	r.GET("/interface/local_ent", func(c *gin.Context) {
+		req := &LocalEntReq{}
+		resp := &response{}
+		err := c.BindQuery(req)
+		if err != nil {
+			resp.Code = 1001
+			resp.Msg = err.Error()
+			resp.Data = nil
+			c.JSON(http.StatusOK, resp)
 		}
-		data := &NotifyChargeRes{
-			Code:    10000,
-			Message: "ok",
-		}
-		c.JSON(http.StatusOK, data)
+
+		//c.JSON(http.StatusOK, "ok")
+		c.JSON(http.StatusBadGateway, "return 502")
 	})
 
 	r.Run(":8081")
