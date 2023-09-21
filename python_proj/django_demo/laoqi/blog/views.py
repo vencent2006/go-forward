@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from .models import BlogArticles
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required
 def blog_title(request):
     blogs = BlogArticles.objects.all()
     return render(request, "blog/titles.html", {"blogs": blogs})
