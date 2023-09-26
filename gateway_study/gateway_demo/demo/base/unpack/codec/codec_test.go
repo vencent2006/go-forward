@@ -1,4 +1,4 @@
-package aaa
+package codec
 
 import (
 	"bytes"
