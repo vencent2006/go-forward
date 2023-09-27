@@ -40,7 +40,7 @@ func (p *Pxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	// step 3, 把下游请求内容返回给上游
 	for key, value := range res.Header {
 		for _, v := range value {
-			rw.Header().Set(key, v)
+			rw.Header().Add(key, v)
 		}
 	}
 
