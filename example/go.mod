@@ -6,6 +6,7 @@ require (
 	github.com/ClickHouse/clickhouse-go v1.5.4
 	github.com/amir-the-h/okex v1.1.4-alpha
 	github.com/beego/beego/v2 v2.0.7
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-contrib/static v0.0.1
 	github.com/gin-gonic/gin v1.9.0
