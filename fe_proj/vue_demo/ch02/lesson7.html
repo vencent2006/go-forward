@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 7</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// {{}} 插值表达式
+	// v-html, v-bind(:), v-on(@), 动态参数@[name] :[name]，修饰符@click.prevent
+	const app = Vue.createApp({
+		data() {
+			return {
+				message: 'hello world',
+				name: 'title',
+				event: 'mouseenter'
+			}
+		},
+		methods: {
+			handleClick(e) {
+				alert('click')
+			}
+		},
+		template: `
+			<form action="https://www.baidu.com" @click.prevent="handleClick">
+				<button type="submit">提交</button>
+			</form>	
+		`
+	});
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+
+</script>
+</html>

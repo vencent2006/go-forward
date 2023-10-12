@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 8</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// data & methods & computed & watcher
+	const app = Vue.createApp({
+		data() {
+			return {
+				message: 'hello world',
+				count: 2,
+				price: 5
+			}
+		},
+		computed: {
+			// 当计算属性依赖的内容发生变更时，才会重新执行计算
+			total() {
+				return Date.now()
+				// return this.count * this.price
+			}
+		},
+		methods:{
+			formatString(string) {
+				return string.toUpperCase()
+			},
+			// 只要页面重新渲染，才会重新计算
+			getTotal() {
+				return Date.now()
+			}
+		},
+		template: `
+			<div> {{message}} {{ total }} </div>
+			<div> {{message}} {{ getTotal() }} </div>
+		`
+	});
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+
+</script>
+</html>
