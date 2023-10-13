@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 11</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	const app = Vue.createApp({
+		data(){
+			return {
+				listArray:['dell', 'lee', 'teacher'],
+				listObject:{
+					firstName: 'dell',
+					lastName: 'lee',
+					job: 'teacher'
+				}
+			}
+		},
+		methods: {
+			handleAddBtnClick(){
+				// 1. 使用数组的变更函数 push pop shift unshift
+				// this.listArray.push('hello')
+				// this.listArray.pop()
+				// this.listArray.shift()
+				// this.listArray.unshift('hello')
+				// this.listArray.reverse()
+				// this.listArray.sort()
+
+				// 2. 直接替换数据
+				// this.listArray = ['bye', 'world']
+				// this.listArray = ['bye'].concat(['world'])
+				// this.listArray = ['bye', 'world'].filter(item => item === 'bye')
+
+				// 3. 直接更新数组的内容
+				this.listArray[1] = 'hello'
+
+				// 直接添加对象的内容， 也可以自动的展示出来
+				this.listObject.age = 100
+				this.listObject.sex = 'male'
+			}
+		},
+		template: `
+			<div>
+				<span>listArray</span>
+				<div v-for="(item, index) in listArray" :key="index">
+					{{item}} -- {{index}}
+				</div>
+				<span>listObject</span>
+				<div v-for="(value, key, index) in listObject">
+					{{value}} -- {{key}} -- {{index}}
+				</div>
+				<span>item in 10</span>
+				<div v-for="item in 10">{{item}}</div>
+				<span>filter specific key</span>
+				<template v-for="(value, key, index) in listObject" 
+					:key="index">
+					<div v-if="key !== 'lastName'">
+					{{value}} -- {{key}} -- {{index}}
+					</div>
+				</template>
+				<button @click="handleAddBtnClick">新增</button>
+			</div>
+		`
+	});
+	const vm = app.mount('#root');
+
+</script>
+</html>

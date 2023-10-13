@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 10</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	const app = Vue.createApp({
+		data(){
+			return {
+				show:false,
+				conditionOne: false,
+				conditionTwo: false,
+			}
+		},
+		template: `
+			<div v-if="show">Hello World</div>
+
+			<div v-if="conditionOne">if</div>
+			<div v-else-if="conditionTwo">elseif</div>
+			<div v-else>else</div>
+			
+			<div v-show="show">bye bye</div>
+		`
+	});
+	const vm = app.mount('#root');
+
+</script>
+</html>

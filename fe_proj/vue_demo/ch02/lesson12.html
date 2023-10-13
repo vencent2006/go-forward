@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 12</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// 事件修饰符：stop, prevent, capture, self, once, passive
+	const app = Vue.createApp({
+		data() {
+			return {
+				counter: 0
+			}
+		},
+		methods: {
+			handleBtnClick(){
+				this.counter +=1 
+			},
+			handleDivClick(){
+				alert("div clicked")
+			}
+		},
+		template: `
+			<div>
+				<div @click.self="handleDivClick">
+					{{counter}}
+					<button @click="handleBtnClick">button</button>
+				</div>
+			</div>
+		`
+	});
+	const vm = app.mount('#root');
+
+</script>
+</html>

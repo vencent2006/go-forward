@@ -23,15 +23,26 @@
 			return {
 				classString: 'red', 
 				classObject: {red:true, green:false},
-				classArray: ['red', 'green'],
+				classArray: ['red', 'green', {brown:true}],
+				styleString: 'color: yellow;',
+				styleObject: {
+					color: 'orange',
+					background: 'yellow'
+				}
 			}
 		},
 		template: `
-			<div :class="classObject">Hello World</div>
+			<div :style="styleObject">
+				Hello World
+				<demo class="green"/>
+			</div>
 		`
 	});
 	app.component('demo', {
-		template: `<div>single</div>`
+		template: `
+			<div :class="$attrs.class">one</div>
+			<div>two</div>
+		`
 	})
 	const vm = app.mount('#root');
 
