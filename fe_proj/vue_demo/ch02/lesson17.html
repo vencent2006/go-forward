@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 17</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// Non-prop 属性
+	const app = Vue.createApp({
+		template: `
+			<div>
+				<counter msg="hello" msg1="hello1" />
+			</div>
+		`
+	});
+	app.component('counter',{
+		// inheritAttrs: false,
+		template: `
+			<div :msg="$attrs.msg">Counter</div>
+			<div v-bind="$attrs">Counter</div>
+			<div :msg1="$attrs.msg1">Counter</div>
+		`,
+	})
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

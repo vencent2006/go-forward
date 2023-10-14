@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 18</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	const app = Vue.createApp({
+		data() {
+			return {
+				count:1
+			}
+		},
+		methods:{
+			handleAddOne(param){
+				this.count += param
+			}
+		},
+		template: `
+			<div>
+				<counter :count="count" @add="handleAddOne"/>
+			</div>
+		`
+	});
+	app.component('counter',{
+		props:['count'],
+		emits:{
+			add: (count) => {
+				if (count > 0) {
+					return true
+				}else{
+					return false
+				}
+			}
+		},
+		methods:{
+			handleItemClick(){
+				this.$emit('add', -2)
+			}
+		},
+		template: `
+			<div @click="handleItemClick">{{count}}</div>
+		`,
+	})
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 22</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// v-once 让某个元素标签只渲染一次
+	// ref 实际上是获取 Dom 节点 / 组件引用 的一个语法
+	// provide / inject
+	const app = Vue.createApp({
+		data(){
+			return {
+				count: 1
+			}
+		},
+		mounted(){
+			this.$refs.count.innerHTML = 'hello'
+		},
+		template: `
+			<div ref="count">
+				{{count}}	
+			</div>
+		`
+	});
+	// app.component('input-item',{
+	// 	template: `
+	// 		<input />
+	// 	`,
+	// })
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

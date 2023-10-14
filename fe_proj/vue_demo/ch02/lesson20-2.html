@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 20</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// slot 插槽 # 简写
+	// 作用域插槽
+	const app = Vue.createApp({
+		template: `
+			<list v-slot="{item}">
+				<div>{{item}}</div>
+			</list>
+		`
+	});
+	app.component('list',{
+		data() {
+			return {
+				list: [1,2,3]
+			}
+		},
+		methods:{
+			handleClick() {
+				alert(123)
+			}
+		},
+		template: `
+			<div>
+				<slot v-for="item in list" :item="item"/>
+			</div>
+		`,
+	})
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

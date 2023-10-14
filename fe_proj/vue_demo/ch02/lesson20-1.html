@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 20</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// slot 插槽
+	// slot 中使用的数据，作用域的问题
+	// 父模板里调用的数据属性，使用的都是父模板里的数据
+	// 子模板里调用的数据属性，使用的都是子模板里的数据
+	// 具名插槽
+	const app = Vue.createApp({
+		data() {
+			return {
+				text: '提交'
+			}
+		},
+		template: `
+			<layout>
+				<template v-slot:header>
+					<div>header</div>
+				</template>
+				<template v-slot:footer>
+					<div>footer</div>
+				</template>
+			</layout>		
+		`
+	});
+	app.component('layout',{
+		methods:{
+			handleClick() {
+				alert(123)
+			}
+		},
+		template: `
+			<div>
+				<slot name="header"></slot>
+				<div>content</div>
+				<slot name="footer"></slot>
+			</div>
+		`,
+	})
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

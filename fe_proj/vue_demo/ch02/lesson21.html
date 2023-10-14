@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 21</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// 动态组件： 根据数据的变化，结合 component 这个标签，随时动态切换组件的显示
+	const app = Vue.createApp({
+		data(){
+			return {
+				currentItem: 'input-item'
+			}
+		},
+		methods:{
+			handleClick(){
+				if (this.currentItem === 'input-item') {
+					this.currentItem = 'common-item'
+				}else{
+					this.currentItem = 'input-item'
+				}
+			}
+		},
+		template: `
+			<keep-alive>
+				<component :is="currentItem" />
+			</keep-alive>
+			<button @click="handleClick">切换</button>		
+		`
+	});
+	app.component('input-item',{
+		template: `
+			<input />
+		`,
+	})
+	app.component('common-item',{
+		template: `
+			<div>hello world</div>
+		`,
+	})
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>
