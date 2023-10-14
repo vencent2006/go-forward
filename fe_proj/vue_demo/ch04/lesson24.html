@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 23</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// 单元素，单组件的入场出场动画
+	const app = Vue.createApp({
+		data(){
+			return {
+				show:false,
+			}
+		},
+		methods:{
+			handleClick(){
+				this.show = !this.show
+			}
+		},
+		template: `
+			<div>
+				<transition>
+					<div v-if="show">hello world</div>
+				</transition>
+				<button @click="handleClick">切换</button>
+			</div>
+		`
+	});
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>
