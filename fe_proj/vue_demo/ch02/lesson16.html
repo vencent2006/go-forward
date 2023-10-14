@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 16</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// :content="params.content" :a="param.a" :b="param.b" :c="param.c"
+	// 属性传的时候，使用 content-abc 这种命名，接的时候，使用 contentAbc 命名
+	// 单项数据流的概念
+	const app = Vue.createApp({
+		data() {
+			return {
+				num:1,
+			}
+		},
+		template: `
+			<div>
+				<counter :count="num"/>
+			</div>
+		`
+	});
+	app.component('counter',{
+		props: ['count'],
+		data(){
+			return {
+				myCount: this.count,
+			}
+		},
+		template: `<div @click="myCount += 1">{{myCount}}</div>`,
+	})
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

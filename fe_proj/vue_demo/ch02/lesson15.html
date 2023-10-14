@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 14</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// input textarea checkbox radio
+	// 修饰符 lazy number trim
+	const counter = {
+		data(){
+			return {
+				count:1
+			}
+		},
+		template: `<div @click="count += 1">{{count}}</div>`
+	}
+	const app = Vue.createApp({
+		components:{
+			counter
+		},
+		template: `
+			<div>
+				<counter />
+			</div>
+		`
+	});
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+
+</script>
+</html>

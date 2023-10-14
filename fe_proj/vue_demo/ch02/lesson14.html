@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 14</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// input textarea checkbox radio
+	// 修饰符 lazy number trim
+	const app = Vue.createApp({
+		data() {
+			return {
+				message: '',
+				message2: '',
+				options: [{
+					text:'A', value:'A',
+				},{
+					text:'B', value:'B',
+				},{
+					text:'C', value:'C',
+				}]
+			}
+		},
+		template: `
+			<div>
+				{{message}}
+				<select v-model="message">
+					<option disabled value=''>请选择内容</option>
+					<option value='A'>A</option>
+					<option value='B'>B</option>
+					<option value='C'>C</option>
+				</select>
+			</div>
+			<div>
+				{{message2}}
+				<select v-model="message2" multiple>
+					<option v-for="item in options" :value="item.value">{{item.text}}</option>
+				</select>
+			</div>
+		`
+	});
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+
+</script>
+</html>

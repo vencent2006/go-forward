@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 13</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// input textarea checkbox radio
+	const app = Vue.createApp({
+		data() {
+			return {
+				message: [],
+				message2: '',
+			}
+		},
+		template: `
+			<div>
+				{{message}}
+				jack <input type="checkbox" v-model="message" value="jack" />
+				dell <input type="checkbox" v-model="message" value="dell" />
+				lee <input type="checkbox" v-model="message" value="lee" />
+			</div>
+			<div>
+				{{message2}}
+				jack <input type="radio" v-model="message2" value="jack" />
+				dell <input type="radio" v-model="message2" value="dell" />
+				lee <input type="radio" v-model="message2" value="lee" />
+			</div>
+		`
+	});
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+
+</script>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 14</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	const app = Vue.createApp({
+		data() {
+			return {
+				num:123
+			}
+		},
+		template: `
+			<div>
+				<test :content="num"/>
+			</div>
+		`
+	});
+	app.component('test',{
+		props: ['content'],
+		template: `<div>{{typeof content}}</div>`,
+	})
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+
+</script>
+</html>
