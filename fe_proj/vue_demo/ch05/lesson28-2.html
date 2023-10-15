@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 28</title>
+	<style>
+	</style>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// mixin 混入（mix in)
+	// 组件 data, methods 优先级高于 mixin data 优先级
+	// 生命周期函数，先执行 mixin 里面的，再执行组件里面的
+	const myMixin = {
+		data() {
+			return {
+				number:2,
+				count:1,
+			}
+		},
+		created() {
+			console.log('mixin created')
+		},
+		methods:{
+			handleClick(){
+				console.log('mixin handleClick')
+			}
+		}
+	}
+	const app = Vue.createApp({
+		data(){
+			return {
+				number:1,
+			}
+		},
+		created(){
+			console.log('created')
+		},
+		// mixins: [myMixin],
+		methods:{
+			// handleClick(){
+				// console.log('click')
+			// }
+		},
+		template: `
+			<div>
+				<div>{{number}}</div>
+				<div>{{count}}</div>
+				<button @click="handleClick">切换</button>
+			</div>
+		`
+	});
+	app.mixin({
+		data() {
+			return {
+				number:2,
+				count:22,
+			}
+		},
+		created() {
+			console.log('mixin created')
+		},
+		methods:{
+			handleClick(){
+				console.log('mixin handleClick')
+			}
+		}
+	})
+	app.component('child', {
+		template: '<div>{{count}}</div>'
+	})
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>
