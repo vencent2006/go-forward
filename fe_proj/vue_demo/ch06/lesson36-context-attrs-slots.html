@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 36</title>
+	<style>
+	</style>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// toRef
+	const app = Vue.createApp({
+		template: `
+			<child app='app'>parent</child>
+		`,
+	});
+	app.component('child', {
+		mounted() {
+			console.log(this.$slots)
+		},
+		setup(props, context) {
+			const { h } = Vue
+			const { attrs, slots, emit } = context
+			// console.log(attrs) // None-Props 属性: 就是父组件传递了，但是子组件没有用props接收的属性
+			// console.log(slots.default())
+			// h(标签，标签的属性，标签的内容)
+			return () => h('div', {}, slots.default())
+		}
+	})
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

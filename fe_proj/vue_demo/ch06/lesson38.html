@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 38</title>
+	<style>
+	</style>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// computed 计算属性
+	const app = Vue.createApp({
+		setup() {
+			const { ref, computed } = Vue
+			const count = ref(0)
+			const handleClick = () => {
+				count.value += 1
+			}
+			// const countAddFive = computed(() => {
+			// 	return count.value + 5
+			// })
+			let countAddFive = computed({
+				get: () => {
+					return count.value + 5
+				},
+				set: (param) => {
+					count.value = param - 5
+				}
+			})
+			setTimeout(() => {
+				countAddFive.value = 100
+			}, 2000);
+			return {
+					count,
+					handleClick,
+					countAddFive
+			}
+		},
+		template: `
+			<div>
+				<span @click="handleClick">{{count}}</span> --> {{countAddFive}}
+			</div>
+		`,
+	});
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>
