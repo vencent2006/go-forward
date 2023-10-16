@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 34</title>
+	<style>
+	</style>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	const app = Vue.createApp({
+		template: `
+			<div @click="handleClick">{{name}}</div>
+		`,
+		data () {
+			return {
+				gender:"male"
+			}
+		},
+		methods: {
+			test() {
+				// setup 挂载在this.$options
+				console.log(this.$options.setup())
+				// name 不在this.$data上
+				console.log(this.$data)
+			}
+		},
+		mounted () {
+			this.test()
+		},
+		// created 实例被完全初始化之前
+		// setup 不能调用methods里的方法
+		// methods 可以调用setup
+		setup(props, context) {
+			return {
+				name: 'dell',
+				handleClick: () => {
+					alert("123")
+				}
+			}
+		}
+	});
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>
