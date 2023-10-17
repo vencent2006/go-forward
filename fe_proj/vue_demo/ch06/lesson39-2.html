@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 39</title>
+	<style>
+	</style>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// watch 监听器
+	const app = Vue.createApp({
+		setup() {
+			const { reactive, watch, toRefs } = Vue
+			const nameObj = reactive({name: 'dell'})
+			// 具备一定的惰性 lazy
+			// 参数可以拿到原始值和当前值
+			const { name } = toRefs(nameObj)
+			watch(name, (currentVal, prevVal) => {
+				console.log(currentVal, prevVal)
+			})
+
+			return {
+				name
+			}
+		},
+		template: `
+			<div>
+				<div>
+					Name: <input v-model="name">
+				</div>
+				<div>
+					Name is {{name}}
+				</div>
+			</div>
+		`,
+	});
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

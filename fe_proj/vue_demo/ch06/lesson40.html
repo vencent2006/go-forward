@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 40</title>
+	<style>
+	</style>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	
+	const app = Vue.createApp({
+		// 没有对应beforeMount和onBeforeMount，因为setup的执行时间点就在beforeMount和onBeforeMount之间；有这样时机要求的逻辑，直接写在setup就行了
+		// beforeMount => onBeforeMount
+		// mounted => onMounted
+		// beforeUpdate => onBeforeUpdate
+		// beforeUnmount => onBeforeUnmount 试验 用v-if控制子组件的隐藏
+		// unmounted => onUnmounted
+		// 新生命周期函数
+		// onRenderTracked 每次渲染之后收集依赖的时候，会自动执行的函数
+		// onRenderTriggered 每次重新渲染被触发的时候
+		setup() {
+			const { onBeforeMount, onMounted, onBeforeUpdate, ref, onUpdated, onRenderTracked, onRenderTriggered } = Vue
+			const name = ref('dell')
+			onBeforeMount(() => {
+				console.log("onBeforeMount")
+			})
+			onMounted(() => {
+				console.log("onMounted")
+			})
+			onBeforeUpdate(() => {
+				console.log('onBeforeUpdate')
+			})
+			onUpdated(() => {
+				console.log('onUpdated')
+			})
+			// 每次渲染重新收集响应式依赖
+			onRenderTracked(() => {
+				console.log('OnRenderTracked')
+			})
+			// 每次触发页面重新渲染时自动执行
+			onRenderTriggered(() => {
+				console.log('onRenderTriggered')
+			})
+
+			const handleClick = ()=>{
+				name.value = 'lee'
+			}
+			return { name, handleClick}
+		},
+		template: `
+			<div @click="handleClick">
+				{{name}}
+			</div>
+		`,
+	});
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

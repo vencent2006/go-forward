@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 41</title>
+	<style>
+	</style>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// 单向数据流: 谁提供数据，在哪里数据
+	// provide, inject
+	const app = Vue.createApp({
+		setup() {
+			const { provide, ref, readonly } = Vue
+			const name = ref('dell')
+			provide('name', readonly(name))
+			provide('changeNmae', (value) => {
+				name.value = value
+			})
+			return { }
+		},
+		template: `
+			<div>
+				<child />
+			</div>
+		`,
+	});
+
+	app.component('child', {
+		setup() {
+			const { inject } = Vue
+			const name = inject('name', 'hello') // hello是取不到值时的默认值
+			const changeName = inject('changeNmae')
+			const handleClick = () => {
+				// name.value = 'lee' // 父组件定义了readonly，传递失败
+				changeName('lee')
+			}
+			return { name, handleClick }
+		},
+		template: '<div @click="handleClick">{{name}}</div>'
+	})
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>

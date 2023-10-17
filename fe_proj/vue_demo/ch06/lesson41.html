@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lesson 41</title>
+	<style>
+	</style>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	// dom ref 
+	// CompositionAPI 的语法下, 获取真实的 DOM 元素节点
+	const app = Vue.createApp({
+		setup() {
+			const { ref, onMounted } = Vue
+			const hello = ref(null)
+			onMounted(() => {
+				console.log(hello.value)
+			})
+			return { hello }
+		},
+		template: `
+			<div>
+				<div ref="hello">hello world</div>
+			</div>
+		`,
+	});
+
+	// vm 代表的就是 vue 应用的根组件
+	const vm = app.mount('#root');
+</script>
+</html>
