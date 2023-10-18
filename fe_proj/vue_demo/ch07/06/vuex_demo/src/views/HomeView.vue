@@ -1,20 +1,19 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    {{ myName }}
+    <h1>{{ name }}</h1>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-
+import { toRefs } from 'vue';
+import { useStore } from 'vuex';
 export default {
   name: 'HomeView',
-  // 计算属性
-  computed: {
-    myName() {
-      return this.$store.state.name
-    }
+  setup() {
+    const store = useStore()
+    const { name } = toRefs(store.state)
+    return { name }
   }
 }
 </script>
