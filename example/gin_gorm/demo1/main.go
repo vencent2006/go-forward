@@ -27,6 +27,7 @@ type ResponseData struct {
 func main() {
 	router := gin.Default()
 	router.GET("/order", getOrder)
+	router.Run(":8081")
 }
 
 func getOrder(c *gin.Context) {

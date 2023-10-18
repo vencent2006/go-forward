@@ -11,6 +11,7 @@ import { useStore } from 'vuex'
 export default {
   name: 'AboutView',
   setup() {
+
     const store = useStore()
     const { name } = toRefs(store.state)
     const handleClick = () => {
