@@ -22,3 +22,12 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### normalize.css
+```
+npm install normalize.css --save
+
+# 我的报了冲突，采用忽略冲突的方式安装
+sudo npm install normalize.css --save --legacy-peer-deps
+```
