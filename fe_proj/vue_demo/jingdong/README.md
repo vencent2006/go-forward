@@ -24,7 +24,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-### normalize.css
+### normalize.css 抹平css在不同浏览器间的差异
 ```
 npm install normalize.css --save
 
