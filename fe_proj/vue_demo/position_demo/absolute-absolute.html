@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>absolute-absolute</title>
+<style>
+.div1{
+	height:100px;
+	background-color: green;
+	text-align:center;
+}
+.div2{
+	height:100px;
+	width:100px;
+	background-color: blueviolet;
+	/* 子元素是absolute */
+	position:absolute;
+	top:50px;
+	left:50px;
+}
+.div3{
+	height:100px;
+	background-color: #aaa;
+	text-align:center;
+}
+.div4{
+	height:100px;
+	background-color: #777;
+	text-align:center;
+}
+.container1{
+	/* 父元素是absolute */
+	position:absolute;
+	height:200px;
+	background-color: greenyellow;
+}           
+
+
+</style>
+</head>
+<body>
+	<div class="div1">第一个div</div>   
+	<div class="container1">
+		DIV容器
+		<div class="div2">第二个div</div>
+	</div>
+	<div class="div3">第三个div</div>
+	<div class="div4">第四个div</div>     
+</body>
+</html>

@@ -1,4 +1,11 @@
 <template>
+  <div class="wrapper">
+    <div class="position">
+      <span class="iconfont position__icon">&#xe64c;</span>
+      北京理工大学国防科技园2号楼10层
+      <span class="iconfont position__notice">&#xe66a;</span>
+    </div>
+  </div>
   <div class="docker">
     <!-- BEM -->
     <!-- 写法: block__element--modifier -->
@@ -22,6 +29,32 @@
 </template>
 
 <style lang="scss">
+.wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: .5rem;
+  right: 0;
+  padding: 0 .18rem;
+  // background: blue;
+}
+.position {
+  position: relative;
+  padding: .16rem 0;
+  line-height: .22rem;
+  font-size: .16rem;
+  .position__icon { // 优先级更高 会编译成 .position .position__icon
+    position: relative;
+    top: .01rem;
+    font-size: .2rem;
+  }
+  .position__notice {
+    position: absolute;
+    right: 0;
+    top: .01rem;
+    font-size: .2rem;
+  }
+}
 .docker {
   display: flex;
   box-sizing: border-box; // css中的width所包含的是盒子模型中的content的宽度+padding+border的宽度。此时和怪异盒子模型的表现一致
@@ -31,8 +64,8 @@
   bottom: 0;
   width: 100%;
   height: .49rem;
-  border-top: 1px solid #F1F1F1;
-  background: green;
+  border-top: .01rem solid #F1F1F1;
+  // background: green;
 
   &__item {
     flex: 1; // 就是 flex-grow 表示占1份
