@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		/* 方法1：flex */
+		/* .box {
+			width: 300px;
+			height: 200px;
+			background: skyblue;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.box div {
+			width: 100px;
+			height: 100px;
+			background: pink;
+		} */
+		/* 方法2：不适用flex, relative + absolute + transform */
+		/* .box {
+			width: 300px;
+			height: 200px;
+			background: skyblue;
+			position: relative;
+		}
+		.box div {
+			width: 100px;
+			height: 100px;
+			background: pink;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		} */
+		/* 方法3：flex + margin:auto */
+		/* .box {
+			width: 300px;
+			height: 200px;
+			background: skyblue;
+			display: flex;
+		}
+		.box div {
+			width: 100px;
+			height: 100px;
+			background: pink;
+			margin: auto;
+		} */
+		/* 方法4(不推荐，是奇技淫巧)：4个方向都是0，然后让margin变成auto */
+		.box {
+			width: 300px;
+			height: 200px;
+			background: skyblue;
+			position: relative;
+		}
+		.box div {
+			width: 100px;
+			height: 100px;
+			background: pink;
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto ;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div></div>
+	</div>
+</body>
+</html>

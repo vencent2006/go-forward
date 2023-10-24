@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.main {
+			width: 500px;
+			height: 300px;
+			background: skyblue;
+			display: flex;
+		}
+		.main div {
+			width: 100px;
+			height: 100px;
+			background: pink;
+			/* flex-grow: 0; 默认的 */
+			/* flex-grow: 1; */
+			/* 如果比例值为1，就占满剩余的所有空间 */
+			/* 要占（500-100）*0.5 = 200 ，然后200+100=3000 */
+			/* 当比例值大于等于1的时候，都会占满整个空间 */
+			flex-grow: 0.5;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div>1</div>
+	</div>
+</body>
+</html>

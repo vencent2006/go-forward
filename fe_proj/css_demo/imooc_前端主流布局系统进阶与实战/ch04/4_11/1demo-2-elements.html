@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.main2 {
+			width: 500px;
+			height: 200px;
+			background: skyblue;
+			display: flex;
+		}
+		.main2 div:nth-of-type(1) {
+			width: 300px;
+			height: 100px;
+			background: yellow;
+			flex-shrink: .2;
+		}
+		.main2 div:nth-of-type(2) {
+			width: 400px;
+			height: 100px;
+			background: pink;
+			flex-shrink: .1;
+		}
+		/* 溢出 300+400-500=200 */
+		/* 300 - (3/7 * 200) = 214.xxx */
+		/* 400 - (4/7 * 200) = 285.xxx */
+
+		/* 300 - (6/10 * 200) = 180 */
+		/* 400 - (4/10 * 200) = 320 */
+	</style>
+</head>
+<body>
+	<div class="main2">
+		<div>1</div>
+		<div>2</div>
+	</div>
+</body>
+</html>

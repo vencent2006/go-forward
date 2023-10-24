@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		/* 目标：居中显示 */
+		/* 方法1：flex + align-items */
+		/* .box {
+			width: 300px;
+			height: 200px;
+			background: skyblue;
+			display: flex;
+			align-items: center;
+		} */
+		/* 方法2：flex + flex-wrap:wrap + align-content */
+		/* .box {
+			width: 300px;
+			height: 200px;
+			background: skyblue;
+			display: flex;
+			flex-wrap: wrap;
+			align-content: center;
+		} */
+		/* 方法3：行高与高度相同；但是只能支持单行 */
+		/* .box {
+			width: 300px;
+			height: 200px;
+			background: skyblue;
+			line-height: 200px;
+		} */
+		/* 方法4：teble-cell + vertical-align */
+			.box {
+			width: 300px;
+			height: 200px;
+			background: skyblue;
+			display: table-cell;
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		测试文字测试文字测试文字测试文字测试文字测试文测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字
+	</div>
+</body>
+</html>
