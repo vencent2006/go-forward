@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!-- reset css -->
+	<link rel="stylesheet" href="./reset.css">
+	<link rel="stylesheet" href="./iconfont.css">
+	<!-- style -->
+	<style>
+		body {
+			background: #f6f6f6;
+		}
+
+		.header-container {
+			background: #ffffff;
+		}
+
+		.header-wrapper {
+			/* 居中 */
+			/* todo: 为啥不是width:100% */
+			margin: 0 auto; 
+			height: 52px;
+			min-width: 1000px;
+			max-width: 1156px; /* 可以量 */
+			
+			display: flex;
+			align-items: center;
+		}
+
+		/* header-logo */
+		.header-logo {
+			 margin-right: 40px;
+		}
+
+		/* header-nav */
+		.header-nav {
+			display: flex;
+		}
+		.header-nav li {
+			margin-right: 30px;
+		}
+
+		/* header-search */
+		.header-search {
+			flex-grow: 1;
+			
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.header-search-wrapper {
+			max-width: 482px;
+			height: 34px;
+			background: #f6f6f6;
+			/* 左右变成圆角给一个非常大的值就可以了 */
+			border-radius: 100px;
+			flex-grow: 1;
+
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.header-search-input {
+			/* 不要有默认的 */
+			border: none;
+			background: none;
+			/* 左右有点空隙 */
+			margin: 0 20px;
+		}
+		.header-search-wrapper i {
+			margin: 0 20px;
+			display: flex;
+		}
+
+		/* header-btn */
+		.header-btn {
+			display: flex;
+		}
+		.header-btn-login {
+			width: 60px;
+			height: 32px;
+			/* button 的边框，不是在height外面，而是在里面 */
+			border: 1px #0066ff solid; 
+			border-radius: 3px;
+			color: #0066ff;
+			background: none;
+			cursor: pointer;
+			margin-left: 20px;
+		}
+		.header-btn-zhihu {
+			width: 90px;
+			height: 32px;
+			border-radius: 3px;
+			color: white;
+			background: #0066ff;
+			cursor: pointer;
+			border: none;
+			margin-left: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="header-container">
+		<div class="header-wrapper">
+			<!-- header logo -->
+			<div class="header-logo">
+				<a href="#"><img src="./logo.png" alt=""></a>
+			</div>
+
+			<!-- header nav -->
+			<ul class="header-nav">
+				<li>首页</li>
+				<li>会员</li>
+				<li>发现</li>
+				<li>等你来答</li>
+			</ul>
+
+			<!-- header-search -->
+			<div class="header-search">
+				<div class="header-search-wrapper">
+					<input class="header-search-input" type="text" placeholder="520文案">
+					<!-- 字体图标 -->
+					<i class="iconfont icon-fangdajing"></i>
+				</div>
+			</div>
+
+			<!-- header-button -->
+			<div class="header-btn">
+				<button class="header-btn-login">登录</button>
+				<button class="header-btn-zhihu">加入知乎</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

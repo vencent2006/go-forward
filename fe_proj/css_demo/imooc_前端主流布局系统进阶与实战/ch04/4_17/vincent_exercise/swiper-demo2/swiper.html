@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>swiper</title>
+	<!-- 导入css -->
+	<link rel="stylesheet" href="./reset.css">
+	<link rel="stylesheet" href="./iconfont.css">
+	<!-- style -->
+	<style>
+		.swiper-container {
+			position: relative;
+		}
+
+		/* wrapper */
+		.swiper-wrapper {
+			width: 100%;
+			display: flex;
+			
+		}
+		.swiper-slide {
+			width: 100%;
+			flex-shrink: 0;
+		}
+		.swiper-slide img {
+			width: 100%;
+		}
+
+
+		/* pagination */
+		.swiper-pagination {
+			position: absolute;
+			width: 100%;
+			height: 28px;
+			bottom: 0;
+
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.swiper-pagination-bullet {
+			width: 10px;
+			height: 10px;
+			background: gray;
+			border-radius: 50%;
+			margin: 0 4px;
+		}
+		.swiper-pagination-bullet-active{
+			background: white;
+		}
+
+
+		/* button nav */
+		.swiper-nav-button-prev, .swiper-nav-button-next {
+			position: absolute;
+			top: 0;
+			height: 100%;
+			display: flex;
+			align-items: center;
+		}
+		.swiper-nav-button-prev {
+			left: 0;
+		}
+		.swiper-nav-button-next {
+			right: 0;
+		}
+		.swiper-nav-button-prev i, .swiper-nav-button-next i{
+			font-size: 40px;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<div class="swiper-container">
+		<!-- wrapper -->
+		<div class="swiper-wrapper">
+			<!-- slide -->
+			<div class="swiper-slide"><img src="https://pic3.iqiyipic.com/common/lego/20210609/e66f0e28608f4aa7b08b5d93088c73c6.jpg?caplist=jpg,webp" alt=""></div>
+			<div class="swiper-slide"><img src="https://pic0.iqiyipic.com/common/lego/20210614/71f0084bddcb446db323fa9eebf53585.jpg?caplist=jpg,webp" alt=""></div>
+			<div class="swiper-slide"><img src="https://m.iqiyipic.com/common/lego/20210613/80bfb766ac36470f9ec3a3788f85eabe.jpg?caplist=jpg,webp" alt=""></div>
+		</div>
+
+		<!-- pagination -->
+		<div class="swiper-pagination">
+			<!-- bullet -->
+			<div class="swiper-pagination-bullet swiper-pagination-bullet-active"></div>
+			<div class="swiper-pagination-bullet"></div>
+			<div class="swiper-pagination-bullet"></div>
+		</div>
+		
+		<!-- nav button -->
+			<!-- button prev -->
+			<div class="swiper-nav-button-prev">
+				<i class="iconfont icon-swiperhoutui"></i>
+			</div>
+			<!-- button next -->
+			<div class="swiper-nav-button-next">
+				<i class="iconfont icon-swiperqianjin"></i>
+			</div>
+
+	</div>
+</body>
+</html>

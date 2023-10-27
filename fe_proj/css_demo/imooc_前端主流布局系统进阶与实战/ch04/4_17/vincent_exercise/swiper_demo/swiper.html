@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!-- 清理样式 -->
+	<link rel="stylesheet" href="./reset.css">
+	<!-- 字体图标 -->
+	<link rel="stylesheet" href="./iconfont.css">
+	<style>
+		/* 1. swiper-wrapper */
+		.swiper-container {
+			/* 父容器 relative，子容器 absolute，因为他们都重叠在一起了 */
+			position: relative;
+		}
+
+		.swiper-wrapper {
+			display: flex; /* 选择弹性 */
+		}
+
+		.swiper-slide {
+			/* 限制宽度是父容器大小 */
+			width: 100%;
+			/* 溢出项布局 选择 flex-shrink */
+			flex-shrink: 0;
+		}
+		.swiper-slide img {
+			width: 100%;
+		}
+
+
+		/* 2. swiper-pagination */
+		.swiper-pagination {
+			position: absolute;
+			height: 28px;
+			width: 100%;
+			bottom: 0;
+
+			display: flex; /* 选择弹性 */
+			justify-content: center; /* 水平居中 */ 
+			align-items: center; /* 垂直居中 */
+		}
+
+		/* 2.1 小点  */
+		.swiper-pagination-bullet {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: #c6bcaf;
+			margin: 0 4px;
+		}
+		/* 2.2 小点激活状态 */
+		.swiper-pagination-bullet-active {
+			background: white;
+		}
+
+
+		/* 3. swiper nav: prev next */
+		.swiper-button-prev, .swiper-button-next {
+			position: absolute;
+			top: 0;
+			height: 100%;
+			display: flex;
+			align-items: center;
+		}
+		.swiper-button-prev {
+			left: 0;
+			margin-left: 10px;
+		}
+		.swiper-button-next {
+			right: 0;
+			margin-right: 10px;
+		}
+		.swiper-button-prev i, .swiper-button-next i {
+			font-size: 44px;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<!-- 整体有个container -->
+	<div class="swiper-container">
+		<!-- 1. swiper display wrapper -->
+		<div class="swiper-wrapper">
+			<!-- 1.1 每一个都是一个slide 轮播 -->
+			<div class="swiper-slide"><img src="https://pic3.iqiyipic.com/common/lego/20210609/e66f0e28608f4aa7b08b5d93088c73c6.jpg?caplist=jpg,webp" alt=""></div>
+			<div class="swiper-slide"><img src="https://pic0.iqiyipic.com/common/lego/20210614/71f0084bddcb446db323fa9eebf53585.jpg?caplist=jpg,webp" alt=""></div>
+			<div class="swiper-slide"><img src="https://m.iqiyipic.com/common/lego/20210613/80bfb766ac36470f9ec3a3788f85eabe.jpg?caplist=jpg,webp" alt=""></div>
+		</div>
+
+		<!-- 2. 分页器 swiper pagination -->
+		<div class="swiper-pagination">
+			<!-- 小点，用span来做; 第一个是选中状态 -->
+			<span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
+			<span class="swiper-pagination-bullet"></span>
+			<span class="swiper-pagination-bullet"></span>
+		</div>
+
+		<!-- 3. 导航btn swiper nav; 使用了字体图标 -->
+		<div class="swiper-button-prev">
+			<i class="iconfont icon-swiperhoutui"></i>
+		</div>
+		<div class="swiper-button-next">
+			<i class="iconfont icon-swiperqianjin"></i>
+		</div>
+	</div>
+</body>
+</html>
