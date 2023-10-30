@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		/* 干掉默认样式 */
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html {
+			/* font-size: 100vw; */  /* 在iphone6 -> 375px */
+			font-size: 26.666667vw;  /* 在iphone6 -> 100px */
+		}
+		
+		body {
+			/* rem布局，一定要在 body 重置font-size */
+			font-size: 0.16rem; 
+		}
+		.box {
+			/* 页面可视区分成了100vw和100vh */
+			width: 1rem;
+			height: 1rem;
+			background: pink;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">哈哈</div>
+</body>
+</html>

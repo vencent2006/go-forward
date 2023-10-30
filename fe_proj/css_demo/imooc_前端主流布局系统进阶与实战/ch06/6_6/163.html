@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>163</title>
+	<link rel="stylesheet" href="./iconfont/iconfont.css">
+	<link rel="stylesheet" href="./css/reset.css">
+	<style>
+		/* 先写 html 的 font-size */
+		html {
+			font-size: 26.666667vw;
+		}
+		/* 再写 body 的 font-size */
+		body {
+			font-size: 16px;
+		}
+		a {
+			color: #34372e;
+		}
+		/* 1. head */
+		.head {
+			height: 43px;
+			background: #ef1b1a;
+			color: white;
+			padding: 0 10px;
+			/* display */
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		/* i标签优先级很高，图标字要大点 */
+		.head i {
+			font-size: 18px;
+		}
+		.head-user, .head-email {
+			width: 25%;
+			font-size: 14px;
+		}
+		.head-email {
+			text-align: right;
+		}
+
+		.head-logo {
+			width: 50%;
+			text-align: center; /* 让logo能居中展示 */
+		}
+		.head-logo img {
+			height: 21px;
+		}
+		/* 2. nav */
+		.nav {
+			height: 46px;
+			/* 现在的浏览器支持0.5px了 */
+			border-bottom: 0.5px #ededed solid;
+			padding: 0 10px;
+			/* display */
+			display: flex;
+			align-items: center;
+			font-size: 18px;
+		}
+
+		.nav li {
+			/* 平均分 */
+			flex-grow: 1;
+			text-align: center;
+			position: relative;
+		}
+		.nav li.active a{
+			color: #ef191b;
+		}
+		/* 伪类 */
+		.nav li.active::after {
+			content: "";
+			position: absolute;
+			bottom: -12px;
+			left: 50%;
+			margin-left: -7px;
+			width: 15px;
+			height: 2px;
+			background: #ef191b;
+		}
+
+	</style>
+</head>
+<body>
+	<!-- head -->
+	<div class="head">
+		<div class="head-user">
+			<i class="iconfont icon-yonghu"></i>
+		</div>
+		<div class="head-logo">
+			<img src="./img/logo.png" alt="">
+		</div>
+		<div class="head-email">
+			<i class="iconfont icon-youxiang"></i>
+			邮箱
+			<i class="iconfont icon-jiantou"></i>
+		</div>
+	</div>
+	<!-- nav -->
+	<ul class="nav">
+		<li class="active"><a href="#">要闻</a></li>
+		<li><a href="#">推荐</a></li>
+		<li><a href="#">原创</a></li>
+		<li><a href="#">热点</a></li>
+	</ul>
+</body>
+</html>

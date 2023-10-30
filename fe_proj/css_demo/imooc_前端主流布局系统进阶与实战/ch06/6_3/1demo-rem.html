@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		html {
+			font-size: 30px;
+		}
+		body {
+			font-size: 20px;
+		}
+		.box {
+			font-size: 2em;
+			width: 100px;
+			height: 100px;
+			background: pink;
+			/* 先看看em 与font-size相同 font-size默认是16px */
+			/* rem : root + em ， 只跟html的font-size有关系 */
+			/* border的font-size就是：html的font-size * 2 = 30 * 2 = 60px */
+			border: 2rem skyblue solid;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>
