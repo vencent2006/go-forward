@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.main {
+			/* 不加高也不加宽，与容器相同 */
+			background: skyblue;
+			/* inline-grid 根据内容最自适应 */
+			display: inline-grid;
+			grid-template-rows: repeat(3, 1fr);
+			grid-auto-flow: column;
+			grid-auto-columns: 100px;
+			gap: 5px;
+		}
+		.main div {
+			background: pink;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<div>5</div>
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<div>5</div>
+	</div>	
+</body>
+</html>

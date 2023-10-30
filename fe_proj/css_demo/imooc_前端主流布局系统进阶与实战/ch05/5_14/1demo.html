@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="./reset.css">
+	<link rel="stylesheet" href="./iconfont.css">
+	<style>
+		.nav {
+			width: 233px;
+			height: 100vh; /* vh 是可视区 */
+			background: rgba(0, 0, 0, 0.5);
+		}
+		/* nav>li 表示子项 */
+		.nav>li {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 42px;
+			padding: 0 28px; /* 不能用margin，因为要配合hover的改变颜色 */
+			cursor: pointer;
+			color: white;
+			/* 子ul要absolute定位，所以这里要先relative定位 */
+			position: relative;
+		}
+		.nav>li a {
+			color: inherit; /* a标签的优先级比较高，这里得刻意用继承才行 */
+		}
+		.nav>li:hover {
+			background: #ff6801;
+		}
+		.nav>li:hover .nav-menu {
+			display: grid;
+		}
+		.nav-menu {
+			display: none;
+			position: absolute;
+			left: 100%; /* 直接移动到外面 */
+			top: 0;
+			/* display: grid; */
+			height: 460px;
+			grid-template-rows: repeat(6, 1fr);
+			grid-template-columns: 305px; /* 显式网格 */
+			grid-auto-flow: column; /* 列的折行 */
+			grid-auto-columns: 305px; /* 隐式网格 */ 
+			background: white;
+			border: 1px #e1e1e1 solid;
+			box-shadow: 5px 5px 10px #ccc; /* 阴影 */
+			color: #36303c;
+		}
+		.nav-menu>li {
+			display: flex;
+			align-items: center;
+		}
+		.nav-menu>li>img {
+			margin-left: 26px;
+			margin-right: 21px;
+		}
+	</style>
+</head>
+<body>
+	<ul class="nav">
+		<li>
+			<div>
+				<a href="#">手机</a>
+				<a href="#">电话卡</a>
+			</div>
+			<!-- 箭头使用字体图标 -->
+			<i class="iconfont icon-right-arrow"></i>
+			<ul class="nav-menu">
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div>
+				<a href="#">笔记本</a>
+				<a href="#">显示器</a>
+				<a href="#">平板</a>
+			</div>
+			<!-- 箭头使用字体图标 -->
+			<i class="iconfont icon-right-arrow"></i>
+			<ul class="nav-menu">
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div>
+				<a href="#">手机</a>
+				<a href="#">电话卡</a>
+			</div>
+			<!-- 箭头使用字体图标 -->
+			<i class="iconfont icon-right-arrow"></i>
+			<ul class="nav-menu">
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+				<li>
+					<img src="./phone.png" alt="">
+					<p>小米 MIX FOLD</p>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div>
+				<a href="#">笔记本</a>
+				<a href="#">显示器</a>
+				<a href="#">平板</a>
+			</div>
+			<!-- 箭头使用字体图标 -->
+			<i class="iconfont icon-right-arrow"></i>
+		</li>
+		<li>
+			<div>
+				<a href="#">手机</a>
+				<a href="#">电话卡</a>
+			</div>
+			<!-- 箭头使用字体图标 -->
+			<i class="iconfont icon-right-arrow"></i>
+		</li>
+		<li>
+			<div>
+				<a href="#">笔记本</a>
+				<a href="#">显示器</a>
+				<a href="#">平板</a>
+			</div>
+			<!-- 箭头使用字体图标 -->
+			<i class="iconfont icon-right-arrow"></i>
+		</li>
+		
+	</ul>
+</body>
+</html>
