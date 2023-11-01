@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>bili</title>
+	<link rel="stylesheet" href="./iconfont/iconfont.css">
+	<link rel="stylesheet" href="./css/reset.css">
+	<style>
+		a {
+			color: #4c514d;
+		}
+		/* 1. head */
+		.head {
+			height: 44px;
+			display: flex;
+			align-items: center;
+			padding: 0 10px;
+		}
+		.head-logo {
+			margin-left: 8px;
+			/* 右边自动填充，把右边的内容挤压到右侧 */
+			margin-right: auto;
+		}
+		.head-logo i {
+			font-size: 28px;
+			color: #f47296;
+		}
+		.head-search i {
+			font-size: 22px;
+			color: #c9c9c9;
+		}
+		.head-login {
+			margin-left: 20px;
+			font-size: 12px;
+			background: #e8e8e8;
+			/* 圆形用 border-radius:50% */
+			border-radius: 50%;
+			padding: 7px;
+		}
+		/* a 标签的优先级不足，或者继承，或者单独写 */
+		.head-login a {
+			color: #f47296;
+		}
+		.head-app {
+			margin-right: 2px;
+			margin-left: 20px;
+			background: #f47296;
+			border-radius: 4px;
+			padding: 5px 10px;
+		}
+		.head-app a {
+			color: #fffefc;
+		}
+
+		/* 2. nav */
+		.nav {
+			height: 40px;
+			border-bottom: 0.5px solid #f3f3f3;
+			padding: 0 10px;
+			position: relative;
+		}
+		.nav-list {
+			height: 100%;
+			display: flex;
+			align-items: center;
+			overflow: hidden;
+		}
+		.nav-list li {
+			width: 40px;
+			margin-right: 20px;
+			/* 空间不够，不要压缩 */
+			flex-shrink: 0;
+			text-align: center;
+			position: relative;
+			
+		}
+		.nav-list li.active a {
+			color: #f47296;
+		}
+		/* 伪类 */
+		.nav-list li.active::after {
+			content: "";
+			position: absolute;
+			width: 44px;
+			height: 2px;
+			background: #f47296;
+			bottom: -10px;
+			left: -2px;
+		}
+		.nav-arrow {
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 40px;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		/* 3. video */
+		.video {
+			padding: 8px 10px;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			column-gap: 10px;
+		}
+		.video-item-pic {
+			display: grid;
+		}
+		.video-item-pic img {
+			grid-area: 1/1/1/1;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 3px;
+		}
+		.video-item-pic span {
+			grid-area: 1/1/1/1;
+			align-self: flex-end;
+			color: white;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 2px;
+		}
+		.video-item-pic i {
+			/* 这个可以夹在父容器的padding */
+			/* margin-left: 5px; */
+			margin-right: 5px;
+		}
+		.video-item-title {
+			margin-top: 7px;
+			margin-bottom: 15px;
+			font-size: 12px;
+			line-height: 16px;
+		}
+	</style>
+</head>
+<body>
+	<!-- head -->
+	<div class="head">
+		<div class="head-logo">
+			<i class="iconfont icon-BILIBILI_LOGO"></i>
+		</div>
+		<div class="head-search">
+			<i class="iconfont icon-fangdajing"></i>
+		</div>
+		<div class="head-login">
+			<a href="#">登录</a>
+		</div>
+		<div class="head-app">
+			<a href="#">下载 App</a>
+		</div>
+	</div>
+	<!-- nav -->
+	<div class="nav">
+		<ul class="nav-list">
+			<li class="active"><a href="#">首页</a></li>
+			<li><a href="#">动画</a></li>
+			<li><a href="#">番剧</a></li>
+			<li><a href="#">国创</a></li>
+			<li><a href="#">音乐</a></li>
+			<li><a href="#">舞蹈</a></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">动画</a></li>
+			<li><a href="#">番剧</a></li>
+			<li><a href="#">国创</a></li>
+			<li><a href="#">音乐</a></li>
+			<li><a href="#">舞蹈</a></li>
+		</ul>
+		<div class="nav-arrow">
+			<i class="iconfont icon-arrow-bottom"></i>
+		</div>
+	</div>
+	<!-- video -->
+	<ul class="video">
+		<li class="video-item">
+			<div class="video-item-pic">
+				<img src="./img/video1.jpg" alt="">
+				<span>
+					<span>
+						<i class="iconfont icon-703bofang-fangxing-xianxing"></i>
+						73.7万
+					</span>
+					<span>
+						<i class="iconfont icon-xinxi"></i>
+						5591
+					</span>
+				</span>
+				<h3 class="video-item-title"><a href="#">史上最骚魔法师！(第二集)</a></h3>
+			</div>
+		</li>
+		<li class="video-item">
+			<div class="video-item-pic">
+				<img src="./img/video2.jpg" alt="">
+				<span>
+					<span>
+						<i class="iconfont icon-703bofang-fangxing-xianxing"></i>
+						80.6万
+					</span>
+					<span>
+						<i class="iconfont icon-xinxi"></i>
+						1.8万
+					</span>
+				</span>
+				<h3 class="video-item-title"><a href="#">日食记翻车18次的巧克力,比丝滑无能能超越我。</a></h3>
+			</div>
+		</li>
+		<li class="video-item">
+			<div class="video-item-pic">
+				<img src="./img/video3.jpg" alt="">
+				<span>
+					<span>
+						<i class="iconfont icon-703bofang-fangxing-xianxing"></i>
+						201.8万
+					</span>
+					<span>
+						<i class="iconfont icon-xinxi"></i>
+						2.4万
+					</span>
+				</span>
+				<h3 class="video-item-title"><a href="#">测试标题</a></h3>
+			</div>
+		</li>
+		<li class="video-item">
+			<div class="video-item-pic">
+				<img src="./img/video1.jpg" alt="">
+				<span>
+					<span>
+						<i class="iconfont icon-703bofang-fangxing-xianxing"></i>
+						116.1万
+					</span>
+					<span>
+						<i class="iconfont icon-xinxi"></i>
+						2万
+					</span>
+				</span>
+				<h3 class="video-item-title"><a href="#">测试标题</a></h3>
+			</div>
+		</li>
+		<li class="video-item">
+			<div class="video-item-pic">
+				<img src="./img/video1.jpg" alt="">
+				<span>
+					<span>
+						<i class="iconfont icon-703bofang-fangxing-xianxing"></i>
+						73.7万
+					</span>
+					<span>
+						<i class="iconfont icon-xinxi"></i>
+						5591
+					</span>
+				</span>
+				<h3 class="video-item-title"><a href="#">史上最骚魔法师！(第二集)</a></h3>
+			</div>
+		</li>
+		<li class="video-item">
+			<div class="video-item-pic">
+				<img src="./img/video2.jpg" alt="">
+				<span>
+					<span>
+						<i class="iconfont icon-703bofang-fangxing-xianxing"></i>
+						80.6万
+					</span>
+					<span>
+						<i class="iconfont icon-xinxi"></i>
+						1.8万
+					</span>
+				</span>
+				<h3 class="video-item-title"><a href="#">日食记翻车18次的巧克力,比丝滑无能能超越我。</a></h3>
+			</div>
+		</li>
+		<li class="video-item">
+			<div class="video-item-pic">
+				<img src="./img/video3.jpg" alt="">
+				<span>
+					<span>
+						<i class="iconfont icon-703bofang-fangxing-xianxing"></i>
+						201.8万
+					</span>
+					<span>
+						<i class="iconfont icon-xinxi"></i>
+						2.4万
+					</span>
+				</span>
+				<h3 class="video-item-title"><a href="#">测试标题</a></h3>
+			</div>
+		</li>
+		<li class="video-item">
+			<div class="video-item-pic">
+				<img src="./img/video1.jpg" alt="">
+				<span>
+					<span>
+						<i class="iconfont icon-703bofang-fangxing-xianxing"></i>
+						116.1万
+					</span>
+					<span>
+						<i class="iconfont icon-xinxi"></i>
+						2万
+					</span>
+				</span>
+				<h3 class="video-item-title"><a href="#">测试标题</a></h3>
+			</div>
+		</li>
+	</ul>
+</body>
+</html>

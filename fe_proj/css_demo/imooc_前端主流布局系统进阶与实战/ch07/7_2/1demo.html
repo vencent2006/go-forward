@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="a.css" media="(orientation: portrait)">
+	<link rel="stylesheet" href="b.css" media="(orientation: landscape)">
+	<title>media</title>
+	<style>
+		/* 打印模式触发 */
+		/* @media print {
+			.box {
+				font-size: 60px;
+			}
+		} */
+		/* 大于700px时触发 */
+		/* @media ( min-width: 700px ) {
+			.box {
+				width: 200px;
+				height: 200px;
+				background: pink;
+			}
+		} */
+		/* 水平时触发 */
+		/* @media (orientation:landscape) {
+			.box {
+				width: 200px;
+				height: 200px;
+				background: skyblue;
+			}
+		} */
+		/* 多个条件 */
+		/* @media ( min-width: 700px ) and (max-width: 1000px) {
+			.box {
+				width: 200px;
+				height: 200px;
+				background: pink;
+			}
+		} */
+		/* @media screen and ( min-width: 700px ) and (max-width: 1000px) {
+			.box {
+				width: 200px;
+				height: 200px;
+				background: pink;
+			}
+		} */
+		/* @media not screen and ( min-width: 700px ) {
+			.box {
+				width: 200px;
+				height: 200px;
+				background: pink;
+			}
+		} */
+		/* @media screen, print and ( min-width: 700px ) {
+			.box {
+				width: 200px;
+				height: 200px;
+				background: pink;
+			}
+		} */
+	</style>
+</head>
+<body>
+	<div class="box">aaaaaaaaaaaaaaaaaa</div>
+</body>
+</html>

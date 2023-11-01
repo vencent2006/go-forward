@@ -13,17 +13,17 @@
 		}
 		/* 再写 body 的 font-size */
 		body {
-			font-size: 16px;
+			font-size: 0.16rem;
 		}
 		a {
 			color: #34372e;
 		}
 		/* 1. head */
 		.head {
-			height: 43px;
+			height: 0.43rem;
 			background: #ef1b1a;
 			color: white;
-			padding: 0 10px;
+			padding: 0 0.1rem;
 			/* display */
 			display: flex;
 			align-items: center;
@@ -31,11 +31,11 @@
 		}
 		/* i标签优先级很高，图标字要大点 */
 		.head i {
-			font-size: 18px;
+			font-size: 0.18rem;
 		}
 		.head-user, .head-email {
 			width: 25%;
-			font-size: 14px;
+			font-size: 0.14rem;
 		}
 		.head-email {
 			text-align: right;
@@ -46,18 +46,18 @@
 			text-align: center; /* 让logo能居中展示 */
 		}
 		.head-logo img {
-			height: 21px;
+			height: 0.21rem;
 		}
 		/* 2. nav */
 		.nav {
-			height: 46px;
-			/* 现在的浏览器支持0.5px了 */
-			border-bottom: 0.5px #ededed solid;
-			padding: 0 10px;
+			height: 0.46rem;
+			/* 现在的浏览器支持0.005rem了 */
+			border-bottom: 0.005rem #ededed solid;
+			padding: 0 0.1rem;
 			/* display */
 			display: flex;
 			align-items: center;
-			font-size: 18px;
+			font-size: 0.18rem;
 		}
 
 		.nav li {
@@ -73,16 +73,16 @@
 		.nav li.active::after {
 			content: "";
 			position: absolute;
-			bottom: -12px;
+			bottom: -0.12rem;
 			left: 50%;
-			margin-left: -7px;
-			width: 15px;
-			height: 2px;
+			margin-left: -0.07rem;
+			width: 0.15rem;
+			height: 0.02rem;
 			background: #ef191b;
 		}
 		/* nav-sub */
 		.nav-sub {
-			padding: 11px 10px 7px 10px;
+			padding: 0.11rem 0.1rem 0.07rem 0.1rem;
 			background: #f8f8f8;
 			/* 主要是给箭头用的，即 nav-sub-arrow */
 			position: relative;
@@ -90,10 +90,10 @@
 		.nav-sub-list {
 			display: grid;
 			grid-template-columns: repeat(5, 1fr);
-			grid-auto-rows: 35px;
+			grid-auto-rows: 0.35rem;
 		}
 		.nav-sub__closed {
-			height: 70px; /* 高度固定 */
+			height: 0.7rem; /* 高度固定 */
 			overflow: hidden; /* 溢出的部分隐藏 */
 		}
 		/* +表示兄弟； 下面表示是关闭状态下的箭头方向为0 */
@@ -102,67 +102,67 @@
 		}
 		.nav-sub-arrow {
 			position: absolute;
-			right: 10px;
-			bottom: 10px;
+			right: 0.1rem;
+			bottom: 0.1rem;
 			/* 箭头旋转过来 */
 			transform: rotate(180deg);
 		}
 		/* 3. news */
 		.news {
-			padding: 0 10px;
+			padding: 0 0.1rem;
 		}
 		.news-title {
-			font-size: 18px;
-			/* height: 66px;  *//* 有了line-height就可以不加height，当有内容时就撑开高度了 */
-			line-height: 66px; /* 对于文字而言，line-height等于height就是垂直居中 */
+			font-size: 0.18rem;
+			/* height: 0.66rem;  *//* 有了line-height就可以不加height，当有内容时就撑开高度了 */
+			line-height: 0.66rem; /* 对于文字而言，line-height等于height就是垂直居中 */
 		}
 		.news-item {
-			margin-bottom: 25px;
+			margin-bottom: 0.25rem;
 		}
 		.news-item-title {
-			width: 295px;
-			line-height: 22px;
-			font-size: 17px;
-			margin-bottom: 8px;
+			width: 2.95rem;
+			line-height: 0.22rem;
+			font-size: 0.17rem;
+			margin-bottom: 0.08rem;
 			font-weight: 400;
 		}
 		.news-item-info {
-			font-size: 12px;
+			font-size: 0.12rem;
 			color: #b3b4b6;
 		}
 		.news-item-img img {
 			width: 100%;
-			margin-top: 5px;
-			margin-bottom: 9px;
+			margin-top: 0.05rem;
+			margin-bottom: 0.09rem;
 		}
 
 		/* 4. news2 */
-		.news2{}
+		/* .news2{} */
 		.news2-item {
-			border-top: 0.5px #f6f7f9 solid;
-			padding: 10px;
+			border-top: 0.005rem #f6f7f9 solid;
+			padding: 0.1rem;
 			/* display */
 			display: flex;
 		}
 		.news2-item-content {
 			flex-grow: 1;
-			margin-right: 15px;
+			margin-right: 0.15rem;
 		}
 		.news2-item-title {
-			line-height: 22px;
-			font-size: 17px;
-			margin-bottom: 8px;
+			line-height: 0.22rem;
+			font-size: 0.17rem;
+			margin-bottom: 0.08rem;
 			font-weight: 400;
 		}
 		.news2-item-info {
-			font-size: 12px;
+			font-size: 0.12rem;
 			color: #b3b4b6;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 		}
 		.news2-item-img {
-			width: 117px;
+			width: 1.17rem;
 		}
 		.news2-item-img img {
 			width: 100%;
@@ -171,9 +171,9 @@
 		}
 		.app {
 			color: #fb1515;
-			border: 0.5px #fbbab8 solid;
-			border-radius: 1000px;
-			padding: 2px 5px;
+			border: 0.005rem #fbbab8 solid;
+			border-radius: 10rem;
+			padding: 0.02rem 0.05rem;
 		}
 
 	</style>
