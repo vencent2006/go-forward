@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>7_6</title>
+	<style>
+		ul {
+			display: none;
+		}
+
+		input {
+			display: none;
+		}
+
+		/* +(加号)表示相邻的ul元素 */
+		input:checked + ul {
+			display: block;
+		}
+
+		@media (min-width: 700px) {
+			/* 大于700px 才会触发 */
+			ul {
+				display: block;
+			}
+			span {
+				display: none;
+			}
+		}
+	</style>
+</head>
+<body>
+	<label for="menu">
+		<span>
+			菜单按钮
+		</span>
+	</label>
+	<input id="menu" type="checkbox">
+	<ul>
+		<li>首页</li>
+		<li>教程</li>
+		<li>论坛</li>
+		<li>文章</li>
+	</ul>
+</body>
+</html>

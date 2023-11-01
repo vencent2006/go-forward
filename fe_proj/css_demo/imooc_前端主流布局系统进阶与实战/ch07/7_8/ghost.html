@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ghost</title>
+	<link rel="stylesheet" href="./iconfont/iconfont.css">
+	<link rel="stylesheet" href="./css/reset.css">
+	<style>
+		body {
+			background: #ebebeb;
+		}
+		a {
+			color: #505050;
+		}
+		.head {
+			height: 190px;
+			background: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.head-logo {
+			width: 200px;
+		}
+		/* 2. nav */
+		.nav {
+			border-top: 1px #ebebeb solid;
+			border-bottom: 2px #ebebeb solid;
+			background: white;
+			padding: 0 15px;
+		}
+		.nav-bar {
+			height: 56px;
+			/* 利用弹性上下左右居中 */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.nav-bar i {
+			/* 可点击的手型 */
+			cursor: pointer;
+		}
+		.nav-list {
+			display: none;
+		}
+		.nav-list li {
+			/* 跟按钮（nav-bar）的高度一致 */
+			height: 56px;
+			line-height: 56px;
+			position: relative;
+			padding: 0 21px;
+		}
+		.nav-list li.active::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			height: 2px;
+			width: 100%;
+			background: #e67e22;
+		}
+		.nav-toggle {
+			display: none;
+		}
+		.nav-toggle:checked + .nav-list {
+			display: block;
+		}
+
+		/* 3. main */
+
+		.main-article {
+			background: white;
+			margin: 30px 20px;
+			padding-top: 0;
+		}
+		.main-article-title {
+			padding-top: 30px;
+			font-size: 35px;
+			text-align: center;
+			font-weight: 400;
+
+		}
+		.main-article-info {
+			color: #959595;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+		.main-article-info-item {
+			padding: 0 5px;
+		}
+		.main-article-abstract {
+			margin: 0px 40px;
+			font-size: 18px;
+		}
+		.main-article-btn {
+			margin: 35px 40px;
+			border: none;
+			background: #e67e22;
+			color: white;
+			cursor: pointer;
+			padding: 10px;
+		}
+		.main-article-category {
+			margin: 0px 40px;
+			display: flex;
+			border-top: 1px #ebebeb solid;
+			padding: 20px 0px;
+		}
+		.main-article-category i {
+			margin-right: 10px;
+		}
+
+
+
+		/* 响应式 */
+		.row {
+			display: grid;
+			grid-template-columns: repeat(12, 1fr);
+		}
+		/* 子类里以col开头的 */
+		.row>[class*="col"]{
+			grid-area: auto/auto/auto/span 12;
+		}
+		.row .col-1 {
+			grid-area: auto/auto/auto/span 1;
+		}
+		.row .col-2 {
+			grid-area: auto/auto/auto/span 2;
+		}
+		.row .col-3 {
+			grid-area: auto/auto/auto/span 3;
+		}
+		.row .col-4 {
+			grid-area: auto/auto/auto/span 4;
+		}
+		.row .col-5 {
+			grid-area: auto/auto/auto/span 5;
+		}
+		.row .col-6 {
+			grid-area: auto/auto/auto/span 6;
+		}
+		.row .col-7 {
+			grid-area: auto/auto/auto/span 7;
+		}
+		.row .col-8 {
+			grid-area: auto/auto/auto/span 8;
+		}
+		.row .col-9 {
+			grid-area: auto/auto/auto/span 9;
+		}
+		.row .col-10 {
+			grid-area: auto/auto/auto/span 10;
+		}
+		.row .col-11 {
+			grid-area: auto/auto/auto/span 11;
+		}
+		.row .col-12 {
+			grid-area: auto/auto/auto/span 12;
+		}
+
+		@media (min-width:576px) {
+			.row .col-sm-1 {
+				grid-area: auto/auto/auto/span 1;
+			}
+			.row .col-sm-2 {
+				grid-area: auto/auto/auto/span 2;
+			}
+			.row .col-sm-3 {
+				grid-area: auto/auto/auto/span 3;
+			}
+			.row .col-sm-4 {
+				grid-area: auto/auto/auto/span 4;
+			}
+			.row .col-sm-5 {
+				grid-area: auto/auto/auto/span 5;
+			}
+			.row .col-sm-6 {
+				grid-area: auto/auto/auto/span 6;
+			}
+			.row .col-sm-7 {
+				grid-area: auto/auto/auto/span 7;
+			}
+			.row .col-sm-8 {
+				grid-area: auto/auto/auto/span 8;
+			}
+			.row .col-sm-9 {
+				grid-area: auto/auto/auto/span 9;
+			}
+			.row .col-sm-10 {
+				grid-area: auto/auto/auto/span 10;
+			}
+			.row .col-sm-11 {
+				grid-area: auto/auto/auto/span 11;
+			}
+			.row .col-sm-12 {
+				grid-area: auto/auto/auto/span 12;
+			}
+		}
+
+		@media (min-width:768px) {
+			/* 加.nav是为了提升优先级 */
+			.nav .nav-bar {
+				display: none;
+			}
+			/* 加.nav是为了提升优先级 */
+			.nav .nav-list {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+
+			.row .col-md-1 {
+				grid-area: auto/auto/auto/span 1;
+			}
+			.row .col-md-2 {
+				grid-area: auto/auto/auto/span 2;
+			}
+			.row .col-md-3 {
+				grid-area: auto/auto/auto/span 3;
+			}
+			.row .col-md-4 {
+				grid-area: auto/auto/auto/span 4;
+			}
+			.row .col-md-5 {
+				grid-area: auto/auto/auto/span 5;
+			}
+			.row .col-md-6 {
+				grid-area: auto/auto/auto/span 6;
+			}
+			.row .col-md-7 {
+				grid-area: auto/auto/auto/span 7;
+			}
+			.row .col-md-8 {
+				grid-area: auto/auto/auto/span 8;
+			}
+			.row .col-md-9 {
+				grid-area: auto/auto/auto/span 9;
+			}
+			.row .col-md-10 {
+				grid-area: auto/auto/auto/span 10;
+			}
+			.row .col-md-11 {
+				grid-area: auto/auto/auto/span 11;
+			}
+			.row .col-md-12 {
+				grid-area: auto/auto/auto/span 12;
+			}
+		}
+		@media (min-width:992px) {
+			.row .col-lg-1 {
+				grid-area: auto/auto/auto/span 1;
+			}
+			.row .col-lg-2 {
+				grid-area: auto/auto/auto/span 2;
+			}
+			.row .col-lg-3 {
+				grid-area: auto/auto/auto/span 3;
+			}
+			.row .col-lg-4 {
+				grid-area: auto/auto/auto/span 4;
+			}
+			.row .col-lg-5 {
+				grid-area: auto/auto/auto/span 5;
+			}
+			.row .col-lg-6 {
+				grid-area: auto/auto/auto/span 6;
+			}
+			.row .col-lg-7 {
+				grid-area: auto/auto/auto/span 7;
+			}
+			.row .col-lg-8 {
+				grid-area: auto/auto/auto/span 8;
+			}
+			.row .col-lg-9 {
+				grid-area: auto/auto/auto/span 9;
+			}
+			.row .col-lg-10 {
+				grid-area: auto/auto/auto/span 10;
+			}
+			.row .col-lg-11 {
+				grid-area: auto/auto/auto/span 11;
+			}
+			.row .col-lg-12 {
+				grid-area: auto/auto/auto/span 12;
+			}
+		}
+		@media (min-width:1200px) {
+			.row .col-xl-1 {
+				grid-area: auto/auto/auto/span 1;
+			}
+			.row .col-xl-2 {
+				grid-area: auto/auto/auto/span 2;
+			}
+			.row .col-xl-3 {
+				grid-area: auto/auto/auto/span 3;
+			}
+			.row .col-xl-4 {
+				grid-area: auto/auto/auto/span 4;
+			}
+			.row .col-xl-5 {
+				grid-area: auto/auto/auto/span 5;
+			}
+			.row .col-xl-6 {
+				grid-area: auto/auto/auto/span 6;
+			}
+			.row .col-xl-7 {
+				grid-area: auto/auto/auto/span 7;
+			}
+			.row .col-xl-8 {
+				grid-area: auto/auto/auto/span 8;
+			}
+			.row .col-xl-9 {
+				grid-area: auto/auto/auto/span 9;
+			}
+			.row .col-xl-10 {
+				grid-area: auto/auto/auto/span 10;
+			}
+			.row .col-xl-11 {
+				grid-area: auto/auto/auto/span 11;
+			}
+			.row .col-xl-12 {
+				grid-area: auto/auto/auto/span 12;
+			}
+		}
+		@media (min-width:1400px) {
+			.row .col-xxl-1 {
+				grid-area: auto/auto/auto/span 1;
+			}
+			.row .col-xxl-2 {
+				grid-area: auto/auto/auto/span 2;
+			}
+			.row .col-xxl-3 {
+				grid-area: auto/auto/auto/span 3;
+			}
+			.row .col-xxl-4 {
+				grid-area: auto/auto/auto/span 4;
+			}
+			.row .col-xxl-5 {
+				grid-area: auto/auto/auto/span 5;
+			}
+			.row .col-xxl-6 {
+				grid-area: auto/auto/auto/span 6;
+		  	}
+			.row .col-xxl-7 {
+				grid-area: auto/auto/auto/span 7;
+			}
+			.row .col-xxl-8 {
+				grid-area: auto/auto/auto/span 8;
+			}
+			.row .col-xxl-9 {
+				grid-area: auto/auto/auto/span 9;
+			}
+			.row .col-xxl-10 {
+				grid-area: auto/auto/auto/span 10;
+			}
+			.row .col-xxl-11 {
+				grid-area: auto/auto/auto/span 11;
+			}
+			.row .col-xxl-12 {
+				grid-area: auto/auto/auto/span 12;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- 1. head -->
+	<div class="head">
+		<img class="head-logo" src="./img/ghost-logo.png" alt="">
+	</div>
+	<!-- 2. nav -->
+	<div class="nav">
+		<!-- 折叠 -->
+		<div class="nav-bar">
+			<label for="nav-toggle">
+				<i class="iconfont icon-zhedie"></i>
+			</label>
+		</div>
+		<!-- list，一般老师都用的ul -->
+		<input id="nav-toggle" class="nav-toggle" type="checkbox">
+		<ul class="nav-list">
+			<li class="active"><a href="#">首页</a></li>
+			<li><a href="#">论坛</a></li>
+			<li><a href="#">快捷手册</a></li>
+			<li><a href="#">中文文档</a></li>
+			<li><a href="#">关于</a></li>
+		</ul>
+	</div>
+	<!-- 3. main -->
+	<div class="main">
+		<div class="main-article">
+			<h2 class="main-article-title">全新的Ghost文档上线</h2>
+			<div class="main-article-info">
+				<span class="main-article-info-item">作者：王赛</span> • <span class="main-article-info-item">2018年11月20日</span>
+			</div>
+			<p class="main-article-abstract">
+				我们的整个 Ghost 文档 已经全新改版了！并且添加了一些新的补充，包括使用教程和功能集成。 新文档的目标是帮助更多人有效地安装并管理他们发布的内容，并且最大限度地发挥 Ghost 作为一个开源发布平台的灵活性。文档的设计和结构已经修订完毕，我们的改进包括 Ghost 安装和设
+			</p>
+			<button class="main-article-btn">阅读全文</button>
+			<section class="main-article-category">
+				<i class="iconfont icon-wenjianjia"></i>
+				<a class="main-article-category-info" href="#">Android, 客户端</a>
+			</section>
+		</div>
+		<div class="main-article">
+			<h2 class="main-article-title">全新的Ghost文档上线</h2>
+			<div class="main-article-info">
+				<span class="main-article-info-item">作者：王赛</span> • <span class="main-article-info-item">2018年11月20日</span>
+			</div>
+			<p class="main-article-abstract">
+				我们的整个 Ghost 文档 已经全新改版了！并且添加了一些新的补充，包括使用教程和功能集成。 新文档的目标是帮助更多人有效地安装并管理他们发布的内容，并且最大限度地发挥 Ghost 作为一个开源发布平台的灵活性。文档的设计和结构已经修订完毕，我们的改进包括 Ghost 安装和设
+			</p>
+			<button class="main-article-btn">阅读全文</button>
+			<section class="main-article-category">
+				<i class="iconfont icon-wenjianjia"></i>
+				<a class="main-article-category-info" href="#">Android, 客户端</a>
+			</section>
+		</div>
+	</div>
+</body>
+</html>
