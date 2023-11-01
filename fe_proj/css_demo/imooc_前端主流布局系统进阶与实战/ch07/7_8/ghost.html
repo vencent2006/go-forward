@@ -7,6 +7,10 @@
 	<link rel="stylesheet" href="./iconfont/iconfont.css">
 	<link rel="stylesheet" href="./css/reset.css">
 	<style>
+		/* css的变量 */
+		:root {
+			--container: 100%;
+		}
 		body {
 			background: #ebebeb;
 		}
@@ -69,48 +73,52 @@
 		}
 
 		/* 3. main */
+		.main {
+			/* todo 为什么是padding而不是margin呢 */
+			padding: 0 15px;
+			/* 引入变量 container */
+			width: var(--container);
+			/* 居中 */
+			margin: 0 auto;
+			/* 因为有了padding，所以要改下盒模型 */
+			box-sizing: border-box;
+		}
 
 		.main-article {
+			margin-top: 35px;
 			background: white;
-			margin: 30px 20px;
-			padding-top: 0;
+			padding: 35px;
+			/* font-size的1.5倍 */
+			line-height: 1.5;
 		}
-		.main-article-title {
-			padding-top: 30px;
+		.main-article h2 {
 			font-size: 35px;
 			text-align: center;
 			font-weight: 400;
-
 		}
-		.main-article-info {
+		/* 作者那行 */
+		.main-article div{
+			text-align: center;
 			color: #959595;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-bottom: 10px;
 		}
-		.main-article-info-item {
-			padding: 0 5px;
-		}
-		.main-article-abstract {
-			margin: 0px 40px;
+		.main-article p {
+			margin-top: 25px;
 			font-size: 18px;
 		}
-		.main-article-btn {
-			margin: 35px 40px;
+		.main-article button {
 			border: none;
 			background: #e67e22;
 			color: white;
-			cursor: pointer;
 			padding: 10px;
+			cursor: pointer;
+			margin: 30px 0;
 		}
-		.main-article-category {
-			margin: 0px 40px;
-			display: flex;
+		.main-article section {
 			border-top: 1px #ebebeb solid;
+			display: flex;
 			padding: 20px 0px;
 		}
-		.main-article-category i {
+		.main-article section i {
 			margin-right: 10px;
 		}
 
@@ -252,6 +260,11 @@
 			}
 		}
 		@media (min-width:992px) {
+			/* css的变量 */
+			:root {
+				--container: 940px;
+			}
+
 			.row .col-lg-1 {
 				grid-area: auto/auto/auto/span 1;
 			}
@@ -290,6 +303,11 @@
 			}
 		}
 		@media (min-width:1200px) {
+			/* css的变量 */
+			:root {
+				--container: 1160px;
+			}
+
 			.row .col-xl-1 {
 				grid-area: auto/auto/auto/span 1;
 			}
@@ -391,34 +409,53 @@
 		</ul>
 	</div>
 	<!-- 3. main -->
-	<div class="main">
-		<div class="main-article">
-			<h2 class="main-article-title">全新的Ghost文档上线</h2>
-			<div class="main-article-info">
-				<span class="main-article-info-item">作者：王赛</span> • <span class="main-article-info-item">2018年11月20日</span>
+	<div class="main row">
+		<div class="col-lg-8">
+			<div class="main-article">
+				<h2>全新的Ghost文档上线</h2>
+				<div>
+					<span>作者：王赛</span> • <span>2018年11月20日</span>
+				</div>
+				<p>
+					我们的整个 Ghost 文档 已经全新改版了！并且添加了一些新的补充，包括使用教程和功能集成。 新文档的目标是帮助更多人有效地安装并管理他们发布的内容，并且最大限度地发挥 Ghost 作为一个开源发布平台的灵活性。文档的设计和结构已经修订完毕，我们的改进包括 Ghost 安装和设
+				</p>
+				<button>阅读全文</button>
+				<section>
+					<i class="iconfont icon-wenjianjia"></i>
+					<a href="#">Android</a>,
+					<a href="#">客户端</a>
+				</section>
 			</div>
-			<p class="main-article-abstract">
-				我们的整个 Ghost 文档 已经全新改版了！并且添加了一些新的补充，包括使用教程和功能集成。 新文档的目标是帮助更多人有效地安装并管理他们发布的内容，并且最大限度地发挥 Ghost 作为一个开源发布平台的灵活性。文档的设计和结构已经修订完毕，我们的改进包括 Ghost 安装和设
-			</p>
-			<button class="main-article-btn">阅读全文</button>
-			<section class="main-article-category">
-				<i class="iconfont icon-wenjianjia"></i>
-				<a class="main-article-category-info" href="#">Android, 客户端</a>
-			</section>
-		</div>
-		<div class="main-article">
-			<h2 class="main-article-title">全新的Ghost文档上线</h2>
-			<div class="main-article-info">
-				<span class="main-article-info-item">作者：王赛</span> • <span class="main-article-info-item">2018年11月20日</span>
+			<div class="main-article">
+				<h2>全新的Ghost文档上线</h2>
+				<div>
+					<span>作者：王赛</span> • <span>2018年11月20日</span>
+				</div>
+				<p>
+					我们的整个 Ghost 文档 已经全新改版了！并且添加了一些新的补充，包括使用教程和功能集成。 新文档的目标是帮助更多人有效地安装并管理他们发布的内容，并且最大限度地发挥 Ghost 作为一个开源发布平台的灵活性。文档的设计和结构已经修订完毕，我们的改进包括 Ghost 安装和设
+				</p>
+				<button>阅读全文</button>
+				<section>
+					<i class="iconfont icon-wenjianjia"></i>
+					<a href="#">Android</a>,
+					<a href="#">客户端</a>
+				</section>
 			</div>
-			<p class="main-article-abstract">
-				我们的整个 Ghost 文档 已经全新改版了！并且添加了一些新的补充，包括使用教程和功能集成。 新文档的目标是帮助更多人有效地安装并管理他们发布的内容，并且最大限度地发挥 Ghost 作为一个开源发布平台的灵活性。文档的设计和结构已经修订完毕，我们的改进包括 Ghost 安装和设
-			</p>
-			<button class="main-article-btn">阅读全文</button>
-			<section class="main-article-category">
-				<i class="iconfont icon-wenjianjia"></i>
-				<a class="main-article-category-info" href="#">Android, 客户端</a>
-			</section>
+			<div class="main-article">
+				<h2>全新的Ghost文档上线</h2>
+				<div>
+					<span>作者：王赛</span> • <span>2018年11月20日</span>
+				</div>
+				<p>
+					我们的整个 Ghost 文档 已经全新改版了！并且添加了一些新的补充，包括使用教程和功能集成。 新文档的目标是帮助更多人有效地安装并管理他们发布的内容，并且最大限度地发挥 Ghost 作为一个开源发布平台的灵活性。文档的设计和结构已经修订完毕，我们的改进包括 Ghost 安装和设
+				</p>
+				<button>阅读全文</button>
+				<section>
+					<i class="iconfont icon-wenjianjia"></i>
+					<a href="#">Android</a>,
+					<a href="#">客户端</a>
+				</section>
+			</div>
 		</div>
 	</div>
 </body>
