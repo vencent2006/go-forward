@@ -173,6 +173,60 @@
 		}
 
 
+		/* 4. foot */
+		.foot {
+			margin-top: 35px;
+			padding-top: 35px;
+			background: #202020;
+			overflow: hidden;
+		}
+
+		.foot-wrapper {
+			width: var(--container);
+			/* 居中一下 */
+			margin: 0 auto;
+		}
+		.foot-item {
+			padding: 0 30px;
+			margin-bottom: 30px;
+		}
+		.foot-item h3 {
+			color: white;
+			font-size: 22px;
+			padding-bottom: 10px;
+			border-bottom: 1px #cccccc solid;
+			position: relative;
+		}
+
+		.foot-item h3::after {
+			content: "";
+			position: absolute;
+			bottom: -1px;
+			left: 0;
+			height: 1px;
+			width: 90px;
+			/* width: 100%; */
+			background: #e67e22;
+		}
+		.foot-item div {
+			margin-top: 20px;
+		}
+		.foot-item div a {
+			margin: 10px;
+			display: inline-block;
+			color: #959595;
+		}
+
+		.copyright {
+			background: #111111;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 80px;
+			color: #555555;
+		}
+
+
 		/* 响应式 */
 		.row {
 			display: grid;
@@ -542,6 +596,62 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<!-- 4. foot -->
+	<div class="foot">
+		<div class="foot-wrapper row">
+			<div class="foot-item col-lg-4">
+				<h3>友链</h3>
+				<div>
+					<a href="#">Bootstrap中文网</a>
+					<a href="#">React</a>
+					<a href="#">Vue.js</a>
+					<a href="#">Svelte</a>
+					<a href="#">Preact</a>
+					<a href="#">Babel</a>
+					<a href="#">Webpack</a>
+					<a href="#">Rollup.js</a>
+					<a href="#">Bootstrap中文网</a>
+					<a href="#">React</a>
+					<a href="#">Vue.js</a>
+					<a href="#">Svelte</a>
+					<a href="#">Preact</a>
+					<a href="#">Babel</a>
+					<a href="#">Webpack</a>
+					<a href="#">Rollup.js</a>
+				</div>
+			</div>
+			<div class="foot-item col-lg-4">
+				<h3>标签云</h3>
+				<div>
+					<a href="#">客户端</a>
+					<a href="#">Android</a>
+					<a href="#">jQuery</a>
+					<a href="#">Ghost 0.7版本</a>
+					<a href="#">开源</a>
+					<a href="#">助手函数</a>
+					<a href="#">客户端</a>
+					<a href="#">Android</a>
+					<a href="#">jQuery</a>
+					<a href="#">Ghost 0.7版本</a>
+					<a href="#">开源</a>
+					<a href="#">助手函数</a>
+					<a href="#">客户端</a>
+				</div>
+			</div>
+			<div class="foot-item col-lg-4">
+				<h3>合作伙伴</h3>
+				<div>
+					<a href="#">腾讯</a>
+					<a href="#">阿里巴巴</a>
+					<a href="#">百度</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">
+		<p>Copyright @ Ghost中文网 | 京ICP备11008151号-11 | 京公网安备11010802014853</p>
 	</div>
 </body>
 </html>
