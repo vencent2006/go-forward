@@ -258,7 +258,7 @@ button:-moz-focusring,
 .g-ant {
     display: flex;
 }
-/* 侧边栏 */
+/* 1. 侧边栏 */
 .g-ant__sider {
     /* 不收缩 */
     flex-shrink: 0;
@@ -269,7 +269,11 @@ button:-moz-focusring,
     min-height: 100vw;
 }
 .g-ant__sider__wrap {
-    color: red;
+    color: white;
+    height: 100%;
+    display: flex;
+    /* 弹性的方向是列 column */
+    flex-direction: column;
 }
 .g-ant__sider__wrap--fixed {
     position: fixed;
@@ -284,8 +288,17 @@ button:-moz-focusring,
     width: 48px;
 }
 
+.g-ant__sider__head {
+    flex-shrink: 0;
+}
+.g-ant__sider__main {
+    flex-grow: 1;
+}
+.g-ant__sider__foot {
+    flex-shrink: 0;
+}
 
-/* 主体 */
+/* 2. 主体 */
 .g-ant__main {
     /* 占满其余空间 */
     flex-grow: 1;
