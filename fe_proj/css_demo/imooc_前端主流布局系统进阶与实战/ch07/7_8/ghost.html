@@ -122,6 +122,55 @@
 			margin-right: 10px;
 		}
 
+		/* main-aside */
+		.main-aside {
+			background: white;
+			padding: 35px;
+			margin-top: 35px;
+		}
+		.main-aside h3 {
+			font-size: 20px;
+			font-weight: 400;
+			padding-bottom: 10px;
+			border-bottom: 1px #cccccc solid;
+			position: relative;
+		}
+
+		.main-aside h3::after {
+			content: "";
+			position: absolute;
+			bottom: -1px;
+			left: 0;
+			height: 1px;
+			width: 90px;
+			/* width: 100%; */
+			background: #e67e22;
+		}
+
+		.main-aside p {
+			margin-top: 30px;
+		}
+
+		.main-aside button {
+			border: none;
+			background: #e67e22;
+			color: white;
+			padding: 10px;
+			cursor: pointer;
+			width: 100%;
+			margin-top: 30px;
+		}
+		/* 标签云 */
+		.main-aside div {
+			margin-top: 20px;
+		}
+		.main-aside div a {
+			border: 1px #ebebeb solid;
+			/* inline-block */
+			display: inline-block;
+			margin: 11px 7px 0 0;
+			padding: 5px 10px;
+		}
 
 
 		/* 响应式 */
@@ -263,6 +312,11 @@
 			/* css的变量 */
 			:root {
 				--container: 940px;
+			}
+
+			.row>[class*="col"]{
+				/* 栅格间的空隙 */
+				padding: 0 15px;
 			}
 
 			.row .col-lg-1 {
@@ -410,6 +464,7 @@
 	</div>
 	<!-- 3. main -->
 	<div class="main row">
+		<!-- 占 lg的8个 -->
 		<div class="col-lg-8">
 			<div class="main-article">
 				<h2>全新的Ghost文档上线</h2>
@@ -455,6 +510,36 @@
 					<a href="#">Android</a>,
 					<a href="#">客户端</a>
 				</section>
+			</div>
+		</div>
+
+		<!-- 占 lg的4个 -->
+		<div class="col-lg-4">
+			<div class="main-aside">
+				<h3>声明</h3>
+				<p>Ghost 中文版不再继续维护，请去官方下载。</p>
+			</div>
+			<div class="main-aside">
+				<h3>下载</h3>
+				<button>Ghost最新版</button>
+			</div>
+			<div class="main-aside">
+				<h3>标签云</h3>
+				<div>
+					<a href="#">客户端</a>
+					<a href="#">Android</a>
+					<a href="#">jQuery</a>
+					<a href="#">Ghost 0.7版本</a>
+					<a href="#">开源</a>
+					<a href="#">助手函数</a>
+					<a href="#">客户端</a>
+					<a href="#">Android</a>
+					<a href="#">jQuery</a>
+					<a href="#">Ghost 0.7版本</a>
+					<a href="#">开源</a>
+					<a href="#">助手函数</a>
+					<a href="#">客户端</a>
+				</div>
 			</div>
 		</div>
 	</div>
