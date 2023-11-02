@@ -325,7 +325,7 @@ button:-moz-focusring,
 /* logo */
 .m-logo {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; 这里不能居中，是为了照顾closed的左移 */ 
     align-items: center;
     padding: 16px;
     color: white;
@@ -337,6 +337,10 @@ button:-moz-focusring,
     font-weight: 600;
     margin-left: 12px;
     flex-shrink: 0;
+}
+
+.g-ant__sider--closed .m-logo {
+    padding: 16px 8px;/* 关闭时logo往左移动点 */
 }
 
 /* menu */
@@ -373,6 +377,14 @@ button:-moz-focusring,
 .m-menu__sub--selected {
     background: #1890ff;
     color: white;
+}
+
+.g-ant__sider--closed .m-menu__title {
+    transform: scale(1.5); /* title放大1.5 */
+}
+
+.g-ant__sider--closed .m-menu__sub {
+    display: none; /* 关闭子菜单 */
 }
 
 

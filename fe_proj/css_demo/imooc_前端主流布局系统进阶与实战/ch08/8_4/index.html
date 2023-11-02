@@ -268,6 +268,21 @@
 				}
 			}
 		}
+
+		var bar = document.querySelector('.u-bar');
+		var sider = document.querySelector('.g-ant__sider');
+		var menus = document.querySelectorAll('.m-menu')
+		bar.onclick = function() {
+			// toggle后面的class不能加点
+			sider.classList.toggle('g-ant__sider--closed');// 切换成closed
+			// 第一个打开，其余的都关闭
+			menus[0].classList.add('m-menu--selected');
+			menus[0].querySelector('[class*="icon-arrow"]').className = 'iconfont icon-arrowup'
+			for (var i = 1; i < menus.length; i++) {
+				menus[i].classList.remove('m-menu--selected');
+				menus[i].querySelector('[class*="icon-arrow"]').className = 'iconfont icon-arrowdown'
+			}
+		};
 	</script>
 </body>
 </html>
