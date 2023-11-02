@@ -292,7 +292,24 @@ button:-moz-focusring,
 }
 .g-ant__sider__main {
     flex-grow: 1;
+    overflow: hidden auto;
 }
+
+/* 自定义滚动条 start */
+.g-ant__sider__main::-webkit-scrollbar {
+    width : 6px;
+    height: 6px;
+}
+.g-ant__sider__main::-webkit-scrollbar-thumb {
+    background   : #51606d;
+    border-radius: 3px;
+}
+.g-ant__sider__main::-webkit-scrollbar-track {
+    background   : #263849;
+    border-radius: 3px;
+}
+/* 自定义滚动条 end */
+
 .g-ant__sider__foot {
     flex-shrink: 0;
 }
