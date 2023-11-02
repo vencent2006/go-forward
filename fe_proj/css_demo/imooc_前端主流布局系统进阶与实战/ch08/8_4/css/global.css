@@ -269,7 +269,6 @@ button:-moz-focusring,
     min-height: 100vw;
 }
 .g-ant__sider__wrap {
-    color: white;
     height: 100%;
     display: flex;
     /* 弹性的方向是列 column */
@@ -303,8 +302,74 @@ button:-moz-focusring,
     /* 占满其余空间 */
     flex-grow: 1;
 }
+
 /*-----------------通用模块(m-)-----------------------*/
+
+/* logo */
+.m-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    color: white;
+}
+.m-logo>img {/* 子类选择器 > */
+    width: 32px;
+}
+.m-logo>h1 {
+    font-weight: 600;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+/* menu */
+.m-menu {
+    color: #8c959e;
+    cursor: pointer;
+}
+.m-menu__title {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    padding: 0 15px;
+}
+.m-menu__title>span {
+    margin-right: auto;    
+}
+
+.m-menu__sub {
+    display: none;
+}
+.m-menu__sub>li {
+    padding-left: 45px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.m-menu--selected .m-menu__title{
+    color: white;
+}
+.m-menu--selected .m-menu__sub{
+    display: block;
+}
+.m-menu__sub--selected {
+    background: #1890ff;
+    color: white;
+}
+
+
 /*-----------------通用元件(u-)-----------------------*/
+
+.u-bar {
+    font-size: 18px;
+    color: white;
+    /* 转成block是为了加padding */
+    display: block;
+    padding: 15px;
+    cursor: pointer;
+}
+
 /*-----------------响应式系统-----------------------*/
 
 
