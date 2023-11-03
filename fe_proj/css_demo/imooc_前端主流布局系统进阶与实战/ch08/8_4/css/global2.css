@@ -318,7 +318,42 @@ button:-moz-focusring,
 .g-ant__main {
     /* 占满其余空间 */
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    background: #f1f2f6;
 }
+.g-ant__main__head {
+    height: 48px;
+    background: white;
+    flex-shrink: 0; /* 不让收缩 */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-shadow: 0 1px 4px #ccc; /* 阴影 */
+    column-gap: 20px; /* column gap */
+    padding: 0 20px;
+}
+/* > 表示直接一级子元素 */
+.g-ant__main__head > span {
+    margin-left: -15px; /* 负数抵消空隙 */
+}
+
+.g-ant__main__main {
+    flex-grow: 1;
+}
+.g-ant__main__foot {
+    margin-top: 70px;
+    margin-bottom: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #868782;
+}
+.g-ant__main__foot a {
+    color: inherit;
+    margin: 0 20px;
+}
+
 
 /*-----------------通用模块(m-)-----------------------*/
 
