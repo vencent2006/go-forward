@@ -23,14 +23,14 @@ input,
 textarea,
 th,
 td {
-    margin : 0;
+    margin: 0;
     padding: 0
 }
 
 /*设置默认字体*/
 body {
-    font-size  : 14px;
-    font-style : normal;
+    font-size: 14px;
+    font-style: normal;
     font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
 }
 
@@ -63,20 +63,20 @@ ol {
 }
 
 a {
-    text-decoration : none;
+    text-decoration: none;
     background-color: transparent
 }
 
 a:hover,
 a:active {
-    outline-width  : 0;
+    outline-width: 0;
     text-decoration: none
 }
 
 /*重置表格*/
 table {
     border-collapse: collapse;
-    border-spacing : 0
+    border-spacing: 0
 }
 
 /*重置hr*/
@@ -101,7 +101,7 @@ svg:not(:root) {
 /*下面的操作是针对于html5页面布局准备的，不支持ie6~8以及其他低版本的浏览器*/
 html {
     /*禁用系统默认菜单*/
-    -webkit-touch-callout   : none;
+    -webkit-touch-callout: none;
     /*关闭iphone & Android的浏览器纵向和横向模式中自动调整字体大小的功能*/
     -webkit-text-size-adjust: 100%
 }
@@ -140,7 +140,7 @@ video {
 audio:not([controls]),
 video:not([controls]) {
     display: none;
-    height : 0
+    height: 0
 }
 
 progress {
@@ -149,14 +149,14 @@ progress {
 
 mark {
     background-color: #ff0;
-    color           : #000
+    color: #000
 }
 
 sub,
 sup {
-    position      : relative;
-    font-size     : 75%;
-    line-height   : 0;
+    position: relative;
+    font-size: 75%;
+    line-height: 0;
     vertical-align: baseline
 }
 
@@ -173,7 +173,7 @@ input,
 select,
 textarea {
     font-size: 100%;
-    outline  : 0
+    outline: 0
 }
 
 button,
@@ -202,7 +202,7 @@ button::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
     border-style: none;
-    padding     : 0
+    padding: 0
 }
 
 button:-moz-focusring,
@@ -215,7 +215,7 @@ button:-moz-focusring,
 [type="checkbox"],
 [type="radio"] {
     box-sizing: border-box;
-    padding   : 0
+    padding: 0
 }
 
 [type="number"]::-webkit-inner-spin-button,
@@ -225,7 +225,7 @@ button:-moz-focusring,
 
 [type="search"] {
     -webkit-appearance: textfield;
-    outline-offset    : -2px
+    outline-offset: -2px
 }
 
 [type="search"]::-webkit-search-cancel-button,
@@ -234,30 +234,40 @@ button:-moz-focusring,
 }
 
 ::-webkit-input-placeholder {
-    color  : inherit;
+    color: inherit;
     opacity: .54
 }
 
 ::-webkit-file-upload-button {
     -webkit-appearance: button;
-    font              : inherit
+    font: inherit
 }
 
 /* 上面都是之前reset.css的内容，就是清除默认样式和各个浏览器不一致的东西 */
 
 /*-----------------通用方法-----------------------*/
+
+/* 通用变量 */
+:root {
+    --theme: #1890ff;
+}
+
 /* 显示 */
 .show {
-    display: block !important; /* 加important表示优先级最高 */
+    display: block !important;
+    /* 加important表示优先级最高 */
 }
+
 /* 隐藏 */
 .hide {
     display: none !important;
 }
+
 /*-----------------通用布局(g-)-----------------------*/
 .g-ant {
     display: flex;
 }
+
 /* 1. 侧边栏 */
 .g-ant__sider {
     /* 不收缩 */
@@ -268,12 +278,14 @@ button:-moz-focusring,
     /* 用min-height才能利用flex的高度自动拉伸 */
     min-height: 100vh;
 }
+
 .g-ant__sider__wrap {
     height: 100%;
     display: flex;
     /* 弹性的方向是列 column */
     flex-direction: column;
 }
+
 .g-ant__sider__wrap--fixed {
     position: fixed;
     left: 0;
@@ -282,6 +294,7 @@ button:-moz-focusring,
     width: inherit;
     overflow: hidden;
 }
+
 /* 侧边栏折叠 closed */
 .g-ant__sider--closed {
     width: 48px;
@@ -290,6 +303,7 @@ button:-moz-focusring,
 .g-ant__sider__head {
     flex-shrink: 0;
 }
+
 .g-ant__sider__main {
     flex-grow: 1;
     overflow: hidden auto;
@@ -297,17 +311,20 @@ button:-moz-focusring,
 
 /* 自定义滚动条 start */
 .g-ant__sider__main::-webkit-scrollbar {
-    width : 6px;
+    width: 6px;
     height: 6px;
 }
+
 .g-ant__sider__main::-webkit-scrollbar-thumb {
-    background   : #51606d;
+    background: #51606d;
     border-radius: 3px;
 }
+
 .g-ant__sider__main::-webkit-scrollbar-track {
-    background   : #263849;
+    background: #263849;
     border-radius: 3px;
 }
+
 /* 自定义滚动条 end */
 
 .g-ant__sider__foot {
@@ -323,25 +340,32 @@ button:-moz-focusring,
     /* justify-content: space-between; */
     background: #f1f2f6;
 }
+
 .g-ant__main__head {
     height: 48px;
     background: white;
-    flex-shrink: 0; /* 不让收缩 */
+    flex-shrink: 0;
+    /* 不让收缩 */
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    box-shadow: 0 1px 4px #ccc; /* 阴影 */
-    column-gap: 20px; /* column gap */
+    box-shadow: 0 1px 4px #ccc;
+    /* 阴影 */
+    column-gap: 20px;
+    /* column gap */
     padding: 0 20px;
 }
+
 /* > 表示直接一级子元素 */
-.g-ant__main__head > span {
-    margin-left: -15px; /* 负数抵消空隙 */
+.g-ant__main__head>span {
+    margin-left: -15px;
+    /* 负数抵消空隙 */
 }
 
 .g-ant__main__main {
     flex-grow: 1;
 }
+
 .g-ant__main__foot {
     margin-top: 70px;
     margin-bottom: 30px;
@@ -349,6 +373,7 @@ button:-moz-focusring,
     text-align: center;
     color: #868782;
 }
+
 .g-ant__main__foot a {
     color: inherit;
     margin: 0 20px;
@@ -360,14 +385,17 @@ button:-moz-focusring,
 /* logo */
 .m-logo {
     display: flex;
-    /* justify-content: center; 这里不能居中，是为了照顾closed的左移 */ 
+    /* justify-content: center; 这里不能居中，是为了照顾closed的左移 */
     align-items: center;
     padding: 16px;
     color: white;
 }
-.m-logo>img {/* 子类选择器 > */
+
+.m-logo>img {
+    /* 子类选择器 > */
     width: 32px;
 }
+
 .m-logo>h1 {
     font-weight: 600;
     margin-left: 12px;
@@ -375,7 +403,8 @@ button:-moz-focusring,
 }
 
 .g-ant__sider--closed .m-logo {
-    padding: 16px 8px;/* 关闭时logo往左移动点 */
+    padding: 16px 8px;
+    /* 关闭时logo往左移动点 */
 }
 
 /* menu */
@@ -383,6 +412,7 @@ button:-moz-focusring,
     color: #8c959e;
     cursor: pointer;
 }
+
 .m-menu__title {
     height: 44px;
     display: flex;
@@ -390,36 +420,42 @@ button:-moz-focusring,
     column-gap: 10px;
     padding: 0 15px;
 }
+
 .m-menu__title>span {
-    margin-right: auto;    
+    margin-right: auto;
 }
 
 .m-menu__sub {
     display: none;
 }
+
 .m-menu__sub>li {
     padding-left: 45px;
     height: 40px;
     line-height: 40px;
 }
 
-.m-menu--selected .m-menu__title{
+.m-menu--selected .m-menu__title {
     color: white;
 }
-.m-menu--selected .m-menu__sub{
+
+.m-menu--selected .m-menu__sub {
     display: block;
 }
+
 .m-menu__sub--selected {
-    background: #1890ff;
+    background: var(--theme);
     color: white;
 }
 
 .g-ant__sider--closed .m-menu__title {
-    transform: scale(1.5); /* title放大1.5 */
+    transform: scale(1.5);
+    /* title放大1.5 */
 }
 
 .g-ant__sider--closed .m-menu__sub {
-    display: none; /* 关闭子菜单 */
+    display: none;
+    /* 关闭子菜单 */
 }
 
 .m-card {
@@ -431,18 +467,70 @@ button:-moz-focusring,
     border-radius: 2px;
     font-size: 16px;
 }
+
 .m-card__title {
-    flex-shrink: 0; /* 不要收缩 */
+    flex-shrink: 0;
+    /* 不要收缩 */
     height: 57px;
     border-bottom: 1px #f1f1f1 solid;
     display: flex;
     align-items: center;
     padding-left: 20px;
 }
+
 .m-card__body {
     flex-grow: 1;
     padding: 20px;
 }
+
+
+.m-setting {
+    width: 300px;
+    height: 100vh;
+    background: white;
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.m-setting__bar {
+    width: 48px;
+    height: 48px;
+    background: var(--theme);
+    border-radius: 2px;
+    position: absolute;
+    /* 往左一个身位 */
+    left: -48px;
+    top: calc(50% - 24px);
+    color: white;
+    /* 居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.m-setting__bar>i {
+    font-size: 22px;
+}
+
+.m-setting__item {
+    margin: 50px 0;
+
+}
+
+.m-setting__item__theme {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+}
+
+
+
+
 
 
 /*-----------------通用元件(u-)-----------------------*/
@@ -456,6 +544,53 @@ button:-moz-focusring,
     cursor: pointer;
 }
 
+.u-foxiaolan,
+.u-bomu,
+.u-huoshan,
+.u-rimu,
+.u-mingqing,
+.u-jiguanglv,
+.u-jikelan,
+.u-jiangzi {
+    width: 20px;
+    height: 20px;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+    line-height: 20px;
+    text-align: center;
+}
+
+.u-foxiaolan {
+    background: #188efc;
+}
+
+.u-bomu {
+    background: #f5212d;
+}
+
+.u-huoshan {
+    background: #fe531f;
+}
+
+.u-rimu {
+    background: #fbae14;
+}
+
+.u-mingqing {
+    background: #14c2c3;
+}
+
+.u-jiguanglv {
+    background: #53c41a;
+}
+
+.u-jikelan {
+    background: #2f54eb;
+}
+
+.u-jiangzi {
+    background: #5f6368;
+}
+
 /*-----------------响应式系统-----------------------*/
-
-
