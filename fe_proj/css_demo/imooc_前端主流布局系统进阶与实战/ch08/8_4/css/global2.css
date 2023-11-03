@@ -489,10 +489,20 @@ button:-moz-focusring,
     height: 100vh;
     background: white;
     position: fixed;
-    right: 0;
+    right: -300px;
     top: 0;
     padding: 0 15px;
     box-sizing: border-box;
+    z-index: 10;
+}
+
+.m-setting--open {
+    right: 0;
+}
+
+/* +（加号）是相邻兄弟选择器 */
+.m-setting--open+.u-mask {
+    display: block;
 }
 
 .m-setting__bar {
@@ -623,6 +633,17 @@ button:-moz-focusring,
     position: relative;
     left: 2px;
     top: 2px;
+}
+
+.u-mask {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 5;
 }
 
 /*-----------------响应式系统-----------------------*/

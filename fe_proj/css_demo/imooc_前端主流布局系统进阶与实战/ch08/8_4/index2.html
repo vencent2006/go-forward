@@ -253,7 +253,7 @@
 			</ul>
 		</div>
 	</div>
-
+	<div class="u-mask"></div>
 	<script>
 		// js代码，要写在body的底部
 		var menuTitles = document.querySelectorAll('.m-menu__title');
@@ -288,6 +288,31 @@
 				menus[i].querySelector('[class*="icon-arrow"]').className = 'iconfont icon-arrowdown'
 			}
 		};
+		var setting = document.querySelector('.m-setting');
+		var settingBar = document.querySelector('.m-setting__bar');
+		var themes = document.querySelectorAll('.m-setting__item__theme>li');
+
+		settingBar.onclick = function () {
+			setting.classList.toggle('m-setting--open');
+			if (setting.className.includes('m-setting--open')) {
+				var icon = this.querySelector('i');
+				icon.className = 'iconfont icon-close';
+			}
+			else {
+				var icon = this.querySelector('i');
+				icon.className = 'iconfont icon-setting';
+			}
+		};
+		for (var i = 0; i < themes.length; i++ ) {
+			themes[i].onclick = function () {
+				for (var i = 0; i < themes.length; i++) {
+					themes[i].innerHTML = '';
+				}
+				this.innerHTML = '<i class="iconfont icon-check"></i>';
+				var color = getComputedStyle(this).backgroundColor;
+				document.documentElement.style.setProperty('--theme', color);
+			};
+		}
 	</script>
 </body>
 </html>
