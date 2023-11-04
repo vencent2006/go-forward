@@ -123,8 +123,15 @@
 				</div>
 			</div>
 		</div>
+		<!-- 遮罩层 -->
+		<div class="u-mask"></div>
+		<!-- 主体 -->
 		<div class="g-ant__main">
 			<div class="g-ant__main__head g-ant__main__head--fixed">
+				<div class="m-logo2">
+					<img src="./static/logo.svg" alt="">
+					<i class="iconfont icon-outdent u-bar"></i>
+				</div>
 				<i class="iconfont icon-idcard"></i>
 				<i class="iconfont icon-check-circle"></i>
 				<i class="iconfont icon-read"></i>
@@ -274,7 +281,7 @@
 			}
 		}
 
-		var bar = document.querySelector('.u-bar');
+		var bar = document.querySelector('.g-ant__sider__foot .u-bar');
 		var sider = document.querySelector('.g-ant__sider');
 		var menus = document.querySelectorAll('.m-menu')
 		bar.onclick = function() {
@@ -338,6 +345,19 @@
 		siderShow.onclick = function () {
 			this.classList.toggle('u-switch--closed');
 			sider.classList.toggle('hide');
+		}
+
+		var bar2 = document.querySelector('.m-logo2 .u-bar');
+		bar2.onclick = function () {
+			if (!sider.className.includes('hide')) {
+				// 如果侧边栏(sider)不是hide，那么让侧边栏show
+				sider.classList.add('show');
+			}
+		}
+
+		var mask = document.querySelector('.g-ant__sider + .u-mask');
+		mask.onclick = function() {
+			sider.classList.remove('show');
 		}
 		</script>
 </body>

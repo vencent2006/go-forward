@@ -417,6 +417,20 @@ button:-moz-focusring,
     flex-shrink: 0;
 }
 
+.m-logo2 {
+    display: none;
+    align-items: center;
+    margin-right: auto;
+}
+
+.m-logo2>img {
+    width: 32px;
+}
+
+.m-logo2>.u-bar {
+    color: inherit;
+}
+
 .g-ant__sider--closed .m-logo {
     padding: 16px 8px;
     /* 关闭时logo往左移动点 */
@@ -672,3 +686,29 @@ button:-moz-focusring,
 }
 
 /*-----------------响应式系统-----------------------*/
+
+@media(max-width:1400px) {}
+
+@media(max-width:1200px) {}
+
+@media(max-width:992px) {
+    .m-logo2 {
+        display: flex;
+    }
+
+    .g-ant__sider {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 6;
+    }
+
+    .g-ant__sider:is(.show)+.u-mask {
+        display: block;
+    }
+}
+
+@media(max-width:768px) {}
+
+@media(max-width:576px) {}
