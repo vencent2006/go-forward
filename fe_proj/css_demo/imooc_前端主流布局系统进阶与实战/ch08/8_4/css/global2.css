@@ -277,6 +277,9 @@ button:-moz-focusring,
     /* 不能用 height: 100vh; */
     /* 用min-height才能利用flex的高度自动拉伸 */
     min-height: 100vh;
+    position: relative;
+    /* 为啥设置z-index前，要设置position呢 */
+    z-index: 10;
 }
 
 .g-ant__sider__wrap {
@@ -354,6 +357,18 @@ button:-moz-focusring,
     column-gap: 20px;
     /* column gap */
     padding: 0 20px;
+}
+
+.g-ant__main__head--fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    /* 让sider的层在自己之上，设置较低的z-index */
+    z-index: 2;
+}
+
+.g-ant__main__head--fixed:not(.hide)+.g-ant__main__main {
+    margin-top: 48px;
 }
 
 /* > 表示直接一级子元素 */
@@ -622,6 +637,16 @@ button:-moz-focusring,
     border-radius: 100px;
     background: var(--theme);
     cursor: pointer;
+}
+
+.u-switch--closed {
+    /* 浅灰色 */
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* 关闭状态下的小圆圈 */
+.u-switch--closed .u-switch__handle {
+    left: 14px;
 }
 
 .u-switch__handle {

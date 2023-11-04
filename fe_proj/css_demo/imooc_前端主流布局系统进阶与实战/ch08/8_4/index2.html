@@ -124,7 +124,7 @@
 			</div>
 		</div>
 		<div class="g-ant__main">
-			<div class="g-ant__main__head">
+			<div class="g-ant__main__head g-ant__main__head--fixed">
 				<i class="iconfont icon-idcard"></i>
 				<i class="iconfont icon-check-circle"></i>
 				<i class="iconfont icon-read"></i>
@@ -221,13 +221,13 @@
 			<ul class="m-setting__item__toggle">
 				<li>
 					<span>内容头部</span>
-					<div class="u-switch">
+					<div class="u-switch j-head--fixed">
 						<div class="u-switch__handle"></div>
 					</div>
 				</li>
 				<li>
 					<span>侧边菜单</span>
-					<div class="u-switch">
+					<div class="u-switch j-sider--fixed">
 						<div class="u-switch__handle"></div>
 					</div>
 				</li>
@@ -240,13 +240,13 @@
 			<ul class="m-setting__item__toggle">
 				<li>
 					<span>内容头部</span>
-					<div class="u-switch">
+					<div class="u-switch j-head--show">
 						<div class="u-switch__handle"></div>
 					</div>
 				</li>
 				<li>
 					<span>侧边菜单</span>
-					<div class="u-switch">
+					<div class="u-switch j-sider--show">
 						<div class="u-switch__handle"></div>
 					</div>
 				</li>
@@ -313,6 +313,32 @@
 				document.documentElement.style.setProperty('--theme', color);
 			};
 		}
-	</script>
+
+		// setting
+		var headFixed = document.querySelector('.j-head--fixed');
+		var siderFixed = document.querySelector('.j-sider--fixed');
+		var headShow = document.querySelector('.j-head--show');
+		var siderShow = document.querySelector('.j-sider--show');
+		var mainHead = document.querySelector('.g-ant__main__head');
+		var siderWrap = document.querySelector('.g-ant__sider__wrap');
+		
+
+		headFixed.onclick = function () {
+			this.classList.toggle('u-switch--closed');
+			mainHead.classList.toggle('g-ant__main__head--fixed');
+		}
+		siderFixed.onclick = function () {
+			this.classList.toggle('u-switch--closed');
+			siderWrap.classList.toggle('g-ant__sider__wrap--fixed');
+		}
+		headShow.onclick = function () {
+			this.classList.toggle('u-switch--closed');
+			mainHead.classList.toggle('hide');
+		}
+		siderShow.onclick = function () {
+			this.classList.toggle('u-switch--closed');
+			sider.classList.toggle('hide');
+		}
+		</script>
 </body>
 </html>
