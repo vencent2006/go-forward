@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./reset.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      .main {
+        width: 100%;
+        height: 100%;
+      }
+      /* container1 */
+      .container1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(./img/porsche.jpg);
+        background-size: cover; /* what? */
+      }
+      .container1 h2,
+      .container1 p {
+        color: white;
+        position: absolute;
+        font-size: 20px;
+        text-align: center;
+        width: 100%;
+      }
+      /* container2 */
+      .container2 {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .container2 .item1 {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-image: url("./img/1930.jpg");
+        background-size: cover;
+      }
+      .container2 .item2 {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-image: url("./img/1940.jpg");
+        background-size: cover;
+      }
+      .container2 .item3 {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-image: url("./img/1950.jpg");
+        background-size: cover;
+      }
+      .container2 .item4 {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-image: url("./img/1960.jpg");
+        background-size: cover;
+      }
+      /* container3 */
+      .container3 {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .container3 .item5 {
+        width: 100%;
+        height: 100%;
+        background-image: url("./img/1970.jpg");
+        background-size: cover;
+        /* background-attachment: fixed; 这个不用加 */
+      }
+      .container3 .item6 {
+        width: 100%;
+        height: 100%;
+        background-image: url("./img/1980.jpg");
+        background-size: cover;
+        background-attachment: fixed;
+      }
+      .container3 .item7 {
+        width: 100%;
+        height: 100%;
+        background-image: url("./img/1990.jpg");
+        background-size: cover;
+        background-attachment: fixed;
+      }
+      .container3 .item8 {
+        width: 100%;
+        height: 100%;
+        background-image: url("./img/2000.jpg");
+        background-size: cover;
+        background-attachment: fixed;
+      }
+      /* container3 wrapper */
+      .container3 .wrapper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      /* clock */
+      .clock {
+        width: 82px;
+        height: 82px;
+        background-image: url(./img/clock-face.png);
+        position: fixed;
+        right: 5%;
+        top: 10%;
+        z-index: 10;
+        opacity: 0;
+      }
+      .clock .clock-hand {
+        width: 82px;
+        height: 82px;
+        background-image: url(./img/clock-hand.png);
+      }
+    </style>
+    <script src="./skrollr.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <!-- clock -->
+      <div class="clock" data-700="opacity:0;" data-701="opacity:1;">
+        <div
+          class="clock-hand"
+          data-701="transform: rotate(0deg);"
+          data-3000="transform: rotate(720deg);"
+        ></div>
+      </div>
+      <!-- container1 -->
+      <div class="container1" data-300="top:0%;" data-700="top:-100%;">
+        <h2
+          data-0="top:5%; font-size:40px; opacity:0;"
+          data-300="top:50%; font-size:60px; opacity: 1;"
+        >
+          Ferdinand Porsche
+        </h2>
+        <p data-0="top:90%; opacity:0;" data-300="top:60%; opacity:1;">
+          The history of Porsche goes back to 1875 - the birth year of Ferdinand
+          Porsche. It is he who laid the foundations for a unique company with
+          strong ideals.
+        </p>
+      </div>
+      <!-- container2 -->
+      <div
+        class="container2"
+        data-300="top:100%;"
+        data-700="top:0%;"
+        data-1600="top:0%;"
+        data-2000="top:-100%;"
+      >
+        <div
+          class="item1"
+          data-700="opacity:1; transform:scale(1)"
+          data-1000="opacity:0; transform:scale(0.5);"
+        ></div>
+        <div
+          class="item2"
+          data-700="opacity:0; transform:scale(2)"
+          data-1000="opacity:1; transform:scale(1);"
+          data-1300="opacity:0; transform:scale(0.5);"
+        ></div>
+        <div
+          class="item3"
+          data-1000="opacity:0; transform:scale(2)"
+          data-1300="opacity:1; transform:scale(1);"
+          data-1600="opacity:0; transform:scale(0.5);"
+        ></div>
+        <div
+          class="item4"
+          data-1300="opacity:0; transform:scale(2)"
+          data-1600="opacity:1; transform:scale(1);"
+        ></div>
+      </div>
+      <!-- container3 -->
+      <div class="container3" data-1600="top:100%;" data-2000="top:0%;">
+        <div class="wrapper" data-2000="top:0%;" data-3000="top:-300%;">
+          <div class="item5"></div>
+          <div class="item6"></div>
+          <div class="item7"></div>
+          <div class="item8"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      skrollr.init();
+    </script>
+  </body>
+</html>

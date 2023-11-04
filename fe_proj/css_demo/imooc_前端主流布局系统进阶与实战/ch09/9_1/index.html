@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="../reset.css">
+	<style>
+		.main {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.main .item {
+			 /* 这个拉伸很重要,实现右对齐 */
+			flex-grow: 1;
+			height: 200px;
+			/* flex-basis就是如果元素没设置width，就使用flex-basis来设定元素的with */
+			/* flex-basis: 200px; */
+		}
+		.main .item img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			/* display: block; */
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div class="item"><img src="../imgs/1.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/2.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/3.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/4.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/5.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/6.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/7.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/8.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/9.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/10.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/11.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/12.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/13.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/14.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/15.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/16.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/17.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/18.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/19.jpg" alt=""></div>
+		<div class="item"><img src="../imgs/20.jpg" alt=""></div>
+	</div>
+	<script>
+		var items = document.querySelectorAll('.item');
+		for (var i=0;i<items.length;i++) {
+			items[i].style.flexBasis = Math.random()*200 + 200 + 'px';
+		}
+	</script>
+</body>
+</html>

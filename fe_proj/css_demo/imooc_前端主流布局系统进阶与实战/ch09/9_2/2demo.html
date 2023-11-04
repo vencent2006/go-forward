@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../reset.css">
+    <style>
+        .main{
+            /* column-count和column-width，都设定的时候选择栏数比较少的 */
+            /* column-count: 4; */
+            column-width: 300px;
+            column-gap: 20px;
+            /* dashed noun是曲线的意思 */
+            column-rule: 1px gray dashed;
+        }
+        h1 {
+            column-span: all;
+            text-align: center;
+        }
+        .main .item img{
+            width:100%;
+            height:100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1>我是标题</h1>
+        <div class="item">
+            <img src="../imgs/1.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/2.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/3.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/4.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/5.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/6.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/7.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/8.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/9.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/10.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/11.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/12.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/13.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/14.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="../imgs/15.jpg" alt="">
+        </div>
+    </div>
+</body>
+</html>
