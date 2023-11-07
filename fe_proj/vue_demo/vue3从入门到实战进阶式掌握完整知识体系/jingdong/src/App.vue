@@ -1,4 +1,13 @@
 <template>
+  <!-- wrapper -->
+  <div class="wrapper">
+    <div class="position">
+      <span class="iconfont position__icon">&#xe619;</span>
+      北京理工大学国防科技园2号楼10层
+      <span class="iconfont position__notice">&#xe60b;</span>
+    </div>
+  </div>
+  <!-- docker -->
   <div class="docker">
     <!-- BEM命名 block__element--modifier -->
     <div class="docker__item docker__item--active">
@@ -21,6 +30,45 @@
 </template>
 
 <style lang="scss">
+@import './style/variables.scss';
+@import './style/mixins.scss';
+
+// wrapper
+.wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: .5rem;
+  right: 0;
+  padding: 0 .18rem;
+}
+
+.position {
+  position: relative;
+  padding: .16rem .24rem .16rem 0;
+  background: pink;
+  line-height: .22rem;
+  font-size: .16rem;
+  @include ellipsis; // 从mixin中引入
+
+  // 提升下优先级，直接用.，而不是&
+  .position__icon {
+    position: relative;
+    top: .01rem;
+    font-size: .2rem;
+  }
+
+  .position__notice {
+    position: absolute;
+    right: 0;
+    top: .17rem;
+    font-size: .2rem;
+  }
+
+  color: $content-fontcolor;
+}
+
+// docker
 .docker {
   display: flex;
   box-sizing: border-box;
@@ -30,8 +78,8 @@
   bottom: 0;
   width: 100%;
   height: .49rem;
-  border-top: 1px;
-  border-top: 1px solid #F1F1F1;
+  border-top: .01rem solid #F1F1F1;
+  color: $content-fontcolor;
 
   &__item {
     flex: 1;
