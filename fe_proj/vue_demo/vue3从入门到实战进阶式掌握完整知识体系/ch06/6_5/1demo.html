@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2_5</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    // toRef
+    const app = Vue.createApp({
+      template: `
+        <child @change="handleChange">parent</child>
+      `,
+      methods: {
+        handleChange() {
+          alert("change");
+        },
+      },
+    });
+    app.component("child", {
+      template: `
+        <div @click="handleClick">123123</div>
+      `,
+      setup(props, context) {
+        const { h } = Vue;
+        // attrs 替代none-props
+        // slots 替代slots
+        // emit 替代 emit
+        const { attrs, slots, emit } = context;
+        function handleClick() {
+          emit("change");
+        }
+        return { handleClick };
+      },
+    });
+    const vm = app.mount("#root");
+  </script>
+</html>

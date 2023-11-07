@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2_5</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    // toRef
+    const app = Vue.createApp({
+      template: `
+        <child app='lalala'>parent</child>
+      `,
+    });
+    app.component("child", {
+      // template: `
+      //   <div>child</div>
+      // `,
+      mounted() {
+        console.log(this.$slots);
+      },
+      setup(props, context) {
+        const { h } = Vue;
+        const { attrs, slots, emit } = context;
+        // console.log(attrs.app); // None-props 属性
+        // console.log(slots.default());
+        // return () => h("div", {}, ["123123"]);
+        return () => h("div", {}, slots.default());
+      },
+    });
+    const vm = app.mount("#root");
+  </script>
+</html>

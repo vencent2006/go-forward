@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6_11</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    // 生命周期函数
+    const app = Vue.createApp({
+      // beforeMount => onBeforeMount
+      setup() {
+        const { onBeforeMount } = Vue;
+        onBeforeMount(() => {
+          console.log("onBeforeMount");
+        });
+        return {};
+      },
+      template: `
+        <div>
+          Hello world
+        </div>
+      `,
+    });
+    const vm = app.mount("#root");
+  </script>
+</html>

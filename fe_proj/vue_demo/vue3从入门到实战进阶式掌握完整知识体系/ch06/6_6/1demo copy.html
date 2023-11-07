@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2_5</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      setup() {
+        const { ref, reactive } = Vue;
+        const inputValue = ref("123");
+        const list = reactive([]);
+        const handleInputValueChange = (e) => {
+          console.log(e.target.value);
+          inputValue.value = e.target.value;
+        };
+        const handleSubmit = () => {
+          list.push(inputValue.value);
+        };
+        return { inputValue, handleInputValueChange, list, handleSubmit };
+      },
+      template: `
+        <div>
+          <div>
+            <input :value="inputValue" @input="handleInputValueChange" />
+            <div>{{inputValue}}</div>
+            <button @click="handleSubmit">提交</button>
+          </div>
+          <ul>
+            <li v-for="(item, index) of list" :key="index">{{item}}</li>
+          </ul>
+        </div>
+      `,
+    });
+    const vm = app.mount("#root");
+  </script>
+</html>

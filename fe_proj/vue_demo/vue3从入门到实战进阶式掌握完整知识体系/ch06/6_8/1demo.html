@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6_8</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    // 计算属性
+    const app = Vue.createApp({
+      setup() {
+        const { reactive, computed } = Vue;
+        const countObj = reactive({ count: 0 });
+        const handleClick = () => {
+          countObj.count += 1;
+        };
+        let countAddFive = computed({
+          get: () => {
+            return countObj.count + 5;
+          },
+          set: (param) => {
+            countObj.count = param - 5;
+          },
+        });
+        setTimeout(() => {
+          countAddFive.value = 100;
+        }, 3000);
+        return {
+          countObj,
+          handleClick,
+          countAddFive,
+        };
+      },
+      template: `
+        <div>
+          <span @click="handleClick">{{countObj.count}}</span> -- {{countAddFive}}
+        </div>
+      `,
+    });
+    const vm = app.mount("#root");
+  </script>
+</html>

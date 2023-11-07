@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6_9</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    // watch 侦听器
+    const app = Vue.createApp({
+      setup() {
+        const { reactive, watch, toRefs } = Vue;
+        const nameObj = reactive({ name: "dell", englishName: "lee" });
+        // 具备一定的惰性 lazy
+        // 参数可以拿到原始和当前值
+        // 可以侦听多个数据的变化，用一个侦听器承载
+        watch(
+          [() => nameObj.name, () => nameObj.englishName],
+          ([currentName, currentEnglishName], [prevName, prevEngishName]) => {
+            console.log("name changed: ", currentName, prevName);
+            console.log(
+              "englishName changed:",
+              currentEnglishName,
+              prevEngishName
+            );
+          }
+        );
+        const { name } = toRefs(nameObj);
+        const { englishName } = toRefs(nameObj);
+        return {
+          name,
+          englishName,
+        };
+      },
+      template: `
+        <div>
+          Name: <input v-model="name" >
+        </div>
+        <div>
+          Name is {{name}}
+        </div>
+        <div>
+          englishName: <input v-model="englishName" >
+        </div>
+        <div>
+          englishName is {{englishName}}
+        </div>
+      `,
+    });
+    const vm = app.mount("#root");
+  </script>
+</html>
