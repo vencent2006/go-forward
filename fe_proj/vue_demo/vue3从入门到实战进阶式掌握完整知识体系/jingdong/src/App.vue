@@ -6,6 +6,13 @@
       北京理工大学国防科技园2号楼10层
       <span class="iconfont position__notice">&#xe60b;</span>
     </div>
+    <div class="search">
+      <span class="iconfont">&#xe62d;</span>
+      <span class="search__text">山姆会员商店优惠商品</span>
+    </div>
+    <div class="banner">
+      <img class="banner__img" src="http://www.dell-lee.com/imgs/vue3/banner.jpg" alt="">
+    </div>
   </div>
   <!-- docker -->
   <div class="docker">
@@ -33,7 +40,7 @@
 @import './style/variables.scss';
 @import './style/mixins.scss';
 
-// wrapper
+// 1. wrapper
 .wrapper {
   position: absolute;
   left: 0;
@@ -43,10 +50,11 @@
   padding: 0 .18rem;
 }
 
+// 1.2 position 位置信息
 .position {
   position: relative;
   padding: .16rem .24rem .16rem 0;
-  background: pink;
+  // background: pink;
   line-height: .22rem;
   font-size: .16rem;
   @include ellipsis; // 从mixin中引入
@@ -68,7 +76,38 @@
   color: $content-fontcolor;
 }
 
-// docker
+// 1.3 search 搜索
+.search {
+  margin-bottom: .12rem;
+  line-height: .32rem; // 行高自动撑开
+  background: #F5F5F5;
+  color: #b7b7b7;
+  border-radius: .16rem;
+
+  .iconfont {
+    display: inline-block;
+    font-size: .16rem;
+    padding: 0 .08rem 0 .16rem;
+  }
+
+  &__text {
+    display: inline-block;
+    font-size: .14rem;
+  }
+}
+
+.banner {
+  // skill: 下面三行是为了避免抖动，提前占据好图片的空间
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 25.4%;
+
+  &__img {
+    width: 100%;
+  }
+}
+
+// 2. docker
 .docker {
   display: flex;
   box-sizing: border-box;
