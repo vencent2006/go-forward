@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // 1. wrapper
 .wrapper {
   overflow-y: auto; // 纵向滚动
