@@ -3,25 +3,28 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, toRefs } from 'vue'
 export default {
   props: ['message']
 }
 // 封装toast相关的逻辑
 export const useToastEffect = () => {
   const toastData = reactive({
-    showToast: false,
+    show: false,
     toastMessage: ''
   })
   const showToast = (message) => {
-    toastData.showToast = true
+    toastData.show = true
     toastData.toastMessage = message
     setTimeout(() => {
-      toastData.showToast = false
+      toastData.show = false
       toastData.toastMessage = ''
     }, 2000)
   }
-  return { toastData, showToast }
+
+  const { show, toastMessage } = toRefs(toastData)
+
+  return { show, toastMessage, showToast }
 }
 </script>
 
