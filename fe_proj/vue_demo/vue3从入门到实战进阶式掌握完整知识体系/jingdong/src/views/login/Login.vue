@@ -5,7 +5,8 @@
       <input class="wrapper__input__content" placeholder="用户名" v-model="username" />
     </div>
     <div class="wrapper__input">
-      <input class="wrapper__input__content" placeholder="请输入密码" type="password" v-model="password" />
+      <input class="wrapper__input__content" placeholder="请输入密码" type="password" v-model="password"
+        autocomplete="new-password" />
     </div>
     <div class="wrapper__login-button" @click="handleLogin">登录</div>
     <div class="wrapper__login-link" @click="handleRegisterClick">立即注册</div>
@@ -20,6 +21,7 @@ import { useRouter } from 'vue-router'
 import { post } from '../../utils/request'
 import Toast, { useToastEffect } from '../../components/Toast'
 
+// 处理登录相关逻辑
 const useLoginEffect = (showToast) => {
   const router = useRouter()
   const data = reactive({ username: '', password: '' })
@@ -44,6 +46,7 @@ const useLoginEffect = (showToast) => {
   return { username, password, handleLogin }
 }
 
+// 处理注册跳转
 const useRegisterEffect = () => {
   const router = useRouter()
   const handleRegisterClick = () => {
