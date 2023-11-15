@@ -1,37 +1,44 @@
 <template>
   <div class="nearby">
     <h3 class="nearby_title">附近店铺</h3>
-    <div v-for="(item, index) in itemList" :key="index" class="nearby__item">
-      <img class="nearby__item__img" :src="item.img">
+    <div v-for="item in nearbyList" :key="item._id" class="nearby__item">
+      <img class="nearby__item__img" :src="item.imgUrl">
       <div class="nearby__item__content">
-        <div class="nearby__item__content__title">{{ item.title }}</div>
+        <div class="nearby__item__content__title">{{ item.name }}</div>
         <div class="nearby__item__content__tags">
-          <span v-for="(tag, tagIndex) in item.tags" :key="tagIndex" class="nearby__item__content__tags__tag">{{ tag
-          }}</span>
+          <span class="nearby__item__content__tags__tag">月销:{{ item.sales }}</span>
+          <span class="nearby__item__content__tags__tag">起送:{{ item.expressLimit }}</span>
+          <span class="nearby__item__content__tags__tag">基础运费:{{ item.expressPrice }}</span>
         </div>
-        <p class="nearby__item__content__highlight">{{ item.desc }}</p>
+        <p class="nearby__item__content__highlight">{{ item.slogan }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue'
+import { get } from '../../utils/request'
+
+const useNearbyListEffect = () => {
+  // 使用ref，成为响应式的数据，ref是基本类型, reactive 是复合类型
+  const nearbyList = ref([])
+  const getNearbyList = async () => {
+    const result = await get('/api/shop/hot-list')
+    if (result?.errno === 0 && result?.data?.length) {
+      // ref 封装的赋值要加value
+      nearbyList.value = result.data
+    }
+  }
+  return { nearbyList, getNearbyList }
+}
+
 export default {
   name: 'Nearby',
   setup() {
-    const itemList = [
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' },
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' },
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' },
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' },
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' },
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' },
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' },
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' },
-      { img: 'http://www.dell-lee.com/imgs/vue3/near.png', title: '沃尔玛', tags: ['月售1万+', '月售1万+', '月售1万+'], desc: 'VIP尊享89元减4元运费券(每月3张)' }
-
-    ]
-    return { itemList }
+    const { nearbyList, getNearbyList } = useNearbyListEffect()
+    getNearbyList()
+    return { nearbyList }
   }
 }
 </script>
