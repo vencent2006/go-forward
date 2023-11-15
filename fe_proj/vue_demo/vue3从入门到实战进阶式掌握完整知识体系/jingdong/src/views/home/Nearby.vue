@@ -1,7 +1,9 @@
 <template>
   <div class="nearby">
     <h3 class="nearby_title">附近店铺</h3>
-    <ShopInfo v-for="item in nearbyList" :key="item._id" :item="item" />
+    <router-link to="/shop" v-for="item in nearbyList" :key="item._id">
+      <ShopInfo :item="item" />
+    </router-link>
   </div>
 </template>
 
@@ -43,6 +45,11 @@ export default {
     font-size: .18rem;
     font-weight: normal; // 不加粗展示
     color: $content-fontcolor;
+  }
+
+  a {
+    // 去掉 router-link 的默认下划线
+    text-decoration: none;
   }
 }
 </style>
