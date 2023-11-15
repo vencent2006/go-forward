@@ -75,8 +75,8 @@ export default {
 .search {
   margin-bottom: .12rem;
   line-height: .32rem; // 行高自动撑开
-  background: #F5F5F5;
-  color: #b7b7b7;
+  background: $search-bgColor;
+  color: $search-fontColor;
   border-radius: .16rem;
 
   .iconfont {

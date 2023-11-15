@@ -7,12 +7,14 @@
         <input class="search__content__input" placeholder="请输入商品名称" />
       </div>
     </div>
-    <ShopInfo :item="item" :hideBorder="true" />
+    <ShopInfo :item="data.item" :hideBorder="true" />
   </div>
 </template>
 
 <script>
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { get } from '@/utils/request'
 import ShopInfo from '@/components/ShopInfo'
 // https://fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd/api/shop/hot-list
 export default {
@@ -20,32 +22,34 @@ export default {
   components: { ShopInfo },
   setup() {
     const router = useRouter()
-    const item = {
-      _id: '1',
-      name: '沃尔玛',
-      imgUrl: 'http://www.dell-lee.com/imgs/vue3/near.png',
-      sales: 10000,
-      expressLimit: 0,
-      expressPrice: 5,
-      slogan: 'VIP尊享满89元减4元运费券'
+    const data = reactive({ item: {} })
+    const getItemData = async () => {
+      const result = await get('/api/shop/1')
+      console.log(result)
+      if (result?.errno === 0 && result?.data) {
+        data.item = result.data
+      }
     }
+    getItemData()
 
     const handleBackClick = () => {
       router.back()
     }
-    return { item, handleBackClick }
+    return { data, handleBackClick }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '../../style/variables.scss';
+
 .wrapper {
   padding: 0 .18rem;
 }
 
 .search {
   display: flex;
-  margin: .2rem 0 .16rem 0;
+  margin: .14rem 0 .16rem 0;
   line-height: .32rem;
 
   &__back {
@@ -56,14 +60,14 @@ export default {
 
   &__content {
     flex: 1; // flex:1 直接填满剩余空间
-    background: #F5F5F5;
+    background: $search-bgColor;
     border-radius: .16rem;
     display: flex;
 
     &__icon {
       width: .44rem;
       text-align: center;
-      color: #B7B7B7;
+      color: $search-fontColor;
     }
 
     &__input {
@@ -75,10 +79,10 @@ export default {
       background: none;
       height: .32rem;
       font-size: .14rem;
-      color: #333;
+      color: $content-fontcolor;
 
       &::placeholder {
-        color: #333;
+        color: $content-fontcolor;
       }
     }
   }
