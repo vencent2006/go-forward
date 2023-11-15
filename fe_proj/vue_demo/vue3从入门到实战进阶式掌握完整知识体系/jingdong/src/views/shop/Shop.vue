@@ -9,6 +9,7 @@
     </div>
     <!-- v-show item.imgUrl有数据了，才展示组件 -->
     <ShopInfo :item="item" :hideBorder="true" v-show="item.imgUrl" />
+    <Content />
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import { reactive, toRefs } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { get } from '@/utils/request'
 import ShopInfo from '@/components/ShopInfo'
+import Content from './Content.vue'
 
 const useShopInfoEffect = () => {
   const data = reactive({ item: {} }) // 记住：这种reactive的方式
@@ -48,7 +50,7 @@ const useBackRouterEffect = () => {
 
 export default {
   name: 'Shop',
-  components: { ShopInfo },
+  components: { ShopInfo, Content },
   setup() {
     const { item, getItemData } = useShopInfoEffect()
     const { handleBackClick } = useBackRouterEffect()
