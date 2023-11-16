@@ -27,7 +27,7 @@ const useShopInfoEffect = () => {
     const route = useRoute()
     // console.log(route.params.id)
     const result = await get(`/api/shop/${route.params.id}`)
-    console.log(result)
+    // console.log(result)
     if (result?.errno === 0 && result?.data) {
       data.item = result.data
     }

@@ -1,22 +1,21 @@
 <template>
   <div class="content">
     <div class="category">
-      <div class="category__item category__item--active">全部商品</div>
-      <div class="category__item">秒杀</div>
-      <div class="category__item">新鲜水果</div>
-      <div class="category__item">休闲食品</div>
-      <div class="category__item">时令蔬菜</div>
-      <div class="category__item">肉蛋家禽</div>
+      <!-- :class="{ 'docker__item': true, 'docker__item--active': index === 0 }"> -->
+      <div v-for="cat in categories" :key="cat.name"
+        :class="{ 'category__item': true, 'category__item--active': currentTab === cat.tab }"
+        @click="() => handleCategoryClick(cat.tab)">{{ cat.name }}</div>
     </div>
+
     <div class="product">
-      <div class="product__item">
-        <img class="product__item__img" src="http://www.dell-lee.com/imgs/vue3/near.png">
+      <div class="product__item" v-for="item in contentList" :key="item._id">
+        <img class="product__item__img" :src="item.imgUrl">
         <div class="product__item__detail">
-          <h4 class="product__item__title">番茄250g/份</h4>
-          <p class="product__item__sales">月售10件</p>
+          <h4 class="product__item__title">{{ item.name }}</h4>
+          <p class="product__item__sales">月售{{ item.sales }}件</p>
           <p class="product__item__price">
-            <span class="product__item__price__yen">&yen;</span>33.6
-            <span class="product__item__price__origin">&yen;66.6</span>
+            <span class="product__item__price__yen">&yen;</span>{{ item.price }}
+            <span class="product__item__price__origin">&yen;{{ item.oldPrice }}</span>
           </p>
         </div>
         <div class="product__number">
@@ -25,13 +24,58 @@
           <span class="product__number__plus">+</span>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import { reactive, toRefs } from 'vue'
+import { useRoute } from 'vue-router'
+import { get } from '@/utils/request'
+
+const useProductListEffect = () => {
+  const data = reactive({
+    currentTab: 'all',
+    contentList: []
+  })
+  const route = useRoute()
+  const getContentData = async (tabName) => {
+    // console.log(route.params.id)
+    const result = await get(`/api/shop/${route.params.id}/products`, {
+      tab: tabName // all 全部; seckill 秒杀; fruit 水果
+    })
+    if (result?.errno === 0 && result?.data?.length) {
+      data.contentList = result.data
+      data.currentTab = tabName
+    }
+  }
+  const { contentList, currentTab } = toRefs(data)
+  return { contentList, currentTab, getContentData }
+}
+
+export default {
+  name: 'Content',
+  setup() {
+    const categories = [{
+      name: '全部商品',
+      tab: 'all'
+    }, {
+      name: '秒杀',
+      tab: 'seckill'
+    }, {
+      name: '水果',
+      tab: 'fruit'
+    }
+    ]
+    const { contentList, currentTab, getContentData } = useProductListEffect()
+    getContentData('all') // 刚进来用的tab='all'
+    const handleCategoryClick = (tab) => {
+      console.log('tab', tab)
+      getContentData(tab)
+    }
+    return { categories, contentList, currentTab, handleCategoryClick }
+  }
+}
 </script>
 
 <style lang='scss' scoped>
