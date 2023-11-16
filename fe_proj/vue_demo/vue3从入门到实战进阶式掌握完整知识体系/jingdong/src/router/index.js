@@ -5,16 +5,16 @@ const routes = [
     path: '/',
     name: 'Home',
     // 动态加载
-    component: () => import(/* webpackChunkName: "home" */ '../views/home/Home')
+    component: () => import(/* webpackChunkName: "home" */ '@/views/home/Home')
   },
   {
     path: '/shop/:id',
     name: 'Shop',
-    component: () => import(/* webpackChunkName: "shop" */ '../views/shop/Shop')
+    component: () => import(/* webpackChunkName: "shop" */ '@/views/shop/Shop')
   },
   {
     path: '/register',
-    component: () => import(/* webpackChunkName: "register" */ '../views/register/Register'),
+    component: () => import(/* webpackChunkName: "register" */ '@/views/register/Register'),
     beforeEnter(to, from, next) {
       const { isLogin } = localStorage
       isLogin ? next({ name: 'Home' }) : next()
@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/login/Login'),
+    component: () => import(/* webpackChunkName: "login" */ '@/views/login/Login'),
     beforeEnter(to, from, next) {
       const { isLogin } = localStorage
       isLogin ? next({ name: 'Home' }) : next()

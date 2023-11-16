@@ -35,6 +35,9 @@ export default {}
 </script>
 
 <style lang='scss' scoped>
+@import '@/style/variables.scss';
+@import '@/style/mixins.scss';
+
 .content {
   display: flex;
   position: absolute;
@@ -48,16 +51,16 @@ export default {}
   overflow-y: scroll;
   height: 100%;
   width: .76rem;
-  background: #F5F5F5;
+  background: $search-bgColor;
 
   &__item {
     line-height: .4rem;
     text-align: center;
     font-size: .14rem;
-    color: #333;
+    color: $content-fontcolor;
 
     &--active {
-      background: #FFF;
+      background: $bgColor;
     }
   }
 }
@@ -71,7 +74,11 @@ export default {}
     display: flex;
     padding: .12rem 0;
     margin: 0 .16rem;
-    border-bottom: .01rem solid #F1F1F1;
+    border-bottom: .01rem solid $content-bgColor;
+
+    &__detail {
+      overflow: hidden;
+    }
 
     &__img {
       width: .68rem;
@@ -83,21 +90,23 @@ export default {}
       margin: 0;
       line-height: .2rem;
       font-size: .14rem;
-      color: #333;
+      color: $content-fontcolor;
+      // 要求ellipsis的父组件，必须有overflow: hidden; 这个ellipsis才能生效
+      @include ellipsis; // 从mixin中引入
     }
 
     &__sales {
       margin: .06rem 0;
       line-height: .16rem;
       font-size: .12rem;
-      color: #333;
+      color: $content-fontcolor;
     }
 
     &__price {
       margin: 0;
       line-height: .2rem;
       font-size: .14rem;
-      color: #E93B3B;
+      color: $highlight-fontColor;
 
       &__yen {
         font-size: .12rem;
@@ -107,7 +116,7 @@ export default {}
         margin-left: .06rem;
         line-height: .2rem;
         font-size: .12rem;
-        color: #999;
+        color: $light-fontColor;
         text-decoration: line-through;
       }
     }
@@ -129,14 +138,14 @@ export default {}
       }
 
       &__minus {
-        border: .01rem solid #666;
-        color: #666;
+        border: .01rem solid $medium-fontColor;
+        color: $medium-fontColor;
         margin-right: .05rem;
       }
 
       &__plus {
-        background: #0091FF;
-        color: #FFF;
+        background: $btn-bgColor;
+        color: $bgColor;
         margin-left: .05rem;
       }
     }

@@ -42,8 +42,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../style/variables.scss';
-@import '../../style/mixins.scss';
+@import '@/style/variables.scss';
+@import '@/style/mixins.scss';
 
 // 1. position 位置信息
 .position {

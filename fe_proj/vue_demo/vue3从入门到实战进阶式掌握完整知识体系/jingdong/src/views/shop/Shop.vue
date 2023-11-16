@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../style/variables.scss';
+@import '@/style/variables.scss';
 
 .wrapper {
   padding: 0 .18rem;

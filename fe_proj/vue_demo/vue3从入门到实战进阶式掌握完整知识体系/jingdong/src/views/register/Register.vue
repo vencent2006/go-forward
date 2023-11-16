@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../style/variables.scss';
+@import '@/style/variables.scss';
 
 .wrapper {
   position: absolute;
@@ -129,10 +129,10 @@ export default {
   &__register-button {
     margin: .32rem .4rem .16rem .4rem;
     line-height: .48rem;
-    background: #0091FF;
+    background: $btn-bgColor;
     box-shadow: 0 .04rem .08rem 0 rgba(0, 145, 255, .32);
     border-radius: 4px;
-    color: #FFF;
+    color: $bgColor;
     font-size: .16rem;
     text-align: center;
   }
