@@ -20,10 +20,10 @@
         </div>
         <div class="product__number">
           <!-- 减号操作 -->
-          <span class="product__number__minus" @click="() => { delItemToCart(shopId, item._id) }">-</span>
+          <span class="product__number__minus" @click="() => { changeCardItemInfo(shopId, item._id, item, -1) }">-</span>
           {{ cartList[shopId]?.[item._id]?.count || 0 }}
           <!-- 加号操作 -->
-          <span class="product__number__plus" @click="() => { addItemToCart(shopId, item._id, item) }">+</span>
+          <span class="product__number__plus" @click="() => { changeCardItemInfo(shopId, item._id, item, 1) }">+</span>
         </div>
       </div>
     </div>
@@ -80,23 +80,14 @@ const useCartEffect = () => {
   const { cartList } = toRefs(store.state)
 
   // 点击+号的操作
-  const addItemToCart = (shopId, productId, productInfo) => {
+  const changeCardItemInfo = (shopId, productId, productInfo, delta) => {
     // console.log(shopId, productId, productInfo)
     // store.js mutations里要有 addItemToCart 这个方法
-    store.commit('addItemToCart', {
-      shopId, productId, productInfo
+    store.commit('changeCardItemInfo', {
+      shopId, productId, productInfo, delta
     })
   }
-
-  // 点击-号的操作
-  const delItemToCart = (shopId, productId) => {
-    // console.log(shopId, productId, productInfo)
-    // store.js mutations里要有 delItemToCart 这个方法
-    store.commit('delItemToCart', {
-      shopId, productId
-    })
-  }
-  return { cartList, addItemToCart, delItemToCart }
+  return { cartList, changeCardItemInfo }
 }
 
 export default {
@@ -107,7 +98,7 @@ export default {
 
     const { currentTab, handleTabClick } = useTabEffect()
     const { list } = useCurrentListEffect(currentTab, shopId)
-    const { cartList, addItemToCart, delItemToCart } = useCartEffect()
+    const { cartList, changeCardItemInfo } = useCartEffect()
     return {
       categories,
       currentTab,
@@ -117,8 +108,7 @@ export default {
       shopId,
       // 购物车
       cartList,
-      addItemToCart,
-      delItemToCart
+      changeCardItemInfo
     }
   }
 }

@@ -11,9 +11,9 @@ export default createStore({
   getters: {
   },
   mutations: {
-    // 添加product到购物车
-    addItemToCart(state, payload) {
-      const { shopId, productId, productInfo } = payload
+    // 修改product到购物车
+    changeCardItemInfo(state, payload) {
+      const { shopId, productId, productInfo, delta } = payload
       // console.log(shopId, productId, productInfo)
       // const cartList = state.cartList
       let shopInfo = state.cartList[shopId]
@@ -24,24 +24,7 @@ export default createStore({
         product = productInfo
         product.count = 0
       }
-      product.count += 1
-
-      // 写回到state
-      shopInfo[productId] = product
-      state.cartList[shopId] = shopInfo
-
-      console.log('shopInfo  ', shopInfo[productId])
-    },
-
-    // 删除product，从购物车
-    delItemToCart(state, payload) {
-      const { shopId, productId } = payload
-      // console.log(shopId, productId)
-      const shopInfo = state.cartList[shopId]
-      if (!shopInfo) { return } // shopInfo不存在, 直接返回
-      const product = shopInfo[productId]
-      if (!product) { return }
-      product.count -= 1
+      product.count += delta
       if (product.count < 0) {
         product.count = 0
       }
