@@ -19,8 +19,10 @@
           </p>
         </div>
         <div class="product__number">
-          <span class="product__number__minus">-</span>
+          <!-- 减号操作 -->
+          <span class="product__number__minus" @click="() => { delItemToCart(shopId, item._id) }">-</span>
           {{ cartList[shopId]?.[item._id]?.count || 0 }}
+          <!-- 加号操作 -->
           <span class="product__number__plus" @click="() => { addItemToCart(shopId, item._id, item) }">+</span>
         </div>
       </div>
@@ -76,6 +78,8 @@ const useCurrentListEffect = (currentTab, shopId) => {
 const useCartEffect = () => {
   const store = useStore()
   const { cartList } = toRefs(store.state)
+
+  // 点击+号的操作
   const addItemToCart = (shopId, productId, productInfo) => {
     // console.log(shopId, productId, productInfo)
     // store.js mutations里要有 addItemToCart 这个方法
@@ -83,7 +87,16 @@ const useCartEffect = () => {
       shopId, productId, productInfo
     })
   }
-  return { cartList, addItemToCart }
+
+  // 点击-号的操作
+  const delItemToCart = (shopId, productId) => {
+    // console.log(shopId, productId, productInfo)
+    // store.js mutations里要有 delItemToCart 这个方法
+    store.commit('delItemToCart', {
+      shopId, productId
+    })
+  }
+  return { cartList, addItemToCart, delItemToCart }
 }
 
 export default {
@@ -94,7 +107,7 @@ export default {
 
     const { currentTab, handleTabClick } = useTabEffect()
     const { list } = useCurrentListEffect(currentTab, shopId)
-    const { cartList, addItemToCart } = useCartEffect()
+    const { cartList, addItemToCart, delItemToCart } = useCartEffect()
     return {
       categories,
       currentTab,
@@ -104,7 +117,8 @@ export default {
       shopId,
       // 购物车
       cartList,
-      addItemToCart
+      addItemToCart,
+      delItemToCart
     }
   }
 }
