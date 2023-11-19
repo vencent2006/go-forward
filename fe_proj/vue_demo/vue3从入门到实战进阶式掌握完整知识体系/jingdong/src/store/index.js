@@ -13,7 +13,7 @@ export default createStore({
   mutations: {
     // 修改product到购物车
     changeCardItemInfo(state, payload) {
-      const { shopId, productId, productInfo, delta } = payload
+      const { shopId, productId, productInfo, num } = payload
       // console.log(shopId, productId, productInfo)
       // const cartList = state.cartList
       let shopInfo = state.cartList[shopId]
@@ -24,7 +24,8 @@ export default createStore({
         product = productInfo
         product.count = 0
       }
-      product.count += delta
+      product.count += num
+      if (num > 0) { product.check = true } // 选中状态为true
       if (product.count < 0) {
         product.count = 0
       }

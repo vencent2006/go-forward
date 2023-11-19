@@ -4,6 +4,7 @@
     <div class="product">
       <template v-for="item in productList" :key="item._id">
         <div class="product__item" v-if="item.count > 0">
+          <div class="product__item__checked iconfont" v-html="item.check ? '&#xe652;' : '&#xe6f7;'"></div>
           <img class="product__item__img" :src="item.imgUrl">
           <div class="product__item__detail">
             <h4 class="product__item__title">{{ item.name }}</h4>
@@ -45,6 +46,7 @@ import { useCommonCartEffect } from './commonCartEffect'
 
 // 获取购物车信息逻辑
 const useCartEffect = (shopId) => {
+  const { changeCardItemInfo } = useCommonCartEffect()
   const store = useStore()
   const cartList = store.state.cartList
   // 商品个数
@@ -81,7 +83,7 @@ const useCartEffect = (shopId) => {
     return productList
   })
 
-  return { total, price, productList }
+  return { total, price, productList, changeCardItemInfo }
 }
 
 export default {
@@ -89,8 +91,7 @@ export default {
   setup() {
     const route = useRoute()
     const shopId = route.params.id
-    const { total, price, productList } = useCartEffect(shopId)
-    const { changeCardItemInfo } = useCommonCartEffect()
+    const { total, price, productList, changeCardItemInfo } = useCartEffect(shopId)
     return { total, price, productList, changeCardItemInfo, shopId }
   }
 }
@@ -177,6 +178,13 @@ export default {
     padding: .12rem 0;
     margin: 0 .16rem;
     border-bottom: .01rem solid $content-bgColor;
+
+    &__checked {
+      line-height: .5rem;
+      margin-right: .2rem;
+      color: #0091FF;
+      font-size: .2rem;
+    }
 
     &__detail {
       overflow: hidden;

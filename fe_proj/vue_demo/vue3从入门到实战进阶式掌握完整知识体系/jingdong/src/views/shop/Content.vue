@@ -21,7 +21,7 @@
         <div class="product__number">
           <!-- 减号操作 -->
           <span class="product__number__minus" @click="() => { changeCardItemInfo(shopId, item._id, item, -1) }">-</span>
-          {{ cartList[shopId]?.[item._id]?.count || 0 }}
+          {{ item.count || 0 }}
           <!-- 加号操作 -->
           <span class="product__number__plus" @click="() => { changeCardItemInfo(shopId, item._id, item, 1) }">+</span>
         </div>
@@ -82,7 +82,7 @@ export default {
 
     const { currentTab, handleTabClick } = useTabEffect()
     const { list } = useCurrentListEffect(currentTab, shopId)
-    const { cartList, changeCardItemInfo } = useCommonCartEffect()
+    const { changeCardItemInfo } = useCommonCartEffect()
     return {
       categories,
       currentTab,
@@ -91,7 +91,6 @@ export default {
       // shopId
       shopId,
       // 购物车
-      cartList,
       changeCardItemInfo
     }
   }
