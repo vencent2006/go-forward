@@ -33,8 +33,8 @@
 <script>
 import { reactive, ref, toRefs, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 import { get } from '@/utils/request'
+import { useCommonCartEffect } from './commonCartEffect'
 
 const categories = [
   { name: '全部商品', tab: 'all' },
@@ -74,22 +74,6 @@ const useCurrentListEffect = (currentTab, shopId) => {
   return { list }
 }
 
-// 购物车相关逻辑
-const useCartEffect = () => {
-  const store = useStore()
-  const { cartList } = toRefs(store.state)
-
-  // 点击+号的操作
-  const changeCardItemInfo = (shopId, productId, productInfo, delta) => {
-    // console.log(shopId, productId, productInfo)
-    // store.js mutations里要有 addItemToCart 这个方法
-    store.commit('changeCardItemInfo', {
-      shopId, productId, productInfo, delta
-    })
-  }
-  return { cartList, changeCardItemInfo }
-}
-
 export default {
   name: 'Content',
   setup() {
@@ -98,7 +82,7 @@ export default {
 
     const { currentTab, handleTabClick } = useTabEffect()
     const { list } = useCurrentListEffect(currentTab, shopId)
-    const { cartList, changeCardItemInfo } = useCartEffect()
+    const { cartList, changeCardItemInfo } = useCommonCartEffect()
     return {
       categories,
       currentTab,
