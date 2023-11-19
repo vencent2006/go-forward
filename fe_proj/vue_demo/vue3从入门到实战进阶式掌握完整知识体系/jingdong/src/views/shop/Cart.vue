@@ -1,9 +1,28 @@
 <template>
   <div class="cart">
+    <!-- 展示商品信息 -->
+    <div class="product">
+      <div class="product__item" v-for="item in productList" :key="item._id">
+        <img class="product__item__img" :src="item.imgUrl">
+        <div class="product__item__detail">
+          <h4 class="product__item__title">{{ item.name }}</h4>
+          <p class="product__item__price">
+            <span class="product__item__price__yen">&yen;</span>{{ item.price }}
+            <span class="product__item__price__origin">&yen;{{ item.oldPrice }}</span>
+          </p>
+        </div>
+        <div class="product__number">
+          <span class="product__number__minus">-</span>
+          {{ item.count || 0 }}
+          <span class="product__number__plus">+</span>
+        </div>
+      </div>
+    </div>
+    <!-- 确认信息部分 -->
     <div class="check">
       <div class="check__icon">
         <img src="http://www.dell-lee.com/imgs/vue3/basket.png" class="check__icon__img" />
-        <div class="check__icon__tag">123123{{ total }}</div>
+        <div class="check__icon__tag">{{ total }}</div>
       </div>
       <div class="check__info">
         总计：<span class="check__info__price">&yen; {{ price }}</span>
@@ -19,10 +38,8 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 
 // 获取购物车信息逻辑
-const useCartEffect = () => {
+const useCartEffect = (shopId) => {
   const store = useStore()
-  const route = useRoute()
-  const shopId = route.params.id
   const cartList = store.state.cartList
   // 商品个数
   const total = computed(() => {
@@ -39,31 +56,42 @@ const useCartEffect = () => {
   })
   // 总价
   const price = computed(() => {
-    const proudctList = cartList[shopId]
+    const productList = cartList[shopId]
     let count = 0
-    if (proudctList) {
-      for (const i in proudctList) {
-        const product = proudctList[i]
+    if (productList) {
+      for (const i in productList) {
+        const product = productList[i]
         count += product.count * product.price
       }
     }
     // 保留2位小数
     return count.toFixed(2)
   })
-  return { total, price }
+  // 商品列表
+  const productList = computed(() => {
+    console.log('shopId', shopId)
+    // const 是限定作用域的 所以下面的productList 不会和 上面的productList 发生语法错误
+    const productList = cartList[shopId] || []
+    return productList
+  })
+
+  return { total, price, productList }
 }
 
 export default {
   name: 'Cart',
   setup() {
-    const { total, price } = useCartEffect()
-    return { total, price }
+    const route = useRoute()
+    const shopId = route.params.id
+    const { total, price, productList } = useCartEffect(shopId)
+    return { total, price, productList }
   }
 }
 </script>
 
 <style lang='scss' scoped>
 @import '@/style/variables.scss';
+@import '@/style/mixins.scss';
 
 .cart {
   position: fixed;
@@ -129,5 +157,87 @@ export default {
     background: #4FB0F9;
     color: $bgColor;
   }
+}
+
+.product {
+  overflow-y: scroll; // 超出区域可以上下滚
+  flex: 1; // 右侧填满
+  background: #FFF;
+
+  &__item {
+    position: relative;
+    display: flex;
+    padding: .12rem 0;
+    margin: 0 .16rem;
+    border-bottom: .01rem solid $content-bgColor;
+
+    &__detail {
+      overflow: hidden;
+    }
+
+    &__img {
+      width: .46rem;
+      height: .46rem;
+      margin-right: .16rem;
+    }
+
+    &__title {
+      margin: 0;
+      line-height: .2rem;
+      font-size: .14rem;
+      color: $content-fontcolor;
+      // 要求ellipsis的父组件，必须有overflow: hidden; 这个ellipsis才能生效
+      @include ellipsis; // 从mixin中引入
+    }
+
+    &__price {
+      margin: .06rem 0 0 0;
+      line-height: .2rem;
+      font-size: .14rem;
+      color: $highlight-fontColor;
+
+      &__yen {
+        font-size: .12rem;
+      }
+
+      &__origin {
+        margin-left: .06rem;
+        line-height: .2rem;
+        font-size: .12rem;
+        color: $light-fontColor;
+        text-decoration: line-through;
+      }
+    }
+
+    .product__number {
+      position: absolute;
+      right: 0;
+      bottom: .12rem;
+
+      &__minus,
+      &__plus {
+        display: inline-block; // span
+        width: .2rem;
+        height: .2rem;
+        line-height: .16rem;
+        border-radius: 50%;
+        font-size: .2rem;
+        text-align: center;
+      }
+
+      &__minus {
+        border: .01rem solid $medium-fontColor;
+        color: $medium-fontColor;
+        margin-right: .05rem;
+      }
+
+      &__plus {
+        background: $btn-bgColor;
+        color: $bgColor;
+        margin-left: .05rem;
+      }
+    }
+  }
+
 }
 </style>
