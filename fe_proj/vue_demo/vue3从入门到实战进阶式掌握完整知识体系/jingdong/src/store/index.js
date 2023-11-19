@@ -25,7 +25,7 @@ export default createStore({
         product.count = 0
       }
       product.count += num
-      if (num > 0) { product.check = true } // 选中状态为true
+      if (num > 0) { product.check = true } // 选中状态为true，表示选中了
       if (product.count < 0) {
         product.count = 0
       }
@@ -35,6 +35,11 @@ export default createStore({
       state.cartList[shopId] = shopInfo
 
       console.log('shopInfo  ', shopInfo[productId])
+    },
+    changeCartItemChecked(state, payload) {
+      const { shopId, productId } = payload
+      const product = state.cartList[shopId][productId]
+      product.check = !product.check
     }
   },
   actions: {

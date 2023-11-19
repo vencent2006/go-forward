@@ -2,9 +2,13 @@
   <div class="cart">
     <!-- 展示商品信息 -->
     <div class="product">
+      <div class="product__header">
+
+      </div>
       <template v-for="item in productList" :key="item._id">
         <div class="product__item" v-if="item.count > 0">
-          <div class="product__item__checked iconfont" v-html="item.check ? '&#xe652;' : '&#xe6f7;'"></div>
+          <div class="product__item__checked iconfont" v-html="item.check ? '&#xe652;' : '&#xe6f7;'"
+            @click="() => changeCartItemChecked(shopId, item._id)"></div>
           <img class="product__item__img" :src="item.imgUrl">
           <div class="product__item__detail">
             <h4 class="product__item__title">{{ item.name }}</h4>
@@ -69,12 +73,16 @@ const useCartEffect = (shopId) => {
     if (productList) {
       for (const i in productList) {
         const product = productList[i]
-        count += product.count * product.price
+        if (product.check) {
+          // 选中的，才累加金额
+          count += product.count * product.price
+        }
       }
     }
     // 保留2位小数
     return count.toFixed(2)
   })
+
   // 商品列表
   const productList = computed(() => {
     console.log('shopId', shopId)
@@ -83,7 +91,12 @@ const useCartEffect = (shopId) => {
     return productList
   })
 
-  return { total, price, productList, changeCardItemInfo }
+  const changeCartItemChecked = (shopId, productId) => {
+    // 找到shopId和productId对应的商品，把选中状态设置为相反
+    store.commit('changeCartItemChecked', { shopId, productId })
+  }
+
+  return { total, price, productList, changeCardItemInfo, changeCartItemChecked }
 }
 
 export default {
@@ -91,8 +104,8 @@ export default {
   setup() {
     const route = useRoute()
     const shopId = route.params.id
-    const { total, price, productList, changeCardItemInfo } = useCartEffect(shopId)
-    return { total, price, productList, changeCardItemInfo, shopId }
+    const { total, price, productList, changeCardItemInfo, changeCartItemChecked } = useCartEffect(shopId)
+    return { total, price, productList, changeCardItemInfo, changeCartItemChecked, shopId }
   }
 }
 </script>
@@ -171,6 +184,11 @@ export default {
   overflow-y: scroll; // 超出区域可以上下滚
   flex: 1; // 右侧填满
   background: #FFF;
+
+  &__header {
+    height: .52rem;
+    border-bottom: 1px solid #F1F1F1;
+  }
 
   &__item {
     position: relative;
