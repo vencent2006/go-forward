@@ -1,6 +1,6 @@
 <template>
   <!-- 蒙层 -->
-  <div class="mask" v-if="showCart" />
+  <div class="mask" v-if="showCart" @click="handleCartShowChange" />
   <!-- 购物车信息 -->
   <div class="cart">
     <!-- 展示商品信息 -->
@@ -12,7 +12,9 @@
             @click="() => setCartItemsChecked(shopId)"></span>
           全选
         </div>
-        <div class="product__header__clear" @click="() => cleanCartProducts(shopId)">清空购物车</div>
+        <div class="product__header__clear">
+          <span class="product__header__clear__btn" @click="() => cleanCartProducts(shopId)">清空购物车</span>
+        </div>
       </div>
       <!-- 这个template主要是占位，没有具体样式内容 -->
       <template v-for="item in productList" :key="item._id">
@@ -146,26 +148,28 @@ const useCartEffect = (shopId) => {
     store.commit('setCartItemsChecked', { shopId })
   }
 
-  // 购物车是否展示
-  const showCart = ref(false) // 是否展示购物车
-  const handleCartShowChange = () => {
-    showCart.value = !showCart.value
-  }
-
   return {
     // 变量
     total,
     price,
     productList,
     allChecked,
-    showCart,
     // 方法
     changeCardItemInfo,
     changeCartItemChecked,
     cleanCartProducts,
-    setCartItemsChecked,
-    handleCartShowChange
+    setCartItemsChecked
   }
+}
+
+// 展示/隐藏购物车逻辑
+const toggleCartEffect = () => {
+  // 购物车是否展示
+  const showCart = ref(false) // 是否展示购物车
+  const handleCartShowChange = () => {
+    showCart.value = !showCart.value
+  }
+  return { showCart, handleCartShowChange }
 }
 
 export default {
@@ -174,7 +178,8 @@ export default {
     const route = useRoute()
     const shopId = route.params.id
 
-    const { total, price, productList, allChecked, showCart, changeCardItemInfo, changeCartItemChecked, cleanCartProducts, setCartItemsChecked, handleCartShowChange } = useCartEffect(shopId)
+    const { total, price, productList, allChecked, changeCardItemInfo, changeCartItemChecked, cleanCartProducts, setCartItemsChecked } = useCartEffect(shopId)
+    const { showCart, handleCartShowChange } = toggleCartEffect()
 
     return {
       // 变量
@@ -215,7 +220,7 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 2;
-  background: #FFF;
+  background: $bgColor;
 }
 
 .check {
@@ -280,14 +285,14 @@ export default {
 .product {
   overflow-y: scroll; // 超出区域可以上下滚
   flex: 1; // 右侧填满
-  background: #FFF;
+  background: $bgColor;
 
   &__header {
     display: flex;
     line-height: .52rem;
     border-bottom: 1px solid #F1F1F1;
     font-size: .14rem;
-    color: #333;
+    color: $content-fontcolor;
 
     &__all {
       width: .64rem;
@@ -296,7 +301,9 @@ export default {
 
     &__icon {
       display: inline-block;
-      color: #0091FF;
+      margin-right: .1rem;
+      vertical-align: top;
+      color: $btn-bgColor;
       font-size: .2rem;
     }
 
@@ -304,8 +311,10 @@ export default {
       flex: 1;
       margin-right: .16rem;
       text-align: right;
-      font-size: .14rem;
-      color: #333;
+
+      &__btn {
+        display: inline-block; // 让高度撑满
+      }
     }
   }
 
@@ -319,7 +328,7 @@ export default {
     &__checked {
       line-height: .5rem;
       margin-right: .2rem;
-      color: #0091FF;
+      color: $btn-bgColor;
       font-size: .2rem;
     }
 
@@ -364,7 +373,7 @@ export default {
     .product__number {
       position: absolute;
       right: 0;
-      bottom: .12rem;
+      bottom: .3rem;
 
       &__minus,
       &__plus {
