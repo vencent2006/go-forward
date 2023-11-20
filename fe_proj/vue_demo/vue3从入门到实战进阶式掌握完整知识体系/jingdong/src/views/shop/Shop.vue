@@ -9,7 +9,7 @@
     </div>
     <!-- v-show item.imgUrl有数据了，才展示组件 -->
     <ShopInfo :item="item" :hideBorder="true" v-show="item.imgUrl" />
-    <Content />
+    <Content :shopName="item.name" />
     <Cart />
   </div>
 </template>

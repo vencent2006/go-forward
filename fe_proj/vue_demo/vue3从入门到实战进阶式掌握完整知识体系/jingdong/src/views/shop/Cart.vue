@@ -72,7 +72,7 @@ const useCartEffect = (shopId) => {
   const cartList = store.state.cartList
   // 商品个数
   const total = computed(() => {
-    const proudctList = cartList[shopId]
+    const proudctList = cartList[shopId]?.productList
     // console.log('lalalala ----- ', proudctList)
     let count = 0
     if (proudctList) {
@@ -85,7 +85,7 @@ const useCartEffect = (shopId) => {
   })
   // 总价
   const price = computed(() => {
-    const productList = cartList[shopId]
+    const productList = cartList[shopId]?.productList
     let count = 0
     if (productList) {
       for (const i in productList) {
@@ -102,7 +102,7 @@ const useCartEffect = (shopId) => {
 
   // 都被选中
   const allChecked = computed(() => {
-    const productList = cartList[shopId]
+    const productList = cartList[shopId]?.productList
     let result = true
     let cnt = 0 // 购物车中选中的商品的数量
     if (productList) {
@@ -132,7 +132,7 @@ const useCartEffect = (shopId) => {
   const productList = computed(() => {
     console.log('shopId', shopId)
     // const 是限定作用域的 所以下面的productList 不会和 上面的productList 发生语法错误
-    const productList = cartList[shopId] || []
+    const productList = cartList[shopId].productList || []
     return productList
   })
 

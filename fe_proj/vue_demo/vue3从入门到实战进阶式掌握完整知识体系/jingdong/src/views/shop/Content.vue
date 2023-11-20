@@ -20,11 +20,13 @@
         </div>
         <div class="product__number">
           <!-- 减号操作 -->
-          <span class="product__number__minus" @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }">-</span>
+          <span class="product__number__minus"
+            @click="() => { changeCartItem(shopId, item._id, item, -1, shopName) }">-</span>
           <!-- 从购物车的数据里拿值 -->
-          {{ cartList?.[shopId]?.[item._id]?.count || 0 }}
+          {{ cartList?.[shopId]?.productList?.[item._id]?.count || 0 }}
           <!-- 加号操作 -->
-          <span class="product__number__plus" @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }">+</span>
+          <span class="product__number__plus"
+            @click="() => { changeCartItem(shopId, item._id, item, 1, shopName) }">+</span>
         </div>
       </div>
     </div>
@@ -33,6 +35,7 @@
 
 <script>
 import { reactive, ref, toRefs, watchEffect } from 'vue'
+import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { get } from '@/utils/request'
 import { useCommonCartEffect } from './commonCartEffect'
@@ -77,13 +80,23 @@ const useCurrentListEffect = (currentTab, shopId) => {
 
 export default {
   name: 'Content',
+  props: ['shopName'],
   setup() {
     const route = useRoute()
+    const store = useStore()
     const shopId = route.params.id
 
     const { currentTab, handleTabClick } = useTabEffect()
     const { list } = useCurrentListEffect(currentTab, shopId)
     const { cartList, changeCartItemInfo } = useCommonCartEffect()
+    const changeShopName = (shopId, shopName) => {
+      store.commit('changeShopName', { shopId, shopName })
+    }
+    const changeCartItem = (shopId, productId, productInfo, num, shopName) => {
+      changeCartItemInfo(shopId, productId, productInfo, num)
+      changeShopName(shopId, shopName)
+    }
+
     return {
       cartList,
       categories,
@@ -93,7 +106,7 @@ export default {
       // shopId
       shopId,
       // 购物车
-      changeCartItemInfo
+      changeCartItem
     }
   }
 }
