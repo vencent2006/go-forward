@@ -23,7 +23,7 @@
           <span class="product__number__minus"
             @click="() => { changeCartItem(shopId, item._id, item, -1, shopName) }">-</span>
           <!-- 从购物车的数据里拿值 -->
-          {{ cartList?.[shopId]?.productList?.[item._id]?.count || 0 }}
+          {{ getProductCartCount(shopId, item._id) }}
           <!-- 加号操作 -->
           <span class="product__number__plus"
             @click="() => { changeCartItem(shopId, item._id, item, 1, shopName) }">+</span>
@@ -78,24 +78,36 @@ const useCurrentListEffect = (currentTab, shopId) => {
   return { list }
 }
 
+// 购物车相关
+const useCartEffect = () => {
+  const store = useStore()
+  const { cartList, changeCartItemInfo } = useCommonCartEffect()
+  const changeShopName = (shopId, shopName) => {
+    store.commit('changeShopName', { shopId, shopName })
+  }
+  const changeCartItem = (shopId, productId, productInfo, num, shopName) => {
+    changeCartItemInfo(shopId, productId, productInfo, num)
+    changeShopName(shopId, shopName)
+  }
+  // 获取指定shopId下的指定productId的数量
+  const getProductCartCount = (shopId, productId) => {
+    return cartList?.[shopId]?.productList?.[productId]?.count || 0
+  }
+  return { cartList, changeCartItem, getProductCartCount }
+}
+
 export default {
   name: 'Content',
   props: ['shopName'],
   setup() {
     const route = useRoute()
-    const store = useStore()
     const shopId = route.params.id
 
+    // tab 和 列表
     const { currentTab, handleTabClick } = useTabEffect()
     const { list } = useCurrentListEffect(currentTab, shopId)
-    const { cartList, changeCartItemInfo } = useCommonCartEffect()
-    const changeShopName = (shopId, shopName) => {
-      store.commit('changeShopName', { shopId, shopName })
-    }
-    const changeCartItem = (shopId, productId, productInfo, num, shopName) => {
-      changeCartItemInfo(shopId, productId, productInfo, num)
-      changeShopName(shopId, shopName)
-    }
+    // 购物车
+    const { cartList, changeCartItem, getProductCartCount } = useCartEffect()
 
     return {
       cartList,
@@ -106,7 +118,8 @@ export default {
       // shopId
       shopId,
       // 购物车
-      changeCartItem
+      changeCartItem,
+      getProductCartCount
     }
   }
 }
