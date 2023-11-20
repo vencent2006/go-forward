@@ -31,6 +31,7 @@ export default createStore({
       }
 
       // 写回到state
+      // 必须要写回吗？？
       shopInfo[productId] = product
       state.cartList[shopId] = shopInfo
 

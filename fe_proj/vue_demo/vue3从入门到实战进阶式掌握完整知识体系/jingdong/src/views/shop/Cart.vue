@@ -5,7 +5,8 @@
       <!-- 全选 和 清空购物车 -->
       <div class="product__header">
         <div class="product__header__all">
-          <span class="product__header__icon iconfont">&#xe652;</span>
+          <span class="product__header__icon iconfont" v-html="allChecked ? '&#xe652;' : '&#xe667;'"
+            @click="() => changeAllProducts(shopId)"></span>
           全选
         </div>
         <div class="product__header__clear" @click="() => cleanCartProducts(shopId)">清空购物车</div>
@@ -89,6 +90,34 @@ const useCartEffect = (shopId) => {
     return count.toFixed(2)
   })
 
+  // 都被选中
+  const allChecked = computed(() => {
+    const productList = cartList[shopId]
+    let result = true
+    let cnt = 0
+    if (productList) {
+      for (const i in productList) {
+        const product = productList[i]
+        if (product.count > 0) {
+          if (!product.check) {
+            // 商品数量>0 且 没有选中
+            // 那么，全选
+            result = false
+            break
+          } else {
+            cnt++
+          }
+        }
+      }
+    }
+    if (cnt === 0) {
+      // 一个都没选，就谈不上"全选"了
+      result = false
+    }
+    // console.log('allChecked', result)
+    return result
+  })
+
   // 商品列表
   const productList = computed(() => {
     console.log('shopId', shopId)
@@ -107,15 +136,47 @@ const useCartEffect = (shopId) => {
     store.commit('cleanCartProducts', { shopId })
   }
 
+  // 全选/全不选 购物车
+  const changeAllProducts = (shopId) => {
+    const productList = cartList[shopId]
+    if (productList) {
+      if (allChecked.value) {
+        // 如果当前是全选，那么就要设置为全不选
+        for (const i in productList) {
+          const product = productList[i]
+          if (product.count > 0 && product.check) {
+            // 商品数量>0 且 选中
+            // 那么，就帮设置为“没选中”
+            const productId = product._id
+            store.commit('changeCartItemChecked', { shopId, productId })
+          }
+        }
+      } else {
+        // 如果当前不是全选，那么就要设置为全选
+        for (const i in productList) {
+          const product = productList[i]
+          if (product.count > 0 && !product.check) {
+            // 商品数量>0 且 没有选中
+            // 那么，就帮设置为“选中”
+            const productId = product._id
+            store.commit('changeCartItemChecked', { shopId, productId })
+          }
+        }
+      }
+    }
+  }
+
   return {
     // 变量
     total,
     price,
     productList,
+    allChecked,
     // 方法
     changeCardItemInfo,
     changeCartItemChecked,
-    cleanCartProducts
+    cleanCartProducts,
+    changeAllProducts
   }
 }
 
@@ -124,17 +185,19 @@ export default {
   setup() {
     const route = useRoute()
     const shopId = route.params.id
-    const { total, price, productList, changeCardItemInfo, changeCartItemChecked, cleanCartProducts } = useCartEffect(shopId)
+    const { total, price, productList, allChecked, changeCardItemInfo, changeCartItemChecked, cleanCartProducts, changeAllProducts } = useCartEffect(shopId)
     return {
       // 变量
+      shopId,
       total,
       price,
       productList,
+      allChecked,
       // 方法
       changeCardItemInfo,
       changeCartItemChecked,
       cleanCartProducts,
-      shopId
+      changeAllProducts
     }
   }
 }
