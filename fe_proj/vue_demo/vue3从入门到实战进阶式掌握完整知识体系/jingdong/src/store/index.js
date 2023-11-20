@@ -36,10 +36,16 @@ export default createStore({
 
       console.log('shopInfo  ', shopInfo[productId])
     },
+    // 改变购物车选中状态
     changeCartItemChecked(state, payload) {
       const { shopId, productId } = payload
       const product = state.cartList[shopId][productId]
       product.check = !product.check
+    },
+    // 清空购物车
+    cleanCartProducts(state, payload) {
+      const { shopId } = payload
+      state.cartList[shopId] = {}
     }
   },
   actions: {

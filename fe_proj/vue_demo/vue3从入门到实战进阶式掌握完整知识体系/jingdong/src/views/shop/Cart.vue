@@ -2,12 +2,18 @@
   <div class="cart">
     <!-- 展示商品信息 -->
     <div class="product">
+      <!-- 全选 和 清空购物车 -->
       <div class="product__header">
-
+        <div class="product__header__all">
+          <span class="product__header__icon iconfont">&#xe652;</span>
+          全选
+        </div>
+        <div class="product__header__clear" @click="() => cleanCartProducts(shopId)">清空购物车</div>
       </div>
+      <!-- 这个template主要是占位，没有具体样式内容 -->
       <template v-for="item in productList" :key="item._id">
         <div class="product__item" v-if="item.count > 0">
-          <div class="product__item__checked iconfont" v-html="item.check ? '&#xe652;' : '&#xe6f7;'"
+          <div class="product__item__checked iconfont" v-html="item.check ? '&#xe652;' : '&#xe667;'"
             @click="() => changeCartItemChecked(shopId, item._id)"></div>
           <img class="product__item__img" :src="item.imgUrl">
           <div class="product__item__detail">
@@ -96,7 +102,21 @@ const useCartEffect = (shopId) => {
     store.commit('changeCartItemChecked', { shopId, productId })
   }
 
-  return { total, price, productList, changeCardItemInfo, changeCartItemChecked }
+  // 清空购物车
+  const cleanCartProducts = (shopId) => {
+    store.commit('cleanCartProducts', { shopId })
+  }
+
+  return {
+    // 变量
+    total,
+    price,
+    productList,
+    // 方法
+    changeCardItemInfo,
+    changeCartItemChecked,
+    cleanCartProducts
+  }
 }
 
 export default {
@@ -104,8 +124,18 @@ export default {
   setup() {
     const route = useRoute()
     const shopId = route.params.id
-    const { total, price, productList, changeCardItemInfo, changeCartItemChecked } = useCartEffect(shopId)
-    return { total, price, productList, changeCardItemInfo, changeCartItemChecked, shopId }
+    const { total, price, productList, changeCardItemInfo, changeCartItemChecked, cleanCartProducts } = useCartEffect(shopId)
+    return {
+      // 变量
+      total,
+      price,
+      productList,
+      // 方法
+      changeCardItemInfo,
+      changeCartItemChecked,
+      cleanCartProducts,
+      shopId
+    }
   }
 }
 </script>
@@ -186,8 +216,29 @@ export default {
   background: #FFF;
 
   &__header {
-    height: .52rem;
+    display: flex;
+    line-height: .52rem;
     border-bottom: 1px solid #F1F1F1;
+    font-size: .14rem;
+    color: #333;
+
+    &__all {
+      width: .64rem;
+      margin-left: .16rem;
+    }
+
+    &__icon {
+      color: #0091FF;
+      font-size: .2rem;
+    }
+
+    &__clear {
+      flex: 1;
+      margin-right: .16rem;
+      text-align: right;
+      font-size: .14rem;
+      color: #333;
+    }
   }
 
   &__item {
