@@ -12,7 +12,7 @@ export default createStore({
   },
   mutations: {
     // 修改product到购物车
-    changeCardItemInfo(state, payload) {
+    changeCartItemInfo(state, payload) {
       const { shopId, productId, productInfo, num } = payload
       const shopInfo = state.cartList[shopId] || {}// shopInfo不存在就给一个初值
       let product = shopInfo[productId]

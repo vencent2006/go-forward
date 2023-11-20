@@ -32,10 +32,10 @@
           <div class="product__number">
             <!-- 减号操作 -->
             <span class="product__number__minus"
-              @click="() => { changeCardItemInfo(shopId, item._id, item, -1) }">-</span>
+              @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }">-</span>
             {{ item.count || 0 }}
             <!-- 加号操作 -->
-            <span class="product__number__plus" @click="() => { changeCardItemInfo(shopId, item._id, item, 1) }">+</span>
+            <span class="product__number__plus" @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }">+</span>
           </div>
         </div>
       </template>
@@ -67,7 +67,7 @@ import { useCommonCartEffect } from './commonCartEffect'
 
 // 获取购物车信息逻辑
 const useCartEffect = (shopId) => {
-  const { changeCardItemInfo } = useCommonCartEffect()
+  const { changeCartItemInfo } = useCommonCartEffect()
   const store = useStore()
   const cartList = store.state.cartList
   // 商品个数
@@ -159,7 +159,7 @@ const useCartEffect = (shopId) => {
     productList,
     allChecked,
     // 方法
-    changeCardItemInfo,
+    changeCartItemInfo,
     changeCartItemChecked,
     cleanCartProducts,
     setCartItemsChecked
@@ -182,7 +182,7 @@ export default {
     const route = useRoute()
     const shopId = route.params.id
 
-    const { total, price, productList, allChecked, changeCardItemInfo, changeCartItemChecked, cleanCartProducts, setCartItemsChecked } = useCartEffect(shopId)
+    const { total, price, productList, allChecked, changeCartItemInfo, changeCartItemChecked, cleanCartProducts, setCartItemsChecked } = useCartEffect(shopId)
     const { showCart, handleCartShowChange } = toggleCartEffect()
 
     return {
@@ -194,7 +194,7 @@ export default {
       allChecked,
       showCart,
       // 方法
-      changeCardItemInfo,
+      changeCartItemInfo,
       changeCartItemChecked,
       cleanCartProducts,
       setCartItemsChecked,
