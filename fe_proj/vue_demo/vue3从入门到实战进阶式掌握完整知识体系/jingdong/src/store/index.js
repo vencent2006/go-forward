@@ -47,6 +47,17 @@ export default createStore({
     cleanCartProducts(state, payload) {
       const { shopId } = payload
       state.cartList[shopId] = {}
+    },
+    // 全选购物车
+    setCartItemsChecked(state, payload) {
+      const { shopId } = payload
+      const products = state.cartList[shopId]
+      if (products) {
+        for (const key in products) {
+          const product = products[key]
+          product.check = true
+        }
+      }
     }
   },
   actions: {

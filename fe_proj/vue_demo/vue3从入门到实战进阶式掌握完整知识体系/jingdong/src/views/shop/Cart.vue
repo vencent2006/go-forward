@@ -1,12 +1,15 @@
 <template>
+  <!-- 蒙层 -->
+  <div class="mask" v-if="showCart" />
+  <!-- 购物车信息 -->
   <div class="cart">
     <!-- 展示商品信息 -->
-    <div class="product">
+    <div class="product" v-if="showCart">
       <!-- 全选 和 清空购物车 -->
       <div class="product__header">
         <div class="product__header__all">
           <span class="product__header__icon iconfont" v-html="allChecked ? '&#xe652;' : '&#xe667;'"
-            @click="() => changeAllProducts(shopId)"></span>
+            @click="() => setCartItemsChecked(shopId)"></span>
           全选
         </div>
         <div class="product__header__clear" @click="() => cleanCartProducts(shopId)">清空购物车</div>
@@ -38,7 +41,8 @@
     <!-- 确认信息部分 -->
     <div class="check">
       <div class="check__icon">
-        <img src="http://www.dell-lee.com/imgs/vue3/basket.png" class="check__icon__img" />
+        <img src="http://www.dell-lee.com/imgs/vue3/basket.png" class="check__icon__img"
+          @click="() => handleCartShowChange(showCart)" />
         <div class="check__icon__tag">{{ total }}</div>
       </div>
       <div class="check__info">
@@ -50,7 +54,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { useCommonCartEffect } from './commonCartEffect'
@@ -94,7 +98,7 @@ const useCartEffect = (shopId) => {
   const allChecked = computed(() => {
     const productList = cartList[shopId]
     let result = true
-    let cnt = 0
+    let cnt = 0 // 购物车中选中的商品的数量
     if (productList) {
       for (const i in productList) {
         const product = productList[i]
@@ -136,34 +140,16 @@ const useCartEffect = (shopId) => {
     store.commit('cleanCartProducts', { shopId })
   }
 
-  // 全选/全不选 购物车
-  const changeAllProducts = (shopId) => {
-    const productList = cartList[shopId]
-    if (productList) {
-      if (allChecked.value) {
-        // 如果当前是全选，那么就要设置为全不选
-        for (const i in productList) {
-          const product = productList[i]
-          if (product.count > 0 && product.check) {
-            // 商品数量>0 且 选中
-            // 那么，就帮设置为“没选中”
-            const productId = product._id
-            store.commit('changeCartItemChecked', { shopId, productId })
-          }
-        }
-      } else {
-        // 如果当前不是全选，那么就要设置为全选
-        for (const i in productList) {
-          const product = productList[i]
-          if (product.count > 0 && !product.check) {
-            // 商品数量>0 且 没有选中
-            // 那么，就帮设置为“选中”
-            const productId = product._id
-            store.commit('changeCartItemChecked', { shopId, productId })
-          }
-        }
-      }
-    }
+  // 全选 购物车, 老师只实现了全选，没有实现全不选
+  const setCartItemsChecked = (shopId) => {
+    console.log('setCartItemsChecked', shopId)
+    store.commit('setCartItemsChecked', { shopId })
+  }
+
+  // 购物车是否展示
+  const showCart = ref(false) // 是否展示购物车
+  const handleCartShowChange = () => {
+    showCart.value = !showCart.value
   }
 
   return {
@@ -172,11 +158,13 @@ const useCartEffect = (shopId) => {
     price,
     productList,
     allChecked,
+    showCart,
     // 方法
     changeCardItemInfo,
     changeCartItemChecked,
     cleanCartProducts,
-    changeAllProducts
+    setCartItemsChecked,
+    handleCartShowChange
   }
 }
 
@@ -185,7 +173,9 @@ export default {
   setup() {
     const route = useRoute()
     const shopId = route.params.id
-    const { total, price, productList, allChecked, changeCardItemInfo, changeCartItemChecked, cleanCartProducts, changeAllProducts } = useCartEffect(shopId)
+
+    const { total, price, productList, allChecked, showCart, changeCardItemInfo, changeCartItemChecked, cleanCartProducts, setCartItemsChecked, handleCartShowChange } = useCartEffect(shopId)
+
     return {
       // 变量
       shopId,
@@ -193,11 +183,13 @@ export default {
       price,
       productList,
       allChecked,
+      showCart,
       // 方法
       changeCardItemInfo,
       changeCartItemChecked,
       cleanCartProducts,
-      changeAllProducts
+      setCartItemsChecked,
+      handleCartShowChange
     }
   }
 }
@@ -207,11 +199,23 @@ export default {
 @import '@/style/variables.scss';
 @import '@/style/mixins.scss';
 
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba(0, 0, 0, .5);
+  z-index: 1;
+}
+
 .cart {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 2;
+  background: #FFF;
 }
 
 .check {
@@ -291,6 +295,7 @@ export default {
     }
 
     &__icon {
+      display: inline-block;
       color: #0091FF;
       font-size: .2rem;
     }
