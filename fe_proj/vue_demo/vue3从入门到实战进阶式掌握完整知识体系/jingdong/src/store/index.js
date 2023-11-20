@@ -14,18 +14,20 @@ export default createStore({
     // 修改product到购物车
     changeCardItemInfo(state, payload) {
       const { shopId, productId, productInfo, num } = payload
-      // console.log(shopId, productId, productInfo)
-      // const cartList = state.cartList
-      let shopInfo = state.cartList[shopId]
-      if (!shopInfo) { shopInfo = {} } // shopInfo不存在就给一个初值
+      const shopInfo = state.cartList[shopId] || {}// shopInfo不存在就给一个初值
       let product = shopInfo[productId]
       if (!product) {
         console.log('shopInfo ', productId, ' not exist')
         product = productInfo
         product.count = 0
       }
-      product.count += num
-      if (num > 0) { product.check = true } // 选中状态为true，表示选中了
+      product.count = product.count + num
+      // 选中状态为true，表示选中了
+      // num > 0 && (product.check = true) // num > 0 没法像老师一样，加上括号
+      // 跟下面的等价
+      if (num > 0) { product.check = true }
+
+      // 跟下面的等价 product.count < 0 && (product.count = 0)
       if (product.count < 0) {
         product.count = 0
       }
