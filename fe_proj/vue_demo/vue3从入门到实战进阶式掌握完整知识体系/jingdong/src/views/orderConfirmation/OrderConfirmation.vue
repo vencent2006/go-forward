@@ -22,25 +22,30 @@
     <div class="products">
       <!-- 商店名称 -->
       <div class="products__title">{{ shopName }}</div>
-      <!-- 商品列表 -->
-      <div class="products__list">
-        <div class="products__item" v-for="item in productList" :key="item._id">
-          <img class="products__item__img" :src="item.imgUrl">
-          <div class="products__item__detail">
-            <h4 class="products__item__title">{{ item.name }}</h4>
-            <p class="products__item__price">
-              <!-- 单价 -->
-              <span>
-                <span class="products__item__yen">&yen;</span>
-                {{ item.price }} x {{ item.count }}
-              </span>
-              <!-- 总价 -->
-              <span class="products__item__total">
-                <span class="products__item__yen">&yen;</span>
-                {{ (item.price * item.count).toFixed(2) }}
-              </span>
-            </p>
-          </div>
+      <!-- 用wrapper包一下list，让list自己撑开高度 -->
+      <div class="products__wrapper">
+        <!-- 商品列表 -->
+        <div class="products__list">
+          <template v-for="item in productList" :key="item._id">
+            <div class="products__item" v-if="item.count > 0">
+              <img class="products__item__img" :src="item.imgUrl">
+              <div class="products__item__detail">
+                <h4 class="products__item__title">{{ item.name }}</h4>
+                <p class="products__item__price">
+                  <!-- 单价 -->
+                  <span>
+                    <span class="products__item__yen">&yen;</span>
+                    {{ item.price }} x {{ item.count }}
+                  </span>
+                  <!-- 总价 -->
+                  <span class="products__item__total">
+                    <span class="products__item__yen">&yen;</span>
+                    {{ (item.price * item.count).toFixed(2) }}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -81,6 +86,7 @@ export default {
   top: 0;
   bottom: 0;
   background: #EEE;
+  overflow-y: scroll; // 出现滚动条
 }
 
 .top {
@@ -151,24 +157,34 @@ export default {
 }
 
 .products {
-  margin: .16rem .18rem .55rem .18rem;
+  margin: .16rem .18rem .1rem .18rem;
   background: #FFF;
 
   &__title {
-    padding: .16rem 0 .16rem .16rem;
+    padding: .16rem;
     font-size: .16rem;
     color: #333;
   }
 
-  // &__list {
-  //   height: 4rem;
-  //   overflow-y: scroll; // 超出区域可以上下滚
-  // }
+  &__wrapper {
+    overflow-y: scroll;
+    margin: 0 .18rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: .6rem;
+    top: 2.6rem;
+  }
+
+  // list 自己撑开高度
+  &__list {
+    background: #FFF;
+  }
 
   &__item {
-    // position: relative;
+    position: relative;
     display: flex;
-    padding: .16rem;
+    padding: 0 .16rem .16rem .16rem;
 
     &__img {
       width: .46rem;
@@ -218,7 +234,7 @@ export default {
 
 // 底部 订单
 .order {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
