@@ -23,5 +23,13 @@ export const useCommonCartEffect = (shopId) => {
     const productList = cartList[shopId].productList || []
     return productList
   })
-  return { cartList, productList, changeCartItemInfo }
+
+  // 商品名称
+  const shopName = computed(() => {
+    // const 是限定作用域的 所以下面的productList 不会和 上面的productList 发生语法错误
+    const shopName = cartList[shopId]?.shopName || []
+    return shopName
+  })
+
+  return { cartList, shopName, productList, changeCartItemInfo }
 }

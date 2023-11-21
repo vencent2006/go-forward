@@ -30,8 +30,16 @@
           <div class="products__item__detail">
             <h4 class="products__item__title">{{ item.name }}</h4>
             <p class="products__item__price">
-              <span class="products__item__price__yen">&yen;{{ item.price }} * {{ item.count }}</span>
-              <span class="products__item__price__yen">&yen;{{ item.price * item.count }}</span>
+              <!-- 单价 -->
+              <span>
+                <span class="products__item__yen">&yen;</span>
+                {{ item.price }} x {{ item.count }}
+              </span>
+              <!-- 总价 -->
+              <span class="products__item__total">
+                <span class="products__item__yen">&yen;</span>
+                {{ item.price * item.count }}
+              </span>
             </p>
           </div>
         </div>
@@ -41,7 +49,6 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCommonCartEffect } from '@/effects/cartEffects'
 import { useBackRouterEffect } from '@/effects/routeEffects'
@@ -50,8 +57,7 @@ export default {
   setup() {
     const route = useRoute()
     const shopId = route.params.id
-    const { cartList, productList } = useCommonCartEffect(shopId)
-    const { shopName } = toRefs(cartList[shopId])
+    const { shopName, productList } = useCommonCartEffect(shopId)
     const { handleBackClick } = useBackRouterEffect()
     return { shopName, productList, handleBackClick }
   }
@@ -143,30 +149,29 @@ export default {
   background: #FFF;
 
   &__title {
-    font-size: .2rem;
+    padding: .16rem 0 .16rem .16rem;
+    font-size: .16rem;
+    color: #333;
   }
 
-  &__list {
-    height: 4rem;
-    overflow-y: scroll; // 超出区域可以上下滚
-    flex: 1; // 右侧填满
-  }
+  // &__list {
+  //   height: 4rem;
+  //   overflow-y: scroll; // 超出区域可以上下滚
+  // }
 
   &__item {
     position: relative;
     display: flex;
-    padding: .12rem 0;
-    margin: 0 .16rem;
-    border-bottom: .01rem solid $content-bgColor;
-
-    &__detail {
-      overflow: hidden;
-    }
+    padding: .16rem;
 
     &__img {
-      width: .68rem;
-      height: .68rem;
+      width: .46rem;
+      height: .46rem;
       margin-right: .16rem;
+    }
+
+    &__detail {
+      flex: 1;
     }
 
     &__title {
@@ -186,14 +191,21 @@ export default {
     }
 
     &__price {
-      margin: 0;
+      display: flex;
+      margin: .06rem 0 0 0; // price 是p标签，都设置为0，清除默认样式
       line-height: .2rem;
       font-size: .14rem;
       color: $highlight-fontColor;
+    }
 
-      &__yen {
-        font-size: .12rem;
-      }
+    &__total {
+      flex: 1;
+      text-align: right;
+      color: #000;
+    }
+
+    &__yen {
+      font-size: .12rem;
     }
   }
 }
