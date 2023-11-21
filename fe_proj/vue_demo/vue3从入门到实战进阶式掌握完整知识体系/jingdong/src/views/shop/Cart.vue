@@ -63,12 +63,12 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import { useCommonCartEffect } from './commonCartEffect'
+import { useCommonCartEffect } from '@/effects/cartEffects'
 
 // 获取购物车信息逻辑
 const useCartEffect = (shopId) => {
   const store = useStore()
-  const { cartList, changeCartItemInfo } = useCommonCartEffect()
+  const { cartList, productList, changeCartItemInfo } = useCommonCartEffect(shopId)
 
   const calculations = computed(() => {
     const proudctList = cartList[shopId]?.productList
@@ -94,14 +94,6 @@ const useCartEffect = (shopId) => {
     }
     result.price = result.price.toFixed(2) // price 保留2位小数
     return result
-  })
-
-  // 商品列表
-  const productList = computed(() => {
-    console.log('shopId', shopId)
-    // const 是限定作用域的 所以下面的productList 不会和 上面的productList 发生语法错误
-    const productList = cartList[shopId].productList || []
-    return productList
   })
 
   const changeCartItemChecked = (shopId, productId) => {

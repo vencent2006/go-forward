@@ -1,8 +1,9 @@
 // import { toRefs } from 'vue'
 import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 // 购物车相关逻辑
-export const useCommonCartEffect = () => {
+export const useCommonCartEffect = (shopId) => {
   const store = useStore()
   // const { cartList } = toRefs(store.state)
   // 不加toRefs也能用
@@ -15,5 +16,12 @@ export const useCommonCartEffect = () => {
       shopId, productId, productInfo, num
     })
   }
-  return { cartList, changeCartItemInfo }
+
+  // 商品列表
+  const productList = computed(() => {
+    // const 是限定作用域的 所以下面的productList 不会和 上面的productList 发生语法错误
+    const productList = cartList[shopId].productList || []
+    return productList
+  })
+  return { cartList, productList, changeCartItemInfo }
 }

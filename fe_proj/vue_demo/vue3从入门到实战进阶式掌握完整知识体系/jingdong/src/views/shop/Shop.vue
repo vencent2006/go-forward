@@ -16,11 +16,12 @@
 
 <script>
 import { reactive, toRefs } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { get } from '@/utils/request'
 import ShopInfo from '@/components/ShopInfo'
 import Content from './Content.vue'
 import Cart from './Cart.vue'
+import { useBackRouterEffect } from '@/effects/routeEffects'
 
 const useShopInfoEffect = () => {
   const data = reactive({ item: {} }) // 记住：这种reactive的方式
@@ -37,17 +38,6 @@ const useShopInfoEffect = () => {
 
   const { item } = toRefs(data)
   return { item, getItemData }
-}
-
-// 点击回退逻辑
-const useBackRouterEffect = () => {
-  const router = useRouter()
-  const handleBackClick = () => {
-    // todo: 如果const router = useRouter()
-    // 放在这里会报错，不知道为啥
-    router.back()
-  }
-  return { handleBackClick }
 }
 
 export default {
