@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { useCommonCartEffect } from '@/effects/cartEffects'
@@ -68,33 +68,7 @@ import { useCommonCartEffect } from '@/effects/cartEffects'
 // 获取购物车信息逻辑
 const useCartEffect = (shopId) => {
   const store = useStore()
-  const { cartList, productList, changeCartItemInfo } = useCommonCartEffect(shopId)
-
-  const calculations = computed(() => {
-    const proudctList = cartList[shopId]?.productList
-    // total 商品个数
-    // price 总价
-    // allChecked 是否都被选中
-    const result = { total: 0, price: 0, allChecked: true }
-    if (proudctList) {
-      for (const i in proudctList) {
-        const product = proudctList[i]
-        // 总数
-        result.total += product.count
-        // 总价
-        if (product.check) {
-          // 选中的，才累加金额
-          result.price += product.count * product.price
-        }
-        // 是否全选
-        if (product.count > 0 && !product.check) {
-          result.allChecked = false
-        }
-      }
-    }
-    result.price = result.price.toFixed(2) // price 保留2位小数
-    return result
-  })
+  const { productList, calculations, changeCartItemInfo } = useCommonCartEffect(shopId)
 
   const changeCartItemChecked = (shopId, productId) => {
     // 找到shopId和productId对应的商品，把选中状态设置为相反

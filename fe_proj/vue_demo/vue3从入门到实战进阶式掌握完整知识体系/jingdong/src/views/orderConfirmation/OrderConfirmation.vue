@@ -2,7 +2,6 @@
   <div class="wrapper">
     <!-- 顶部信息 -->
     <div class="top">
-      <div class="top__bgcolor"></div>
       <div class="top__header">
         <!-- 后退 -->
         <div class="top__header__back iconfont" @click="handleBackClick">&#xe6f2;</div>
@@ -38,12 +37,17 @@
               <!-- 总价 -->
               <span class="products__item__total">
                 <span class="products__item__yen">&yen;</span>
-                {{ item.price * item.count }}
+                {{ (item.price * item.count).toFixed(2) }}
               </span>
             </p>
           </div>
         </div>
       </div>
+    </div>
+    <!-- 底部 订单 -->
+    <div class="order">
+      <div class="order__price">实付金额 <b>￥{{ calculations.price }}</b></div>
+      <div class="order__btn">提交订单</div>
     </div>
   </div>
 </template>
@@ -54,12 +58,14 @@ import { useCommonCartEffect } from '@/effects/cartEffects'
 import { useBackRouterEffect } from '@/effects/routeEffects'
 
 export default {
+  name: 'OrderConfirmation',
+
   setup() {
     const route = useRoute()
     const shopId = route.params.id
-    const { shopName, productList } = useCommonCartEffect(shopId)
+    const { shopName, productList, calculations } = useCommonCartEffect(shopId)
     const { handleBackClick } = useBackRouterEffect()
-    return { shopName, productList, handleBackClick }
+    return { shopName, productList, calculations, handleBackClick }
   }
 }
 </script>
@@ -160,7 +166,7 @@ export default {
   // }
 
   &__item {
-    position: relative;
+    // position: relative;
     display: flex;
     padding: .16rem;
 
@@ -207,6 +213,33 @@ export default {
     &__yen {
       font-size: .12rem;
     }
+  }
+}
+
+// 底部 订单
+.order {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #FFF;
+  height: .49rem;
+  line-height: .49rem;
+  display: flex;
+
+  &__price {
+    flex: 1;
+    text-indent: .24rem;
+    font-size: .14rem;
+    color: #333;
+  }
+
+  &__btn {
+    width: .98rem;
+    background: #4FB0F9;
+    color: #FFF;
+    text-align: center;
+    font-size: .14rem;
   }
 }
 </style>
