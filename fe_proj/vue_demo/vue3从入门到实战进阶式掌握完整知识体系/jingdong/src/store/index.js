@@ -8,7 +8,12 @@ const setLocalCartList = (state) => {
 }
 // 读取 localstorage 的cartList
 const getLocalCartList = () => {
-  return JSON.parse(localStorage.cartList) || {}
+  // JSON.parse 要用try catch接
+  try {
+    return JSON.parse(localStorage.cartList)
+  } catch (e) {
+    return {}
+  }
 }
 
 export default createStore({

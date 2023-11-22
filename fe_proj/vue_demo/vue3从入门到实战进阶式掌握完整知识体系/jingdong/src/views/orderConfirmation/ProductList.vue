@@ -7,26 +7,24 @@
     <div class="products__wrapper">
       <!-- product 列表 -->
       <div class="products__list">
-        <template v-for="item in productList" :key="item._id">
-          <div class="products__item" v-if="item.count > 0">
-            <img class="products__item__img" :src="item.imgUrl">
-            <div class="products__item__detail">
-              <h4 class="products__item__title">{{ item.name }}</h4>
-              <p class="products__item__price">
-                <!-- 单价 -->
-                <span>
-                  <span class="products__item__yen">&yen;</span>
-                  {{ item.price }} x {{ item.count }}
-                </span>
-                <!-- 总价 -->
-                <span class="products__item__total">
-                  <span class="products__item__yen">&yen;</span>
-                  {{ (item.price * item.count).toFixed(2) }}
-                </span>
-              </p>
-            </div>
+        <div class="products__item" v-for="item in productList" :key="item._id">
+          <img class="products__item__img" :src="item.imgUrl">
+          <div class="products__item__detail">
+            <h4 class="products__item__title">{{ item.name }}</h4>
+            <p class="products__item__price">
+              <!-- 单价 -->
+              <span>
+                <span class="products__item__yen">&yen;</span>
+                {{ item.price }} x {{ item.count }}
+              </span>
+              <!-- 总价 -->
+              <span class="products__item__total">
+                <span class="products__item__yen">&yen;</span>
+                {{ (item.price * item.count).toFixed(2) }}
+              </span>
+            </p>
           </div>
-        </template>
+        </div>
       </div>
     </div>
   </div>

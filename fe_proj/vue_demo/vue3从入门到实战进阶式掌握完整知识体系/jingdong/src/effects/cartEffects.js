@@ -20,8 +20,17 @@ export const useCommonCartEffect = (shopId) => {
   // 商品列表
   const productList = computed(() => {
     // const 是限定作用域的 所以下面的productList 不会和 上面的productList 发生语法错误
-    const productList = cartList[shopId].productList || []
-    return productList
+    // productList 是个对象，而不是个数组
+    const productList = cartList[shopId].productList || {}
+    // 去掉count=0的商品
+    const notEmptyProductList = {} // 记住是对象
+    for (const i in productList) {
+      const product = productList[i]
+      if (product.count > 0) { // 非空的才往里添加
+        notEmptyProductList[i] = product
+      }
+    }
+    return notEmptyProductList
   })
 
   // 商品名称

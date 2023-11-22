@@ -10,8 +10,8 @@
       <h3 class="mask__content__title">确认离开收银台吗?</h3>
       <p class="mask__content__desc">请尽快完成支付，否则将被取消</p>
       <div class="mask__content__btns">
-        <div class="mask__content__btn mask__content__btn--first" @click="handleCancelOrder">取消订单</div>
-        <div class="mask__content__btn mask__content__btn--last" @click="handleConfirmlOrder">确认支付</div>
+        <div class="mask__content__btn mask__content__btn--first" @click="() => handleConfirmlOrder(true)">取消订单</div>
+        <div class="mask__content__btn mask__content__btn--last" @click="() => handleConfirmlOrder(false)">确认支付</div>
       </div>
     </div>
   </div>
@@ -19,26 +19,27 @@
 
 <script>
 import { post } from '@/utils/request'
-import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 import { useCommonCartEffect } from '@/effects/cartEffects'
 
 export default {
   name: 'OrderConfirmation',
   setup() {
     const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
     const shopId = parseInt(route.params.id, 10)
     const { calculations, shopName, productList } = useCommonCartEffect(shopId)
-    const handleCancelOrder = () => { alert('cancel') }
-    const handleConfirmlOrder = async () => {
+
+    const handleConfirmlOrder = async (isCanceled) => {
       const products = []
       for (const i in productList.value) {
         const product = productList.value[i]
-        if (product.count > 0) {
-          products.push({
-            id: parseInt(product._id, 10),
-            num: product.count
-          })
-        }
+        products.push({
+          id: parseInt(product._id, 10),
+          num: product.count
+        })
       }
       console.log(products, '--- products ---')
       try {
@@ -46,24 +47,24 @@ export default {
           addressId: 1,
           shopId,
           shopName: shopName.value,
-          isCanceled: false, // 不是取消，这里是创建订单
+          isCanceled: isCanceled, // true, 取消订单; false, 下单
           products
         }
         console.log('-- reqBody --', reqBody)
         const result = await post('/api/order', reqBody)
         console.log('result', result)
-        // if (result?.errno === 0) {
-        //   localStorage.isLogin = true
-        //   router.push({ name: 'Home' })
-        // } else {
-        //   showToast('登录失败')
-        // }
+        if (result?.errno === 0) {
+          store.commit('cleanCartProducts', { shopId }) // 清空该shopId 的购物车
+          router.push({ name: 'Home' })
+        } else {
+          alert('登录失败')
+        }
       } catch (error) {
         console.log('请求失败', error.message)
-        // showToast('请求失败')
+        alert('请求失败')
       }
     }
-    return { calculations, handleCancelOrder, handleConfirmlOrder }
+    return { calculations, handleConfirmlOrder }
   }
 }
 </script>
