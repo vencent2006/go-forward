@@ -2,21 +2,21 @@
   <div class="wrapper">
     <div class="title">我的订单</div>
     <div class="orders">
-      <div class="order">
+      <div class="order" v-for="(item, index) in list" :key="index">
         <div class="order__title">
-          沃尔玛
-          <span class="order__status">已取消</span>
+          {{ item.shopName }}
+          <span class="order__status">
+            {{ item.isCanceled ? '已取消' : '已下单' }}</span>
         </div>
         <div class="order__content">
           <div class="order__content__imgs">
-            <img class="order__content__img" src="http://www.dell-lee.com/imgs/vue3/tomato.png">
-            <img class="order__content__img" src="http://www.dell-lee.com/imgs/vue3/tomato.png">
-            <img class="order__content__img" src="http://www.dell-lee.com/imgs/vue3/tomato.png">
-            <img class="order__content__img" src="http://www.dell-lee.com/imgs/vue3/tomato.png">
+            <template v-for="(innerItem, innerIndex) in item.products" :key="innerIndex">
+              <img class="order__content__img" :src="innerItem.product.img" v-if="innerIndex <= 3">
+            </template>
           </div>
           <div class="order__content_info">
-            <div class="order__content__price">￥36.88</div>
-            <div class="order__content__count">共2件</div>
+            <div class="order__content__price">￥{{ item.totalPrice }}</div>
+            <div class="order__content__count">共{{ item.totalNumber }}件</div>
           </div>
         </div>
       </div>
@@ -35,47 +35,20 @@ const useOrderListEffect = (shopId) => {
   const data = reactive({ list: [] })
   const getOrders = async () => {
     const result = await get('/api/order')
-    /*
-    {
-    "errno": 0,
-    "data": [
-        {
-            "address": {
-                "city": "北京",
-                "department": "xx小区",
-                "houseNumber": "门牌号",
-                "name": "张三",
-                "phone": "18611112222"
-            },
-            "shopId": "1",
-            "shopName": "沃尔玛",
-            "isCanceled": false,
-            "products": [
-                {
-                    "orderSales": 5,
-                    "product": {
-                        "name": "番茄 250g / 份",
-                        "img": "http://www.dell-lee.com/imgs/vue3/tomato.png",
-                        "price": 33.6,
-                        "sales": 6
-                    }
-                },
-                {
-                    "orderSales": 10,
-                    "product": {
-                        "name": "车厘子 500g / 份",
-                        "img": "http://www.dell-lee.com/imgs/vue3/cherry.png",
-                        "price": 33.6,
-                        "sales": 6
-                    }
-                }
-            ]
-        }
-    ],
-    "message": "errno !== 0 时的错误信息"
-}
-    */
     if (result?.errno === 0 && result?.data?.length) {
+      const orderList = result.data
+      orderList.forEach((order) => {
+        const products = order.products || []
+        let totalPrice = 0
+        let totalNumber = 0
+        products.forEach((productItem) => {
+          totalPrice += (productItem?.product?.price * productItem?.orderSales) || 0
+          totalNumber += productItem?.orderSales || 0
+        })
+        order.totalPrice = totalPrice.toFixed(2)
+        order.totalNumber = totalNumber
+      })
+      console.log(orderList)
       data.list = result.data
     }
   }
@@ -83,6 +56,17 @@ const useOrderListEffect = (shopId) => {
   getOrders()
 
   const { list } = toRefs(data)
+  // console.log(list, '++ list ++')
+  // for (const i in list) {
+  //   const shop = list[i]
+  //   console.log(shop, '--shop--')
+  //   shop.count = shop.products.length
+  //   shop.totalPrice = 0
+  //   for (const j in shop) {
+  //     shop.totalPrice = shop.totalPrice + shop.products[j].price
+  //   }
+  //   shop.totalPrice.toFixed(2)
+  // }
   return { list }
 }
 
