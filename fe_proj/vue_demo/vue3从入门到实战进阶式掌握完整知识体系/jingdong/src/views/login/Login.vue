@@ -18,7 +18,7 @@
 // 先放系统级别的引入
 import { reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
-import { post } from '../../utils/request'
+import { post } from '@/utils/request'
 import Toast, { useToastEffect } from '../../components/Toast'
 
 // 处理登录相关逻辑

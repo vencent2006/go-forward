@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { post } from '@/utils/request'
 import { useRoute } from 'vue-router'
 import { useCommonCartEffect } from '@/effects/cartEffects'
 
@@ -25,10 +26,43 @@ export default {
   name: 'OrderConfirmation',
   setup() {
     const route = useRoute()
-    const shopId = route.params.id
-    const { calculations } = useCommonCartEffect(shopId)
+    const shopId = parseInt(route.params.id, 10)
+    const { calculations, shopName, productList } = useCommonCartEffect(shopId)
     const handleCancelOrder = () => { alert('cancel') }
-    const handleConfirmlOrder = () => { alert('confirm') }
+    const handleConfirmlOrder = async () => {
+      const products = []
+      for (const i in productList.value) {
+        const product = productList.value[i]
+        if (product.count > 0) {
+          products.push({
+            id: parseInt(product._id, 10),
+            num: product.count
+          })
+        }
+      }
+      console.log(products, '--- products ---')
+      try {
+        const reqBody = {
+          addressId: 1,
+          shopId,
+          shopName: shopName.value,
+          isCanceled: false, // 不是取消，这里是创建订单
+          products
+        }
+        console.log('-- reqBody --', reqBody)
+        const result = await post('/api/order', reqBody)
+        console.log('result', result)
+        // if (result?.errno === 0) {
+        //   localStorage.isLogin = true
+        //   router.push({ name: 'Home' })
+        // } else {
+        //   showToast('登录失败')
+        // }
+      } catch (error) {
+        console.log('请求失败', error.message)
+        // showToast('请求失败')
+      }
+    }
     return { calculations, handleCancelOrder, handleConfirmlOrder }
   }
 }
