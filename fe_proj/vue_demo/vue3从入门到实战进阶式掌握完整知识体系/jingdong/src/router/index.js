@@ -14,6 +14,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "cartList" */ '@/views/cartList/CartList')
   },
   {
+    path: '/orderList',
+    name: 'OrderList',
+    // 动态加载
+    component: () => import(/* webpackChunkName: "orderList" */ '@/views/orderList/OrderList')
+  },
+  {
     path: '/orderConfirmation/:id',
     name: 'OrderConfirmation',
     // 动态加载

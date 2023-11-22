@@ -2,16 +2,16 @@
   <!-- 底部 订单 -->
   <div class="order">
     <div class="order__price">实付金额 <b>￥{{ calculations.price }}</b></div>
-    <div class="order__btn" @click="() => handleSubmitOrder(true)">提交订单</div>
+    <div class="order__btn" @click="() => handleShowConfirmChange(true)">提交订单</div>
   </div>
   <!-- toast -->
-  <div class="mask" v-show="showConfirm" @click="() => handleSubmitOrder(false)">
+  <div class="mask" v-show="showConfirm" @click="() => handleShowConfirmChange(false)">
     <div class="mask__content" @click.stop>
       <h3 class="mask__content__title">确认离开收银台吗?</h3>
       <p class="mask__content__desc">请尽快完成支付，否则将被取消</p>
       <div class="mask__content__btns">
-        <div class="mask__content__btn mask__content__btn--first" @click="() => handleConfirmlOrder(true)">取消订单</div>
-        <div class="mask__content__btn mask__content__btn--last" @click="() => handleConfirmlOrder(false)">确认支付</div>
+        <div class="mask__content__btn mask__content__btn--first" @click="() => handleConfirmOrder(true)">取消订单</div>
+        <div class="mask__content__btn mask__content__btn--last" @click="() => handleConfirmOrder(false)">确认支付</div>
       </div>
     </div>
   </div>
@@ -24,57 +24,67 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCommonCartEffect } from '@/effects/cartEffects'
 
+// 下单逻辑相关
+const useMakeOrderEffect = (shopId, productList, shopName) => {
+  const router = useRouter()
+  const store = useStore()
+
+  const handleConfirmOrder = async (isCanceled) => {
+    const products = []
+    for (const i in productList.value) {
+      const product = productList.value[i]
+      products.push({
+        id: parseInt(product._id, 10),
+        num: product.count
+      })
+    }
+    // console.log(products, '--- products ---')
+    try {
+      const reqBody = {
+        addressId: 1,
+        shopId,
+        shopName: shopName.value,
+        isCanceled: isCanceled, // true, 取消订单; false, 下单
+        products
+      }
+      console.log('-- reqBody --', reqBody)
+      const result = await post('/api/order', reqBody)
+      console.log('result', result)
+      if (result?.errno === 0) {
+        store.commit('cleanCartProducts', { shopId }) // 清空该shopId 的购物车
+        router.push({ name: 'OrderList' }) // 跳去订单列表
+      } else {
+        alert('登录失败')
+      }
+    } catch (error) {
+      console.log('请求失败', error.message)
+      alert('请求失败')
+    }
+  }
+
+  return { handleConfirmOrder }
+}
+
+// 蒙层展示相关的逻辑
+const useShowMaskEffect = () => {
+  const showConfirm = ref(false) // 是否展示mask（蒙层）
+  const handleShowConfirmChange = (status) => {
+    showConfirm.value = status
+  }
+  return { showConfirm, handleShowConfirmChange }
+}
+
 export default {
   name: 'OrderConfirmation',
   setup() {
     const route = useRoute()
-    const router = useRouter()
-    const store = useStore()
-
-    const showConfirm = ref(false) // 是否展示mask（蒙层）
-
     const shopId = parseInt(route.params.id, 10)
+
     const { calculations, shopName, productList } = useCommonCartEffect(shopId)
+    const { handleConfirmOrder } = useMakeOrderEffect(shopId, productList, shopName) // 弹窗的逻辑
+    const { showConfirm, handleShowConfirmChange } = useShowMaskEffect() // 提交订单的控制
 
-    const handleConfirmlOrder = async (isCanceled) => {
-      const products = []
-      for (const i in productList.value) {
-        const product = productList.value[i]
-        products.push({
-          id: parseInt(product._id, 10),
-          num: product.count
-        })
-      }
-      console.log(products, '--- products ---')
-      try {
-        const reqBody = {
-          addressId: 1,
-          shopId,
-          shopName: shopName.value,
-          isCanceled: isCanceled, // true, 取消订单; false, 下单
-          products
-        }
-        console.log('-- reqBody --', reqBody)
-        const result = await post('/api/order', reqBody)
-        console.log('result', result)
-        if (result?.errno === 0) {
-          store.commit('cleanCartProducts', { shopId }) // 清空该shopId 的购物车
-          router.push({ name: 'Home' })
-        } else {
-          alert('登录失败')
-        }
-      } catch (error) {
-        console.log('请求失败', error.message)
-        alert('请求失败')
-      }
-      // 关闭蒙层
-      showConfirm.value = false
-    }
-
-    const handleSubmitOrder = (status) => {
-      showConfirm.value = status
-    }
-    return { calculations, showConfirm, handleConfirmlOrder, handleSubmitOrder }
+    return { calculations, showConfirm, handleConfirmOrder, handleShowConfirmChange }
   }
 }
 </script>
