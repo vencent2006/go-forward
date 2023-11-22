@@ -4,23 +4,25 @@
     <!-- BEM命名 block__element--modifier -->
     <!-- 第一项设置了active属性 -->
     <div v-for="(item, index) in dockerList" :key="index"
-      :class="{ 'docker__item': true, 'docker__item--active': index === 0 }">
+      :class="{ 'docker__item': true, 'docker__item--active': index === currentIndex }">
       <router-link :to="item.to">
         <div class="iconfont" v-html="item.icon" />
         <div class="docker__item__title">{{ item.text }}</div>
       </router-link>
     </div>
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'Docker',
+  props: ['currentIndex'],
   setup() {
     const dockerList = [
       { icon: '&#xe6f3;', text: '首页', to: { name: 'Home' } },
       { icon: '&#xe7e5;', text: '购物车', to: { name: 'CartList' } },
-      { icon: '&#xe61e;', text: '订单', to: { name: 'Home' } },
+      { icon: '&#xe61e;', text: '订单', to: { name: 'OrderList' } },
       { icon: '&#xe660;', text: '我的', to: { name: 'Home' } }
     ]
     return { dockerList }
