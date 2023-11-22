@@ -2,11 +2,11 @@
   <!-- 底部 订单 -->
   <div class="order">
     <div class="order__price">实付金额 <b>￥{{ calculations.price }}</b></div>
-    <div class="order__btn">提交订单</div>
+    <div class="order__btn" @click="() => handleSubmitOrder(true)">提交订单</div>
   </div>
   <!-- toast -->
-  <div class="mask">
-    <div class="mask__content">
+  <div class="mask" v-show="showConfirm" @click="() => handleSubmitOrder(false)">
+    <div class="mask__content" @click.stop>
       <h3 class="mask__content__title">确认离开收银台吗?</h3>
       <p class="mask__content__desc">请尽快完成支付，否则将被取消</p>
       <div class="mask__content__btns">
@@ -20,6 +20,7 @@
 <script>
 import { post } from '@/utils/request'
 import { useStore } from 'vuex'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCommonCartEffect } from '@/effects/cartEffects'
 
@@ -29,6 +30,9 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
+
+    const showConfirm = ref(false) // 是否展示mask（蒙层）
+
     const shopId = parseInt(route.params.id, 10)
     const { calculations, shopName, productList } = useCommonCartEffect(shopId)
 
@@ -63,8 +67,14 @@ export default {
         console.log('请求失败', error.message)
         alert('请求失败')
       }
+      // 关闭蒙层
+      showConfirm.value = false
     }
-    return { calculations, handleConfirmlOrder }
+
+    const handleSubmitOrder = (status) => {
+      showConfirm.value = status
+    }
+    return { calculations, showConfirm, handleConfirmlOrder, handleSubmitOrder }
   }
 }
 </script>
