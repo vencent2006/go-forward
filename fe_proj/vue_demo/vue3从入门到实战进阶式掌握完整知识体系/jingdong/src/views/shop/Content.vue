@@ -20,13 +20,13 @@
         </div>
         <div class="product__number">
           <!-- 减号操作 -->
-          <span class="product__number__minus"
-            @click="() => { changeCartItem(shopId, item._id, item, -1, shopName) }">-</span>
+          <span class="product__number__minus iconfont"
+            @click="() => { changeCartItem(shopId, item._id, item, -1, shopName) }">&#xe691;</span>
           <!-- 从购物车的数据里拿值 -->
           {{ getProductCartCount(shopId, item._id) }}
           <!-- 加号操作 -->
-          <span class="product__number__plus"
-            @click="() => { changeCartItem(shopId, item._id, item, 1, shopName) }">+</span>
+          <span class="product__number__plus iconfont"
+            @click="() => { changeCartItem(shopId, item._id, item, 1, shopName) }">&#xe668;</span>
         </div>
       </div>
     </div>
@@ -217,26 +217,13 @@ export default {
       right: 0;
       bottom: .12rem;
 
-      &__minus,
-      &__plus {
-        display: inline-block; // span
-        width: .2rem;
-        height: .2rem;
-        line-height: .16rem;
-        border-radius: 50%;
-        font-size: .2rem;
-        text-align: center;
-      }
-
       &__minus {
-        border: .01rem solid $medium-fontColor;
         color: $medium-fontColor;
         margin-right: .05rem;
       }
 
       &__plus {
-        background: $btn-bgColor;
-        color: $bgColor;
+        color: $btn-bgColor;
         margin-left: .05rem;
       }
     }

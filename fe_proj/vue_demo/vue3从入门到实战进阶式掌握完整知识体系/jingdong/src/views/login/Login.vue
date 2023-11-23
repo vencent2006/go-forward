@@ -107,7 +107,8 @@ export default {
     border-radius: 6px;
 
     &__content {
-      line-height: .48rem;
+      margin-top: .12rem;
+      line-height: .22rem; // 避免光标过大的问题 降低line-height，再加个margin-top
       border: none;
       outline: none; // 没有边框
       width: 100%;

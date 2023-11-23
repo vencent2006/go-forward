@@ -30,10 +30,12 @@
         </div>
         <div class="product__number">
           <!-- 减号操作 -->
-          <span class="product__number__minus" @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }">-</span>
+          <span class="product__number__minus iconfont"
+            @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }">&#xe691;</span>
           {{ item.count || 0 }}
           <!-- 加号操作 -->
-          <span class="product__number__plus" @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }">+</span>
+          <span class="product__number__plus iconfont"
+            @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }">&#xe668;</span>
         </div>
       </div>
     </div>
@@ -310,26 +312,14 @@ export default {
       right: 0;
       bottom: .3rem;
 
-      &__minus,
-      &__plus {
-        display: inline-block; // span
-        width: .2rem;
-        height: .2rem;
-        line-height: .16rem;
-        border-radius: 50%;
-        font-size: .2rem;
-        text-align: center;
-      }
-
       &__minus {
-        border: .01rem solid $medium-fontColor;
+        position: relative;
         color: $medium-fontColor;
         margin-right: .05rem;
       }
 
       &__plus {
-        background: $btn-bgColor;
-        color: $bgColor;
+        color: $btn-bgColor;
         margin-left: .05rem;
       }
     }
