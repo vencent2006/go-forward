@@ -2,6 +2,7 @@ import { login } from '@/api/sys'
 import md5 from 'md5'
 import { setItem, getItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
+import router from '@/router'
 
 /**
 {
@@ -38,8 +39,10 @@ export default {
         })
           .then((data) => {
             console.log(data)
-            // 这也是user
+            // 这也是user module的，所以要加user
             this.commit('user/setToken', data.token)
+            // 跳转
+            router.push('/')
             resolve()
           })
           .catch((err) => {
