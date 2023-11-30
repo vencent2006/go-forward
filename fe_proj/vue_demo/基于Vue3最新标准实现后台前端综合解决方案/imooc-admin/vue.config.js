@@ -5,7 +5,9 @@ function resolve(dir) {
 }
 module.exports = defineConfig({
   chainWebpack(config) {
+    // 首先把原来svg应用的loader(file-loader)先排除
     config.module.rule('svg').exclude.add(resolve('src/icons')).end()
+    // 专门增加一个icons的规则
     config.module
       .rule('icons')
       .test(/\.svg$/)
