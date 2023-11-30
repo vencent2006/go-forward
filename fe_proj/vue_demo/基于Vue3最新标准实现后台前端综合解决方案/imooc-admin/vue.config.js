@@ -9,8 +9,10 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       // 当地址中包含 /api 的时候，触发此代理
+      // 用我自己的代理，自己写的server
       '/api': {
-        target: 'https://api.imooc-admin.lgdsunday.club/',
+        // target: 'https://api.imooc-admin.lgdsunday.club/',
+        target: 'http://localhost:8888/',
         changeOrigin: true
       }
     }
