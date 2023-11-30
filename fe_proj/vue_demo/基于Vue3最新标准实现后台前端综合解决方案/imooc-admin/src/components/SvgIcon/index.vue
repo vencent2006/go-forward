@@ -9,7 +9,7 @@
   <!-- 展示内部组件 -->
   <!-- aria-hidden对浏览器隐藏 -->
   <svg v-else class="svg-icon" :class="className" aria-hidden="true">
-    <use :xlink-href="iconName" />
+    <use :xlink:href="iconName" />
   </svg>
 </template>
 
