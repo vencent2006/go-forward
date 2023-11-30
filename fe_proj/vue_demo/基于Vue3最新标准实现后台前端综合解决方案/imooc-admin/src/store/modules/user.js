@@ -37,10 +37,9 @@ export default {
           password: md5(password)
         })
           .then((data) => {
-            console.log(data.data.data.token)
-            const token = data.data.data.token
+            console.log(data)
             // 这也是user
-            this.commit('user/setToken', token)
+            this.commit('user/setToken', data.token)
             resolve()
           })
           .catch((err) => {
