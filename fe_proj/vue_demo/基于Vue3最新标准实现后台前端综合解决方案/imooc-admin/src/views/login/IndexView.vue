@@ -4,7 +4,12 @@
       2. 为 el-form 绑定 rules 属性
       3. 为 el-form-item 绑定 prop 属性-->
 
-    <el-form class="login-form" :model="loginForm" :rules="loginRules">
+    <el-form
+      class="login-form"
+      ref="loginFormRef"
+      :model="loginForm"
+      :rules="loginRules"
+    >
       <div class="title-container">
         <h3 class="title">bluev admin</h3>
         <h3 class="title">用户登录</h3>
@@ -41,7 +46,11 @@
         </span>
       </el-form-item>
       <!-- 登录按钮 -->
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px"
+      <el-button
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        :loading="loading"
+        @click="handlerLogin"
         >登录</el-button
       >
     </el-form>
@@ -51,6 +60,7 @@
 <script setup>
 import { ref } from 'vue'
 import { validatePassword } from './rules'
+import { useStore } from 'vuex'
 // 数据源
 const loginForm = ref({
   username: 'super-admin',
@@ -77,7 +87,6 @@ const loginRules = ref({
 // 处理密码框文本显示
 const passwordType = ref('password')
 // template 中绑定的方法，直接声明即可
-//
 const onChangePwdType = () => {
   // 使用ref声明的数据，在script中使用加value的方式，template直接使用自身
   if (passwordType.value === 'password') {
@@ -85,6 +94,30 @@ const onChangePwdType = () => {
   } else {
     passwordType.value = 'password'
   }
+}
+// 处理登录
+const loading = ref(false)
+const store = useStore()
+const loginFormRef = ref(null)
+const handlerLogin = () => {
+  // 1. 进行表单校验
+  console.log(loginFormRef.value)
+  // validate 这个是element plus的
+  loginFormRef.value.validate((valid) => {
+    if (!valid) return
+    // 2. 触发登录动作
+    loading.value = true
+    store
+      .dispatch('user/login', loginForm.value)
+      .then(() => {
+        loading.value = false
+        // TODO 3. 进行登录后处理
+      })
+      .catch((err) => {
+        console.log(err)
+        loading.value = false
+      })
+  })
 }
 </script>
 
