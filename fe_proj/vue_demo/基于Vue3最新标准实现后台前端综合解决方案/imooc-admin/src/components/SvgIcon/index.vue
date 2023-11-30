@@ -7,6 +7,7 @@
     :class="className"
   ></div>
   <!-- 展示内部组件 -->
+  <!-- aria-hidden对浏览器隐藏 -->
   <svg v-else class="svg-icon" :class="className" aria-hidden="true">
     <use :xlink-href="iconName" />
   </svg>
@@ -37,6 +38,7 @@ const isExternal = computed(() => external(props.icon))
  * 外部图标样式
  */
 const styleExternalIcon = computed(() => ({
+  // 第一个50%是水平居中，第二个50%是垂直居中
   mask: `url(${props.icon}) no-repeat 50% 50%`,
   '-webkit-mask': `url(${props.icon}) no-repeat 50% 50%`
 }))
