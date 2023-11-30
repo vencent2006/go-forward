@@ -1,23 +1,36 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <!-- 1. 为 el-form 绑定 model 属性
+      2. 为 el-form 绑定 rules 属性
+      3. 为 el-form-item 绑定 prop 属性-->
+
+    <el-form class="login-form" :model="loginForm" :rules="loginRules">
       <div class="title-container">
         <h3 class="title">bluev admin</h3>
         <h3 class="title">用户登录</h3>
       </div>
       <!-- username -->
-      <el-form-item>
+      <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon="user"></svg-icon>
         </span>
-        <el-input placeholder="username" name="username" type="text"></el-input>
+        <el-input
+          placeholder="username"
+          name="username"
+          type="text"
+          v-model="loginForm.username"
+        ></el-input>
       </el-form-item>
       <!-- password -->
-      <el-form-item>
+      <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon="password"></svg-icon>
         </span>
-        <el-input placeholder="password" name="password"></el-input>
+        <el-input
+          placeholder="password"
+          name="password"
+          v-model="loginForm.password"
+        ></el-input>
         <span class="show-pwd">
           <span class="svg-container">
             <svg-icon icon="eye"></svg-icon>
@@ -33,7 +46,30 @@
 </template>
 
 <script setup>
-// 导入的组件可以直接使用
+import { ref } from 'vue'
+import { validatePassword } from './rules'
+// 数据源
+const loginForm = ref({
+  username: 'super-admin',
+  password: '123456'
+})
+// 验证规则
+const loginRules = ref({
+  username: [
+    {
+      required: true,
+      trigger: 'blur',
+      message: '用户名为必填项'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      trigger: 'blur',
+      validator: validatePassword()
+    }
+  ]
+})
 </script>
 
 <style lang="scss" scoped>
