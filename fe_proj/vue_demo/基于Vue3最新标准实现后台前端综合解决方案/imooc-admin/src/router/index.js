@@ -10,6 +10,10 @@ const publicRoutes = [
   {
     path: '/',
     component: () => import('@/layout/index')
+  },
+  {
+    path: '/chart',
+    component: () => import('@/views/ChartView')
   }
 ]
 
