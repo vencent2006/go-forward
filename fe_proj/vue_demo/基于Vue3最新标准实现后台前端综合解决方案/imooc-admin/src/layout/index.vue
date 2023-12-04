@@ -1,7 +1,10 @@
 <template>
   <div class="app-wrapper">
-    <!-- 左侧 menu -->
-    <sidebar class="sidebar-container"></sidebar>
+    <!-- 左侧 menu 使用了行内样式，方便变化主题色 -->
+    <sidebar
+      class="sidebar-container"
+      :style="{ backgroundColor: variables.menuBg }"
+    ></sidebar>
     <div class="main-container">
       <div class="fixed-header">
         <!-- 顶部 navbar -->
@@ -21,7 +24,7 @@ import variables from '@/styles/variables.module.scss'
 import { ref } from 'vue'
 
 console.log(variables)
-const color = ref(variables.menuText)
+const color = ref(variables.menuBg)
 console.log(color)
 </script>
 

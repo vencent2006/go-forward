@@ -1,4 +1,4 @@
-<template>menu</template>
+<template><div>menu</div></template>
 
 <script setup>
 import {} from 'vue'
