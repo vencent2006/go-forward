@@ -1,4 +1,4 @@
-import { login } from '@/api/sys'
+import { getUserInfo, login } from '@/api/sys'
 import md5 from 'md5'
 import { setItem, getItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
@@ -18,12 +18,18 @@ import router from '@/router'
 export default {
   namespaced: true, // 表示是一个单独的模块，不会被合并
   state: () => ({
-    token: getItem(TOKEN) || ''
+    token: getItem(TOKEN) || '',
+    userInfo: {}
   }),
   mutations: {
+    // token
     setToken(state, token) {
       state.token = token
       setItem(TOKEN, token)
+    },
+    // userInfo
+    setUserInfo(state, userInfo) {
+      state.userInfo = userInfo
     }
   },
   actions: {
@@ -49,6 +55,14 @@ export default {
             reject(err)
           })
       })
+    },
+    /**
+     * 获取用户信息
+     */
+    async getUserInfo(context) {
+      const res = await getUserInfo()
+      this.commit('user/setUserInfo', res)
+      return res
     }
   }
 }

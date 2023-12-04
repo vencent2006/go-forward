@@ -1,3 +1,4 @@
+import store from '@/store'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
@@ -24,6 +25,22 @@ service.interceptors.response.use(
   // 请求失败
   (error) => {
     ElMessage.error(error.message)
+    return Promise.reject(error)
+  }
+)
+
+// 请求拦截器
+service.interceptors.request.use(
+  (config) => {
+    // 在这个位置需要统一的去注入token
+    if (store.getters.token) {
+      // 如果token存在 注入token
+      // 引入变量的格式很特别
+      config.headers.Authorization = `Bearer ${store.getters.token}`
+    }
+    return config // 必须返回配置
+  },
+  (error) => {
     return Promise.reject(error)
   }
 )
