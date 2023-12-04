@@ -25,7 +25,16 @@ service.interceptors.response.use(
   },
   // 请求失败
   (error) => {
-    ElMessage.error(error.message)
+    // 处理 token 超时问题
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.code === 401 // 401 代表用户没有访问权限，需要进行身份认证
+    ) {
+      // token 超时
+      store.dispatch('user/logout')
+    }
+    ElMessage.error(error.message) // 提示错误信息
     return Promise.reject(error)
   }
 )
