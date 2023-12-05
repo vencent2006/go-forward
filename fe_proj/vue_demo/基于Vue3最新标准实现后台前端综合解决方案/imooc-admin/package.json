@@ -13,6 +13,7 @@
     "echarts": "^5.3.2",
     "element-plus": "^1.0.2-beta.28",
     "md5": "^2.3.0",
+    "path-browserify": "^1.0.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.0"

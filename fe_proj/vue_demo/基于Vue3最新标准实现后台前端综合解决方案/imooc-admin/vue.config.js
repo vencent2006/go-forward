@@ -17,6 +17,13 @@ module.exports = defineConfig({
       }
     }
   },
+  configureWebpack: {
+    resolve: {
+      fallback: {
+        path: require.resolve('path-browserify')
+      }
+    }
+  },
   chainWebpack(config) {
     // 首先把原来svg应用的loader(file-loader)先排除
     config.module.rule('svg').exclude.add(resolve('src/icons')).end()
