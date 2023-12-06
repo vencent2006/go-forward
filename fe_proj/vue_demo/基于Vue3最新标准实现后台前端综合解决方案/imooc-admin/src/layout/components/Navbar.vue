@@ -2,6 +2,8 @@
   <div class="navbar">
     <!-- 汉堡按钮，就是展开/收起导航，不知道为啥叫汉堡 -->
     <hamburger class="hamburger-container" />
+    <!--  面包屑  -->
+    <breadcrumb class="breadcrumb-container" />
     <!--  右部菜单栏  -->
     <div class="right-menu">
       <!-- 头像 -->
@@ -32,6 +34,7 @@
 
 <script setup>
 import Hamburger from '@/components/Hamburger'
+import Breadcrumb from '@/components/Breadcrumb'
 import {} from 'vue'
 </script>
 
@@ -57,13 +60,17 @@ import {} from 'vue'
     }
   }
 
+  .breadcrumb-container {
+    float: left;
+  }
+
   .right-menu {
     display: flex;
     align-items: center;
     float: right;
     padding-right: 16px;
 
-    ::v-deep .avatar-container {
+    :deep(.avatar-container) {
       cursor: pointer;
       .avatar-wrapper {
         margin-top: 5px;
