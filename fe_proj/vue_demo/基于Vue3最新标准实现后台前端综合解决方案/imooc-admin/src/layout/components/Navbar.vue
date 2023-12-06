@@ -1,5 +1,8 @@
 <template>
   <div class="navbar">
+    <!-- 汉堡按钮，就是展开/收起导航，不知道为啥叫汉堡 -->
+    <hamburger class="hamburger-container" />
+    <!--  右部菜单栏  -->
     <div class="right-menu">
       <!-- 头像 -->
       <el-dropdown class="avatar-container" trigger="click">
@@ -28,6 +31,7 @@
 </template>
 
 <script setup>
+import Hamburger from '@/components/Hamburger'
 import {} from 'vue'
 </script>
 
@@ -38,6 +42,20 @@ import {} from 'vue'
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
+  .hamburger-container {
+    line-height: 46px;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    //  hover 动画
+    transition: background 0.5s;
+
+    &:hover {
+      // hover了，背景颜色变了
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
 
   .right-menu {
     display: flex;

@@ -1,6 +1,7 @@
 <template>
   <!-- 一级 menu 菜单 -->
   <el-menu
+    :collapse="!$store.getters.sidebarOpened"
     :default-active="activeMenu"
     :background-color="$store.getters.cssVar.menuBg"
     :text-color="$store.getters.cssVar.menuText"
@@ -37,4 +38,13 @@ const activeMenu = computed(() => {
   const { path } = route
   return path
 })
+
+// const a = () => ({ position: {} })
+const a = { position: {} }
+console.log(typeof a)
+console.log(a)
+// eslint-disable-next-line no-empty
+const b = { position: {} }
+console.log(typeof b)
+console.log(b)
 </script>
