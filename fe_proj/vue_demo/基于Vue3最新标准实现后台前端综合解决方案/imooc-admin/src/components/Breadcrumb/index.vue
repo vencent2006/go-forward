@@ -1,18 +1,25 @@
 <template>
   <el-breadcrumb class="breadcrumb" separator="/">
-    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-    <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-    <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-    <!-- 面包屑的最后一项 -->
-    <el-breadcrumb-item>
-      <span class="no-redirect">活动详情</span>
+    <el-breadcrumb-item
+      v-for="(item, index) in breadcrumbData"
+      :key="item.path"
+    >
+      <!-- 不可点击项 | 最后一项不可点击 -->
+      <span v-if="index === breadcrumbData.length - 1" class="no-redirect">{{
+        item.meta.title
+      }}</span>
+      <!-- 可点击项 -->
+      <a v-else class="redirect" @click.prevent="onLinkClick(item)">{{
+        item.meta.title
+      }}</a>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 const route = useRoute()
 // 生成数组
 const breadcrumbData = ref([])
@@ -32,6 +39,16 @@ watch(
     immediate: true // 非惰性
   }
 )
+// 处理点击事件
+const router = useRouter()
+const onLinkClick = (item) => {
+  console.log(item)
+  router.push(item.path)
+}
+
+// 将来需要进行主题替换，所以这里获取下动态样式
+const store = useStore()
+const linkHoverColor = ref(store.getters.cssVar.menuBg)
 </script>
 
 <style lang="scss" scoped>
@@ -44,6 +61,16 @@ watch(
   :deep(.no-redirect) {
     color: #97a8be;
     cursor: text;
+  }
+
+  .redirect {
+    color: #666;
+    font-weight: 600;
+  }
+
+  .redirect:hover {
+    //  将来需要进行主题替换，所以这里不去写死样式
+    color: v-bind(linkHoverColor);
   }
 }
 </style>
