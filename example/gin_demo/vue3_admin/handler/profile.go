@@ -28,7 +28,8 @@ func HandleProfile(c *gin.Context) {
 	r := &Response{
 		Code: CODE_SUCC,
 		Data: Profile{
-			Avatar: "https://m.imooc.com/static/wap/static/common/img/logo-small@2x.png",
+			//Avatar: "https://m.imooc.com/static/wap/static/common/img/logo-small@2x.png",
+			Avatar: "https://img.t.sinajs.cn/t6/style/images/global_nav/v7/WB_logo.png",
 			Id:     "61270a9ec87aa543c9c3420",
 			Permission: PermissionInfo{
 				Menus: []string{"userManage", "roleList", "permissionList", "articleRanking", "articleCreate"},
