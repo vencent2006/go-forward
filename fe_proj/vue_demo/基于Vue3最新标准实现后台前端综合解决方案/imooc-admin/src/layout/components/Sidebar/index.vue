@@ -6,9 +6,7 @@
         shape="square"
         src="https://img2.baidu.com/it/u=648933335,1401463189&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400"
       />
-      <h1 class="logo-title" v-if="$store.getters.sidebarOpened">
-        {{ $t('msg.test') }}
-      </h1>
+      <h1 class="logo-title" v-if="$store.getters.sidebarOpened">admin</h1>
     </div>
     <el-scrollbar>
       <sidebar-menu></sidebar-menu>
