@@ -6,7 +6,9 @@
         shape="square"
         src="https://img2.baidu.com/it/u=648933335,1401463189&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400"
       />
-      <h1 class="logo-title" v-if="$store.getters.sidebarOpened">admin</h1>
+      <h1 class="logo-title" v-if="$store.getters.sidebarOpened">
+        {{ username }}
+      </h1>
     </div>
     <el-scrollbar>
       <sidebar-menu></sidebar-menu>
@@ -16,8 +18,14 @@
 
 <script setup>
 import SidebarMenu from './SidebarMenu'
-import {} from 'vue'
+
+import { ref } from 'vue'
+import { useStore } from 'vuex'
 const logoHeight = 44
+
+// username
+const store = useStore()
+const username = ref(store.getters.userInfo.username)
 </script>
 <style lang="scss" scoped>
 .logo-container {
