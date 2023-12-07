@@ -15,4 +15,8 @@ import '@/permission'
 const app = createApp(App)
 installElementPlus(app)
 installIcons(app)
-app.use(store).use(router).use(i18n).mount('#app')
+app
+  .use(store) // 全局状态
+  .use(router) // 路由
+  .use(i18n) // 国际化
+  .mount('#app') // 挂载点
