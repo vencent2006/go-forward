@@ -19,13 +19,19 @@
 <script setup>
 import SidebarMenu from './SidebarMenu'
 
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 const logoHeight = 44
 
 // username
 const store = useStore()
-const username = ref(store.getters.userInfo.username)
+const username = computed(() => {
+  if (store.getters.language === 'zh') {
+    return store.getters.userInfo.title
+  } else {
+    return store.getters.userInfo.username
+  }
+})
 </script>
 <style lang="scss" scoped>
 .logo-container {

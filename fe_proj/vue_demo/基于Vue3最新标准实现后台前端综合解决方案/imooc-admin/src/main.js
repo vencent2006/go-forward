@@ -19,4 +19,4 @@ app
   .use(store) // 全局状态
   .use(router) // 路由
   .use(i18n) // 国际化
-  .mount('#app') // 挂载点
+  .mount('#app') // 挂载点z
