@@ -1,4 +1,3 @@
-import variables from '@/styles/variables.module.scss'
 // 快捷访问
 const getters = {
   token: (state) => state.user.token,
@@ -14,7 +13,7 @@ const getters = {
    * css 全局变量
    * @returns {*}
    */
-  cssVar: (state) => variables,
+  cssVar: (state) => state.theme.variables,
   /**
    * 侧边栏(sidebar) 打开状态
    * @returns {boolean} true: 打开状态, false: 关闭状态
