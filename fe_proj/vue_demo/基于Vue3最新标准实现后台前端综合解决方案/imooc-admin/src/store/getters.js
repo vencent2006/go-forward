@@ -24,7 +24,11 @@ const getters = {
    * 国际化的语言
    * @returns {*}
    */
-  language: (state) => state.app.language
+  language: (state) => state.app.language,
+  /**
+   * 主题色
+   */
+  mainColor: (state) => state.theme.mainColor
 }
 
 export default getters
