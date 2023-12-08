@@ -6,6 +6,8 @@
     <breadcrumb class="breadcrumb-container" />
     <!--  右部菜单栏  -->
     <div class="right-menu">
+      <!--   主题颜色选择   -->
+      <theme-picker class="right-menu-item hover-effect"></theme-picker>
       <!-- 国际化选择 -->
       <lang-select class="right-menu-item hover-effect" />
       <!-- 头像 -->
@@ -40,6 +42,7 @@
 import Hamburger from '@/components/Hamburger'
 import Breadcrumb from '@/components/Breadcrumb'
 import LangSelect from '@/components/LangSelect'
+import ThemePicker from '@/components/ThemePicker'
 import {} from 'vue'
 </script>
 
