@@ -6,6 +6,8 @@
     <breadcrumb class="breadcrumb-container" />
     <!--  右部菜单栏  -->
     <div class="right-menu">
+      <!-- header search -->
+      <header-search class="right-menu-item hover-effect" />
       <!--   主题颜色选择   -->
       <theme-picker class="right-menu-item hover-effect"></theme-picker>
       <!-- 国际化选择 -->
@@ -46,6 +48,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import LangSelect from '@/components/LangSelect'
 import ThemePicker from '@/components/ThemePicker'
 import Screenfull from '@/components/Screenfull'
+import HeaderSearch from '@/components/HeaderSearch'
 </script>
 
 <style lang="scss" scoped>

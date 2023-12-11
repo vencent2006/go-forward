@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "echarts": "^5.3.2",
     "element-plus": "^1.0.2-beta.28",
+    "fuse.js": "^6.4.6",
     "md5": "^2.3.0",
     "path-browserify": "^1.0.1",
     "screenfull": "^5.1.0",
