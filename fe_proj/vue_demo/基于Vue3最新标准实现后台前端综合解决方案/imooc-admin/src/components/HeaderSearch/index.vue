@@ -1,11 +1,8 @@
 <template>
   <div :class="{ show: isShow }" class="header-search">
-    <svg-icon
-      id="guide-search"
-      class-name="search-icon"
-      icon="search"
-      @click.stop="onShowClick"
-    />
+    <a href="javascript:" @click.stop="onShowClick">
+      <svg-icon id="guide-search" class-name="search-icon" icon="search" />
+    </a>
     <el-select
       ref="headerSearchSelectRef"
       class="header-search-select"
@@ -70,7 +67,7 @@ const onSelectChange = () => {
     display: inline-block;
     vertical-align: middle;
 
-    ::v-deep .el-input__inner {
+    :deep(.el-input__inner) {
       border-radius: 0;
       border: 0;
       padding-left: 0;
