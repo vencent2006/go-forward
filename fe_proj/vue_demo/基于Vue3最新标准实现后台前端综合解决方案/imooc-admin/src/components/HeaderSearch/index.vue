@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { generateRoutes } from './FuseData'
 import Fuse from 'fuse.js'
 import { filterRouters } from '@/utils/route'
@@ -90,6 +90,25 @@ const fuse = new Fuse(searchPool.value, {
       weight: 0.3
     }
   ]
+})
+
+/**
+ * 关闭 search 的处理事件
+ */
+const onClose = () => {
+  headerSearchSelectRef.value.blur()
+  isShow.value = false // 看scss 控制 &.show .header-search-select 是否展示
+  searchOptions.value = [] // 清空 searchOptions
+}
+/**
+ * 监听 search 打开，处理 close 事件
+ */
+watch(isShow, (val) => {
+  if (val) {
+    document.body.addEventListener('click', onClose)
+  } else {
+    document.body.removeEventListener('click', onClose)
+  }
 })
 </script>
 
