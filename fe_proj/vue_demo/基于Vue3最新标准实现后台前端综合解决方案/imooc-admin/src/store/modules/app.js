@@ -1,4 +1,4 @@
-import { LANG } from '@/constant'
+import { LANG, TAGS_VIEW } from '@/constant'
 import { getItem, setItem } from '@/utils/storage'
 
 export default {
@@ -6,8 +6,9 @@ export default {
   // () => ({sidebarOpened: true}), 这么写才能返回一个对象
   // () => {}, 这么写是单纯的执行一个函数，并没有返回值
   state: () => ({
-    sidebarOpened: true,
-    language: getItem(LANG) || 'zh'
+    sidebarOpened: true, // 侧边栏 是否 展开
+    language: getItem(LANG) || 'zh', // 国际化 的 当前语言
+    tagsViewList: getItem(TAGS_VIEW) || [] // tag view
   }),
   mutations: {
     /**
@@ -22,6 +23,19 @@ export default {
     setLanguage(state, lang) {
       setItem(LANG, lang) // 设置到localstorage里
       state.language = lang
+    },
+    /**
+     * 添加 tags
+     */
+    addTagsViewList(state, tag) {
+      const isFind = state.tagsViewList.find((item) => {
+        return item.path === tag.path
+      })
+      // 处理重复
+      if (!isFind) {
+        state.tagsViewList.push(tag) // 如果没找到，就放进 tagsViewList
+        setItem(TAGS_VIEW, state.tagsViewList) // 并存入 localStorage
+      }
     }
   },
   actions: {}
