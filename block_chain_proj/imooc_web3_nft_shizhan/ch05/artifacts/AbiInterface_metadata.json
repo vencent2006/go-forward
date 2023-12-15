@@ -1,0 +1,68 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_x",
+						"type": "uint256"
+					}
+				],
+				"name": "setX",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"custom:dev-run-script": "./scripts/deploy_with_ethers.ts",
+			"details": "Store & retrieve value in a variable",
+			"kind": "dev",
+			"methods": {},
+			"title": "Storage",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"AbiInterface.sol": "AbiInterface"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"AbiInterface.sol": {
+			"keccak256": "0x8b34f6117e6561e8795b95f797e9e1a6c4e06b34ec81ad8eb98db8e8e4675fc5",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://9b9ca0eabb3a592ceec73453049d80df40a028c61b383d215d04279b0908d3fc",
+				"dweb:/ipfs/QmZ5pBoUmxJCtJJ2c7XipNQpRmSQK3Z5neNACPTK6uRDpq"
+			]
+		}
+	},
+	"version": 1
+}
