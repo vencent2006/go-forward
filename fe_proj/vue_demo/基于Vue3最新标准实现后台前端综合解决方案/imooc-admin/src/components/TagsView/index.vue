@@ -32,7 +32,7 @@
 <script setup>
 import ContextMenu from './ContextMenu.vue'
 import { useRoute } from 'vue-router'
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 const route = useRoute()
 
@@ -71,6 +71,25 @@ const openMenu = (e, index) => {
   selectIndex.value = index
   visible.value = true
 }
+
+/**
+ * 关闭 menu
+ */
+const closeMenu = () => {
+  visible.value = false
+}
+
+/**
+ * 监听变化
+ * 点击别的地方的时候, 就关闭"右击"打开的菜单
+ */
+watch(visible, (val) => {
+  if (val) {
+    document.body.addEventListener('click', closeMenu)
+  } else {
+    document.body.removeEventListener('click', closeMenu)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
