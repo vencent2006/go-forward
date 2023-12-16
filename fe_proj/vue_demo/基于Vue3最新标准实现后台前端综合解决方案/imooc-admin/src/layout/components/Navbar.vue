@@ -3,7 +3,7 @@
     <!-- 汉堡按钮，就是展开/收起导航，不知道为啥叫汉堡 -->
     <hamburger class="hamburger-container" />
     <!--  面包屑  -->
-    <breadcrumb class="breadcrumb-container" />
+    <breadcrumb id="guide-breadcrumb" class="breadcrumb-container" />
     <!--  右部菜单栏  -->
     <div class="right-menu">
       <!-- 引导页 -->

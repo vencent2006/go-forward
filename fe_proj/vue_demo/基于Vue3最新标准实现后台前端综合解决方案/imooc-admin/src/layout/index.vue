@@ -5,6 +5,7 @@
   >
     <!-- 左侧 menu 使用了行内样式，方便变化主题色 -->
     <sidebar
+      id="guide-sidebar"
       class="sidebar-container"
       :style="{ backgroundColor: variables.menuBg }"
     ></sidebar>
@@ -13,7 +14,7 @@
         <!-- 顶部 navbar -->
         <navbar />
         <!-- tags -->
-        <tags-view></tags-view>
+        <tags-view id="guide-tags"></tags-view>
       </div>
       <!-- 内容区 -->
       <app-main></app-main>
