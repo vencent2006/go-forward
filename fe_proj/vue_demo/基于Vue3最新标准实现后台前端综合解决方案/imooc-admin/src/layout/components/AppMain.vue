@@ -6,7 +6,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import { generateTitle } from '@/utils/i18n'
+import { generateTitle, watchSwitchLang } from '@/utils/i18n'
 import { useStore } from 'vuex'
 import { watch } from 'vue'
 import { isTags } from '@/utils/tags'
@@ -51,6 +51,20 @@ watch(
     immediate: true // 不是惰性，而是立即生效
   }
 )
+/**
+ * 国际化 tags
+ */
+watchSwitchLang(() => {
+  store.getters.tagsViewList.forEach((route, index) => {
+    store.commit('app/changeTagsView', {
+      index,
+      tag: {
+        ...route,
+        title: getTitle(route)
+      }
+    })
+  })
+})
 </script>
 
 <style lang="scss" scoped>

@@ -36,6 +36,13 @@ export default {
         state.tagsViewList.push(tag) // 如果没找到，就放进 tagsViewList
         setItem(TAGS_VIEW, state.tagsViewList) // 并存入 localStorage
       }
+    },
+    /**
+     * 为指定的 tag 修改 title
+     */
+    changeTagsView(state, { index, tag }) {
+      state.tagsViewList[index] = tag
+      setItem(TAGS_VIEW, state.tagsViewList)
     }
   },
   actions: {}
