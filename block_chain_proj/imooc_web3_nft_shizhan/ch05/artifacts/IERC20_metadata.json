@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.19+commit.7dd6d404"
+		"version": "0.8.17+commit.8df45f5f"
 	},
 	"language": "Solidity",
 	"output": {
@@ -63,7 +63,7 @@
 		"compilationTarget": {
 			"IERC20.sol": "IERC20"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -76,11 +76,11 @@
 	},
 	"sources": {
 		"IERC20.sol": {
-			"keccak256": "0xc826a37c380063c7e43427047f06f140539df313e85f6c857ce56045dd6d41f3",
+			"keccak256": "0x8e119eaee7bdafb57a9d0acb1894582c20cb1770b1037f1a8f837da9a49d1337",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://1495421d7dfc9c9e84eca43e152332fc9ae31994c29730852a5ce7634c3aeda3",
-				"dweb:/ipfs/QmRvoaKDyTt7ot66oGJRoqzNzzdrV5LX7A1GxFX7QvxZbo"
+				"bzz-raw://760eb018ba15ac831120f69a71d9d022d9f103787bd0920243513de0726bbc32",
+				"dweb:/ipfs/QmYkf5KAAdjqadaqNQHtWvYpuCRXAkByXQT54qRrHj35St"
 			]
 		}
 	},

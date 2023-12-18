@@ -1,13 +1,13 @@
 {
-	"id": "1709f902c25d87f35b66e21ee05aa511",
+	"id": "242cf7a57f107d984cb113b3e27f35be",
 	"_format": "hh-sol-build-info-1",
-	"solcVersion": "0.8.19",
-	"solcLongVersion": "0.8.19+commit.7dd6d404",
+	"solcVersion": "0.8.17",
+	"solcLongVersion": "0.8.17+commit.8df45f5f",
 	"input": {
 		"language": "Solidity",
 		"sources": {
 			"IERC20.sol": {
-				"content": "// SPDX-License-Identifier: GPL-3.0\n\npragma solidity >=0.8.2 <0.9.0;\n\n/**\n * @title Storage\n * @dev Store & retrieve value in a variable\n * @custom:dev-run-script ./scripts/deploy_with_ethers.ts\n */\n \n interface IERC20{\n    function name() external view returns (string memory);\n    function symbol() external view returns (string memory);\n    function decimals() external view returns (uint8);\n}\n\n\n\n\n// OxdAC17F958D2ee523a2206206994597C13D831ec7"
+				"content": "// SPDX-License-Identifier: GPL-3.0\n\npragma solidity >=0.8.2 <0.9.0;\n\n/**\n * @title Storage\n * @dev Store & retrieve value in a variable\n * @custom:dev-run-script ./scripts/deploy_with_ethers.ts\n */\n \n interface IERC20{\n    function name() external view returns (string memory);\n    function symbol() external view returns (string memory);\n    function decimals() external view returns (uint8);\n}\n\n\n\n\n// 0xdAC17F958D2ee523a2206206994597C13D831ec7"
 			}
 		},
 		"settings": {
@@ -118,7 +118,7 @@
 							"symbol()": "95d89b41"
 						}
 					},
-					"metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"custom:dev-run-script\":\"./scripts/deploy_with_ethers.ts\",\"details\":\"Store & retrieve value in a variable\",\"kind\":\"dev\",\"methods\":{},\"title\":\"Storage\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"IERC20.sol\":\"IERC20\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"IERC20.sol\":{\"keccak256\":\"0xc826a37c380063c7e43427047f06f140539df313e85f6c857ce56045dd6d41f3\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://1495421d7dfc9c9e84eca43e152332fc9ae31994c29730852a5ce7634c3aeda3\",\"dweb:/ipfs/QmRvoaKDyTt7ot66oGJRoqzNzzdrV5LX7A1GxFX7QvxZbo\"]}},\"version\":1}",
+					"metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"custom:dev-run-script\":\"./scripts/deploy_with_ethers.ts\",\"details\":\"Store & retrieve value in a variable\",\"kind\":\"dev\",\"methods\":{},\"title\":\"Storage\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"IERC20.sol\":\"IERC20\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"IERC20.sol\":{\"keccak256\":\"0x8e119eaee7bdafb57a9d0acb1894582c20cb1770b1037f1a8f837da9a49d1337\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://760eb018ba15ac831120f69a71d9d022d9f103787bd0920243513de0726bbc32\",\"dweb:/ipfs/QmYkf5KAAdjqadaqNQHtWvYpuCRXAkByXQT54qRrHj35St\"]}},\"version\":1}",
 					"storageLayout": {
 						"storage": [],
 						"types": null
