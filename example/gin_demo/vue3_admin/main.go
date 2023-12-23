@@ -10,6 +10,7 @@ func main() {
 
 	r.POST("/api/sys/login", handler.HandleLogin)
 	r.GET("/api/sys/profile", handler.HandleProfile)
+	r.GET("/v1/api/logging/suggestions/getorgkeys", handler.GetTenantList)
 
 	r.Run(":8888")
 }
