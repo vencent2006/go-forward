@@ -1,0 +1,64 @@
+{
+	"compiler": {
+		"version": "0.8.17+commit.8df45f5f"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_gas",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "callForever",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"forever.sol": "GasCaller"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"forever.sol": {
+			"keccak256": "0x999c80bcef57e14989c6e1eb763c6446ca13adbeaa39fce632982633cf4814c5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://97f485da64429c354e29e66477691374fee62bd45216c8ae8a9d373a5866b695",
+				"dweb:/ipfs/QmQRbEKT5eFmjKfEREGPWQxDbaA8cnvNfLakdQv3wMx5cG"
+			]
+		}
+	},
+	"version": 1
+}
