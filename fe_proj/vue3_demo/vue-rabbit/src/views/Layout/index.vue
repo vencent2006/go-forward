@@ -2,10 +2,16 @@
 import LayoutNav from './components/LayoutNav.vue'
 import LayoutHeader from './components/LayoutHeader.vue'
 import LayoutFooter from './components/LayoutFooter.vue'
-import LayoutFiexed from './components/LayoutFiexed.vue'
+import LayoutFixed from './components/LayoutFixed.vue'
+import {onMounted} from 'vue'
+import {useCategoryStore} from '@/stores/category'
+const categoryStore = useCategoryStore()
+onMounted(async () => {
+  await categoryStore.getCategory()
+})
 </script>
 <template>
-  <LayoutFiexed />
+  <LayoutFixed />
   <LayoutNav />
   <LayoutHeader />
   <!-- 二级路由出口 -->
