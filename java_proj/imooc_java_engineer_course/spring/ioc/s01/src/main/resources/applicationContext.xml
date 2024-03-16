@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="sweetApple" class="com.imooc.spring.ioc.entity.Apple">
@@ -17,5 +17,17 @@
         <property name="title" value="金帅"/>
         <property name="origin" value="中国"/>
         <property name="color" value="黄色"/>
+    </bean>
+    <bean id="lily" class="com.imooc.spring.ioc.entity.Child">
+        <property name="name" value="莉莉"/>
+        <property name="apple" ref="sweetApple"/>
+    </bean>
+    <bean id="andy" class="com.imooc.spring.ioc.entity.Child">
+        <property name="name" value="安迪"/>
+        <property name="apple" ref="sourApple"/>
+    </bean>
+    <bean id="luna" class="com.imooc.spring.ioc.entity.Child">
+        <property name="name" value="露娜"/>
+        <property name="apple" ref="softApple"/>
     </bean>
 </beans>
