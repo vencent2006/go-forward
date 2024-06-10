@@ -27,13 +27,42 @@
     1. role的修改
     2. active的修改
     3. delete_user
+
+    5-1
+    1. gifts 奖品结构的确定
+    2. gifts 奖品的读取
+    3. gifts 添加
+    4. gifts 初始化
+
+    奖池的存储格式
+    {
+        level1: {
+            level1: {
+                gift_name1: {
+                    name: xx
+                    count: xx
+                },
+                gift_name2: {
+                    name: xx
+                    count: xx
+                }
+            },
+            level2: {},
+            level3: {}
+        },
+        level2: {
+            level1: {},
+            level2: {},
+            level3: {}
+        }
+    }
 """
 import json
 import os.path
 import time
 
-from common.consts import ROLES
-from common.error import UserExistsError, RoleError
+from common.consts import ROLES, FIRSTLEVELS, SECONDLEVELS
+from common.error import UserExistsError, RoleError, LevelError, GiftCountError
 from common.utils import check_file, timestamp_to_str
 
 
@@ -42,8 +71,12 @@ class Base(object):
         self.user_json = user_json
         self.gift_json = gift_json
 
+        # 检查数据
         self.__check_user_json()
         self.__check_gift_json()
+
+        # 初始化
+        self.__init_gifts()
         return
 
     def __check_user_json(self):
@@ -130,6 +163,66 @@ class Base(object):
             f.write(json_data)
         return delete_user
 
+    def read_gift(self):
+        with open(self.gift_json, 'r') as f:
+            data = json.loads(f.read())
+        return data
+
+    def __init_gifts(self):
+        data = {
+            'level1': {
+                'level1': {},
+                'level2': {},
+                'level3': {}
+            },
+            'level2': {
+                'level1': {},
+                'level2': {},
+                'level3': {}
+            },
+            'level3': {
+                'level1': {},
+                'level2': {},
+                'level3': {}
+            },
+            'level4': {
+                'level1': {},
+                'level2': {},
+                'level3': {}
+            }
+        }
+        gifts = self.read_gift()
+        if len(gifts) != 0:
+            return
+        json_data = json.dumps(data)
+        with open(self.gift_json, 'w') as f:
+            f.write(json_data)
+        return
+
+    def __write_gift(self, first_level, second_level, gift_name, gift_count):
+        if first_level not in FIRSTLEVELS:
+            raise LevelError('first level %s not exist' % first_level)
+        if second_level not in SECONDLEVELS:
+            raise LevelError('second level %s not exist' % second_level)
+        if gift_count <= 0:
+            raise GiftCountError('gift count %s invalid ' % gift_count)
+        gifts = self.read_gift()
+        current_gift_pool = gifts[first_level]
+        current_second_gift_pool = current_gift_pool[second_level]
+        if gift_name in current_second_gift_pool:
+            # 如果存在就累加值
+            current_second_gift_pool[gift_name]['count'] = current_second_gift_pool[gift_name]['count'] + gift_count
+        else:
+            # 如果不存在，就设置值
+            current_second_gift_pool[gift_name] = {'name': gift_name, 'count': gift_count}
+
+        # 写回数据
+        gifts[first_level] = current_second_gift_pool
+        json_data = json.dumps(gifts)
+        with open(self.gift_json, 'w') as f:
+            f.write(json_data)
+        return
+
 
 if __name__ == '__main__':
     gift_path = os.path.join(os.getcwd(), 'storage', 'gift.json')
@@ -142,4 +235,5 @@ if __name__ == '__main__':
     # base.write_user(username='dewei', role='admin')
     # result = base.change_role(username='dewei', role='admin')
     # result = base.delete_user(username='dewei')
-    # print(result)
+    result = base.read_gift()
+    print(result)
