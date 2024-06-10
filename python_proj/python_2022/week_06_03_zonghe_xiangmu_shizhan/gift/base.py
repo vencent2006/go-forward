@@ -56,6 +56,10 @@
             level3: {}
         }
     }
+
+    6-1
+    1: gift 修改（数量递减）
+    2: gift 奖品删除
 """
 import json
 import os.path
@@ -189,15 +193,16 @@ class Base(object):
         return
 
     def write_gift(self, first_level, second_level, gift_name, gift_count):
-        if first_level not in FIRSTLEVELS:
-            raise LevelError('first level %s not exist' % first_level)
-        if second_level not in SECONDLEVELS:
-            raise LevelError('second level %s not exist' % second_level)
-        if gift_count <= 0:
-            raise GiftCountError('gift count %s invalid ' % gift_count)
-        gifts = self.read_gift()
-        current_gift_pool = gifts[first_level]
-        current_second_gift_pool = current_gift_pool[second_level]
+        self.__check_gift_count(gift_count)
+
+        data = self.__check_and_get_gift(first_level, second_level, gift_name)
+        if data == False:
+            return data
+
+        gifts = data.get('gifts')
+        current_gift_pool = data.get('level_one')
+        current_second_gift_pool = data.get('level_two')
+
         if gift_name in current_second_gift_pool:
             # 如果存在就累加值
             current_second_gift_pool[gift_name]['count'] = current_second_gift_pool[gift_name]['count'] + gift_count
@@ -209,7 +214,67 @@ class Base(object):
         current_gift_pool[second_level] = current_second_gift_pool
         gifts[first_level] = current_gift_pool
         self.__save_gift(gifts)  # 存储
-        return
+
+    def gift_update(self, first_level, second_level, gift_name, gift_count=1):
+        self.__check_gift_count(gift_count)
+
+        data = self.__check_and_get_gift(first_level, second_level, gift_name)
+        if data == False:
+            return data
+
+        gifts = data.get('gifts')
+        current_gift_pool = data.get('level_one')
+        current_second_gift_pool = data.get('level_two')
+
+        current_gift = current_second_gift_pool[gift_name]
+        if current_gift['count'] >= gift_count:
+            current_gift['count'] -= gift_count
+        else:
+            raise GiftCountError('gift count %s not enough to - %s ' % (current_gift['count'], gift_count))
+        # 写回
+        current_second_gift_pool[gift_name] = current_gift
+        current_gift_pool[second_level] = current_second_gift_pool
+        gifts[first_level] = current_gift_pool
+        self.__save_gift(gifts)
+
+    def delete_gift(self, first_level, second_level, gift_name):
+        data = self.__check_and_get_gift(first_level, second_level, gift_name)
+        if data == False:
+            return data
+
+        gifts = data.get('gifts')
+        current_gift_pool = data.get('level_one')
+        current_second_gift_pool = data.get('level_two')
+        # 删除
+        delete_gift_data = current_second_gift_pool.pop(gift_name)
+        # 存储
+        current_gift_pool[second_level] = current_second_gift_pool
+        gifts[first_level] = current_gift_pool
+        self.__save_gift(gifts)
+        return delete_gift_data
+
+    def __check_and_get_gift(self, first_level, second_level, gift_name):
+        self.__check_gift_level(first_level, second_level)
+        gifts = self.read_gift()
+        level_one = gifts[first_level]
+        level_two = level_one[second_level]
+        if gift_name not in level_two:
+            return False
+        return {
+            'level_one': level_one,
+            'level_two': level_two,
+            'gifts': gifts
+        }
+
+    def __check_gift_count(self, gift_count):
+        if gift_count <= 0:
+            raise GiftCountError('gift count %s invalid ' % gift_count)
+
+    def __check_gift_level(self, first_level, second_level):
+        if first_level not in FIRSTLEVELS:
+            raise LevelError('first level %s not exist' % first_level)
+        if second_level not in SECONDLEVELS:
+            raise LevelError('second level %s not exist' % second_level)
 
     def __save(self, data, path):
         json_data = json.dumps(data)
@@ -236,7 +301,7 @@ if __name__ == '__main__':
     # result = base.delete_user(username='dewei')
     result = base.read_gift()
     print(result)
-    base.write_gift(first_level='level1', second_level='level2', gift_name='iphone10', gift_count=1)
-    base.write_gift(first_level='level1', second_level='level2', gift_name='iphone11', gift_count=11)
+    # base.write_gift(first_level='level1', second_level='level2', gift_name='iphone10', gift_count=1)
+    base.delete_gift(first_level='level1', second_level='level2', gift_name='iphone10')
     result = base.read_gift()
     print(result)

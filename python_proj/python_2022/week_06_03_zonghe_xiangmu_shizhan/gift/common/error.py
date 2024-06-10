@@ -1,5 +1,6 @@
 # coding:utf-8
 
+# ----- file error -----
 class NotPathError(Exception):
     def __init__(self, message):
         self.message = message
@@ -15,6 +16,7 @@ class NotFileError(Exception):
         self.message = message
 
 
+# ----- user error -----
 class UserExistsError(Exception):
     def __init__(self, message):
         self.message = message
@@ -25,11 +27,18 @@ class RoleError(Exception):
         self.message = message
 
 
+# ----- gift error -----
+
 class LevelError(Exception):
     def __init__(self, message):
         self.message = message
 
 
 class GiftCountError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
+class GiftNameError(Exception):
     def __init__(self, message):
         self.message = message
