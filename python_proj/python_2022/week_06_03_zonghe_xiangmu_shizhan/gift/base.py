@@ -21,12 +21,19 @@
     username:{username, role, active}
 
     Python中的*（星号）和**(双星号）完全详解 https://blog.csdn.net/m0_48891301/article/details/134004143
+    Python | 一文简单搞懂json.dump()与json.dumps()的区别 https://blog.csdn.net/weixin_46264660/article/details/130238426
+
+    4-1
+    1. role的修改
+    2. active的修改
+    3. delete_user
 """
 import json
 import os.path
 import time
 
-from common.error import UserExistsError
+from common.consts import ROLES
+from common.error import UserExistsError, RoleError
 from common.utils import check_file, timestamp_to_str
 
 
@@ -58,7 +65,7 @@ class Base(object):
                 data[username] = v
         return data
 
-    def write_user(self, **user):
+    def __write_user(self, **user):
         if 'username' not in user:
             raise ValueError('missing username')
         if 'role' not in user:
@@ -82,6 +89,47 @@ class Base(object):
             f.write(json_users)
         return
 
+    def __change_role(self, username, role):
+        users = self.__read_users()
+        user = users[username]  # {'username':{role, create_time}}
+        if not user:
+            return False
+        if role not in ROLES:
+            raise RoleError('not use role %s' % role)
+        user['role'] = role
+        user['update_time'] = time.time()
+        users['username'] = user
+
+        json_data = json.dumps(users)
+        with open(self.user_json, 'w') as f:
+            f.write(json_data)
+        return True
+
+    def __change_active(self, username):
+        users = self.__read_users()
+        user = users.get(username)
+        if not user:
+            return False
+        user['active'] = not user['active']
+        user['update_time'] = time.time()
+        users['username'] = user
+
+        json_data = json.dumps(users)
+        with open(self.user_json, 'w') as f:
+            f.write(json_data)
+        return True
+
+    def __delete_user(self, username):
+        users = self.__read_users()
+        user = users.get(username)
+        if not user:
+            return False
+        delete_user = users.pop(username)
+        json_data = json.dumps(users)
+        with open(self.user_json, 'w') as f:
+            f.write(json_data)
+        return delete_user
+
 
 if __name__ == '__main__':
     gift_path = os.path.join(os.getcwd(), 'storage', 'gift.json')
@@ -91,4 +139,7 @@ if __name__ == '__main__':
     print(user_path)
 
     base = Base(user_json=user_path, gift_json=gift_path)
-    base.write_user(username='dewei', role='admin')
+    # base.write_user(username='dewei', role='admin')
+    # result = base.change_role(username='dewei', role='admin')
+    # result = base.delete_user(username='dewei')
+    # print(result)
