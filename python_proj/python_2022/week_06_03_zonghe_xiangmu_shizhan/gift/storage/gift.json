@@ -1,1 +1,1 @@
-{"level1": {"level1": {}, "level2": {}, "level3": {}}, "level2": {"level1": {}, "level2": {}, "level3": {}}, "level3": {"level1": {}, "level2": {}, "level3": {}}, "level4": {"level1": {}, "level2": {}, "level3": {}}}
+{"level1": {"level1": {}, "level2": {"iphone10": {"name": "iphone10", "count": 3}, "iphone11": {"name": "iphone11", "count": 33}}, "level3": {}}, "level2": {"level1": {}, "level2": {}, "level3": {}}, "level3": {"level1": {}, "level2": {}, "level3": {}}, "level4": {"level1": {}, "level2": {}, "level3": {}}}

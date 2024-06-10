@@ -110,16 +110,13 @@ class Base(object):
         user['gifts'] = []
 
         users = self.__read_users()
-        print(users)
-        # return
+
         if user['username'] in users:
             raise UserExistsError(message='username %s already existed' % user['username'])
         users.update(
             {user['username']: user}
         )
-        json_users = json.dumps(users)
-        with open(self.user_json, 'w') as f:
-            f.write(json_users)
+        self.__save_user(users)
         return
 
     def __change_role(self, username, role):
@@ -133,9 +130,7 @@ class Base(object):
         user['update_time'] = time.time()
         users['username'] = user
 
-        json_data = json.dumps(users)
-        with open(self.user_json, 'w') as f:
-            f.write(json_data)
+        self.__save_user(users)
         return True
 
     def __change_active(self, username):
@@ -147,9 +142,7 @@ class Base(object):
         user['update_time'] = time.time()
         users['username'] = user
 
-        json_data = json.dumps(users)
-        with open(self.user_json, 'w') as f:
-            f.write(json_data)
+        self.__save_user(users)
         return True
 
     def __delete_user(self, username):
@@ -158,9 +151,7 @@ class Base(object):
         if not user:
             return False
         delete_user = users.pop(username)
-        json_data = json.dumps(users)
-        with open(self.user_json, 'w') as f:
-            f.write(json_data)
+        self.__save_user(users)
         return delete_user
 
     def read_gift(self):
@@ -194,12 +185,10 @@ class Base(object):
         gifts = self.read_gift()
         if len(gifts) != 0:
             return
-        json_data = json.dumps(data)
-        with open(self.gift_json, 'w') as f:
-            f.write(json_data)
+        self.__save_gift(data)
         return
 
-    def __write_gift(self, first_level, second_level, gift_name, gift_count):
+    def write_gift(self, first_level, second_level, gift_name, gift_count):
         if first_level not in FIRSTLEVELS:
             raise LevelError('first level %s not exist' % first_level)
         if second_level not in SECONDLEVELS:
@@ -217,11 +206,21 @@ class Base(object):
             current_second_gift_pool[gift_name] = {'name': gift_name, 'count': gift_count}
 
         # 写回数据
-        gifts[first_level] = current_second_gift_pool
-        json_data = json.dumps(gifts)
-        with open(self.gift_json, 'w') as f:
-            f.write(json_data)
+        current_gift_pool[second_level] = current_second_gift_pool
+        gifts[first_level] = current_gift_pool
+        self.__save_gift(gifts)  # 存储
         return
+
+    def __save(self, data, path):
+        json_data = json.dumps(data)
+        with open(path, 'w') as f:
+            f.write(json_data)
+
+    def __save_user(self, data):
+        self.__save(data, self.user_json)
+
+    def __save_gift(self, data):
+        self.__save(data, self.gift_json)
 
 
 if __name__ == '__main__':
@@ -235,5 +234,9 @@ if __name__ == '__main__':
     # base.write_user(username='dewei', role='admin')
     # result = base.change_role(username='dewei', role='admin')
     # result = base.delete_user(username='dewei')
+    result = base.read_gift()
+    print(result)
+    base.write_gift(first_level='level1', second_level='level2', gift_name='iphone10', gift_count=1)
+    base.write_gift(first_level='level1', second_level='level2', gift_name='iphone11', gift_count=11)
     result = base.read_gift()
     print(result)
