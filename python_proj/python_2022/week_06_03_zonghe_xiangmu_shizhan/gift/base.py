@@ -116,7 +116,7 @@ class Base(object):
         users = self.__read_users()
 
         if user['username'] in users:
-            raise UserExistsError(message='username %s already existed' % user['username'])
+            raise UserExistsError('username %s already existed' % user['username'])
         users.update(
             {user['username']: user}
         )
