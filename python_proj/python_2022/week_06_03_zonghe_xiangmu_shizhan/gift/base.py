@@ -192,7 +192,7 @@ class Base(object):
         self.__save_gift(data)
         return
 
-    def write_gift(self, first_level, second_level, gift_name, gift_count):
+    def __write_gift(self, first_level, second_level, gift_name, gift_count):
         self.__check_gift_count(gift_count)
 
         data = self.__check_and_get_gift(first_level, second_level, gift_name)
@@ -215,7 +215,7 @@ class Base(object):
         gifts[first_level] = current_gift_pool
         self.__save_gift(gifts)  # 存储
 
-    def gift_update(self, first_level, second_level, gift_name, gift_count=1):
+    def __gift_update(self, first_level, second_level, gift_name, gift_count=1, is_admin=False):
         self.__check_gift_count(gift_count)
 
         data = self.__check_and_get_gift(first_level, second_level, gift_name)
@@ -225,19 +225,24 @@ class Base(object):
         gifts = data.get('gifts')
         current_gift_pool = data.get('level_one')
         current_second_gift_pool = data.get('level_two')
-
         current_gift = current_second_gift_pool[gift_name]
-        if current_gift['count'] >= gift_count:
-            current_gift['count'] -= gift_count
+
+        if is_admin == True:
+            if gift_count < 0:
+                raise GiftCountError(f'gift_count({gift_count}) < 0')
+            current_gift['count'] = gift_count
         else:
-            raise GiftCountError('gift count %s not enough to - %s ' % (current_gift['count'], gift_count))
+            if current_gift['count'] >= gift_count:
+                current_gift['count'] -= gift_count
+            else:
+                raise GiftCountError('gift count %s not enough to - %s ' % (current_gift['count'], gift_count))
         # 写回
         current_second_gift_pool[gift_name] = current_gift
         current_gift_pool[second_level] = current_second_gift_pool
         gifts[first_level] = current_gift_pool
         self.__save_gift(gifts)
 
-    def delete_gift(self, first_level, second_level, gift_name):
+    def __delete_gift(self, first_level, second_level, gift_name):
         data = self.__check_and_get_gift(first_level, second_level, gift_name)
         if data == False:
             return data
@@ -258,8 +263,6 @@ class Base(object):
         gifts = self.read_gift()
         level_one = gifts[first_level]
         level_two = level_one[second_level]
-        if gift_name not in level_two:
-            return False
         return {
             'level_one': level_one,
             'level_two': level_two,
@@ -267,6 +270,7 @@ class Base(object):
         }
 
     def __check_gift_count(self, gift_count):
+        assert isinstance(gift_count, int), 'gift_count must be int'
         if gift_count <= 0:
             raise GiftCountError('gift count %s invalid ' % gift_count)
 
@@ -302,6 +306,6 @@ if __name__ == '__main__':
     result = base.read_gift()
     print(result)
     # base.write_gift(first_level='level1', second_level='level2', gift_name='iphone10', gift_count=1)
-    base.delete_gift(first_level='level1', second_level='level2', gift_name='iphone10')
-    result = base.read_gift()
-    print(result)
+    # base.delete_gift(first_level='level1', second_level='level2', gift_name='iphone10')
+    # result = base.read_gift()
+    # print(result)

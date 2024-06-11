@@ -8,12 +8,19 @@
     3:添加用户(判断当前身份是否是管理员)
     4:冻结与恢复用户
     5:修改用户身份
+
+    8-1
+    1: admin的验证（只有admin的用户才能用这个类）
+    2：任何函数都应该动态的更新getuser
+    3：奖品的添加
+    4：奖品的删除
+    5：奖品数量的更新（同步base调整）
 """
 import os
 
 from base import Base
-from common.consts import ROLE_ADMIN, ROLE_NORMAL
-from common.error import NotUserError, UserActiveError
+from common.consts import ROLE_ADMIN
+from common.error import NotUserError, UserActiveError, RoleError
 
 
 class Admin(Base):
@@ -30,6 +37,8 @@ class Admin(Base):
             raise NotUserError('not user %s' % self.username)
         if current_user.get('active') == False:
             raise UserActiveError('the user %s not active' % self.username)
+        if current_user.get('role') != ROLE_ADMIN:
+            raise RoleError('permission by admin')
 
         self.user = current_user
         self.role = current_user.get('role')
@@ -54,9 +63,22 @@ class Admin(Base):
             raise Exception('can not update yourself')
         self._Base__change_role(username=username, role=role)
 
+    def add_gift(self, first_level, second_level, gift_name, gift_count):
+        self.__check_admin()
+        self._Base__write_gift(first_level=first_level, second_level=second_level, gift_name=gift_name,
+                               gift_count=gift_count)
+
+    def delete_gift(self, first_level, second_level, gift_name):
+        self.__check_admin()
+        self._Base__delete_gift(first_level=first_level, second_level=second_level, gift_name=gift_name)
+
+    def update_gift(self, first_level, second_level, gift_name, gift_count):
+        self.__check_admin()
+        self._Base__gift_update(first_level=first_level, second_level=second_level, gift_name=gift_name,
+                                gift_count=gift_count, is_admin=True)
+
     def __check_admin(self):
-        if self.role != ROLE_ADMIN:
-            raise Exception('permission')
+        self.get_user()
 
 
 if __name__ == '__main__':
@@ -71,4 +93,7 @@ if __name__ == '__main__':
     # admin.add_user(username='dewei', role='admin')
     # admin.add_user(username='lucas', role='normal')
     # admin.update_user_active('lucas')
-    admin.update_user_role('lucas', ROLE_NORMAL)
+    # admin.update_user_role('lucas', ROLE_NORMAL)
+    admin.add_gift(first_level='level1', second_level='level1', gift_name='糖豆', gift_count=1000)
+    # admin.delete_gift(first_level='level1', second_level='level1', gift_name='糖豆')
+    admin.update_gift(first_level='level1', second_level='level1', gift_name='糖豆', gift_count=1)
