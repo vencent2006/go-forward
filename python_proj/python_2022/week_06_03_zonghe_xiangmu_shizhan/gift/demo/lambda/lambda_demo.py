@@ -1,25 +1,21 @@
 # coding:utf-8
 import unittest
+from functools import reduce
 
 
 class LambdaTestCase(unittest.TestCase):
     def test_map(self):
-        numbers = [x for x in range(1, 6)]
-        print(numbers)
+        # numbers = [x for x in range(1, 6)]
+        numbers = list(range(1, 6))
+        squared = list(map(lambda x: x ** 2, numbers))
+        print(squared)
 
+    def test_filter(self):
+        numbers = list(range(1, 9))
+        even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+        print(even_numbers)
 
-class DemoTestCase(unittest.TestCase):
-    def test_iter(self):
-        list = [1, 2, 3, 4]
-        it = iter(list)
-
-        while True:
-            try:
-                print(next(it))
-            except StopIteration:
-                print('iter finished')
-                return
-
-
-if __name__ == '__main__':
-    unittest.main()
+    def test_reduce(self):
+        numbers = list(range(1, 6))
+        product = reduce(lambda x, y: x * y, numbers)
+        print(product)
