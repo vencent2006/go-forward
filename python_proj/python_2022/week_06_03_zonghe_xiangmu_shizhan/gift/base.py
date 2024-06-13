@@ -158,7 +158,7 @@ class Base(object):
         self.__save_user(users)
         return delete_user
 
-    def read_gift(self):
+    def __read_gifts(self):
         with open(self.gift_json, 'r') as f:
             data = json.loads(f.read())
         return data
@@ -186,7 +186,7 @@ class Base(object):
                 'level3': {}
             }
         }
-        gifts = self.read_gift()
+        gifts = self.__read_gifts()
         if len(gifts) != 0:
             return
         self.__save_gift(data)
@@ -303,8 +303,8 @@ if __name__ == '__main__':
     # base.write_user(username='dewei', role='admin')
     # result = base.change_role(username='dewei', role='admin')
     # result = base.delete_user(username='dewei')
-    result = base.read_gift()
-    print(result)
+    # result = base.read_gift()
+    # print(result)
     # base.write_gift(first_level='level1', second_level='level2', gift_name='iphone10', gift_count=1)
     # base.delete_gift(first_level='level1', second_level='level2', gift_name='iphone10')
     # result = base.read_gift()

@@ -17,6 +17,7 @@
     5：奖品数量的更新（同步base调整）
 """
 import os
+import pprint
 
 from base import Base
 from common.consts import ROLE_ADMIN
@@ -31,7 +32,8 @@ class Admin(Base):
 
     def get_user(self):
         users = self._Base__read_users()  # 还是有办法获得父类的私有方法
-        print(users)
+        # print(users)
+        pprint.pprint(users)
         current_user = users.get(self.username)
         if current_user == None:
             raise NotUserError('not user %s' % self.username)
