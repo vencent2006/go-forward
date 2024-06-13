@@ -2,6 +2,7 @@
 import cmath
 import random
 import unittest
+from functools import reduce
 
 
 class ExerciseTestCase(unittest.TestCase):
@@ -40,3 +41,37 @@ class ExerciseTestCase(unittest.TestCase):
         print(list1)
         random.shuffle(list1)
         print(list1)
+
+    def test_sushu(self):
+        """
+        prime number，素数
+        :return:
+        """
+        lower = int(input('input lower:'))
+        upper = int(input('input upper:'))
+        print('\nlower:{}, upper:{}'.format(lower, upper))
+        for n in range(lower, upper + 1):
+            if n > 1:
+                for i in range(2, n):
+                    if n % i == 0:
+                        break
+                else:
+                    print(n)
+
+    def test_jiecheng(self):
+        n = int(input('input a integer: '))
+        if n < 0:
+            raise ValueError('minus not has factorial')
+        elif n == 0:
+            res = 1
+        else:
+            numbers = list(range(1, n + 1))
+            res = reduce(lambda x, y: x * y, numbers)
+
+        print(f'\n{n} factorial = {res}\n')
+
+    def test_9_multiple_9(self):
+        for i in range(1, 10):
+            for j in range(1, i + 1):
+                print(f'{j}x{i}={i * j}', end=' ')
+            print()
