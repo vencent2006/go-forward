@@ -1,4 +1,5 @@
 # coding:utf-8
+import calendar
 import cmath
 import random
 import unittest
@@ -75,3 +76,33 @@ class ExerciseTestCase(unittest.TestCase):
             for j in range(1, i + 1):
                 print(f'{j}x{i}={i * j}', end=' ')
             print()
+
+    def test_char_transform(self):
+        """Python ASCII码与字符相互转换"""
+        c = input('input a char: ')
+        print()
+        a = int(input('input a ASCII: '))
+        print()
+        print(c + ' ASCII = ', ord(c))
+        print(a, ' mapping char = ', chr(a))
+
+    def test_calendar(self):
+        """Python 生成日历"""
+        yy = int(input('input year: '))
+        mm = int(input('input month: '))
+        print(calendar.month(yy, mm))
+
+    def test_recur_fibo(self):
+        def recur_fibo(n):
+            if n <= 1:
+                return n
+            else:
+                return recur_fibo(n - 1) + recur_fibo(n - 2)
+
+        nterms = int(input('input terms count: '))
+        if nterms <= 0:
+            return 'input positive integer'
+        else:
+            print('fibonacci sequence')
+            for i in range(nterms):
+                print(recur_fibo(i), end=' ')
