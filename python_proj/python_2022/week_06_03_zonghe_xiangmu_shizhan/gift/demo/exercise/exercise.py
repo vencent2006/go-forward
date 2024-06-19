@@ -93,6 +93,8 @@ class ExerciseTestCase(unittest.TestCase):
         print(calendar.month(yy, mm))
 
     def test_recur_fibo(self):
+        """递归函数"""
+
         def recur_fibo(n):
             if n <= 1:
                 return n
@@ -106,3 +108,13 @@ class ExerciseTestCase(unittest.TestCase):
             print('fibonacci sequence')
             for i in range(nterms):
                 print(recur_fibo(i), end=' ')
+
+    def test_io_file(self):
+        """文件io"""
+        filename = 'test.txt'
+        with open(filename, 'wt') as out_file:
+            out_file.write('this text will write into file\nCan you see me?')
+
+        with open(filename, 'rt') as in_file:
+            text = in_file.read()
+        print(text)
