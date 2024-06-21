@@ -118,3 +118,11 @@ class ExerciseTestCase(unittest.TestCase):
         with open(filename, 'rt') as in_file:
             text = in_file.read()
         print(text)
+
+    def test_char_transform(self):
+        """字符串转换"""
+        one_str = 'www.google.com'
+        print(one_str.upper())
+        print(one_str.lower())
+        print(one_str.capitalize())
+        print(one_str.title())
