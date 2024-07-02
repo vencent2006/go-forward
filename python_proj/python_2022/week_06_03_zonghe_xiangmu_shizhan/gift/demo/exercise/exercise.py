@@ -1,6 +1,7 @@
 # coding:utf-8
 import calendar
 import cmath
+import datetime
 import random
 import unittest
 from functools import reduce
@@ -149,3 +150,9 @@ class ExerciseTestCase(unittest.TestCase):
 
         # 关闭数据库连接
         db.close()
+
+    def test_yesterday(self):
+        today = datetime.date.today()
+        oneday = datetime.timedelta(days=1)
+        yesterday = today - oneday
+        print(yesterday)
