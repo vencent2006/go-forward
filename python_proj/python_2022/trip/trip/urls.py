@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from trip import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # 测试用
+    path("", views.hello, name="hello"),
+    path('runoob', views.runoob),
+    path('runoob2', views.runoob2),
+    path('runoob3', views.runoob3)
 ]
