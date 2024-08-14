@@ -15,7 +15,8 @@ import { BookModule } from './modules/book/book.module';
       port: 3306,
       username: 'root',
       password: 'qwer1234',
-      database: 'vben-book-dev'
+      database: 'vben-book-dev',
+      autoLoadEntities: true, // 这个一定要写
     }),
     UserModule,
     AuthModule,
