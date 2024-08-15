@@ -8,5 +8,6 @@ import { UserService } from "./user.service";
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],// 说明 UserService可以被别的module引用
 })
 export class UserModule {}
