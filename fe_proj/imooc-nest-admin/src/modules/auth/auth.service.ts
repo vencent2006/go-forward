@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { UserService } from "../user/user.service";
+import * as md5 from "md5" // 这个要这么写
 
 @Injectable()
 export class AuthService {
@@ -7,6 +8,10 @@ export class AuthService {
   }
   async login(username, password){
     const user = await this.userService.findByUsername(username)
-    console.log(user);
+    const md5password = md5(password).toUpperCase()
+    console.log(user, md5password);
+    if(!user || user.password !== md5password){
+      throw new UnauthorizedException("Username or password is incorrect");
+    }
   }
 }
