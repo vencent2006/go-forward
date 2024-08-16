@@ -4,9 +4,18 @@ import { AuthService } from "./auth.service";
 import { APP_GUARD } from "@nestjs/core";
 import { AuthGuard } from "./auth.guard";
 import { UserModule } from "../user/user.module";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
-  imports: [UserModule], // 引用了module
+  imports: [
+    UserModule,
+    JwtModule.register(
+    {
+      global: true,
+      secret: 'secretKey', // 私钥
+      signOptions: {expiresIn: 24 * 60 * 60 + 's'} // 一天过期
+    }
+  )], // 引用了module
   controllers: [AuthController],
   providers:[
     AuthService,
