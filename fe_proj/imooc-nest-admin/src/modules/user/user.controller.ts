@@ -1,6 +1,8 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Req } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { DeleteResult } from "typeorm";
+import { wrapperResponse } from "../../utils";
+import { request } from "express";
 
 @Controller('user')
 export class UserController {
@@ -8,8 +10,11 @@ export class UserController {
   }
 
   @Get('info')
-  getUserByToken() {
-    return 'user info';
+  getUserByToken(@Req() request) {
+    return wrapperResponse(
+      this.userService.findByUsername(request.user.username),
+      '获取用户信息成功',
+    )
   }
 
   @Get(':id')
