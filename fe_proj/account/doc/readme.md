@@ -2,7 +2,9 @@
 
 ```shell
 # typeorm
-npm install --save @nestjs/typeorm typeorm 
+npm i --save @nestjs/typeorm typeorm 
 # mysql
-npm install --save mysql2
+npm i --save mysql2
+# validate & transform
+npm i --save class-validator class-transformer
 ```

@@ -15,6 +15,7 @@ export class AccountService {
   }
 
   create(createAccountDto: CreateAccountDto) {
+    // 1. username 是否存在
     return "This action adds a new account";
   }
 
