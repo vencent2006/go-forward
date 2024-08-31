@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
 @Entity("account")
 export class AccountEntity {
@@ -29,4 +29,20 @@ export class AccountEntity {
 
   @UpdateDateColumn() // 更新时自动更新
   update_time: Date;
+}
+
+/**
+ * 账号状态
+ */
+export enum AccountStatus {
+  VALID = 1,
+  INVALID = 2,
+}
+
+/**
+ * 账号角色
+ */
+export enum AccountRole {
+  USER = 1,
+  ADMIN = 2,
 }

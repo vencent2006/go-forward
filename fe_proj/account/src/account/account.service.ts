@@ -3,8 +3,8 @@ import { CreateAccountDto } from "./dto/create-account.dto";
 import { UpdateAccountDto } from "./dto/update-account.dto";
 import { LoginAccountDto } from "./dto/login-account.dto";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, Repository } from "typeorm";
-import { AccountEntity } from "./entities/account.entity";
+import { Repository } from "typeorm";
+import { AccountEntity, AccountRole, AccountStatus } from "./entities/account.entity";
 
 @Injectable()
 export class AccountService {
@@ -15,8 +15,14 @@ export class AccountService {
   }
 
   create(createAccountDto: CreateAccountDto) {
-    // 1. username 是否存在
-    return "This action adds a new account";
+    const account = new AccountEntity();
+    account.username = createAccountDto.username;
+    account.password = createAccountDto.password;
+    account.role = AccountStatus.VALID.valueOf();
+    account.avatar = createAccountDto.avatar;
+    account.nickname = createAccountDto.nickname;
+    account.status = AccountRole.USER.valueOf();
+    return this.accountRepository.save(account);
   }
 
   login(loginAccountDto: LoginAccountDto) {
@@ -29,6 +35,10 @@ export class AccountService {
 
   findOne(id: number) {
     return this.accountRepository.findOneBy({ id });
+  }
+
+  findOneByUsername(username: string) {
+    return this.accountRepository.findOneBy({ username });
   }
 
   update(id: number, updateAccountDto: UpdateAccountDto) {
