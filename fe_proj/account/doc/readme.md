@@ -7,4 +7,6 @@ npm i --save @nestjs/typeorm typeorm
 npm i --save mysql2
 # validate & transform
 npm i --save class-validator class-transformer
+# jwt
+npm i -S @nestjs/jwt
 ```

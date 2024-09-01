@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Param } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post } from "@nestjs/common";
 import { AccountService } from "./account.service";
 import { CreateAccountDto } from "./dto/create-account.dto";
 import { LoginAccountDto } from "./dto/login-account.dto";
+import { AccountEntity } from "./entities/account.entity";
 
 @Controller("account")
 export class AccountController {
@@ -13,7 +14,11 @@ export class AccountController {
    * @param createAccountDto
    */
   @Post("register")
-  register(@Body() createAccountDto: CreateAccountDto) {
+  async register(@Body() createAccountDto: CreateAccountDto) {
+    const accountExisted:AccountEntity = await this.accountService.findOneByUsername(createAccountDto.username)
+    if (accountExisted) {
+      throw new HttpException("username(" + createAccountDto.username + ") already existed", HttpStatus.BAD_REQUEST)
+    }
     return this.accountService.create(createAccountDto);
   }
 

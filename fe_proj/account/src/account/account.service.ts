@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateAccountDto } from "./dto/create-account.dto";
 import { UpdateAccountDto } from "./dto/update-account.dto";
 import { LoginAccountDto } from "./dto/login-account.dto";
@@ -25,19 +25,24 @@ export class AccountService {
     return this.accountRepository.save(account);
   }
 
-  login(loginAccountDto: LoginAccountDto) {
+  async login(loginAccountDto: LoginAccountDto) {
+    const account = await this.findOneByUsername(loginAccountDto.username)
+    // todo use md5 encrypted password
+    if (!account || account.password != loginAccountDto.password){
+      throw new HttpException("invalid login account", HttpStatus.BAD_REQUEST);
+    }
     return "This action logins a new account";
   }
 
-  findAll() {
+  findAll(): Promise<AccountEntity[]> {
     return this.accountRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<AccountEntity> {
     return this.accountRepository.findOneBy({ id });
   }
 
-  findOneByUsername(username: string) {
+  findOneByUsername(username: string): Promise<AccountEntity> {
     return this.accountRepository.findOneBy({ username });
   }
 

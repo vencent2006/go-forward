@@ -3,6 +3,8 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { AccountModule } from "./account/account.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,8 +17,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
       database: "nextseason",
       autoLoadEntities: true // 这个一定要写
     }),
-    AccountModule],
-  controllers: [AppController],
+    AccountModule,
+    AuthModule],
+  controllers: [AppController, AuthController],
   providers: [AppService]
 })
 export class AppModule {
