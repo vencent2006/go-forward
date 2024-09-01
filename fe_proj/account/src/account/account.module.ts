@@ -7,7 +7,8 @@ import { AccountEntity } from "./entities/account.entity";
 @Module({
   imports: [TypeOrmModule.forFeature([AccountEntity])],
   controllers: [AccountController],
-  providers: [AccountService]
+  providers: [AccountService],
+  exports: [AccountService]// 说明 AccountService 可以被别的module引用
 })
 export class AccountModule {
 }
