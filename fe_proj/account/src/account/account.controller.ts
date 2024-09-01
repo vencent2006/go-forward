@@ -3,6 +3,7 @@ import { AccountService } from "./account.service";
 import { CreateAccountDto } from "./dto/create-account.dto";
 import { LoginAccountDto } from "./dto/login-account.dto";
 import { AccountEntity } from "./entities/account.entity";
+import { Public } from "../auth/public.decorator";
 
 @Controller("account")
 export class AccountController {
@@ -13,11 +14,12 @@ export class AccountController {
    * 注册
    * @param createAccountDto
    */
+  @Public()
   @Post("register")
   async register(@Body() createAccountDto: CreateAccountDto) {
-    const accountExisted:AccountEntity = await this.accountService.findOneByUsername(createAccountDto.username)
+    const accountExisted: AccountEntity = await this.accountService.findOneByUsername(createAccountDto.username);
     if (accountExisted) {
-      throw new HttpException("username(" + createAccountDto.username + ") already existed", HttpStatus.BAD_REQUEST)
+      throw new HttpException("username(" + createAccountDto.username + ") already existed", HttpStatus.BAD_REQUEST);
     }
     return this.accountService.create(createAccountDto);
   }
