@@ -26,12 +26,12 @@ export class AccountService {
   }
 
   async login(loginAccountDto: LoginAccountDto) {
-    const account = await this.findOneByUsername(loginAccountDto.username)
+    const account = await this.findOneByUsername(loginAccountDto.username);
     // todo use md5 encrypted password
-    if (!account || account.password != loginAccountDto.password){
+    if (!account || account.password != loginAccountDto.password) {
       throw new HttpException("invalid login account", HttpStatus.BAD_REQUEST);
     }
-    return "This action logins a new account";
+    return account;
   }
 
   findAll(): Promise<AccountEntity[]> {
