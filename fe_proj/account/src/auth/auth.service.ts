@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { AccountService } from "../account/account.service";
 import { JWT_ACCESS_TOKEN_PERIOD, JWT_REFRESH_TOKEN_PERIOD } from "./auth.jwt.secret";
-import { LoginAccountDto } from "../account/dto/login-account.dto";
+import { LoginAccountByMailDto, LoginAccountDto } from "../account/dto/login-account.dto";
 
 @Injectable()
 export class AuthService {
@@ -13,6 +13,16 @@ export class AuthService {
 
   async login(loginAccountDto: LoginAccountDto) {
     const account = await this.accountService.login(loginAccountDto);
+    const access_token = this.getAccessToken(account.id, account.username);
+    const refresh_token = this.getRefreshToken(account.id);
+    return {
+      access_token,
+      refresh_token
+    };
+  }
+
+  async loginByMail(loginAccountDto: LoginAccountByMailDto) {
+    const account = await this.accountService.loginByMail(loginAccountDto);
     const access_token = this.getAccessToken(account.id, account.username);
     const refresh_token = this.getRefreshToken(account.id);
     return {

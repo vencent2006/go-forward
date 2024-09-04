@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateAccountDto } from "./dto/create-account.dto";
 import { UpdateAccountDto } from "./dto/update-account.dto";
-import { LoginAccountDto } from "./dto/login-account.dto";
+import { LoginAccountByMailDto, LoginAccountDto } from "./dto/login-account.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { AccountEntity, AccountRole, AccountStatus } from "./entities/account.entity";
@@ -34,6 +34,18 @@ export class AccountService {
     return account;
   }
 
+  async loginByMail(loginAccountDto: LoginAccountByMailDto) {
+    if (loginAccountDto.mail == "") {
+      throw new HttpException("mail is null", HttpStatus.BAD_REQUEST);
+    }
+    const account = await this.findOneByMail(loginAccountDto.mail);
+    // todo use md5 encrypted password
+    if (!account || account.password != loginAccountDto.password) {
+      throw new HttpException("invalid login account", HttpStatus.BAD_REQUEST);
+    }
+    return account;
+  }
+
   findAll(): Promise<AccountEntity[]> {
     return this.accountRepository.find();
   }
@@ -44,6 +56,10 @@ export class AccountService {
 
   findOneByUsername(username: string): Promise<AccountEntity> {
     return this.accountRepository.findOneBy({ username });
+  }
+
+  findOneByMail(mail: string): Promise<AccountEntity> {
+    return this.accountRepository.findOneBy({ mail });
   }
 
   update(id: number, updateAccountDto: UpdateAccountDto) {

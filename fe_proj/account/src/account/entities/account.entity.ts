@@ -22,6 +22,9 @@ export class AccountEntity {
   nickname: string;
 
   @Column()
+  mail: string;
+
+  @Column()
   status: number;
 
   @CreateDateColumn() // 创建时自动插入

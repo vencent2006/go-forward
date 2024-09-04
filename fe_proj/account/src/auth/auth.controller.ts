@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Public } from "./public.decorator";
-import { LoginAccountDto } from "../account/dto/login-account.dto";
+import { LoginAccountByMailDto, LoginAccountDto } from "../account/dto/login-account.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -21,5 +21,11 @@ export class AuthController {
   @Get("refresh")
   refreshToken(@Query("refresh_token") refreshToken: string) {
     return this.authService.refreshToken(refreshToken);
+  }
+
+  @Public()
+  @Post("login_by_mail")
+  loginByMail(@Body() loginAccountByMailDto: LoginAccountByMailDto) {
+    return this.authService.loginByMail(loginAccountByMailDto);
   }
 }
