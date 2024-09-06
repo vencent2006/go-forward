@@ -3,12 +3,14 @@ import { JwtService } from "@nestjs/jwt";
 import { AccountService } from "../account/account.service";
 import { JWT_ACCESS_TOKEN_PERIOD, JWT_REFRESH_TOKEN_PERIOD } from "./auth.jwt.secret";
 import { LoginAccountByMailDto, LoginAccountDto } from "../account/dto/login-account.dto";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class AuthService {
   constructor(
     private accountService: AccountService,
-    private jwtService: JwtService) {
+    private jwtService: JwtService,
+    private configService: ConfigService) {
   }
 
   async login(loginAccountDto: LoginAccountDto) {
@@ -32,6 +34,7 @@ export class AuthService {
   }
 
   async refreshToken(oldToken: string) {
+    // console.log(this.configService.get("email_user"));
     try {
       const data = this.jwtService.verify(oldToken);
       const account = await this.accountService.findOne(data.userid);

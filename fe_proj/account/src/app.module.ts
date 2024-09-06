@@ -4,18 +4,16 @@ import { AppService } from "./app.service";
 import { AccountModule } from "./account/account.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./auth/auth.module";
+import { ConfigModule } from "@nestjs/config";
+import { connectionOptions } from "./config/orm.config";
+
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: "mysql",
-      host: "localhost",
-      port: 3306,
-      username: "root",
-      password: "qwer1234",
-      database: "nextseason",
-      autoLoadEntities: true // 这个一定要写
+    ConfigModule.forRoot({
+      isGlobal: true
     }),
+    TypeOrmModule.forRoot(connectionOptions),
     AccountModule,
     AuthModule],
   controllers: [AppController],
