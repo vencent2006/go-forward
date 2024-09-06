@@ -30,26 +30,3 @@ def filterPayed(filter_map, list_filename):
 
 filterPayed(payed_map, "xiquezhuangban.txt")
 filterPayed(payed_map, "fulishang.txt")
-
-# xiquezhuangban_payed_map = {}
-# with open("xiquezhuangban.txt", "r") as file:
-#     lines = file.readlines()
-#     print('xiquezhuangban.txt lines =', len(lines))
-#     for line in lines:
-#         line = line.strip()  # 去除每行的换行符
-#         # 进行需要的操作
-#         if line in payed_map:
-#             xiquezhuangban_payed_map[line] = 1
-#
-# print('len(xiquezhuangban_payed_map = ', len(xiquezhuangban_payed_map))
-#
-# fulishang_payed_map = {}
-# with open("fulishang.txt", "r") as file:
-#     lines = file.readlines()
-#     print('fulishang.txt lines =', len(lines))
-#     for line in lines:
-#         line = line.strip()  # 去除每行的换行符
-#         # 进行需要的操作
-#         if line in payed_map:
-#             fulishang_payed_map[line] = 1
-# print('len(fulishang_payed_map = ', len(fulishang_payed_map))
