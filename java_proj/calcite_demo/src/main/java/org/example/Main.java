@@ -6,10 +6,11 @@ import org.apache.calcite.schema.Schema;
 import org.apache.calcite.schema.SchemaPlus;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+
 import java.sql.*;
 import java.util.Properties;
 
-public class AnotherDb {
+public class Main {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         System.out.println("Hello world!");
         // check driver exist
@@ -34,15 +35,15 @@ public class AnotherDb {
         // MysqlDataSource dataSource = new MysqlDataSource();
         BasicDataSource dataSource = new BasicDataSource();
         // please change host and port maybe like "jdbc:mysql://127.0.0.1:3306/test"
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/test2");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/test");
         dataSource.setUsername("root");
         dataSource.setPassword("qwer1234");
         // mysql schema, the sub schema for rootSchema, "test" is a schema in mysql
-        Schema schema = JdbcSchema.create(rootSchema, "test2", dataSource, null, "test2");
-        rootSchema.add("test2", schema);
+        Schema schema = JdbcSchema.create(rootSchema, "test", dataSource, null, "test");
+        rootSchema.add("test", schema);
         // run sql query
         Statement statement = calciteConnection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from test2.gifts");
+        ResultSet resultSet = statement.executeQuery("select * from test.students");
         while (resultSet.next()) {
             System.out.println(resultSet.getObject(1) + "__" + resultSet.getObject(2));
         }

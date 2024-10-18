@@ -6,13 +6,12 @@ import org.apache.calcite.schema.Schema;
 import org.apache.calcite.schema.SchemaPlus;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-
 import java.sql.*;
 import java.util.Properties;
 
-public class Main {
+public class JoinDb {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        System.out.println("Hello world!");
+        System.out.println("Hello join db!");
         // check driver exist
         Class.forName("org.apache.calcite.jdbc.Driver");
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -32,7 +31,7 @@ public class Main {
 
 
         // code for mysql datasource
-        // MysqlDataSource dataSource = new MysqlDataSource();
+        // mysql database 1
         BasicDataSource dataSource = new BasicDataSource();
         // please change host and port maybe like "jdbc:mysql://127.0.0.1:3306/test"
         dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/test");
@@ -41,11 +40,31 @@ public class Main {
         // mysql schema, the sub schema for rootSchema, "test" is a schema in mysql
         Schema schema = JdbcSchema.create(rootSchema, "test", dataSource, null, "test");
         rootSchema.add("test", schema);
+
+        // mysql database 2
+        BasicDataSource dataSource2 = new BasicDataSource();
+        // please change host and port maybe like "jdbc:mysql://127.0.0.1:3306/test"
+        dataSource2.setUrl("jdbc:mysql://127.0.0.1:3306/test2");
+        dataSource2.setUsername("root");
+        dataSource2.setPassword("qwer1234");
+        // mysql schema, the sub schema for rootSchema, "test" is a schema in mysql
+        Schema schema2 = JdbcSchema.create(rootSchema, "test2", dataSource2, null, "test2");
+        rootSchema.add("test2", schema2);
+
+
+
+
+
         // run sql query
         Statement statement = calciteConnection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from test.students");
+        ResultSet resultSet = statement.executeQuery("select * from test.students " +
+                "left join test2.gifts on test.students.id = test2.gifts.id");
+        // ResultSet resultSet = statement.executeQuery("select * from test2.gifts");
         while (resultSet.next()) {
-            System.out.println(resultSet.getObject(1) + "__" + resultSet.getObject(2));
+            System.out.println(resultSet.getObject(1) +
+                    "__" + resultSet.getObject(2)+
+                    "__" + resultSet.getObject(3)+
+                    "__" + resultSet.getObject(4));
         }
         statement.close();
         connection.close();
