@@ -1,7 +1,3 @@
 <script setup lang="ts"></script>
-
-<template>
-  <router-view />
-</template>
-
+<template>login</template>
 <style scoped></style>

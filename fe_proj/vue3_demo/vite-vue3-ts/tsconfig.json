@@ -1,5 +1,12 @@
 {
   "files": [],
+  "compilerOptions": { 
+    "baseUrl": ".", // 这代表相对于此配置文件的位置
+    "paths":{
+      "@":["./src"],
+      "@/*": ["./src/*"]
+    }
+  },
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
