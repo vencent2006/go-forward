@@ -1,0 +1,7 @@
+token-secret: abcdefg
+
+db:
+  host: 'localhost'
+  port: 5443
+  username: 'king'
+  password: 'king-password'

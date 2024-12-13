@@ -1,0 +1,6 @@
+{
+  "db": {
+    "port": 9999,
+    "host": "yourdomain.com"
+  }
+}

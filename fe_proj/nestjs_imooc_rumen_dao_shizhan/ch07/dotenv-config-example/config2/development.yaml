@@ -1,0 +1,3 @@
+db:
+  host: 'development-domain'
+  port: 8888
