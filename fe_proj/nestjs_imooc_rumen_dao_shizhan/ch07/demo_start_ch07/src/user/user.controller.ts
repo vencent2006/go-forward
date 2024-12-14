@@ -30,6 +30,8 @@ export class UserController {
     // const db = this.configService.get(ConfigEnum.DB);
     const db = this.configService.get('db');
     console.log(db);
+    const dbPort = this.configService.get(ConfigEnum.DB_PORT);
+    console.log(dbPort);
     return this.userService.findAll();
   }
 
