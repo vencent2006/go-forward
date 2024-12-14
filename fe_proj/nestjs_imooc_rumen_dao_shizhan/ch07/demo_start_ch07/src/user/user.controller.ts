@@ -27,7 +27,8 @@ export class UserController {
 
   @Get()
   findAll() {
-    const db = this.configService.get(ConfigEnum.DB);
+    // const db = this.configService.get(ConfigEnum.DB);
+    const db = this.configService.get('db');
     console.log(db);
     return this.userService.findAll();
   }

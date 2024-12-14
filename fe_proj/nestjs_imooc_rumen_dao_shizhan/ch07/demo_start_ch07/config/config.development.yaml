@@ -1,0 +1,10 @@
+db:
+  mysql1:
+    host: 127.0.0.1
+    name: mysql-dev
+    port: 3306
+
+  mysql2:
+    host: 127.0.0.1
+    name: mysql-dev1
+    port: 3306
