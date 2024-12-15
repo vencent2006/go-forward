@@ -64,7 +64,7 @@ const envFilePath = `.env.${process.env.NODE_ENV || `development`}`;
     // }),
     UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, UserService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

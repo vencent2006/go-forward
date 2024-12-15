@@ -28,11 +28,23 @@ export class UserController {
   @Get()
   findAll() {
     // const db = this.configService.get(ConfigEnum.DB);
-    const db = this.configService.get('db');
-    console.log(db);
+    // const db = this.configService.get('db');
+    // console.log(db);
     const dbPort = this.configService.get(ConfigEnum.DB_PORT);
     console.log(dbPort);
     return this.userService.findAll();
+  }
+
+  @Get('/profile/:id')
+  getUserProfile(@Param('id') id: number): any {
+    console.log('controller getUserProfile | id = ', id);
+    return this.userService.findProfile(id);
+  }
+
+  @Get('/logs/:id')
+  getUserLogs(@Param('id') id: number): any {
+    console.log('controller getUserLogs | id = ', id);
+    return this.userService.findUserLogs(id);
   }
 
   @Get(':id')
@@ -49,4 +61,6 @@ export class UserController {
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
+
+
 }
