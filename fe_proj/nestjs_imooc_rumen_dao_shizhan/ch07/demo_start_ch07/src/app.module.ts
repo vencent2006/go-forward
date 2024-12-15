@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import Configuration from './configuration';
 import * as Joi from 'joi';
 import * as dotenv from 'dotenv';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { ConfigEnum } from './enum/const';
 
 const envFilePath = `.env.${process.env.NODE_ENV || `development`}`;
 
@@ -22,10 +24,40 @@ const envFilePath = `.env.${process.env.NODE_ENV || `development`}`;
           .valid('development', 'production')
           .default('development'),
         DB_PORT: Joi.number().default(3306).valid(3306, 3307),
-        DB_URL: Joi.string().domain(),
         DB_HOST: Joi.string().ip(),
+        DB_TYPE: Joi.string().valid('mysql', 'postgres'),
+        DB_DATABASE: Joi.string().required(),
+        DB_USERNAME: Joi.string().required(),
+        DB_PASSWORD: Joi.string().required(),
+        DB_SYNC: Joi.boolean().default(false),
       }),
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService:ConfigService) => ({
+        type: configService.get(ConfigEnum.DB_TYPE),
+        host: configService.get(ConfigEnum.DB_HOST),
+        port: configService.get(ConfigEnum.DB_PORT),
+        username: configService.get(ConfigEnum.DB_USERNAME),
+        password: configService.get(ConfigEnum.DB_PASSWORD),
+        database: configService.get(ConfigEnum.DB_DATABASE),
+        entities: [],
+        synchronize: configService.get(ConfigEnum.DB_SYNC),
+        logging: ['error'],
+      } as TypeOrmModuleOptions)
+    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: 'localhost',
+    //   port: 3307,
+    //   username: 'root',
+    //   password: 'example',
+    //   database: 'testdb',
+    //   entities: [],
+    //   synchronize: true,
+    //   logging: ['error'],
+    // }),
     UserModule,
   ],
   controllers: [AppController],
