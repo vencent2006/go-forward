@@ -1,0 +1,4 @@
+GET http://localhost:18000/nls/hello
+Accept: application/json
+
+###
