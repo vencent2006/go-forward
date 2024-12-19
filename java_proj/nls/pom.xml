@@ -17,6 +17,7 @@
     </properties>
     <modules>
         <module>business</module>
+        <module>generator</module>
     </modules>
     <dependencyManagement>
         <dependencies>
