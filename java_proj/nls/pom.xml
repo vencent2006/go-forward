@@ -27,6 +27,18 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- 集成mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+            <!-- 集成mysql连接 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.28</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -61,5 +73,12 @@
             </plugin>
         </plugins>
     </build>
-
+    <!--  https://maven.aliyun.com  拷贝 public -->
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </repositories>
 </project>

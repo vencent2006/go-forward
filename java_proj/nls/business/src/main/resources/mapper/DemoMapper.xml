@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiawa.nls.business.mapper.DemoMapper">
+    <!-- 查询 -->
+    <select id="count" resultType="int">
+        select count(1) from demo
+    </select>
+</mapper>
