@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- 自动检查数据库的关键字并加上反引号，避免与数据库关键字冲突 -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 插件配置：增强 XML 的合并性 -->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+
+        <!-- 插件配置：自动生成 toString() 方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <!-- 配置注释生成策略，这里选择不生成注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 配置数据库连接，修改为实际数据库的连接信息 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/nls?characterEncoding=UTF8&amp;autoReconnect=true&amp;serverTimezone=Asia/Shanghai"
+                        userId="root"
+                        password="qwer1234">
+        </jdbcConnection>
+
+        <!-- 配置生成的实体类位置 -->
+        <javaModelGenerator targetProject="../business/src/main/java"
+                            targetPackage="com.jiawa.nls.business.domain"/>
+
+        <!-- 配置生成的 SQL 映射文件位置 -->
+        <sqlMapGenerator targetProject="../business/src/main/resources"
+                         targetPackage="mapper"/>
+
+        <!-- 配置生成的 Mapper 类位置 -->
+        <javaClientGenerator targetProject="../business/src/main/java"
+                             targetPackage="com.jiawa.nls.business.mapper"
+                             type="XMLMAPPER"/>
+
+        <!-- 选择要生成代码的数据库表 -->
+        <table tableName="demo" domainObjectName="Demo"/>
+    </context>
+</generatorConfiguration>

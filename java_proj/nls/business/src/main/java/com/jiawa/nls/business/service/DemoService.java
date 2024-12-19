@@ -11,6 +11,6 @@ public class DemoService {
     private DemoMapper demoMapper;
 
     public int count(){
-        return demoMapper.count();
+        return Math.toIntExact(demoMapper.countByExample(null));
     }
 }
