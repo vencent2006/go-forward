@@ -7,3 +7,13 @@ GET http://localhost:8080/nls/count
 Accept: application/json
 
 ###
+
+GET http://localhost:8080/nls/query?mobile=1
+Accept: application/json
+
+###
+
+GET http://localhost:8080/nls/query
+Accept: application/json
+
+###
