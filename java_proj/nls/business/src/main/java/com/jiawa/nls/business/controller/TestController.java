@@ -1,6 +1,7 @@
 package com.jiawa.nls.business.controller;
 
 import com.jiawa.nls.business.domain.Demo;
+import com.jiawa.nls.business.req.DemoQueryReq;
 import com.jiawa.nls.business.service.DemoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ public class TestController {
         return demoService.count();
     }
     @GetMapping("/query")
-    public List<Demo> query(String mobile){
-        return demoService.query(mobile);
+    public List<Demo> query(DemoQueryReq req){
+        return demoService.query(req);
     }
 }
