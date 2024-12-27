@@ -3,6 +3,7 @@ package com.jiawa.nls.business.controller;
 import com.jiawa.nls.business.exception.BusinessException;
 import com.jiawa.nls.business.resp.CommonResp;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,6 +44,22 @@ public class ControllerExceptionHandler {
         log.error("系统异常: ", e);
         commonResp.setSuccess(false);
         commonResp.setMessage(e.getE().getDesc());
+        return commonResp;
+    }
+
+    /**
+     * 校验异常统一处理 处理validation的消息返回
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = BindException.class) // 处理是什么异常
+    @ResponseBody
+    public CommonResp<Object> exceptionHandler(BindException e) {
+        CommonResp<Object> commonResp = new CommonResp<>();
+        log.error("校验异常: {}", e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        commonResp.setSuccess(false);
+        commonResp.setMessage(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
         return commonResp;
     }
 }
