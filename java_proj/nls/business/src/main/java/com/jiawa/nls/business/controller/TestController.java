@@ -1,8 +1,8 @@
 package com.jiawa.nls.business.controller;
 
-import com.jiawa.nls.business.domain.Demo;
 import com.jiawa.nls.business.req.DemoQueryReq;
 import com.jiawa.nls.business.resp.CommonResp;
+import com.jiawa.nls.business.resp.DemoQueryResp;
 import com.jiawa.nls.business.service.DemoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,8 +28,8 @@ public class TestController {
     }
 
     @GetMapping("/query")
-    public CommonResp<List<Demo>> query(DemoQueryReq req) {
-        List<Demo> demoList = demoService.query(req);
+    public CommonResp<List<DemoQueryResp>> query(DemoQueryReq req) {
+        List<DemoQueryResp> demoList = demoService.query(req);
         // CommonResp<List<Demo>> listCommonResp = new CommonResp<>();
         // listCommonResp.setContent(demoList);
         // return listCommonResp;

@@ -28,6 +28,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- 代替BeanUtils的循环拷贝 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.10</version>
+            </dependency>
             <!-- 集成mybatis -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
