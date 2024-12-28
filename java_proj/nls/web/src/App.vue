@@ -12,8 +12,12 @@ import HelloWorld from './components/HelloWorld.vue'
         </a>
     </div>
 
-    <a-button type="dashed">Dashed Button</a-button>
-
+    <a-button type="dashed">
+        <LeftCircleTwoTone/>
+        Dashed Button
+    </a-button>
+    <StepForwardOutlined/>
+    <LeftCircleTwoTone/>
     <HelloWorld msg="Vite + Vue"/>
 </template>
 
