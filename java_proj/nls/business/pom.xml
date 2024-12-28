@@ -92,7 +92,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.jiawa.nls.business.BusinessApplication</mainClass>
+                    <mainClass>com.jiawa.nls.business.config.BusinessApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
