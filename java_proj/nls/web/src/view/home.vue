@@ -1,24 +1,12 @@
 <template>
     <a-layout>
-        <a-layout-header class="header">
-            <div class="logo"/>
-            <a-menu
-                    theme="dark"
-                    mode="horizontal"
-                    v-model:selectedKeys="selectedKeys1"
-                    :style="{ lineHeight: '64px' }"
-            >
-                <a-menu-item key="1">nav 1</a-menu-item>
-                <a-menu-item key="2">nav 2</a-menu-item>
-                <a-menu-item key="3">nav 3</a-menu-item>
-            </a-menu>
-        </a-layout-header>
+        <the-header></the-header>
         <a-layout>
             <a-layout-sider width="200" style="background: #fff">
                 <a-menu
-                        mode="inline"
                         v-model:selectedKeys="selectedKeys2"
                         v-model:openKeys="openKeys"
+                        mode="inline"
                         :style="{ height: '100%', borderRight: 0 }"
                 >
                     <a-sub-menu key="sub1">
@@ -74,40 +62,14 @@
         </a-layout>
     </a-layout>
 </template>
-<script>
-import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons-vue';
-import {defineComponent, ref} from 'vue';
+<script setup>
+import {ref} from 'vue';
+import TheHeader from "../components/the-header.vue";
 
-export default defineComponent({
-    components: {
-        UserOutlined,
-        LaptopOutlined,
-        NotificationOutlined,
-    },
-    setup() {
-        return {
-            selectedKeys1: ref(['2']),
-            selectedKeys2: ref(['1']),
-            collapsed: ref(false),
-            openKeys: ref(['sub1']),
-        };
-    },
-});
+const selectedKeys2 = ref(['1']);
+const openKeys = ref(['sub1']);
 </script>
-<style>
-.logo {
-    float: left;
-    width: 120px;
-    height: 31px;
-    margin: 16px 24px 16px 0;
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.ant-row-rtl .logo {
-    float: right;
-    margin: 16px 0 16px 24px;
-}
-
+<style scoped>
 .site-layout-background {
     background: #fff;
 }
