@@ -21,6 +21,13 @@
 <script setup>
 import TheHeader from "../components/the-header.vue";
 import TheSider from "../components/the-sider.vue";
+import axios from "axios";
+
+axios.get("http://localhost:8080/nls/query", {
+    mobile: "1"
+}).then(response => {
+    console.log(response);
+})
 </script>
 <style scoped>
 .site-layout-background {
