@@ -28,7 +28,7 @@ import {message} from "ant-design-vue";
 
 const resp = ref()
 
-axios.get("http://localhost:8080/nls/query", {
+axios.get(import.meta.env.VITE_SERVER + "/nls/query", {
     params: {
         mobile: "1"
     }
