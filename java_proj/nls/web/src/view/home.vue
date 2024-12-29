@@ -28,7 +28,7 @@ axios.get("http://localhost:8080/nls/query", {
         mobile: "1"
     }
 }).then(response => {
-    console.log(response);
+    // console.log(response);
 })
 </script>
 <style scoped>
