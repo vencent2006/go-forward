@@ -77,9 +77,15 @@
 /*    background-color: #f9f9f9;*/
 /*  }*/
 /*}*/
-.login .title, .register .title, .reset .title {
+.login .title,
+.register .title,
+.reset .title,
+.reset_title,
+.register_title,
+.login_title {
     vertical-align: middle;
     text-align: center;
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin: .5rem;
 }

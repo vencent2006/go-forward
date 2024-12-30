@@ -1,7 +1,8 @@
 <template>
     <a-layout style="height: 100vh; ">
         <a-layout-content
-                style="margin: auto; width: 400px; height: 100%;display: flex; align-items: center;justify-content: center">
+                style="margin: auto; width: 400px; height: 100%;display: flex; flex-direction: column;align-items: center;justify-content: center">
+            <div class="register_title">注册</div>
             <a-form
                     :model="registerMember"
                     name="basic"

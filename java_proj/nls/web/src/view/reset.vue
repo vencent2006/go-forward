@@ -2,7 +2,8 @@
     <a-layout style="height: 100vh; ">
 
         <a-layout-content
-                style="margin: auto; width: 400px; height: 100%;display: flex; align-items: center;justify-content: center">
+                style="margin: auto; width: 400px; height: 100%;display: flex; flex-direction: column; align-items: center;justify-content: center">
+            <div class="reset_title">重置密码</div>
             <a-form
                     :model="resetMember"
                     name="basic"
@@ -62,7 +63,7 @@
                     </a-input-password>
                 </a-form-item>
                 <a-form-item>
-                    <a-button type="primary" block html-type="submit">重置密码</a-button>
+                    <a-button type="primary" block html-type="submit">重&nbsp;置</a-button>
                 </a-form-item>
             </a-form>
         </a-layout-content>
