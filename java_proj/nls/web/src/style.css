@@ -77,3 +77,9 @@
 /*    background-color: #f9f9f9;*/
 /*  }*/
 /*}*/
+.login .title, .register .title, .reset .title {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
