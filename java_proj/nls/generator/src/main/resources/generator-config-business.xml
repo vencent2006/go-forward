@@ -43,6 +43,7 @@
                              type="XMLMAPPER"/>
 
         <!-- 选择要生成代码的数据库表 -->
-        <table tableName="demo" domainObjectName="Demo"/>
+        <!-- <table tableName="demo" domainObjectName="Demo"/> -->
+        <table tableName="sms_code" domainObjectName="SmsCode"/>
     </context>
 </generatorConfiguration>
