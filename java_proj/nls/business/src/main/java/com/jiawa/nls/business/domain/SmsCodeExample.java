@@ -305,73 +305,73 @@ public class SmsCodeExample {
             return (Criteria) this;
         }
 
-        public Criteria andUsedIsNull() {
-            addCriterion("used is null");
+        public Criteria andUseIsNull() {
+            addCriterion("`use` is null");
             return (Criteria) this;
         }
 
-        public Criteria andUsedIsNotNull() {
-            addCriterion("used is not null");
+        public Criteria andUseIsNotNull() {
+            addCriterion("`use` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUsedEqualTo(String value) {
-            addCriterion("used =", value, "used");
+        public Criteria andUseEqualTo(String value) {
+            addCriterion("`use` =", value, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedNotEqualTo(String value) {
-            addCriterion("used <>", value, "used");
+        public Criteria andUseNotEqualTo(String value) {
+            addCriterion("`use` <>", value, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedGreaterThan(String value) {
-            addCriterion("used >", value, "used");
+        public Criteria andUseGreaterThan(String value) {
+            addCriterion("`use` >", value, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedGreaterThanOrEqualTo(String value) {
-            addCriterion("used >=", value, "used");
+        public Criteria andUseGreaterThanOrEqualTo(String value) {
+            addCriterion("`use` >=", value, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedLessThan(String value) {
-            addCriterion("used <", value, "used");
+        public Criteria andUseLessThan(String value) {
+            addCriterion("`use` <", value, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedLessThanOrEqualTo(String value) {
-            addCriterion("used <=", value, "used");
+        public Criteria andUseLessThanOrEqualTo(String value) {
+            addCriterion("`use` <=", value, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedLike(String value) {
-            addCriterion("used like", value, "used");
+        public Criteria andUseLike(String value) {
+            addCriterion("`use` like", value, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedNotLike(String value) {
-            addCriterion("used not like", value, "used");
+        public Criteria andUseNotLike(String value) {
+            addCriterion("`use` not like", value, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedIn(List<String> values) {
-            addCriterion("used in", values, "used");
+        public Criteria andUseIn(List<String> values) {
+            addCriterion("`use` in", values, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedNotIn(List<String> values) {
-            addCriterion("used not in", values, "used");
+        public Criteria andUseNotIn(List<String> values) {
+            addCriterion("`use` not in", values, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedBetween(String value1, String value2) {
-            addCriterion("used between", value1, value2, "used");
+        public Criteria andUseBetween(String value1, String value2) {
+            addCriterion("`use` between", value1, value2, "use");
             return (Criteria) this;
         }
 
-        public Criteria andUsedNotBetween(String value1, String value2) {
-            addCriterion("used not between", value1, value2, "used");
+        public Criteria andUseNotBetween(String value1, String value2) {
+            addCriterion("`use` not between", value1, value2, "use");
             return (Criteria) this;
         }
 

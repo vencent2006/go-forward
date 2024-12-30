@@ -9,7 +9,7 @@ public class SmsCode {
 
     private String code;
 
-    private String used;
+    private String use;
 
     private String status;
 
@@ -41,12 +41,12 @@ public class SmsCode {
         this.code = code;
     }
 
-    public String getUsed() {
-        return used;
+    public String getUse() {
+        return use;
     }
 
-    public void setUsed(String used) {
-        this.used = used;
+    public void setUse(String use) {
+        this.use = use;
     }
 
     public String getStatus() {
@@ -82,7 +82,7 @@ public class SmsCode {
         sb.append(", id=").append(id);
         sb.append(", mobile=").append(mobile);
         sb.append(", code=").append(code);
-        sb.append(", used=").append(used);
+        sb.append(", use=").append(use);
         sb.append(", status=").append(status);
         sb.append(", createAt=").append(createAt);
         sb.append(", updateAt=").append(updateAt);

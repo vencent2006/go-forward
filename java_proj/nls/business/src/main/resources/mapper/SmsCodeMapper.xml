@@ -5,7 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="used" jdbcType="VARCHAR" property="used" />
+    <result column="use" jdbcType="VARCHAR" property="use" />
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
     <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, mobile, code, used, `status`, create_at, update_at
+    id, mobile, code, `use`, `status`, create_at, update_at
   </sql>
   <select id="selectByExample" parameterType="com.jiawa.nls.business.domain.SmsCodeExample" resultMap="BaseResultMap">
     select
@@ -103,10 +103,10 @@
   </delete>
   <insert id="insert" parameterType="com.jiawa.nls.business.domain.SmsCode">
     insert into sms_code (id, mobile, code, 
-      used, `status`, create_at, 
+      `use`, `status`, create_at, 
       update_at)
     values (#{id,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
-      #{used,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{use,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createAt,jdbcType=TIMESTAMP}, 
       #{updateAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jiawa.nls.business.domain.SmsCode">
@@ -121,8 +121,8 @@
       <if test="code != null">
         code,
       </if>
-      <if test="used != null">
-        used,
+      <if test="use != null">
+        `use`,
       </if>
       <if test="status != null">
         `status`,
@@ -144,8 +144,8 @@
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="used != null">
-        #{used,jdbcType=VARCHAR},
+      <if test="use != null">
+        #{use,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
@@ -176,8 +176,8 @@
       <if test="row.code != null">
         code = #{row.code,jdbcType=VARCHAR},
       </if>
-      <if test="row.used != null">
-        used = #{row.used,jdbcType=VARCHAR},
+      <if test="row.use != null">
+        `use` = #{row.use,jdbcType=VARCHAR},
       </if>
       <if test="row.status != null">
         `status` = #{row.status,jdbcType=CHAR},
@@ -198,7 +198,7 @@
     set id = #{row.id,jdbcType=BIGINT},
       mobile = #{row.mobile,jdbcType=VARCHAR},
       code = #{row.code,jdbcType=VARCHAR},
-      used = #{row.used,jdbcType=VARCHAR},
+      `use` = #{row.use,jdbcType=VARCHAR},
       `status` = #{row.status,jdbcType=CHAR},
       create_at = #{row.createAt,jdbcType=TIMESTAMP},
       update_at = #{row.updateAt,jdbcType=TIMESTAMP}
@@ -215,8 +215,8 @@
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
       </if>
-      <if test="used != null">
-        used = #{used,jdbcType=VARCHAR},
+      <if test="use != null">
+        `use` = #{use,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=CHAR},
@@ -234,7 +234,7 @@
     update sms_code
     set mobile = #{mobile,jdbcType=VARCHAR},
       code = #{code,jdbcType=VARCHAR},
-      used = #{used,jdbcType=VARCHAR},
+      `use` = #{use,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=CHAR},
       create_at = #{createAt,jdbcType=TIMESTAMP},
       update_at = #{updateAt,jdbcType=TIMESTAMP}
