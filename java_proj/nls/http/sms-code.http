@@ -1,4 +1,4 @@
-### ptrp
+### 注册短信ptrp
 POST http://localhost:8080/nls/web/sms-code/send-for-register
 Content-Type: application/x-www-form-urlencoded
 
