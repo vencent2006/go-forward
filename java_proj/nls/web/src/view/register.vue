@@ -1,41 +1,67 @@
 <template>
     <a-layout style="height: 100vh; ">
-        <a-layout-content style="margin: auto; width: 400px; height: 100%;display: flex; align-items: center;">
+        <a-layout-content
+                style="margin: auto; width: 400px; height: 100%;display: flex; align-items: center;justify-content: center">
             <a-form
                     :model="registerMember"
                     name="basic"
-                    :label-col="{ span: 8 }"
-                    :wrapper-col="{ span: 16 }"
                     autocomplete="off"
                     @finish="register"
                     @finishFailed="onFinishFailed"
             >
                 <a-form-item
-                        label="Username"
-                        name="username"
-                        :rules="[{ required: true, message: 'Please input your username!' }]"
+                        name="mobile"
+                        :rules="[{ required: true, message: '输入手机号' }]"
                 >
-                    <a-input v-model:value="registerMember.username"/>
+                    <a-input
+                            v-model:value="registerMember.mobile"
+                            placeholder="手机号">
+                        <template #prefix>
+                            <mobileOutlined style="margin-left: 5px"/>
+                        </template>
+                    </a-input>
                 </a-form-item>
 
                 <a-form-item
-                        label="Email"
-                        name="email"
-                        :rules="[{ required: true, message: 'Please input your email!' }]"
+                        name="code"
+                        :rules="[{ required: true, message: '输入验证码' }]"
                 >
-                    <a-input v-model:value="registerMember.email"/>
+                    <a-input-search
+                            v-model:value="registerMember.code"
+                            placeholder="短信验证码"
+                            :enter-button="sendText"
+                            @search="sendRegisterSmsCode"
+                    >
+                        <template #prefix>
+                            <MessageOutlined style="margin-left: 5px"/>
+                        </template>
+                    </a-input-search>
                 </a-form-item>
 
                 <a-form-item
-                        label="Password"
                         name="password"
-                        :rules="[{ required: true, message: 'Please input your password!' }]"
+                        :rules="[{ required: true, message: '输入密码' }]"
                 >
-                    <a-input-password v-model:value="registerMember.password"/>
+                    <a-input-password v-model:value="registerMember.passwordOri" placeholder="密码">
+                        <template #prefix>
+                            <LockOutlined style="margin-left: 5px"/>
+                        </template>
+                    </a-input-password>
                 </a-form-item>
 
-                <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-                    <a-button type="primary" block html-type="submit">Register</a-button>
+
+                <a-form-item
+                        name="password"
+                        :rules="[{ required: true, message: '再次输入密码' }]"
+                >
+                    <a-input-password v-model:value="registerMember.passwordConfirm" placeholder="确认密码">
+                        <template #prefix>
+                            <CheckCircleOutlined style="margin-left: 5px"/>
+                        </template>
+                    </a-input-password>
+                </a-form-item>
+                <a-form-item>
+                    <a-button type="primary" block html-type="submit">注&nbsp;册</a-button>
                 </a-form-item>
             </a-form>
         </a-layout-content>
@@ -46,9 +72,9 @@
 import {ref} from 'vue';
 
 const registerMember = ref({
-    username: '',
-    email: '',
-    password: '',
+    mobile: '',
+    passwordOri: '',
+    passwordConfirm: '',
 });
 
 const register = values => {
@@ -58,4 +84,10 @@ const register = values => {
 const onFinishFailed = errorInfo => {
     console.log('注册失败:', errorInfo);
 };
+
+const sendRegisterSmsCode = () => {
+    console.log('发送短信验证码:');
+};
+
+const sendText = ref('获取验证码');
 </script>
