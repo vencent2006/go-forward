@@ -4,4 +4,10 @@ Content-Type: application/x-www-form-urlencoded
 
 mobile=123
 
-###
+### json格式
+POST http://localhost:8080/nls/web/sms-code/send-for-register
+Content-Type: application/json
+
+{
+  "mobile": "123"
+}
