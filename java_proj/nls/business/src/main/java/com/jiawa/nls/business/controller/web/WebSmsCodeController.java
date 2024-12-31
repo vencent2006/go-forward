@@ -1,6 +1,5 @@
 package com.jiawa.nls.business.controller.web;
 
-import com.jiawa.nls.business.enums.SmsCodeUseEnum;
 import com.jiawa.nls.business.req.RegisterSmsCodeReq;
 import com.jiawa.nls.business.resp.CommonResp;
 import com.jiawa.nls.business.service.SmsCodeService;
@@ -26,7 +25,7 @@ public class WebSmsCodeController {
      */
     @PostMapping("/send-for-register")
     public CommonResp<String> sendForRegister(@Valid @RequestBody RegisterSmsCodeReq req) {
-        smsCodeService.sendCode(req.getMobile(), SmsCodeUseEnum.REGISTER.getCode());
+        smsCodeService.sendCodeForRegister(req.getMobile());
         return new CommonResp<>();
     }
 

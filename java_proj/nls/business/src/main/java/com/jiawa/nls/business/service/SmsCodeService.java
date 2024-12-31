@@ -3,9 +3,11 @@ package com.jiawa.nls.business.service;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
+import com.jiawa.nls.business.domain.Member;
 import com.jiawa.nls.business.domain.SmsCode;
 import com.jiawa.nls.business.domain.SmsCodeExample;
 import com.jiawa.nls.business.enums.SmsCodeStatusEnum;
+import com.jiawa.nls.business.enums.SmsCodeUseEnum;
 import com.jiawa.nls.business.exception.BusinessException;
 import com.jiawa.nls.business.exception.BusinessExceptionEnum;
 import com.jiawa.nls.business.mapper.SmsCodeMapper;
@@ -20,6 +22,21 @@ import java.util.Date;
 public class SmsCodeService {
     @Resource
     private SmsCodeMapper smsCodeMapper;
+    @Resource
+    private MemberService memberService;
+
+    /**
+     * 发送注册验证码
+     *
+     * @param mobile 手机号
+     */
+    public void sendCodeForRegister(String mobile) {
+        Member member = memberService.selectByMobile(mobile);
+        if (member != null) {
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_HAD_REGISTER);
+        }
+        sendCode(mobile, SmsCodeUseEnum.REGISTER.getCode());
+    }
 
     /**
      * 发送验证码
@@ -28,7 +45,7 @@ public class SmsCodeService {
      * @param mobile 手机号
      * @param use    用途
      */
-    public void sendCode(String mobile, String use) {
+    private void sendCode(String mobile, String use) {
         Date now = new Date();
         String code = RandomUtil.randomNumbers(6);
 
