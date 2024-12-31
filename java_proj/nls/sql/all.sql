@@ -24,3 +24,18 @@ create table `sms_code`
     primary key (`id`)
 ) engine = innodb
   default charset = utf8mb4 comment = '短信验证码';
+
+# 会员表
+drop table if exists `member`;
+create table `member`
+(
+    `id`        bigint      not null comment 'id',
+    `mobile`    varchar(50) not null comment '手机号',
+    `password`  varchar(32) not null comment '密码',
+    `name`      varchar(50) not null comment '昵称',
+    `create_at` datetime(3) comment '创建时间',
+    `update_at` datetime(3) comment '更新时间',
+    primary key (`id`),
+    unique key `uk_mobile` (`mobile`)
+) engine = innodb
+  default charset = utf8mb4 comment = '会员表';
