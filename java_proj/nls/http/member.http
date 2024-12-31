@@ -3,7 +3,7 @@ POST http://localhost:8080/nls/web/member/register
 Content-Type: application/json
 
 {
-  "mobile": "12345678902",
+  "mobile": "12345678904",
   "password": "123",
-  "code": "123"
+  "code": "395802"
 }
