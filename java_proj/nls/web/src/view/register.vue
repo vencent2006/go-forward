@@ -32,6 +32,7 @@
                             placeholder="短信验证码"
                             :enter-button="sendText"
                             @search="sendRegisterSmsCode"
+                            :loading="sendBtnLoading"
                     >
                         <template #prefix>
                             <MessageOutlined style="margin-left: 5px"/>
@@ -89,15 +90,18 @@ const onFinishFailed = errorInfo => {
 };
 
 // -------------- 短信验证码 --------------
+const sendBtnLoading = ref(false);
 const sendText = ref('获取验证码');
 const COUNTDOWN = 5;// 倒计时秒数
 let countdown = ref(COUNTDOWN);
 const setTime = () => {
     if (countdown.value === 0) {
+        sendBtnLoading.value = false;
         sendText.value = '获取验证码';
         countdown.value = COUNTDOWN;
         return;
     } else {
+        sendBtnLoading.value = true;
         sendText.value = '重新发送(' + countdown.value + ')';
         countdown.value--;
     }
@@ -108,6 +112,7 @@ const setTime = () => {
 
 const sendRegisterSmsCode = () => {
     console.log('发送短信验证码:');
+    sendBtnLoading.value = true;
     axios.post('/nls/web/sms-code/send-for-register', {
         mobile: registerMember.value.mobile,
     }).then(response => {
@@ -117,6 +122,7 @@ const sendRegisterSmsCode = () => {
             setTime();
             message.error("短信发送成功！");
         } else {
+            sendBtnLoading.value = false;
             message.error(data.message);
         }
     });
