@@ -88,6 +88,24 @@ const onFinishFailed = errorInfo => {
     console.log('注册失败:', errorInfo);
 };
 
+// -------------- 短信验证码 --------------
+const sendText = ref('获取验证码');
+const COUNTDOWN = 5;// 倒计时秒数
+let countdown = ref(COUNTDOWN);
+const setTime = () => {
+    if (countdown.value === 0) {
+        sendText.value = '获取验证码';
+        countdown.value = COUNTDOWN;
+        return;
+    } else {
+        sendText.value = '重新发送(' + countdown.value + ')';
+        countdown.value--;
+    }
+    setTimeout(function () {
+        setTime();
+    }, 1000);
+}
+
 const sendRegisterSmsCode = () => {
     console.log('发送短信验证码:');
     axios.post('/nls/web/sms-code/send-for-register', {
@@ -96,6 +114,7 @@ const sendRegisterSmsCode = () => {
         console.log(response);
         let data = response.data;
         if (data.success) {
+            setTime();
             message.error("短信发送成功！");
         } else {
             message.error(data.message);
@@ -103,5 +122,4 @@ const sendRegisterSmsCode = () => {
     });
 };
 
-const sendText = ref('获取验证码');
 </script>
