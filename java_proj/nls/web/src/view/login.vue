@@ -35,6 +35,16 @@
                 <a-form-item>
                     <a-button type="primary" block html-type="submit">登&nbsp;录</a-button>
                 </a-form-item>
+                <div style="display: flex;align-items: center;justify-content: space-between;">
+                    <router-link to="/register">
+                        <ArrowLeftOutlined/>
+                        注册
+                    </router-link>
+                    <router-link to="/reset">
+                        忘记密码
+                        <ArrowRightOutlined/>
+                    </router-link>
+                </div>
             </a-form>
         </a-layout-content>
     </a-layout>

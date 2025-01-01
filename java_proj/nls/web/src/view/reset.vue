@@ -65,6 +65,12 @@
                 <a-form-item>
                     <a-button type="primary" block html-type="submit">重&nbsp;置</a-button>
                 </a-form-item>
+                <div style="display: flex;align-items: center;justify-content: left;">
+                    <router-link to="/login">
+                        <ArrowLeftOutlined/>
+                        返回登录
+                    </router-link>
+                </div>
             </a-form>
         </a-layout-content>
     </a-layout>
