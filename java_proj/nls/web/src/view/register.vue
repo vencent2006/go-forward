@@ -41,7 +41,7 @@
                 </a-form-item>
 
                 <a-form-item
-                        name="password"
+                        name="passwordOri"
                         :rules="[{ required: true, message: '输入密码' }]"
                 >
                     <a-input-password v-model:value="registerMember.passwordOri" placeholder="密码">
@@ -53,7 +53,7 @@
 
 
                 <a-form-item
-                        name="password"
+                        name="passwordConfirm"
                         :rules="[{ required: true, message: '再次输入密码' }]"
                 >
                     <a-input-password v-model:value="registerMember.passwordConfirm" placeholder="确认密码">
@@ -86,12 +86,34 @@ import axios from "axios";
 
 const registerMember = ref({
     mobile: '',
+    code: '',
+    password: '',
     passwordOri: '',
     passwordConfirm: '',
 });
 
 const register = values => {
     console.log('开始注册:', values);
+    if (registerMember.value.passwordOri !== registerMember.value.passwordConfirm) {
+        message.error("两次密码不一致！");
+        return;
+    }
+
+    registerMember.value.password = registerMember.value.passwordOri;
+    axios.post('/nls/web/member/register', {
+        mobile: registerMember.value.mobile,
+        password: registerMember.value.passwordOri,
+        code: registerMember.value.code,
+    }).then(response => {
+        console.log(response);
+        let data = response.data;
+        if (data.success) {
+            message.success("注册成功！");
+            // todo 跳转登录页
+        } else {
+            message.error(data.message);
+        }
+    });
 };
 
 const onFinishFailed = errorInfo => {
