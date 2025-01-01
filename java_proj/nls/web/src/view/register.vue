@@ -85,6 +85,9 @@
 import {ref} from 'vue';
 import {message} from "ant-design-vue";
 import axios from "axios";
+import {useRouter} from "vue-router";
+
+let router = useRouter();
 
 const registerMember = ref({
     mobile: '',
@@ -111,7 +114,7 @@ const register = values => {
         let data = response.data;
         if (data.success) {
             message.success("注册成功！");
-            // todo 跳转登录页
+            router.push('/login');
         } else {
             message.error(data.message);
         }
@@ -153,7 +156,7 @@ const sendRegisterSmsCode = () => {
         let data = response.data;
         if (data.success) {
             setTime();
-            message.error("短信发送成功！");
+            message.success("短信发送成功！");
         } else {
             sendBtnLoading.value = false;
             message.error(data.message);
