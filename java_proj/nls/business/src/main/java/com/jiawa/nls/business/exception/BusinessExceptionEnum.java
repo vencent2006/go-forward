@@ -16,6 +16,7 @@ public enum BusinessExceptionEnum {
 
     // 会员
     MEMBER_MOBILE_HAD_REGISTER("手机号已注册"),
+    MEMBER_LOGIN_ERROR("手机号未注册或密码错误"),
     ;
 
     @Getter

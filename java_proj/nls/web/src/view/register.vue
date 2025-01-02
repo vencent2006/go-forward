@@ -86,6 +86,7 @@ import {ref} from 'vue';
 import {message} from "ant-design-vue";
 import axios from "axios";
 import {useRouter} from "vue-router";
+import {hexMd5Key} from "../utils/md5";
 
 let router = useRouter();
 
@@ -107,7 +108,8 @@ const register = values => {
     registerMember.value.password = registerMember.value.passwordOri;
     axios.post('/nls/web/member/register', {
         mobile: registerMember.value.mobile,
-        password: registerMember.value.passwordOri,
+        password: hexMd5Key(registerMember.value.password),
+        // password: registerMember.value.passwordOri,
         code: registerMember.value.code,
     }).then(response => {
         console.log(response);

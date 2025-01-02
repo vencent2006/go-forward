@@ -7,13 +7,17 @@ import com.jiawa.nls.business.domain.MemberExample;
 import com.jiawa.nls.business.exception.BusinessException;
 import com.jiawa.nls.business.exception.BusinessExceptionEnum;
 import com.jiawa.nls.business.mapper.MemberMapper;
+import com.jiawa.nls.business.req.MemberLoginReq;
 import com.jiawa.nls.business.req.MemberRegisterReq;
+import com.jiawa.nls.business.resp.MemberLoginResp;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 public class MemberService {
     @Resource
@@ -53,12 +57,37 @@ public class MemberService {
         Member member = new Member();
         member.setId(IdUtil.getSnowflakeNextId());
         member.setMobile(mobile);
-        member.setPassword(req.getPassword());
+        member.setPassword(req.getPassword().toLowerCase());
         member.setName(mobile.substring(0, 3) + "****" + mobile.substring(7));// 手机号中间四位为*
         member.setCreateAt(now);
         member.setUpdateAt(now);
         memberMapper.insert(member);
+    }
 
 
+    /**
+     * 登录
+     *
+     * @param req MemberLoginReq
+     * @return MemberLoginResp
+     */
+    public MemberLoginResp login(MemberLoginReq req) {
+        // 校验：手机号是否已注册
+        Member memberDB = selectByMobile(req.getMobile());
+        if (memberDB == null) {
+            log.warn("手机号不存在, {}", req.getMobile());
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_LOGIN_ERROR);
+        }
+
+        if (memberDB.getPassword().equalsIgnoreCase(req.getPassword())) {
+            log.info("登录成功, {}", req.getMobile());
+            MemberLoginResp memberLoginResp = new MemberLoginResp();
+            memberLoginResp.setName(memberDB.getName());
+            memberLoginResp.setToken("token");
+            return memberLoginResp;
+        } else {
+            log.warn("密码错误, {}", req.getMobile());
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_LOGIN_ERROR);
+        }
     }
 }
