@@ -1,7 +1,9 @@
 package com.jiawa.nls.business.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.jwt.JWTUtil;
 import com.jiawa.nls.business.domain.Member;
 import com.jiawa.nls.business.domain.MemberExample;
 import com.jiawa.nls.business.exception.BusinessException;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -52,7 +55,7 @@ public class MemberService {
         if (memberDB != null) {
             throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_HAD_REGISTER);
         }
-        
+
         // 插入用户
         Member member = new Member();
         member.setId(IdUtil.getSnowflakeNextId());
@@ -83,7 +86,10 @@ public class MemberService {
             log.info("登录成功, {}", req.getMobile());
             MemberLoginResp memberLoginResp = new MemberLoginResp();
             memberLoginResp.setName(memberDB.getName());
-            memberLoginResp.setToken("token");
+            Map<String, Object> map = BeanUtil.beanToMap(memberLoginResp);
+            String key = "JiawaNLS";// 密钥
+            String token = JWTUtil.createToken(map, key.getBytes());
+            memberLoginResp.setToken(token);
             return memberLoginResp;
         } else {
             log.warn("密码错误, {}", req.getMobile());
