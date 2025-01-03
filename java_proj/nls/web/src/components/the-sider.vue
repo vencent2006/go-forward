@@ -21,9 +21,15 @@
     </a-layout-sider>
 </template>
 <script setup>
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
+import {useRouter} from "vue-router";
 
 const selectedKeys = ref(['/home/welcome']);
+const router = useRouter();
+watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
+    // console.log('watch', newValue, oldValue)
+    selectedKeys.value = [newValue]
+}, {immediate: true})
 </script>
 
 <style scoped>

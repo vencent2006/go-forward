@@ -18,7 +18,7 @@ axios.get(import.meta.env.VITE_SERVER + "/nls/query", {
     // console.log(response);
     let data = response.data
     if (data.success) {
-        resp.value = data.content
+        resp.value = JSON.stringify(data.content)
     } else {
         message.error(data.message)
     }

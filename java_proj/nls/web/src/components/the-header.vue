@@ -29,10 +29,16 @@
     </a-layout-header>
 </template>
 <script setup>
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
 import {useMemberStore} from "../stores/member.js";
+import {useRouter} from "vue-router";
 
 const selectedKeys = ref(['/home/welcome']);
+const router = useRouter();
+watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
+    // console.log('watch', newValue, oldValue)
+    selectedKeys.value = [newValue]
+}, {immediate: true})
 const memberStore = useMemberStore()
 const member = memberStore.member
 </script>
