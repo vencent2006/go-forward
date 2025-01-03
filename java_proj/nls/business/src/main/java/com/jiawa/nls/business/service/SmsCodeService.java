@@ -41,6 +41,20 @@ public class SmsCodeService {
     }
 
     /**
+     * 发送重置密码验证码
+     *
+     * @param mobile 手机号
+     */
+    public void sendCodeForReset(String mobile) {
+        Member member = memberService.selectByMobile(mobile);
+        if (member == null) {
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_NOT_REGISTER);
+        }
+        sendCode(mobile, SmsCodeUseEnum.RESET.getCode());
+    }
+
+
+    /**
      * 发送验证码
      * 校验：如果1分钟内有同手机号同用途发送记录，则报错：短信请求过于频繁
      *
