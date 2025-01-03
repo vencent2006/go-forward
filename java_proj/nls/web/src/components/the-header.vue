@@ -1,6 +1,12 @@
 <template>
     <a-layout-header class="header">
         <div class="logo"/>
+        <div style="float: right; color: white;">
+            您好: {{ member.name }} &nbsp;&nbsp;
+            <router-link to="/login" style="color: white;">
+                退出登录
+            </router-link>
+        </div>
         <a-menu
                 v-model:selectedKeys="selectedKeys1"
                 theme="dark"
@@ -15,8 +21,11 @@
 </template>
 <script setup>
 import {ref} from 'vue';
+import {useMemberStore} from "../stores/member.js";
 
 const selectedKeys1 = ref(['2']);
+const memberStore = useMemberStore()
+const member = memberStore.user
 </script>
 
 <style scoped>

@@ -56,12 +56,16 @@ import {message} from "ant-design-vue";
 import axios from "axios";
 import {hexMd5Key} from "../utils/md5.js";
 import {useRouter} from "vue-router";
+import {useMemberStore} from "../stores/member.js";
 
 let router = useRouter();
 const loginMember = ref({
     mobile: '',
     password: '',
 });
+
+const memberStore = useMemberStore();
+
 const login = values => {
     console.log('开始登录:', values);
 
@@ -73,6 +77,7 @@ const login = values => {
         let data = response.data;
         if (data.success) {
             message.success("登录成功！");
+            memberStore.setMember(data.content);
             router.push('/home');
         } else {
             message.error(data.message);
