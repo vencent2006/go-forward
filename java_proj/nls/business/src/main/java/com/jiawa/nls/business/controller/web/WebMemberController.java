@@ -4,6 +4,7 @@ import cn.hutool.crypto.digest.DigestUtil;
 import com.jiawa.nls.business.enums.SmsCodeUseEnum;
 import com.jiawa.nls.business.req.MemberLoginReq;
 import com.jiawa.nls.business.req.MemberRegisterReq;
+import com.jiawa.nls.business.req.MemberResetReq;
 import com.jiawa.nls.business.resp.CommonResp;
 import com.jiawa.nls.business.resp.MemberLoginResp;
 import com.jiawa.nls.business.service.MemberService;
@@ -34,7 +35,7 @@ public class WebMemberController {
      * @return CommonResp
      */
     @PostMapping("/register")
-    public CommonResp<String> register(@Valid @RequestBody MemberRegisterReq req) {
+    public CommonResp<Object> register(@Valid @RequestBody MemberRegisterReq req) {
         req.setPassword(DigestUtil.md5Hex(req.getPassword().toLowerCase()).toLowerCase());// 密码加密
 
         log.info("会员注册开始: {}", req.getMobile());
@@ -60,6 +61,18 @@ public class WebMemberController {
         log.info("会员登录结束: {}", req.getMobile());
 
         return new CommonResp<>(memberLoginResp);
+    }
+
+    @PostMapping("/reset")
+    public CommonResp<Object> reset(@Valid @RequestBody MemberResetReq req) {
+        req.setPassword(DigestUtil.md5Hex(req.getPassword().toLowerCase()).toLowerCase());// 密码加密
+
+        log.info("重置密码, 开始: {}", req.getMobile());
+        smsCodeService.validCode(req.getMobile(), SmsCodeUseEnum.RESET.getCode(), req.getCode());
+        log.info("重置密码, 验证码校验通过: {}", req.getMobile());
+
+        memberService.reset(req);
+        return new CommonResp<>();
     }
 
 }

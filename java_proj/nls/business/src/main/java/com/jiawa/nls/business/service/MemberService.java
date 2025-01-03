@@ -10,6 +10,7 @@ import com.jiawa.nls.business.exception.BusinessExceptionEnum;
 import com.jiawa.nls.business.mapper.MemberMapper;
 import com.jiawa.nls.business.req.MemberLoginReq;
 import com.jiawa.nls.business.req.MemberRegisterReq;
+import com.jiawa.nls.business.req.MemberResetReq;
 import com.jiawa.nls.business.resp.MemberLoginResp;
 import com.jiawa.nls.business.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -86,7 +87,7 @@ public class MemberService {
             log.info("登录成功, {}", req.getMobile());
             MemberLoginResp memberLoginResp = new MemberLoginResp();
             memberLoginResp.setName(memberDB.getName());
-            
+
             Map<String, Object> map = BeanUtil.beanToMap(memberLoginResp);
             String token = JwtUtil.createLoginToken(map);
             memberLoginResp.setToken(token);
@@ -95,5 +96,27 @@ public class MemberService {
             log.warn("密码错误, {}", req.getMobile());
             throw new BusinessException(BusinessExceptionEnum.MEMBER_LOGIN_ERROR);
         }
+    }
+
+    /**
+     * 重置
+     */
+    public void reset(MemberResetReq req) {
+        String mobile = req.getMobile();
+        Date now = new Date();
+
+        // 校验：手机号是否已注册
+        Member memberDB = selectByMobile(req.getMobile());
+        if (memberDB == null) {
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_NOT_REGISTER);
+        }
+
+        // 更新要用这种写法
+        Member member = new Member();
+        member.setId(memberDB.getId());
+        member.setPassword(req.getPassword().toLowerCase());
+        member.setUpdateAt(now);
+        // 只更新有值的字段
+        memberMapper.updateByPrimaryKeySelective(member);
     }
 }
