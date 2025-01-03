@@ -4,6 +4,8 @@ import Login from "../view/login.vue";
 import Register from "../view/register.vue";
 import Reset from "../view/reset.vue";
 import Count from "../view/count.vue";
+import Welcome from "../view/home/welcome.vue";
+import Help from "../view/home/help.vue";
 
 const routes = [
     {
@@ -11,7 +13,16 @@ const routes = [
         redirect: "/login", // 重定向到login
     }, {
         path: "/home",
-        component: Home
+        component: Home,
+        children: [
+            {
+                path: "welcome",
+                component: Welcome,
+            }, {
+                path: "help",
+                component: Help,
+            },
+        ]
     }, {
         path: "/login",
         component: Login
