@@ -1,6 +1,6 @@
 package com.jiawa.nls.business.controller.web;
 
-import com.jiawa.nls.business.req.RegisterSmsCodeReq;
+import com.jiawa.nls.business.req.SmsCodeRegisterReq;
 import com.jiawa.nls.business.resp.CommonResp;
 import com.jiawa.nls.business.service.SmsCodeService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ public class WebSmsCodeController {
      * @return null
      */
     @PostMapping("/send-for-register")
-    public CommonResp<String> sendForRegister(@Valid @RequestBody RegisterSmsCodeReq req) {
+    public CommonResp<String> sendForRegister(@Valid @RequestBody SmsCodeRegisterReq req) {
         smsCodeService.sendCodeForRegister(req.getMobile());
         return new CommonResp<>();
     }
