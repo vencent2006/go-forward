@@ -3,6 +3,7 @@ import Home from "../view/home.vue";
 import Login from "../view/login.vue";
 import Register from "../view/register.vue";
 import Reset from "../view/reset.vue";
+import Count from "../view/count.vue";
 
 const routes = [
     {
@@ -17,10 +18,12 @@ const routes = [
     }, {
         path: "/register",
         component: Register
-    },
-    , {
+    }, {
         path: "/reset",
         component: Reset
+    }, {
+        path: "/count",
+        component: Count
     },
 ]
 const router = createRouter({

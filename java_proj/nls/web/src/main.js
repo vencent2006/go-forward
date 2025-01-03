@@ -7,9 +7,12 @@ import 'ant-design-vue/dist/reset.css';
 import * as Icons from '@ant-design/icons-vue';
 import router from "./router";
 import axios from "axios";
+import {createPinia} from "pinia";
 
+const pinia = createPinia();
 const app = createApp(App);
 app
+    .use(pinia) // pinia
     .use(Antd) // ant design vue
     .use(router) // vue-router
     .mount('#app');
