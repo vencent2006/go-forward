@@ -25,7 +25,7 @@ import {useMemberStore} from "../stores/member.js";
 
 const selectedKeys1 = ref(['2']);
 const memberStore = useMemberStore()
-const member = memberStore.user
+const member = memberStore.member
 </script>
 
 <style scoped>

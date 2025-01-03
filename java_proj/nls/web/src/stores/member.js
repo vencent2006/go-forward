@@ -2,30 +2,22 @@
 
 import {defineStore} from "pinia";
 import {ref} from "vue";
-import axios from "axios";
 
-const API_URL = 'http://geek.itheima.net/v1_0/channels'
+const MEMBER = 'member'
 export const useMemberStore = defineStore('member', () => {
     // 定义数据(state)
-    const user = ref({})
+    const member = ref({})
+    member.value = window.SessionStorage.get(MEMBER) || {}
 
     const setMember = (data) => {
-        user.value = data
-        console.log(user)
+        member.value = data
+        window.SessionStorage.set(MEMBER, data)
     }
 
-    // 定义异步action
-    const list = ref([])
-    const getList = async () => {
-        const res = await axios.get(API_URL);
-        list.value = res.data.data.channels
-    }
 
     // 以对象的形式return供组件使用
     return {
-        user,
+        member,
         setMember,
-        list,
-        getList
     }
 })
