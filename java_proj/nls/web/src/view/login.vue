@@ -11,7 +11,7 @@
                     @finishFailed="onFinishFailed"
             >
                 <a-form-item
-                        name="username"
+                        name="mobile"
                         :rules="[{ required: true, message: '请输入手机号' }]"
                 >
                     <a-input v-model:value="loginMember.mobile" placeholder="手机号">
@@ -52,13 +52,32 @@
 
 <script setup>
 import {ref} from 'vue';
+import {message} from "ant-design-vue";
+import axios from "axios";
+import {hexMd5Key} from "../utils/md5.js";
+import {useRouter} from "vue-router";
 
+let router = useRouter();
 const loginMember = ref({
     mobile: '',
     password: '',
 });
 const login = values => {
     console.log('开始登录:', values);
+
+    axios.post('/nls/web/member/login', {
+        mobile: loginMember.value.mobile,
+        password: hexMd5Key(loginMember.value.password),
+    }).then(response => {
+        console.log(response);
+        let data = response.data;
+        if (data.success) {
+            message.success("登录成功！");
+            router.push('/home');
+        } else {
+            message.error(data.message);
+        }
+    });
 };
 const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
