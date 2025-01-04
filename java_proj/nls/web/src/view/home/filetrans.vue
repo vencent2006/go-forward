@@ -1,22 +1,16 @@
 <template>
     <div>
-        <a-button type="primary" @click="showModal">语音识别</a-button>
-        <a-modal v-model:open="open" title="Basic Modal" @ok="handleOk">
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-        </a-modal>
+        <a-button type="primary" @click="showModal">开始上传音频</a-button>
+        <filetrans-upload ref="filetransUploadComponent"></filetrans-upload>
     </div>
 </template>
 <script setup>
-import {ref} from 'vue';
 
-const open = ref(false);
+import FiletransUpload from "./filetrans-upload.vue";
+import {ref} from "vue";
+
+const filetransUploadComponent = ref();
 const showModal = () => {
-    open.value = true;
-};
-const handleOk = e => {
-    console.log(e);
-    open.value = false;
+    filetransUploadComponent.value.showModal();
 };
 </script>
