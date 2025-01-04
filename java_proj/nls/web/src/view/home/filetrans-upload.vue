@@ -3,7 +3,7 @@
         <a-button type="primary" @click="selectFile" size="large">
             <span><UploadOutlined/>选择音频</span>
         </a-button>
-        <input type="file" accept="audio/*" style="display: none" ref="fileUploadCom"/>
+        <input type="file" accept=".mp3,.wav,.m4a" style="display: none" ref="fileUploadCom"/>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
