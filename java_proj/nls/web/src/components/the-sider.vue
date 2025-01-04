@@ -11,6 +11,12 @@
                     <span>欢迎使用</span>
                 </router-link>
             </a-menu-item>
+            <a-menu-item key="/home/filetrans">
+                <router-link to="/home/filetrans">
+                    <VideoCameraOutlined/>
+                    <span>语音识别</span>
+                </router-link>
+            </a-menu-item>
             <a-menu-item key="/home/help">
                 <router-link to="/home/help">
                     <QuestionCircleOutlined/>

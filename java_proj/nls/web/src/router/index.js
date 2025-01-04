@@ -6,6 +6,7 @@ import Reset from "../view/reset.vue";
 import Count from "../view/count.vue";
 import Welcome from "../view/home/welcome.vue";
 import Help from "../view/home/help.vue";
+import Filetrans from "../view/home/filetrans.vue";
 
 const routes = [
     {
@@ -21,6 +22,9 @@ const routes = [
             }, {
                 path: "help",
                 component: Help,
+            }, {
+                path: "filetrans",
+                component: Filetrans,
             },
         ]
     }, {
