@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.jingdianjichi</groupId>
-        <artifactId>ape-frame</artifactId>
+        <artifactId>ape-common</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ape-user</artifactId>
+    <artifactId>ape-common-web</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -17,5 +17,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
