@@ -1,14 +1,18 @@
 <template>
     <a-modal v-model:open="open" title="Basic Modal" @ok="handleOk">
-        <a-button type="primary" @click="selectFile" size="large">
-            <span><UploadOutlined/>选择音频</span>
-        </a-button>
-        <input type="file"
-               accept=".mp3,.wav,.m4a"
-               style="display: none"
-               ref="fileUploadCom"
-               @change="uploadFile"
-        />
+        <p>
+            <a-button type="primary" @click="selectFile" size="large">
+                <span><UploadOutlined/>选择音频</span>
+            </a-button>
+            <input type="file"
+                   accept=".mp3,.wav,.m4a"
+                   style="display: none"
+                   ref="fileUploadCom"
+                   @change="uploadFile"
+            />
+        </p>
+        <p>已选择文件: {{ filetrans.name }}</p>
+        <a-progress :percent="Number(filetrans.percent.toFixed(1))"/>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
@@ -19,18 +23,31 @@ import {ref} from 'vue';
 import {notification} from "ant-design-vue";
 
 const open = ref(false);
+const filetrans = ref()
+// 在每次打开上传对话框时，都对重要的变量进行初始化
+const init = () => {
+    filetrans.value = {
+        name: '',
+        percent: 0,
+    }
+
+    if (fileUploadCom.value) {
+        fileUploadCom.value.value = '';// 清空input
+    }
+}
 const showModal = () => {
     open.value = true;
+    init()
 };
 const handleOk = e => {
     console.log(e);
     open.value = false;
 };
 
+
 // ----------- 选择文件 -----------
 const fileUploadCom = ref();
 const selectFile = () => {
-    fileUploadCom.value.value = '';// 清空input
     fileUploadCom.value.click();
 }
 
@@ -49,6 +66,12 @@ const uploadFile = () => {
             message: '系统提示',
             description: '文件大小超过最大限制，最大为500M',
         })
+    }
+
+    // 初始化
+    filetrans.value = {
+        name: file.name,
+        percent: 10,
     }
 }
 
