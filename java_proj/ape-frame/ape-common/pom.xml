@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>ape-common-web</module>
+        <module>ape-common-mybatisplus</module>
     </modules>
 
     <properties>

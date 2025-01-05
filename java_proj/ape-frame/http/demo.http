@@ -1,4 +1,11 @@
 GET http://localhost:8099/test
 Accept: application/json
 
-###
+### add user
+POST http://localhost:8099/user
+Content-Type: application/json
+
+{
+  "name": "vincent",
+  "age": 12
+}
