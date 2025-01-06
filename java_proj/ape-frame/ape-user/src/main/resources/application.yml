@@ -1,0 +1,24 @@
+server:
+  port: 8099
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ape-frame?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: qwer1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 20
+      min-idle: 20
+      max-active: 100
+      max-wait: 60000
+      stat-view-servlet: # 访问监控页面的url
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: admin
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 2000
