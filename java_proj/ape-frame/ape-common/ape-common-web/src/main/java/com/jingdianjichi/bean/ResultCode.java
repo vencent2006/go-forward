@@ -1,4 +1,4 @@
-package com.jingdianjichi;
+package com.jingdianjichi.bean;
 
 public class ResultCode {
 

@@ -1,6 +1,6 @@
 package com.jingdianjichi.user.controller;
 
-import com.jingdianjichi.Result;
+import com.jingdianjichi.bean.Result;
 import com.jingdianjichi.user.entity.dto.UserDto;
 import com.jingdianjichi.user.entity.req.UserReq;
 import com.jingdianjichi.user.service.UserService;
@@ -20,6 +20,7 @@ public class UserController {
 
     @PostMapping()
     public Result addUser(@RequestBody UserReq userReq) {
+        int a = 1 / 0;
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userReq, userDto);
         return Result.ok(userService.addUser(userDto));
