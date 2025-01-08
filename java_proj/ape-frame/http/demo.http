@@ -9,3 +9,7 @@ Content-Type: application/json
   "name": "vincent",
   "age": 12
 }
+
+### delete user
+DELETE http://localhost:8099/user/19
+Content-Type: application/json

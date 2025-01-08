@@ -6,10 +6,7 @@ import com.jingdianjichi.user.entity.req.UserReq;
 import com.jingdianjichi.user.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -20,9 +17,13 @@ public class UserController {
 
     @PostMapping()
     public Result addUser(@RequestBody UserReq userReq) {
-        int a = 1 / 0;
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userReq, userDto);
         return Result.ok(userService.addUser(userDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public Result deleteUser(@PathVariable Integer id) {
+        return Result.ok(userService.delete(id));
     }
 }

@@ -15,8 +15,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         Date now = new Date();
         this.strictInsertFill(metaObject, "createBy", String.class, "jingdianjichi");
         this.strictInsertFill(metaObject, "createTime", Date.class, now);
-        this.strictUpdateFill(metaObject, "updateBy", String.class, "jingdianjichi");
-        this.strictInsertFill(metaObject, "updateTime", Date.class, now);
+        // this.strictUpdateFill(metaObject, "updateBy", String.class, "jingdianjichi");
+        // this.strictInsertFill(metaObject, "updateTime", Date.class, now);
         this.strictInsertFill(metaObject, "deleteFlag", Integer.class, 0);
         this.strictInsertFill(metaObject, "version", Integer.class, 0);
     }

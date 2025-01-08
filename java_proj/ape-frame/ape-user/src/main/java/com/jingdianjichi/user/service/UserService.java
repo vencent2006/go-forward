@@ -6,4 +6,6 @@ import com.jingdianjichi.user.entity.dto.UserDto;
 // service -> mapper 用entity(po)
 public interface UserService {
     int addUser(UserDto userDto);
+
+    int delete(Integer id);
 }
