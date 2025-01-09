@@ -6,4 +6,7 @@ import lombok.Data;
 public class UserDto {
     private String name;
     private Integer age;
+
+    private Integer pageIndex;
+    private Integer pageSize;
 }

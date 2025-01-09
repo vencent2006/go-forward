@@ -1,5 +1,7 @@
 package com.jingdianjichi.config;
 
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.jingdianjichi.inteceptor.SqlBeautyInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -12,5 +14,12 @@ public class MybatisConfiguration {
     // 只有配置了sql.beauty.show=true才会生效
     public SqlBeautyInterceptor sqlBeautyInterceptor() {
         return new SqlBeautyInterceptor();
+    }
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        return interceptor;
     }
 }

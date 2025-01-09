@@ -13,3 +13,15 @@ Content-Type: application/json
 ### delete user
 DELETE http://localhost:8099/user/19
 Content-Type: application/json
+
+
+### user list
+GET http://localhost:8099/user
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10
+}
+
+###
