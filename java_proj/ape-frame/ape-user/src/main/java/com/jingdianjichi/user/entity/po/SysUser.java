@@ -1,5 +1,6 @@
 package com.jingdianjichi.user.entity.po;
 
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class SysUser implements Serializable {
 
     private Long id;
 
+    @ApiParam("名称")
     private String name;
 
     private Integer age;
