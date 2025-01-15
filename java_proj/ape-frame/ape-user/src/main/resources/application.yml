@@ -23,6 +23,16 @@ spring:
           log-slow-sql: true
           slow-sql-millis: 2000
 
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    lettuce: # 线程池
+      pool:
+        max-active: 20
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
 
 sql:
   beauty:
