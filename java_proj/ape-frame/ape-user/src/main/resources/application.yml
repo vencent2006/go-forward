@@ -55,3 +55,7 @@ swagger:
   email: jichi@163.com
   version: 1.0
   description: 从0到1 开箱即用脚手架
+
+#log
+logging:
+  config: classpath:log4j2-spring.xml
