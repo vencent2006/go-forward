@@ -52,12 +52,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- logging -->
+        <!--log4j2 begin-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
             <version>2.4.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.4.2</version>
+        </dependency>
+        <!--log4j2   end-->
     </dependencies>
 
 
