@@ -2,68 +2,59 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <groupId>com.jingdianjichi</groupId>
+    <artifactId>ape-user</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>com.jingdianjichi</groupId>
-        <artifactId>ape-frame</artifactId>
+        <artifactId>ape-dependencies</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
-    <artifactId>ape-user</artifactId>
-
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.plugin.version>3.1</maven.plugin.version>
+        <maven.compile.source>1.8</maven.compile.source>
+        <maven.compile.target>1.8</maven.compile.target>
+        <ape.common.version>1.0.0-SNAPSHOT</ape.common.version>
     </properties>
+
     <dependencies>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.1.21</version>
-            <scope>compile</scope>
+            <groupId>com.jingdianjichi</groupId>
+            <artifactId>ape-common-starter</artifactId>
+            <version>${ape.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
-            <scope>compile</scope>
-        </dependency>
-        <!--   mapstruct   -->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>1.4.2.Final</version>
+            <groupId>com.jingdianjichi</groupId>
+            <artifactId>ape-common-web</artifactId>
+            <version>${ape.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>1.4.2.Final</version>
-        </dependency>
-        <!-- test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!--log4j2 begin-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-            <version>2.4.2</version>
+            <groupId>com.jingdianjichi</groupId>
+            <artifactId>ape-common-mybatisplus</artifactId>
+            <version>${ape.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.lmax</groupId>
-            <artifactId>disruptor</artifactId>
-            <version>3.4.2</version>
+            <groupId>com.jingdianjichi</groupId>
+            <artifactId>ape-common-swagger</artifactId>
+            <version>${ape.common.version}</version>
         </dependency>
-        <!--log4j2   end-->
+        <dependency>
+            <groupId>com.jingdianjichi</groupId>
+            <artifactId>ape-common-redis</artifactId>
+            <version>${ape.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jingdianjichi</groupId>
+            <artifactId>ape-common-log</artifactId>
+            <version>${ape.common.version}</version>
+        </dependency>
     </dependencies>
 
 

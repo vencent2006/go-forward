@@ -2,26 +2,64 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
+        <artifactId>ape-dependencies</artifactId>
         <groupId>com.jingdianjichi</groupId>
-        <artifactId>ape-frame</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath/> <!-- 相对路径 从仓库里下载，不用从相对路径去拿 -->
     </parent>
 
+    <groupId>com.jingdianjichi</groupId>
     <artifactId>ape-common</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
+
     <modules>
+        <!-- <module>ape-common-starter</module> -->
         <module>ape-common-web</module>
         <module>ape-common-mybatisplus</module>
-        <module>ape-common-swagger</module>
         <module>ape-common-redis</module>
+        <module>ape-common-swagger</module>
+        <module>ape-common-log</module>
+        <module>ape-common-starter</module>
     </modules>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- <dependency> -->
+            <!--     <groupId>com.jingdianjichi</groupId> -->
+            <!--     <artifactId>ape-common-starter</artifactId> -->
+            <!--     <version>${project.version}</version> -->
+            <!-- </dependency> -->
+            <dependency>
+                <groupId>com.jingdianjichi</groupId>
+                <artifactId>ape-common-mybatisplus</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jingdianjichi</groupId>
+                <artifactId>ape-common-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jingdianjichi</groupId>
+                <artifactId>ape-common-swagger</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jingdianjichi</groupId>
+                <artifactId>ape-common-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jingdianjichi</groupId>
+                <artifactId>ape-common-log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
 </project>
