@@ -1,4 +1,4 @@
-package com.jingdianjichi.user.mapper;
+package com.jingdianjichi.user.dao;
 
 import com.jingdianjichi.user.entity.po.SysUser;
 import org.apache.ibatis.annotations.Param;

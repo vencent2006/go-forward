@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @Slf4j
 @SpringBootApplication
-@MapperScan("com.jingdianjichi.*.mapper")
+@MapperScan("com.jingdianjichi.*.dao")
 @ComponentScan("com.jingdianjichi")
 public class UserApplication {
     public static void main(String[] args) {
