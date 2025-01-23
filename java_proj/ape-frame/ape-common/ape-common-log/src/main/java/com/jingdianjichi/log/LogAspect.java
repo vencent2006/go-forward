@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Slf4j
 @Component
-@ConditionalOnProperty(name = {"log.aspect.enable"}, havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = {"log.aspect.enable"}, havingValue = "true", matchIfMissing = true) // 配置开关
 public class LogAspect {
     /**
      * 切入点

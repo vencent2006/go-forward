@@ -23,6 +23,7 @@
         <module>ape-common-swagger</module>
         <module>ape-common-log</module>
         <module>ape-common-starter</module>
+        <module>ape-common-tool</module>
     </modules>
 
 
