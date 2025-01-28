@@ -55,6 +55,11 @@
             <artifactId>ape-common-log</artifactId>
             <version>${ape.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.jingdianjichi</groupId>
+            <artifactId>ape-common-websocket</artifactId>
+            <version>${ape.common.version}</version>
+        </dependency>
     </dependencies>
 
 

@@ -24,6 +24,7 @@
         <module>ape-common-log</module>
         <module>ape-common-starter</module>
         <module>ape-common-tool</module>
+        <module>ape-common-websocket</module>
     </modules>
 
 
