@@ -3,9 +3,12 @@ package com.jingdianjichi.user.controller;
 import com.jingdianjichi.redis.util.CacheUtil;
 import com.jingdianjichi.redis.util.RedisShareLockUtil;
 import com.jingdianjichi.redis.util.RedisUtil;
+import com.jingdianjichi.user.entity.po.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -85,5 +88,11 @@ public class TestController {
     class SkuPriceInfo {
         private Long id;
         private Long price;
+    }
+
+    @PostMapping("/testQuery")
+    public void testQuery(@RequestBody SysUser sysUser) throws Exception {
+        // 2022-12-18 22:13:14
+        System.out.println(sysUser);
     }
 }
