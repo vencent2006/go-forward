@@ -1,6 +1,8 @@
 package com.jingdianjichi.user;
 
 import com.jingdianjichi.tool.CompletableFutureUtils;
+import com.jingdianjichi.user.event.Person;
+import com.jingdianjichi.user.event.PersonEventService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,9 @@ import java.util.concurrent.TimeUnit;
 public class MainThreadPoolTest {
     @Resource(name = "mailThreadPool")
     private ThreadPoolExecutor mailThreadPool;
+
+    @Resource
+    private PersonEventService personEventService;
 
     @Test
     public void test() {
@@ -58,5 +63,13 @@ public class MainThreadPoolTest {
                     1, TimeUnit.SECONDS, "默认值", log);
             log.info("testFuture: {}", name);
         }
+    }
+
+    @Test
+    public void publishEvent() {
+        Person person = new Person();
+        person.setName("鸡翅");
+        person.setAge(18);
+        personEventService.createPerson(person);
     }
 }
