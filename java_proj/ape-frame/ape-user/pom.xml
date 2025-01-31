@@ -65,6 +65,11 @@
             <artifactId>ape-common-test</artifactId>
             <version>${ape.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.jingdianjichi</groupId>
+            <artifactId>ape-common-tool</artifactId>
+            <version>${ape.common.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
