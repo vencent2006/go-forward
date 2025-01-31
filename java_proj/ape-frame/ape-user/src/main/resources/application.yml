@@ -1,3 +1,5 @@
 spring:
   profiles:
     active: ${env-flag}
+  mvc:
+    static-path-pattern: /static/**
