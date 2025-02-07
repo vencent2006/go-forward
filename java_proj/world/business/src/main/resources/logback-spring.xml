@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="PATH" value="./log/nls" />
+    <!-- Console Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern> -->
+            <pattern>%d{mm:ss.sss} %highlight(%-5level) %yellow(%-50logger{50} %-4line) %green(%-19X{LOG_ID}) %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender -->
+    <!-- <appender name="FILE" class="ch.qos.logback.core.FileAppender"> -->
+    <!--     &lt;!&ndash; <file>logs/myapp.log</file> &ndash;&gt; -->
+    <!--     <file>${PATH}/trace.log</file> -->
+    <!--     <encoder> -->
+    <!--         <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern> -->
+    <!--     </encoder> -->
+    <!-- </appender> -->
+
+    <appender name="TRACE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PATH}/trace.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${PATH}/trace.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <MaxHistory>0</MaxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <layout>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-50logger{50} %-4line %thread %-19X{L0G ID} %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PATH}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${PATH}/error.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <MaxHistory>30</MaxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <layout>
+            <pattern>%d{yyy-MM-dd HH:mm:ss.SSS} %-5level %-50logger{50} %-4line %thread %-19X{LOG_ID}) %msg%n</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- Loggers -->
+    <root level="ERROR">
+        <appender-ref ref="ERROR_FILE" />
+    </root>
+
+    <root level="TRACE">
+        <appender-ref ref="TRACE_FILE" />
+    </root>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
