@@ -1,0 +1,24 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8080
+  servlet:
+    context-path: /nls
+# 数据库连接
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/nls?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: qwer1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # redis
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+# mybatis xml 路径
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+  # 打印持久层日志, 修改某一个包的日志级别
+logging:
+  level:
+    com.jiawa.nls.business.mapper: trace
