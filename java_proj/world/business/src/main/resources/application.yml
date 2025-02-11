@@ -2,7 +2,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /nls
+    context-path: /myworld
 
 spring:
   # 数据库连接
@@ -24,4 +24,4 @@ mybatis:
 # 打印持久层日志, 修改某一个包的日志级别
 logging:
   level:
-    com.jiawa.nls.business.mapper: trace
+    com.vs.myworld.business.mapper: trace

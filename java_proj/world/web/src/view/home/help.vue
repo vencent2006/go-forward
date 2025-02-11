@@ -10,7 +10,7 @@ import {message} from "ant-design-vue";
 
 const resp = ref()
 
-axios.get(import.meta.env.VITE_SERVER + "/nls/query", {
+axios.get(import.meta.env.VITE_SERVER + "/myworld/query", {
     params: {
         mobile: "1"
     }

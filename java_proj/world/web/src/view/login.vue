@@ -8,31 +8,31 @@
                 </div>
                 <div class="login-right">
                     <a-form
-                        :model="loginMember"
-                        name="basic"
-                        autocomplete="off"
-                        @finish="login"
-                        @finishFailed="onFinishFailed"
-                        class="login-form"
+                            :model="loginMember"
+                            name="basic"
+                            autocomplete="off"
+                            @finish="login"
+                            @finishFailed="onFinishFailed"
+                            class="login-form"
                     >
                         <a-form-item
-                            name="mobile"
-                            :rules="[{ required: true, message: '请输入手机号' }]"
+                                name="mobile"
+                                :rules="[{ required: true, message: '请输入手机号' }]"
                         >
                             <a-input v-model:value="loginMember.mobile" placeholder="phone" size="large">
                                 <template #prefix>
-                                    <MobileOutlined />
+                                    <MobileOutlined/>
                                 </template>
                             </a-input>
                         </a-form-item>
 
                         <a-form-item
-                            name="password"
-                            :rules="[{ required: true, message: '请输入密码' }]"
+                                name="password"
+                                :rules="[{ required: true, message: '请输入密码' }]"
                         >
                             <a-input-password v-model:value="loginMember.password" placeholder="password" size="large">
                                 <template #prefix>
-                                    <LockOutlined />
+                                    <LockOutlined/>
                                 </template>
                             </a-input-password>
                         </a-form-item>
@@ -82,7 +82,7 @@ const memberStore = useMemberStore();
 const login = values => {
     console.log('开始登录:', values);
 
-    axios.post('/nls/web/member/login', {
+    axios.post('/myworld/web/member/login', {
         mobile: loginMember.value.mobile,
         password: hexMd5Key(loginMember.value.password),
     }).then(response => {

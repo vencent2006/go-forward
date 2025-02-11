@@ -1,19 +1,19 @@
-GET http://localhost:8080/nls/hello1
+GET http://localhost:8080/myworld/hello1
 Accept: application/json
 
 ###
 
-GET http://localhost:8080/nls/count
+GET http://localhost:8080/myworld/count
 Accept: application/json
 
 ###
 
-GET http://localhost:8080/nls/query?mobile=1
+GET http://localhost:8080/myworld/query?mobile=1
 Accept: application/json
 
 ###
 
-GET http://localhost:8080/nls/query
+GET http://localhost:8080/myworld/query
 Accept: application/json
 
 ###

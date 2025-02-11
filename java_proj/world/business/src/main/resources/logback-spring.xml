@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="PATH" value="./log/nls" />
+    <property name="PATH" value="./log/myworld"/>
     <!-- Console Appender -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern> -->
-            <pattern>%d{mm:ss.sss} %highlight(%-5level) %yellow(%-50logger{50} %-4line) %green(%-19X{LOG_ID}) %msg%n</pattern>
+            <pattern>%d{mm:ss.sss} %highlight(%-5level) %yellow(%-50logger{50} %-4line) %green(%-19X{LOG_ID}) %msg%n
+            </pattern>
         </encoder>
     </appender>
 
@@ -55,15 +56,15 @@
 
     <!-- Loggers -->
     <root level="ERROR">
-        <appender-ref ref="ERROR_FILE" />
+        <appender-ref ref="ERROR_FILE"/>
     </root>
 
     <root level="TRACE">
-        <appender-ref ref="TRACE_FILE" />
+        <appender-ref ref="TRACE_FILE"/>
     </root>
 
     <root level="INFO">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
     </root>
 
 </configuration>

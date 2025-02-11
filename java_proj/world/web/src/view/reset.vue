@@ -106,7 +106,7 @@ const reset = values => {
     }
 
     resetMember.value.password = resetMember.value.passwordOri;
-    axios.post('/nls/web/member/reset', {
+    axios.post('/myworld/web/member/reset', {
         mobile: resetMember.value.mobile,
         password: hexMd5Key(resetMember.value.password),
         code: resetMember.value.code,
@@ -150,7 +150,7 @@ const setTime = () => {
 const sendRegisterSmsCode = () => {
     console.log('发送短信验证码:');
     sendBtnLoading.value = true;
-    axios.post('/nls/web/sms-code/send-for-reset', {
+    axios.post('/myworld/web/sms-code/send-for-reset', {
         mobile: resetMember.value.mobile,
     }).then(response => {
         console.log(response);

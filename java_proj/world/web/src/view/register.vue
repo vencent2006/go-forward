@@ -8,45 +8,47 @@
                 </div>
                 <div class="login-right">
                     <a-form
-                        :model="registerMember"
-                        name="basic"
-                        autocomplete="off"
-                        @finish="register"
-                        @finishFailed="onFinishFailed"
-                        class="login-form"
+                            :model="registerMember"
+                            name="basic"
+                            autocomplete="off"
+                            @finish="register"
+                            @finishFailed="onFinishFailed"
+                            class="login-form"
                     >
                         <a-form-item
-                            name="mobile"
-                            :rules="[{ required: true, message: 'Please input your phone number' }]"
+                                name="mobile"
+                                :rules="[{ required: true, message: 'Please input your phone number' }]"
                         >
                             <a-input v-model:value="registerMember.mobile" placeholder="phone" size="large">
                                 <template #prefix>
-                                    <MobileOutlined />
+                                    <MobileOutlined/>
                                 </template>
                             </a-input>
                         </a-form-item>
 
                         <a-form-item
-                            name="password"
-                            :rules="[{ required: true, message: 'Please input your password' }]"
+                                name="password"
+                                :rules="[{ required: true, message: 'Please input your password' }]"
                         >
-                            <a-input-password v-model:value="registerMember.password" placeholder="password" size="large">
+                            <a-input-password v-model:value="registerMember.password" placeholder="password"
+                                              size="large">
                                 <template #prefix>
-                                    <LockOutlined />
+                                    <LockOutlined/>
                                 </template>
                             </a-input-password>
                         </a-form-item>
 
                         <a-form-item
-                            name="confirmPassword"
-                            :rules="[
+                                name="confirmPassword"
+                                :rules="[
                                 { required: true, message: 'Please confirm your password' },
                                 { validator: validatePassword }
                             ]"
                         >
-                            <a-input-password v-model:value="registerMember.confirmPassword" placeholder="confirm password" size="large">
+                            <a-input-password v-model:value="registerMember.confirmPassword"
+                                              placeholder="confirm password" size="large">
                                 <template #prefix>
-                                    <LockOutlined />
+                                    <LockOutlined/>
                                 </template>
                             </a-input-password>
                         </a-form-item>
@@ -74,11 +76,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { message } from "ant-design-vue";
+import {ref} from 'vue';
+import {message} from "ant-design-vue";
 import axios from "axios";
-import { hexMd5Key } from "../utils/md5.js";
-import { useRouter } from "vue-router";
+import {hexMd5Key} from "../utils/md5.js";
+import {useRouter} from "vue-router";
 
 const router = useRouter();
 const registerMember = ref({
@@ -96,7 +98,7 @@ const validatePassword = async (rule, value) => {
 const register = values => {
     console.log('注册:', values);
 
-    axios.post('/nls/web/member/register', {
+    axios.post('/myworld/web/member/register', {
         mobile: registerMember.value.mobile,
         password: hexMd5Key(registerMember.value.password)
     }).then(response => {

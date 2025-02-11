@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
 
-    <groupId>com.jiawa</groupId>
-    <artifactId>nls</artifactId>
+    <groupId>com.vs</groupId>
+    <artifactId>myworld</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>nls</name>
-    <description>nls</description>
+    <name>myworld</name>
+    <description>myworld</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -78,7 +78,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.jiawa.nls.NlsApplication</mainClass>
+                    <mainClass>com.vs.myworld.myworldApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>

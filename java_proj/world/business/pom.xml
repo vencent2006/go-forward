@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.jiawa.nls</groupId>
+    <groupId>com.vs.myworld</groupId>
     <artifactId>business</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>business</name>
     <description>business</description>
 
     <parent>
-        <groupId>com.jiawa</groupId>
-        <artifactId>nls</artifactId>
+        <groupId>com.vs</groupId>
+        <artifactId>myworld</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -102,7 +102,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.jiawa.nls.business.config.BusinessApplication</mainClass>
+                    <mainClass>com.vs.myworld.business.config.BusinessApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>

@@ -1,5 +1,5 @@
 // 盐值
-const KEY = "!@#$*&^%nls";
+const KEY = "!@#$*&^%myworld";
 
 export function hexMd5Key(s) {
     return hexMd5(s + KEY);

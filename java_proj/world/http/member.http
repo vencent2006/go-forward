@@ -1,5 +1,5 @@
 ### register
-POST http://localhost:8080/nls/web/member/register
+POST http://localhost:8080/myworld/web/member/register
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 
 
 ### login
-POST http://localhost:8080/nls/web/member/login
+POST http://localhost:8080/myworld/web/member/login
 Content-Type: application/json
 
 {
