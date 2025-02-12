@@ -7,7 +7,7 @@ server:
 spring:
   # 数据库连接
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/nls?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/my_world?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai
     username: root
     password: qwer1234
     driver-class-name: com.mysql.cj.jdbc.Driver
