@@ -7,6 +7,7 @@ import Count from "../view/count.vue";
 import Welcome from "../view/home/welcome.vue";
 import Help from "../view/home/help.vue";
 import Filetrans from "../view/home/filetrans.vue";
+import WorldList from "../view/world/world-list.vue";
 
 const routes = [
     {
@@ -39,7 +40,22 @@ const routes = [
     }, {
         path: "/count",
         component: Count
-    },
+    }, {
+        path: "/world",
+        component: WorldList,
+        // children: [
+        //     {
+        //         path: "welcome",
+        //         component: Welcome,
+        //     }, {
+        //         path: "help",
+        //         component: Help,
+        //     }, {
+        //         path: "filetrans",
+        //         component: Filetrans,
+        //     },
+        // ]
+    }
 ]
 const router = createRouter({
     history: createWebHistory(),
