@@ -6,6 +6,7 @@ import com.vs.myworld.business.service.WorldService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -18,7 +19,8 @@ public class WorldController {
     private WorldService worldService;
 
     @GetMapping()
-    public CommonResp<WorldQueryInfo> query() {
+    public CommonResp<WorldQueryInfo> query(@RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size) {
         WorldQueryInfo info = new WorldQueryInfo();
         info.setList(worldService.query());
         info.setTotal((long) info.getList().size());
