@@ -18,6 +18,28 @@ export default defineConfigWithVueTs(
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
 
+  {
+    rules: {
+      'prettier/prettier': [
+        'warn',
+        {
+          singleQuote: true, // 单引号
+          semi: false, // 不使用分号
+          printWidth: 80, // 单行字符数 80
+          trailingComma: 'none', // 结尾不加逗号
+          endOfLine: 'auto', // 自动识别换行符 换行符合不限制 （win mac 不一致）
+        },
+      ],
+      'vue/multi-word-component-names': [
+        'warn',
+        {
+          ignores: ['index'], // 忽略 index 组件, vue 组件名称多单词组成
+        },
+      ],
+      'vue/no-setup-props-destructure': ['off'], // 关闭 setup 语法糖中 props 解构的警告
+    },
+  },
+
   pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
   skipFormatting,
