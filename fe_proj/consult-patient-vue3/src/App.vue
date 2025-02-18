@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Button as VantButton } from 'vant'
+</script>
 <template>
-  <div>App</div>
+  <vant-button type="primary">按钮</vant-button>
 </template>
