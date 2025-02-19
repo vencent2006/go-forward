@@ -1,0 +1,18 @@
+:root {
+  // 问诊患者: 色板
+  --cp-primary: #16c2a3;
+  --cp-plain: #eaf8f6;
+  --cp-orange: #fca21c;
+  --cp-text1: #121826;
+  --cp-text2: #3c3e42;
+  --cp-text3: #6f6f6f;
+  --cp-tag: #848484;
+  --cp-dark: #979797;
+  --cp-tip: #c3c3c5;
+  --cp-disable: #d9dbde;
+  --cp-line: #ededed;
+  --cp-bg: #f6f7f9;
+  --cp-price: #eb5757;
+  // 覆盖vant主题色
+  --van-primary-color: var(--cp-primary);
+}
