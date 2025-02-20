@@ -2,17 +2,18 @@
 import { passwordInputProps, Button as VantButton } from 'vant'
 import { useUserStore } from './stores'
 import { request } from './utils/request'
+import type { User } from './types/user'
 const store = useUserStore()
 const getUser = () => {
   request('patient/myUser', 'GET', { test: 1 })
 }
 const login = () => {
-  request('login/password', 'POST', {
+  request<User>('login/password', 'POST', {
     mobile: '13211112222',
     password: 'abc12345',
   })
-    .then(() => {
-      console.log('登录成功')
+    .then((res) => {
+      console.log('登录成功', res)
     })
     .catch((err) => {
       console.log('登录失败', err)
