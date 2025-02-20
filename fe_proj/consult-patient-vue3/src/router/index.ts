@@ -3,7 +3,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 // createWebHashHistory 哈希路由 会有 # 号
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL), // 路由模式
-  routes: [],
+  routes: [
+    {
+      path: '/login',
+      component: () => import('@/views/Login/index.vue'),
+    },
+  ],
 })
 
 export default router

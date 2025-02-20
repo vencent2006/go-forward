@@ -1,43 +1,9 @@
-<script setup lang="ts">
-import { passwordInputProps, Button as VantButton } from 'vant'
-import { useUserStore } from './stores'
-import { request } from './utils/request'
-import type { User } from './types/user'
-const store = useUserStore()
-const getUser = () => {
-  request('patient/myUser', 'GET', { test: 1 })
-}
-const login = () => {
-  request<User>('login/password', 'POST', {
-    mobile: '13211112222',
-    password: 'abc12345',
-  })
-    .then((res) => {
-      console.log('登录成功', res)
-    })
-    .catch((err) => {
-      console.log('登录失败', err)
-    })
-}
-</script>
+<script setup lang="ts"></script>
 <template>
-  <div>
-    App {{ store.user }}
-    <vant-button
-      type="primary"
-      @click="
-        store.setUser({
-          id: '1',
-          avatar: '1',
-          token: '1',
-          mobile: '1',
-          account: '1',
-        })
-      "
-      >登录</vant-button
-    >
-    <vant-button type="primary" @click="store.delUser()">退出</vant-button>
-    <vant-button type="primary" @click="getUser">获取用户信息</vant-button>
-    <vant-button type="primary" @click="login">接口登录</vant-button>
+  <div class="app">
+    <!-- 路由出口 一级路由 -->
+    <router-view></router-view>
   </div>
 </template>
+
+<style lang="scss" scoped></style>
