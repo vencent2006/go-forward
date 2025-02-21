@@ -4,6 +4,8 @@ import {} from 'vue'
 
 <template>
   <div class="login-page">login</div>
+  <van-button>van-button</van-button>
+  <van-checkbox>van-checkbox</van-checkbox>
 </template>
 
 <style lang="scss" scoped></style>
