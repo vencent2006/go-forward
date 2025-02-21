@@ -1,6 +1,26 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// 1. 通过props实现标题和右侧文字的设置
+defineProps<{
+  title?: string
+  rightText?: string
+}>()
+// 2. 通过emit函数来触发自定义事件（点击右侧文字）
+const emit = defineEmits<{
+  (e: 'click-right'): void
+}>()
+const onClickRight = () => {
+  emit('click-right')
+}
+</script>
 <template>
-  <van-nav-bar fixed left-arrow title="登录" right-text="注册"></van-nav-bar>
+  <!-- 固定定位 左侧箭头 标题 右侧文字 -->
+  <van-nav-bar
+    fixed
+    left-arrow
+    :title="title"
+    :right-text="rightText"
+    @click-right="onClickRight"
+  ></van-nav-bar>
 </template>
 <style lang="scss" scoped>
 :deep() {

@@ -65,7 +65,7 @@ def agent2(file_path):
 # Agent3: 对比前两个账本并整理输出最终结果
 def agent3(content1, content2):
     if content1 and content2:
-        prompt = f"请对比以下两个账本信息并整理输出最终结果：账本 1：{content1} 账本 2：{content2}"
+        prompt = f"请对比以下两个账本信息并整理输出最终结果：账本 1：{content1} 账本 2：{content2}，找出哪个商品销售比例最大"
         result = call_zhipu_ai(prompt)
         print("Agent3 处理结果：")
         print(result)
@@ -120,4 +120,4 @@ if __name__ == "__main__":
     content1 = agent1(file_path1)
     content2 = agent2(file_path2)
     agent3(content1, content2)
-    main()
+    # main()
