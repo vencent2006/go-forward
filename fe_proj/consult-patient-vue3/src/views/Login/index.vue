@@ -1,6 +1,13 @@
 <script setup lang="ts">
-const fn = () => {
-  console.log('click right')
+import { ref } from 'vue'
+import { mobileRules, passwordRules } from '@/utils/rules'
+import { showToast } from 'vant'
+const mobile = ref('')
+const password = ref('')
+const agree = ref(false)
+const onSubmit = () => {
+  if (!agree.value) return showToast('请勾选协议')
+  // TODO 登录
 }
 </script>
 
@@ -16,12 +23,22 @@ const fn = () => {
       </a>
     </div>
     <!-- 表单 -->
-    <van-form autocomplete="off">
-      <van-field placeholder="请输入手机号" type="tel"></van-field>
-      <van-field placeholder="请输入密码" type="password"></van-field>
+    <van-form autocomplete="off" @submit="onSubmit">
+      <van-field
+        v-model="mobile"
+        :rules="mobileRules"
+        placeholder="请输入手机号"
+        type="tel"
+      ></van-field>
+      <van-field
+        v-model="password"
+        :rules="passwordRules"
+        placeholder="请输入密码"
+        type="password"
+      ></van-field>
 
       <div class="cp-cell">
-        <van-checkbox>
+        <van-checkbox v-model="agree">
           <span>我已同意</span>
           <a href="javascript:;">用户协议</a>
           <span>及</span>
