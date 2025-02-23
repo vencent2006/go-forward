@@ -10,3 +10,5 @@ export type User = {
   // 头像
   avatar: string
 }
+
+export type CodeType = 'login' | 'register' | 'changeMobile' | 'forgetPassword' | 'bindMobile'
