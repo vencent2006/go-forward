@@ -39,7 +39,10 @@ const routes = [
     }, {
         path: "/count",
         component: Count
-    },
+    }, {
+        path: "/yidong",
+        component: () => import("../view/yidong/index.vue")
+    }
 ]
 const router = createRouter({
     history: createWebHistory(),
