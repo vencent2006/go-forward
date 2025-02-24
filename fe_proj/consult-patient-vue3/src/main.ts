@@ -8,6 +8,9 @@ import router from './router'
 import 'vant/lib/index.css'
 import './styles/main.scss'
 
+// 导入svg插件需要的代码
+import 'virtual:svg-icons-register'
+
 const app = createApp(App)
 
 app.use(pinia)
