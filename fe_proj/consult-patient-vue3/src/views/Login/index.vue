@@ -13,8 +13,10 @@ const router = useRouter() // 获取路由对象
 const route = useRoute() // 获取当前路由
 const onSubmit = async () => {
   if (!agree.value) return showToast('请勾选协议')
-  // 登录
-  const res = await loginByPassword(mobile.value, password.value)
+  // 登录 (合并短信登录) eg: 13211112222
+  const res = isPass
+    ? await loginByPassword(mobile.value, password.value)
+    : await loginByPassword(mobile.value, code.value)
   userStore.setUser(res.data)
   showSuccessToast('登录成功')
   // as string 类型断言
