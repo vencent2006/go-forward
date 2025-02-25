@@ -8,6 +8,7 @@ const router = createRouter({
     {
       path: '/login',
       component: () => import('@/views/Login/index.vue'),
+      meta: { title: '登录' },
     },
     {
       path: '/',
@@ -15,10 +16,26 @@ const router = createRouter({
       component: () => import('@/views/Layout/index.vue'),
       children: [
         // 二级路由
-        { path: '/home', component: () => import('@/views/Home/index.vue') },
-        { path: '/article', component: () => import('@/views/Article/index.vue') },
-        { path: '/notify', component: () => import('@/views/Notify/index.vue') },
-        { path: '/user', component: () => import('@/views/User/index.vue') },
+        {
+          path: '/home',
+          component: () => import('@/views/Home/index.vue'),
+          meta: { title: '首页' },
+        },
+        {
+          path: '/article',
+          component: () => import('@/views/Article/index.vue'),
+          meta: { title: '健康百科' },
+        },
+        {
+          path: '/notify',
+          component: () => import('@/views/Notify/index.vue'),
+          meta: { title: '消息通知' },
+        },
+        {
+          path: '/user',
+          component: () => import('@/views/User/index.vue'),
+          meta: { title: '个人中心' },
+        },
       ],
     },
   ],
@@ -33,6 +50,11 @@ router.beforeEach((to) => {
   // 3.如果没有token，并且不在白名单中，就跳转到登录页
   if (!store.user?.token && !whiteList.includes(to.path)) return '/login'
   // 不返回，和return true 和 return undefined 一样
+})
+
+// 全局的后置导航
+router.afterEach((to) => {
+  document.title = `${to.meta.title || ''}-优医问诊`
 })
 
 export default router
