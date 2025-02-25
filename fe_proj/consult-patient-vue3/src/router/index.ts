@@ -1,3 +1,4 @@
+import { useUserStore } from '@/stores'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // createWebHashHistory 哈希路由 会有 # 号
@@ -21,6 +22,17 @@ const router = createRouter({
       ],
     },
   ],
+})
+
+// 全局的前置导航
+router.beforeEach((to) => {
+  // 1.获取用户信息对象
+  const store = useUserStore()
+  // 2.白名单
+  const whiteList = ['/login']
+  // 3.如果没有token，并且不在白名单中，就跳转到登录页
+  if (!store.user?.token && !whiteList.includes(to.path)) return '/login'
+  // 不返回，和return true 和 return undefined 一样
 })
 
 export default router
