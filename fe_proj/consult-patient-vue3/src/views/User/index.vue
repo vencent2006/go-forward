@@ -33,8 +33,8 @@ const onLogout = async () => {
     message: '您是否确认退出优医问诊？',
   })
   // 点击的确认
-  store.delUser()
-  router.push('/login')
+  store.delUser() // 删除用户信息
+  router.push('/login') // 跳转登录页
 }
 </script>
 
