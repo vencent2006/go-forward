@@ -43,3 +43,7 @@ ol {
   margin: 0;
   padding: 0;
 }
+
+#nprogress .bar {
+  background-color: var(--cp-primary) !important;
+}
