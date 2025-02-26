@@ -2,7 +2,7 @@
 import { onUnmounted, ref } from 'vue'
 import { codeRules, mobileRules, passwordRules } from '@/utils/rules'
 import { showSuccessToast, showToast, type FormInstance } from 'vant'
-import { loginByPassword, sendMobileCode } from '@/services/user'
+import { loginByMobile, loginByPassword, sendMobileCode } from '@/services/user'
 import { useUserStore } from '../../stores/modules/user'
 import { useRoute, useRouter } from 'vue-router'
 const mobile = ref('')
@@ -16,7 +16,7 @@ const onSubmit = async () => {
   // 登录 (合并短信登录) eg: 13211112222
   const res = isPass
     ? await loginByPassword(mobile.value, password.value)
-    : await loginByPassword(mobile.value, code.value)
+    : await loginByMobile(mobile.value, code.value)
   userStore.setUser(res.data)
   showSuccessToast('登录成功')
   // as string 类型断言
