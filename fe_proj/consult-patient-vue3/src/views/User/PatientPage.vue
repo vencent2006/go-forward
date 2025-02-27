@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { addPatient, delPatient, editPatient, getPatientList } from '@/services/user'
+import { getPatientList } from '@/services/user'
 import type { PatientList, Patient } from '@/types/user'
 import { ref, onMounted, computed } from 'vue'
-import { nameRules, idCardRules } from '@/utils/rules'
+// import { nameRules, idCardRules } from '@/utils/rules'
 import { showConfirmDialog, showSuccessToast, showToast, type FormInstance } from 'vant'
 import { useRoute } from 'vue-router'
-import { useConsultStore } from '@/stores'
+// import { useConsultStore } from '@/stores'
 import router from '@/router'
 
 // 组件挂载完毕，获取数据
@@ -13,17 +13,13 @@ const list = ref<PatientList>([])
 const loadList = async () => {
   const res = await getPatientList()
   list.value = res.data
-  // 默认选中患者
-  if (isChange.value && list.value.length) {
-    const defPatient = list.value.find((item) => item.defaultFlag === 1)
-    if (defPatient) patientId.value = defPatient.id
-    else patientId.value = list.value[0].id
-  }
 }
 
 onMounted(() => {
   loadList()
 })
+
+const count = ref(10)
 </script>
 
 <template>
@@ -50,6 +46,8 @@ onMounted(() => {
         <p>添加患者</p>
       </div>
       <div class="patient-tip">最多可添加 6 人</div>
+      <!-- <cp-radio-btn :model-value="count" @update:model-value="count = $event"></cp-radio-btn> -->
+      <cp-radio-btn v-model:count="count"></cp-radio-btn>
     </div>
   </div>
 </template>
