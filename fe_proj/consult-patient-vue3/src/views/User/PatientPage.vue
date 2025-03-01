@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addPatient, getPatientList } from '@/services/user'
+import { addPatient, editPatient, getPatientList } from '@/services/user'
 import type { PatientList, Patient } from '@/types/user'
 import { ref, onMounted, computed } from 'vue'
 // import { nameRules, idCardRules } from '@/utils/rules'
@@ -27,10 +27,20 @@ const options = [
 
 // 控制popup
 const show = ref(false)
-const showPopup = () => {
+const showPopup = (item?: Patient) => {
+  if (item) {
+    // 有数据，说明是编辑
+    const { id, name, idCard, gender, defaultFlag } = item
+    patient.value = { id, name, idCard, gender, defaultFlag }
+  } else {
+    // 没有数据，说明是添加
+
+    // 清空表单校验
+    form.value?.resetValidation()
+    // 清空数据
+    patient.value = { ...initPatient }
+  }
   show.value = true
-  // 清空数据
-  patient.value = { ...initPatient }
 }
 
 const initPatient: Patient = {
@@ -67,13 +77,13 @@ const onSubmit = async () => {
     // 确认了，会继续往下走
   }
 
-  // 提交即可
-  await addPatient(patient.value)
+  // 提交即可 添加 或者 编辑
+  patient.value.id ? await editPatient(patient.value) : await addPatient(patient.value)
 
   // 成功: 关闭添加患者界面，加载患者列表，成功提示
   show.value = false
   await loadList() // 重新加载数据
-  showSuccessToast('添加成功')
+  showSuccessToast(patient.value.id ? '编辑成功' : '添加成功')
 }
 </script>
 
@@ -91,12 +101,12 @@ const onSubmit = async () => {
           <span>{{ item.genderValue }}</span>
           <span>{{ item.age }}岁</span>
         </div>
-        <div class="icon">
+        <div class="icon" @click="showPopup(item)">
           <cp-icon name="user-edit" />
         </div>
         <div class="tag" v-if="item.defaultFlag === 1">默认</div>
       </div>
-      <div class="patient-add" v-if="list.length < 6" @click="showPopup">
+      <div class="patient-add" v-if="list.length < 6" @click="showPopup()">
         <cp-icon name="user-add" />
         <p>添加患者</p>
       </div>
@@ -104,7 +114,7 @@ const onSubmit = async () => {
       <!-- 使用 popup组件 -->
       <van-popup position="right" v-model:show="show">
         <cp-nav-bar
-          title="添加患者"
+          :title="patient.id ? '编辑患者' : '添加患者'"
           right-text="保存"
           :back="() => (show = false)"
           @click-right="onSubmit"
