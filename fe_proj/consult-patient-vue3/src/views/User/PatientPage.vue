@@ -24,7 +24,11 @@ const options = [
   { label: '女', value: 0 },
 ]
 
-const gender = ref(0)
+// 控制popup
+const show = ref(false)
+const showPopup = () => {
+  show.value = true
+}
 </script>
 
 <template>
@@ -46,13 +50,30 @@ const gender = ref(0)
         </div>
         <div class="tag" v-if="item.defaultFlag === 1">默认</div>
       </div>
-      <div class="patient-add" v-if="list.length < 6">
+      <div class="patient-add" v-if="list.length < 6" @click="showPopup">
         <cp-icon name="user-add" />
         <p>添加患者</p>
       </div>
       <div class="patient-tip">最多可添加 6 人</div>
-      <!-- <cp-radio-btn :model-value="count" @update:model-value="count = $event"></cp-radio-btn> -->
-      <cp-radio-btn :options="options" v-model="gender"></cp-radio-btn>
+      <!-- 使用 popup组件 -->
+      <van-popup position="right" v-model:show="show">
+        <cp-nav-bar title="添加患者" right-text="保存" :back="() => (show = false)"></cp-nav-bar>
+        <van-form autocomplete="off" ref="form">
+          <van-field label="真实姓名" placeholder="请输入真实姓名" />
+          <van-field label="身份证号" placeholder="请输入身份证号" />
+          <van-field label="性别" class="pb4">
+            <!-- 单选按钮组件 -->
+            <template #input>
+              <cp-radio-btn :options="options"></cp-radio-btn>
+            </template>
+          </van-field>
+          <van-field label="默认就诊人">
+            <template #input>
+              <van-checkbox :icon-size="18" round />
+            </template>
+          </van-field>
+        </van-form>
+      </van-popup>
     </div>
   </div>
 </template>

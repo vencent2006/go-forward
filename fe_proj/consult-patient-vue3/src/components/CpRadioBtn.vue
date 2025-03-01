@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
   options: { label: string; value: number | string }[] // 选项数组
-  modelValue: number | string // 选中的值
+  modelValue?: number | string // 选中的值
 }>()
 defineEmits<{
   (e: 'update:modelValue', value: number | string): void // 选中的值
