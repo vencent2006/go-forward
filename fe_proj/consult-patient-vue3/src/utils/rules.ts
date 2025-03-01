@@ -20,4 +20,15 @@ const codeRules: FieldRule[] = [
   { pattern: /^\d{6}$/, message: '验证码必须是6位数字' },
 ]
 
-export { mobileRules, passwordRules, codeRules }
+// 校验姓名
+const nameRules: FieldRule[] = [
+  { required: true, message: '请输入姓名' },
+  { pattern: /^[\u4e00-\u9fa5·]{2,16}$/, message: '姓名必须是2-16位中文' },
+]
+// 校验姓名
+const idCardRules: FieldRule[] = [
+  { required: true, message: '请输入身份证号' },
+  { pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/, message: '身份证号格式不正确' },
+]
+
+export { mobileRules, passwordRules, codeRules, nameRules, idCardRules }

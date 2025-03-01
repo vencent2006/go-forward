@@ -7,6 +7,7 @@ import { showConfirmDialog, showSuccessToast, showToast, type FormInstance } fro
 import { useRoute } from 'vue-router'
 // import { useConsultStore } from '@/stores'
 import router from '@/router'
+import { nameRules, idCardRules } from '@/utils/rules'
 
 // 组件挂载完毕，获取数据
 const list = ref<PatientList>([])
@@ -40,7 +41,7 @@ const initPatient: Patient = {
 }
 const patient = ref<Patient>({ ...initPatient }) // 把initPatient的解构赋给patient
 
-// 因为patient的defaultFlag是number（0|1），随意计算属性支持复选框（true转1，false转0）
+// 支持复选框：因为patient的defaultFlag是number（0|1），随意计算属性支持复选框（true转1，false转0）
 const defaultFlag = computed({
   get: () => {
     return patient.value.defaultFlag === 1 ? true : false
@@ -49,6 +50,14 @@ const defaultFlag = computed({
     patient.value.defaultFlag = value ? 1 : 0
   },
 })
+
+// 进行提交
+const form = ref<FormInstance>() // 通过ref绑定实例
+const onSubmit = async () => {
+  // 表单整体校验 validate 进行校验
+  await form.value?.validate()
+  console.log('校验通过')
+}
 </script>
 
 <template>
@@ -77,10 +86,25 @@ const defaultFlag = computed({
       <div class="patient-tip">最多可添加 6 人</div>
       <!-- 使用 popup组件 -->
       <van-popup position="right" v-model:show="show">
-        <cp-nav-bar title="添加患者" right-text="保存" :back="() => (show = false)"></cp-nav-bar>
+        <cp-nav-bar
+          title="添加患者"
+          right-text="保存"
+          :back="() => (show = false)"
+          @click-right="onSubmit"
+        ></cp-nav-bar>
         <van-form autocomplete="off" ref="form">
-          <van-field v-model="patient.name" label="真实姓名" placeholder="请输入真实姓名" />
-          <van-field v-model="patient.idCard" label="身份证号" placeholder="请输入身份证号" />
+          <van-field
+            v-model="patient.name"
+            label="真实姓名"
+            placeholder="请输入真实姓名"
+            :rules="nameRules"
+          />
+          <van-field
+            v-model="patient.idCard"
+            label="身份证号"
+            placeholder="请输入身份证号"
+            :rules="idCardRules"
+          />
           <van-field label="性别" class="pb4">
             <!-- 单选按钮组件 -->
             <template #input>
