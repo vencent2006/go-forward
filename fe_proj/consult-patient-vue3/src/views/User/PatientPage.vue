@@ -56,7 +56,16 @@ const form = ref<FormInstance>() // 通过ref绑定实例
 const onSubmit = async () => {
   // 表单整体校验 validate 进行校验
   await form.value?.validate()
-  console.log('校验通过')
+  // 性别校验
+  // 取出身份证倒数第二位，%2之后， 1男，0女
+  const gender = +patient.value.idCard.slice(-2, -1) % 2 // +号是把字符串转数字
+  if (gender !== patient.value.gender) {
+    await showConfirmDialog({
+      title: '温馨提示',
+      message: '填写的性别与身份证上的不一致\n您确认提交吗？',
+    })
+    // 确认了，会继续往下走
+  }
 }
 </script>
 
