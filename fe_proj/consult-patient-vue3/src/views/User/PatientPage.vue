@@ -28,7 +28,27 @@ const options = [
 const show = ref(false)
 const showPopup = () => {
   show.value = true
+  // 清空数据
+  patient.value = { ...initPatient }
 }
+
+const initPatient: Patient = {
+  name: '',
+  idCard: '',
+  gender: 1,
+  defaultFlag: 0,
+}
+const patient = ref<Patient>({ ...initPatient }) // 把initPatient的解构赋给patient
+
+// 因为patient的defaultFlag是number（0|1），随意计算属性支持复选框（true转1，false转0）
+const defaultFlag = computed({
+  get: () => {
+    return patient.value.defaultFlag === 1 ? true : false
+  },
+  set: (value) => {
+    patient.value.defaultFlag = value ? 1 : 0
+  },
+})
 </script>
 
 <template>
@@ -59,17 +79,17 @@ const showPopup = () => {
       <van-popup position="right" v-model:show="show">
         <cp-nav-bar title="添加患者" right-text="保存" :back="() => (show = false)"></cp-nav-bar>
         <van-form autocomplete="off" ref="form">
-          <van-field label="真实姓名" placeholder="请输入真实姓名" />
-          <van-field label="身份证号" placeholder="请输入身份证号" />
+          <van-field v-model="patient.name" label="真实姓名" placeholder="请输入真实姓名" />
+          <van-field v-model="patient.idCard" label="身份证号" placeholder="请输入身份证号" />
           <van-field label="性别" class="pb4">
             <!-- 单选按钮组件 -->
             <template #input>
-              <cp-radio-btn :options="options"></cp-radio-btn>
+              <cp-radio-btn v-model="patient.gender" :options="options"></cp-radio-btn>
             </template>
           </van-field>
           <van-field label="默认就诊人">
             <template #input>
-              <van-checkbox :icon-size="18" round />
+              <van-checkbox v-model="defaultFlag" :icon-size="18" round />
             </template>
           </van-field>
         </van-form>
