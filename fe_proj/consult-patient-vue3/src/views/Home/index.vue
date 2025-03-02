@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import KnowledgeList from './components/KnowledgeList.vue'
-// import FollowDoctor from './components/FollowDoctor.vue'
+import FollowDoctor from './components/FollowDoctor.vue'
 // import { useConsultStore } from '@/stores'
 // import { ConsultType } from '@/enums'
 
