@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-// import KnowledgeList from './components/KnowledgeList.vue'
+import KnowledgeList from './components/KnowledgeList.vue'
 // import FollowDoctor from './components/FollowDoctor.vue'
 // import { useConsultStore } from '@/stores'
 // import { ConsultType } from '@/enums'
@@ -90,7 +90,6 @@ const active = ref(1)
         <knowledge-list type="like" />
       </van-tab>
       <van-tab title="推荐">
-        <p v-for="i in 100" :key="i">内容</p>
         <knowledge-list type="recommend" />
       </van-tab>
       <van-tab title="减脂">
