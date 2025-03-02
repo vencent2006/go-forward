@@ -2,28 +2,13 @@
 import { ref } from 'vue'
 
 // import { useFollow } from '@/composables'
-// import type { Knowledge } from '@/types/consult'
+import type { Knowledge } from '@/types/consult'
 
-// defineProps<{
-//   item: Knowledge
-// }>()
+defineProps<{
+  item: Knowledge
+}>()
 
 // const { loading, follow } = useFollow('knowledge')
-const item = ref({
-  creatorName: '张三',
-  creatorAvatar: 'aaa',
-  creatorHospatalName: '医院',
-  creatorDep: '科室',
-  creatorTitles: '职称',
-  topics: ['疾病', '症状', '医生', '健康知识'],
-  likeFlag: 0,
-  title: '标题',
-  content: '内容',
-  coverUrl:
-    'https://img0.baidu.com/it/u=1954361954,3501073111&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-  collectionNumber: 100,
-  commentNumber: 100,
-})
 const loading = ref(false)
 </script>
 
@@ -51,9 +36,12 @@ const loading = ref(false)
         <span v-for="(tag, i) in item.topics" :key="i"># {{ tag }}</span>
       </p>
       <p class="intro van-multi-ellipsis--l2">
+        <!-- 除了首尾标签，都匹配 -->
         {{ item.content.replace(/<[^>]+>/g, '') }}
       </p>
+      <!-- 一张图会更大一些 -->
       <div class="imgs" :class="{ large: item.coverUrl.length === 1 }">
+        <!-- fit="cover" 表示图片会铺满 -->
         <van-image fit="cover" v-for="(url, i) in item.coverUrl" :key="i" :src="url" />
       </div>
       <p class="logs">
