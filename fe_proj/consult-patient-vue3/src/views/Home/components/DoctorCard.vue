@@ -2,14 +2,26 @@
 import { ref } from 'vue'
 
 // import { useFollow } from '@/composables'
-// import type { Doctor } from '@/types/consult'
+import type { Doctor } from '@/types/consult'
+import { followOrUnfollow } from '@/services/consult'
 
-// defineProps<{
-//   item: Doctor
-// }>()
+defineProps<{
+  item: Doctor
+}>()
 
 // 关注逻辑
-// const { loading, follow } = useFollow()
+const loading = ref(false)
+const follow = async (item: Doctor) => {
+  loading.value = true
+
+  try {
+    await followOrUnfollow(item.id, 'doc')
+    item.likeFlag = item.likeFlag === 1 ? 0 : 1
+  } finally {
+    loading.value = false
+  }
+}
+
 const item = ref({
   name: '李雷',
   hospitalName: '北京大学',
@@ -27,7 +39,7 @@ const item = ref({
     <p class="name">{{ item.name }}</p>
     <p class="van-ellipsis">{{ item.hospitalName }} {{ item.depName }}</p>
     <p>{{ item.positionalTitles }}</p>
-    <van-button round size="small" type="primary">
+    <van-button round size="small" type="primary" @click="follow" :loading="loading">
       {{ item.likeFlag === 1 ? '已关注' : '+ 关注' }}
     </van-button>
   </div>
