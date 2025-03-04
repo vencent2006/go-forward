@@ -126,7 +126,7 @@ export type Consult = {
   pictures: Image[]
   /** 患者ID */
   patientId: string
-  /** 优惠券ID */
+      /** 优惠券ID */
   couponId: string
 }
 
@@ -134,3 +134,17 @@ export type Consult = {
 type PartialConsult = Partial<Consult>
 // Required 是一个类型，它可以将一个类型的所有属性都变成必填的
 // type RequiredConsult = Required<PartialConsult>
+
+// 二级科室
+type SubDep = {
+  /** 二级科室ID */
+  id: string
+  /** 二级科室名称 */
+  name: string
+}
+
+// 一级科室
+type TopDep = SubDep & {
+  /** 二级科室数组 */
+  child: SubDep[]
+}
