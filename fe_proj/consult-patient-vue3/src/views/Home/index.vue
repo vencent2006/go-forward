@@ -2,12 +2,14 @@
 import { ref } from 'vue'
 import KnowledgeList from './components/KnowledgeList.vue'
 import FollowDoctor from './components/FollowDoctor.vue'
-// import { useConsultStore } from '@/stores'
+import { useConsultStore } from '@/stores'
 // import { ConsultType } from '@/enums'
+import { Consult } from '../../types/consult'
+import { ConsultType } from '@/enums'
 
 const active = ref(1)
 
-// const store = useConsultStore()
+const store = useConsultStore()
 </script>
 
 <template>
@@ -15,7 +17,7 @@ const active = ref(1)
     <!-- 头部 -->
     <div class="home-header">
       <div class="con">
-        <h1>优医</h1>
+        <h1>优医{{ store.consult }}</h1>
         <div class="search"><cp-icon name="home-search" /> 搜一搜：疾病/症状/医生/健康知识</div>
       </div>
     </div>
@@ -30,7 +32,7 @@ const active = ref(1)
           </router-link>
         </van-col>
         <van-col span="8">
-          <router-link to="/consult/fast" class="nav">
+          <router-link to="/consult/fast" class="nav" @click="store.setType(ConsultType.Fast)">
             <cp-icon name="home-graphic"></cp-icon>
             <p class="title">极速问诊</p>
             <p class="desc">20s医生极速回复</p>
