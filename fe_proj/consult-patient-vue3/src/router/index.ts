@@ -22,6 +22,11 @@ const router = createRouter({
       meta: { title: '登录' },
     },
     {
+      path: '/consult/fast',
+      component: () => import('@/views/consult/ConsultFast.vue'),
+      meta: { title: '极速问诊' },
+    },
+    {
       path: '/',
       redirect: '/home',
       component: () => import('@/views/Layout/index.vue'),
