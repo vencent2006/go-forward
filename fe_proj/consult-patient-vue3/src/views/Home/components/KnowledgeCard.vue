@@ -3,13 +3,13 @@ import { ref } from 'vue'
 
 // import { useFollow } from '@/composables'
 import type { Knowledge } from '@/types/consult'
+import { useFollow } from '@/composables'
 
 defineProps<{
   item: Knowledge
 }>()
 
-// const { loading, follow } = useFollow('knowledge')
-const loading = ref(false)
+const { loading, follow } = useFollow('knowledge')
 </script>
 
 <template>

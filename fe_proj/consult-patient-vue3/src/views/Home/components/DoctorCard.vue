@@ -4,34 +4,25 @@ import { ref } from 'vue'
 // import { useFollow } from '@/composables'
 import type { Doctor } from '@/types/consult'
 import { followOrUnfollow } from '@/services/consult'
+import { useFollow } from '@/composables'
 
 defineProps<{
   item: Doctor
 }>()
 
 // 关注逻辑
-const loading = ref(false)
-const follow = async (item: Doctor) => {
-  loading.value = true
+const { loading, follow } = useFollow()
 
-  try {
-    await followOrUnfollow(item.id, 'doc')
-    item.likeFlag = item.likeFlag === 1 ? 0 : 1
-  } finally {
-    loading.value = false
-  }
-}
-
-const item = ref({
-  name: '李雷',
-  hospitalName: '北京大学',
-  depName: '外科',
-  positionalTitles: '主任医师',
-  avatar:
-    'https://img0.baidu.com/it/u=2721903841,3232596915&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-  likeFlag: 0,
-  id: '1',
-})
+// const item = ref({
+//   name: '李雷',
+//   hospitalName: '北京大学',
+//   depName: '外科',
+//   positionalTitles: '主任医师',
+//   avatar:
+//     'https://img0.baidu.com/it/u=2721903841,3232596915&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+//   likeFlag: 0,
+//   id: '1',
+// })
 </script>
 <template>
   <div class="doctor-card">
