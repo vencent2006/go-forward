@@ -126,7 +126,7 @@ export type Consult = {
   pictures: Image[]
   /** 患者ID */
   patientId: string
-      /** 优惠券ID */
+  /** 优惠券ID */
   couponId: string
 }
 
@@ -148,3 +148,9 @@ type TopDep = SubDep & {
   /** 二级科室数组 */
   child: SubDep[]
 }
+
+// 病情描述对象 Pick 是一个类型，它可以从一个类型中取出一些属性
+type ConsultIllness = Pick<
+  PartialConsult,
+  'illnessDesc' | 'illnessTime' | 'consultFlag' | 'pictures'
+>
