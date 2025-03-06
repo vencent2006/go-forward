@@ -22,6 +22,15 @@ const form = ref<ConsultIllness>({
   consultFlag: undefined,
   pictures: [],
 })
+
+// 上传图片
+const fileList = ref([])
+const onAfterRead = () => {
+  console.log('选择图片, 去上传')
+}
+const onDeleteImg = () => {
+  console.log('删除图片')
+}
 </script>
 
 <template>
@@ -51,6 +60,19 @@ const form = ref<ConsultIllness>({
       <div class="item">
         <p>此次病情是否去医院就诊过？</p>
         <cp-radio-btn :options="flagOptions" v-model="form.consultFlag" />
+      </div>
+      <!-- 上传组件 photo-o 是 vant的样式-->
+      <div class="illness-img">
+        <van-uploader
+          upload-icon="photo-o"
+          upload-text="上传图片"
+          max-count="9"
+          :max-size="5 * 1024 * 1024"
+          v-model="fileList"
+          :after-read="onAfterRead"
+          @delete="onDeleteImg"
+        ></van-uploader>
+        <p class="tip" v-if="!fileList.length">上传内容仅医生可见,最多9张图,最大5MB</p>
       </div>
     </div>
   </div>
