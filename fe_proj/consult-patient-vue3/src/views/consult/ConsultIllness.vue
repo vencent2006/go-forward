@@ -2,6 +2,8 @@
 import { ConsultType, IllnessTime } from '@/enums'
 import { ref } from 'vue'
 import type { ConsultIllness } from '@/types/consult'
+import { uploadImage } from '@/services/consult'
+import type { UploaderAfterRead, UploaderFileListItem } from 'vant'
 
 // 选项数据
 const timeOptions = [
@@ -25,11 +27,29 @@ const form = ref<ConsultIllness>({
 
 // 上传图片
 const fileList = ref([])
-const onAfterRead = () => {
-  console.log('选择图片, 去上传')
+const onAfterRead: UploaderAfterRead = (item) => {
+  // 类型守卫
+  if (Array.isArray(item)) return
+  if (!item.file) return
+  // 上传图片
+  item.status = 'uploading'
+  item.message = '上传中...'
+  uploadImage(item.file)
+    .then((res) => {
+      // 上传成功
+      item.status = 'done'
+      item.message = undefined
+      item.url = res.data.url
+      // 同步数据
+      form.value.pictures?.push(res.data)
+    })
+    .catch((err) => {
+      item.status = 'failed'
+      item.message = '上传失败'
+    })
 }
-const onDeleteImg = () => {
-  console.log('删除图片')
+const onDeleteImg = (item: UploaderFileListItem) => {
+  form.value.pictures = form.value.pictures?.filter((pic) => pic.url !== item.url)
 }
 </script>
 
