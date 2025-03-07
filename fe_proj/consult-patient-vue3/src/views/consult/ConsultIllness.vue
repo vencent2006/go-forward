@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { ConsultType, IllnessTime } from '@/enums'
-import { computed, ref } from 'vue'
-import type { ConsultIllness } from '@/types/consult'
+import { computed, onMounted, ref } from 'vue'
+import type { ConsultIllness, Image } from '@/types/consult'
 import { uploadImage } from '@/services/consult'
-import { showToast, type UploaderAfterRead, type UploaderFileListItem } from 'vant'
+import {
+  showConfirmDialog,
+  showToast,
+  type UploaderAfterRead,
+  type UploaderFileListItem,
+} from 'vant'
 import { useConsultStore } from '@/stores'
 import { useRouter } from 'vue-router'
 
@@ -28,7 +33,7 @@ const form = ref<ConsultIllness>({
 })
 
 // 上传图片
-const fileList = ref([])
+const fileList = ref<Image[]>([])
 const onAfterRead: UploaderAfterRead = (item) => {
   // 类型守卫
   if (Array.isArray(item)) return
@@ -61,16 +66,29 @@ const disabled = computed(
     form.value.consultFlag === undefined,
 )
 const store = useConsultStore()
-const router= useRouter()
+const router = useRouter()
 const next = () => {
   if (!form.value.illnessDesc) return showToast('请输入病情描述')
   if (form.value.illnessTime == undefined) return showToast('请输入症状持续时间')
   if (form.value.consultFlag == undefined) return showToast('请选择是否就诊过')
   // 记录病情
   store.setIllness(form.value)
-  // 跳转到问诊类型
+  // 跳转, 并携带标识
   router.push('/user/patient?isChange=1')
 }
+
+// 数据的回显
+onMounted(() => {
+  showConfirmDialog({
+    title: '温馨提示',
+    message: '是否恢复之前填写的病情信息',
+    closeOnPopstate: false, // 关闭后返回不显示 为false
+  }).then(() => {
+    const { illnessDesc, illnessTime, consultFlag, pictures } = store.consult
+    form.value = { illnessDesc, illnessTime, consultFlag, pictures }
+    fileList.value = pictures || []
+  })
+})
 </script>
 
 <template>
