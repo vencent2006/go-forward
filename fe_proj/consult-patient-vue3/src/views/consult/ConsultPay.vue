@@ -2,10 +2,10 @@
 import { createConsultOrder, getConsultOrderPre } from '@/services/consult'
 import { getPatientDetail } from '@/services/user'
 import { useConsultStore } from '@/stores'
-import type { ConsultOrderPreData } from '@/types/consult'
+import type { ConsultOrderPreData, PartialConsult } from '@/types/consult'
 import type { Patient } from '@/types/user'
 import { onMounted, ref } from 'vue'
-import { showConfirmDialog, showToast } from 'vant'
+import { showConfirmDialog, showDialog, showToast } from 'vant'
 import { onBeforeRouteLeave, useRouter } from 'vue-router'
 
 // 获取预支付信息
@@ -29,7 +29,31 @@ const loadPatient = async () => {
 }
 
 // 数据加载
+type Key = keyof PartialConsult // keyof从一个对象当中获取所有的key，作为一个联合类型
 onMounted(() => {
+  // 生成订单需要的信息，不完整的时候需要提示
+  const validKeys: Key[] = [
+    'type',
+    'illnessType',
+    'depId',
+    'illnessDesc',
+    'illnessTime',
+    'consultFlag',
+    'patientId',
+  ]
+  const valid = validKeys.every((key) => store.consult[key] !== undefined)
+  if (!valid) {
+    // 校验不成功
+    return showDialog({
+      title: '温馨提示',
+      message: '问诊信息不完整请重新填写，如有未支付的问诊订单可在问诊记录中继续支付',
+      closeOnPopstate: false, // 主要作用是控制当用户通过浏览器的前进或后退按钮导航时，是否自动关闭当前的弹出窗口或模态框。
+    }).then(() => {
+      // 点击确定 跳到首页
+      router.push('/')
+    })
+  }
+
   loadData()
   loadPatient()
 })
