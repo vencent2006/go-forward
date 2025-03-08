@@ -32,14 +32,23 @@ const router = createRouter({
       meta: { title: '选择科室' },
     },
     {
+      path: '/consult/illness',
+      component: () => import('@/views/Consult/ConsultIllness.vue'),
+      meta: { title: '病情描述' },
+    },
+    {
       path: '/consult/pay',
       component: () => import('@/views/Consult/ConsultPay.vue'),
       meta: { title: '问诊支付' },
     },
     {
-      path: '/consult/illness',
-      component: () => import('@/views/Consult/ConsultIllness.vue'),
-      meta: { title: '病情描述' },
+      path: '/room',
+      component: () => import('@/views/Room/index.vue'),
+      meta: { title: '问诊室' },
+      beforeEnter(to) {
+        // 支付失败 去问诊记录页
+        if (to.query.payResult === 'false') return '/user/consult'
+      },
     },
     {
       path: '/',
