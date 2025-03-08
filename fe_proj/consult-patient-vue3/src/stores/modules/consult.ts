@@ -34,7 +34,12 @@ export const useConsultStore = defineStore(
       consult.value.patientId = id
     }
 
-    return { consult, setType, setIllnessType, setDep, setIllness, setPatientId }
+    // 记录优惠券
+    const setCoupon = (id: string) => {
+      consult.value.couponId = id
+    }
+
+    return { consult, setType, setIllnessType, setDep, setIllness, setPatientId, setCoupon }
   },
   {
     persist: true,

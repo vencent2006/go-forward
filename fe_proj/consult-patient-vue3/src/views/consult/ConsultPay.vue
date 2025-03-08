@@ -15,6 +15,8 @@ const loadData = async () => {
     illnessType: store.consult.illnessType, // 问诊级别
   })
   payInfo.value = res.data
+  // 记录优惠券id
+  store.setCoupon(res.data.couponId)
 }
 // 获取患者详情
 const patient = ref<Patient>()
@@ -29,13 +31,17 @@ onMounted(() => {
   loadData()
   loadPatient()
 })
+
+// 同意
+const agree = ref(false)
 </script>
 
 <template>
-  <div class="consult-pay-page">
+  <!-- 必须都加载到数据了，才能显示 -->
+  <div class="consult-pay-page" v-if="payInfo && patient">
     <cp-nav-bar title="支付" />
     <div class="pay-info">
-      <p class="tit">图文问诊 49 元</p>
+      <p class="tit">图文问诊 {{ payInfo.payment }} 元</p>
       <img class="img" src="@/assets/avatar-doctor.svg" />
       <p class="desc">
         <span>极速问诊</span>
@@ -43,22 +49,27 @@ onMounted(() => {
       </p>
     </div>
     <van-cell-group>
-      <van-cell title="优惠券" value="`-¥10`" />
-      <van-cell title="积分抵扣" value="`-¥10`" />
-      <van-cell title="实付款" value="`¥29`" class="pay-price" />
+      <van-cell title="优惠券" :value="`-¥${payInfo.couponDeduction}`" />
+      <van-cell title="积分抵扣" :value="`-¥${payInfo.pointDeduction}`" />
+      <van-cell title="实付款" :value="`¥${payInfo.actualPayment}`" class="pay-price" />
     </van-cell-group>
     <div class="pay-space"></div>
     <van-cell-group>
       <van-cell
         title="患者信息"
-        value="`${patient.name} | ${patient.genderValue} | ${patient.age}岁`"
+        :value="`${patient.name} | ${patient.genderValue} | ${patient.age}岁`"
       ></van-cell>
-      <van-cell title="病情描述" label="store.consult.illnessDesc"></van-cell>
+      <van-cell title="病情描述" :label="store.consult.illnessDesc"></van-cell>
     </van-cell-group>
     <div class="pay-schema">
-      <van-checkbox> 我已同意 <span class="text">支付协议</span> </van-checkbox>
+      <van-checkbox v-model="agree"> 我已同意 <span class="text">支付协议</span> </van-checkbox>
     </div>
-    <van-submit-bar button-type="primary" :price="100" button-text="立即支付" text-align="left" />
+    <van-submit-bar
+      button-type="primary"
+      :price="payInfo.actualPayment * 100"
+      button-text="立即支付"
+      text-align="left"
+    />
     <!-- 支付抽屉，控制面板 -->
     <cp-pay-sheet
       order-id="orderId"
@@ -67,7 +78,8 @@ onMounted(() => {
       pay-callback="/room"
     ></cp-pay-sheet>
   </div>
-  <div class="consult-pay-page">
+  <!-- 这下面都是骨架屏 -->
+  <div class="consult-pay-page" v-else>
     <cp-nav-bar title="支付" />
     <!-- 骨架组件 -->
     <van-skeleton title :row="10" style="margin-top: 18px" />
