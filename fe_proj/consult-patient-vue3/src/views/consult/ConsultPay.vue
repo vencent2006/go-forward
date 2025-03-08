@@ -5,7 +5,8 @@ import { useConsultStore } from '@/stores'
 import type { ConsultOrderPreData } from '@/types/consult'
 import type { Patient } from '@/types/user'
 import { onMounted, ref } from 'vue'
-import { showToast } from 'vant'
+import { showConfirmDialog, showToast } from 'vant'
+import { onBeforeRouteLeave, useRouter } from 'vue-router'
 
 // 获取预支付信息
 const payInfo = ref<ConsultOrderPreData>()
@@ -55,6 +56,35 @@ const submit = async () => {
   // 显示支付面板
   show.value = true
 }
+
+// 提示1： 取消支付将无法获得医生回复，医生接诊名额有限，是否确认关闭？
+// 提示2： 问诊信息不完整请重新填写，如有未支付的问诊订单可在问诊记录中继续支付
+
+// 用户引导
+onBeforeRouteLeave((to) => {
+  // 有订单不允许回退
+  if (orderId.value) return false
+})
+const router = useRouter()
+const onClose = () => {
+  // showConfirmDialog 是 vant 提供的一个弹窗组件，返回一个 Promise
+  return showConfirmDialog({
+    title: '提示',
+    message: '取消支付将无法获得医生回复，医生接诊名额有限，是否确认关闭？',
+    cancelButtonText: '狠心离开',
+    confirmButtonText: '继续支付',
+  })
+    .then(() => {
+      // 点击继续支付
+      return false
+    })
+    .catch(() => {
+      // 点击狠心离开
+      orderId.value = '' // 清空订单id
+      router.push('/user/consult') // 跳转页面
+      return true // 关闭弹窗
+    })
+}
 </script>
 
 <template>
@@ -93,8 +123,14 @@ const submit = async () => {
       @click="submit"
       :loading="loading"
     />
-    <!-- 支付抽屉，控制面板 -->
-    <van-action-sheet v-model:show="show" title="选择支付方式">
+    <!-- 支付抽屉，控制面板 close-on-popstate 表示回退不关闭弹窗; closable 表示不可关闭-->
+    <van-action-sheet
+      v-model:show="show"
+      title="选择支付方式"
+      :close-on-popstate="false"
+      :closeable="false"
+      :before-close="onClose"
+    >
       <div class="pay-type">
         <p class="amount">￥ {{ payInfo.actualPayment.toFixed(2) }}</p>
         <van-cell-group>
