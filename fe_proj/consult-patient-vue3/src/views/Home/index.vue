@@ -17,7 +17,7 @@ const store = useConsultStore()
     <!-- 头部 -->
     <div class="home-header">
       <div class="con">
-        <h1>优医{{ store.consult }}</h1>
+        <h1>优医</h1>
         <div class="search"><cp-icon name="home-search" /> 搜一搜：疾病/症状/医生/健康知识</div>
       </div>
     </div>

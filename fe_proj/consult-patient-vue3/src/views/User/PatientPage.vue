@@ -8,12 +8,23 @@ import { useRoute } from 'vue-router'
 // import { useConsultStore } from '@/stores'
 import router from '@/router'
 import { nameRules, idCardRules } from '@/utils/rules'
+import { useConsultStore } from '@/stores'
 
 // 组件挂载完毕，获取数据
 const list = ref<PatientList>([])
 const loadList = async () => {
   const res = await getPatientList()
   list.value = res.data
+  // 默认选中患者
+  if (isChange.value && list.value.length) {
+    const defaultPatient = list.value.find((item) => item.defaultFlag === 1)
+    if (defaultPatient) {
+      patientId.value = defaultPatient.id
+    } else {
+      // 没有默认患者，默认选中第一个
+      patientId.value = list.value[0].id
+    }
+  }
 }
 
 onMounted(() => {
@@ -103,14 +114,52 @@ const remove = async () => {
   await loadList()
   showSuccessToast('删除成功')
 }
+
+// 路由传参 isChange 是不是选择患者
+const route = useRoute()
+const isChange = computed(() => route.query.isChange === '1')
+
+// 选中效果
+const patientId = ref<string>()
+const selectedPatient = (item: Patient) => {
+  if (isChange.value) {
+    // 选择患者
+    patientId.value = item.id
+  }
+}
+
+// 下一步
+const store = useConsultStore()
+const next = () => {
+  if (!patientId.value) {
+    return showToast('请选择患者')
+  }
+  // 保存患者id
+  store.setPatientId(patientId.value)
+  // 跳转
+  router.push('/consult/pay')
+}
 </script>
 
 <template>
   <div class="patient-page">
-    <cp-nav-bar title="家庭档案"></cp-nav-bar>
+    <!-- 导航栏 -->
+    <cp-nav-bar :title="isChange ? '选择患者' : '家庭档案'"></cp-nav-bar>
+
+    <!-- 头部提示 -->
+    <div class="patient-change" v-if="isChange">
+      <h3>请选择患者信息</h3>
+      <p>以便医生给出更准确的治疗，信息仅医生可见</p>
+    </div>
 
     <div class="patient-list">
-      <div class="patient-item" v-for="item in list" :key="item.id">
+      <div
+        class="patient-item"
+        v-for="item in list"
+        :key="item.id"
+        @click="selectedPatient(item)"
+        :class="{ selected: patientId == item.id }"
+      >
         <div class="info">
           <span class="name">{{ item.name }}</span>
           <span class="id">
@@ -119,7 +168,7 @@ const remove = async () => {
           <span>{{ item.genderValue }}</span>
           <span>{{ item.age }}岁</span>
         </div>
-        <div class="icon" @click="showPopup(item)">
+        <div class="icon" @click.stop="showPopup(item)">
           <cp-icon name="user-edit" />
         </div>
         <div class="tag" v-if="item.defaultFlag === 1">默认</div>
@@ -129,45 +178,49 @@ const remove = async () => {
         <p>添加患者</p>
       </div>
       <div class="patient-tip">最多可添加 6 人</div>
-      <!-- 使用 popup组件 -->
-      <van-popup position="right" v-model:show="show">
-        <cp-nav-bar
-          :title="patient.id ? '编辑患者' : '添加患者'"
-          right-text="保存"
-          :back="() => (show = false)"
-          @click-right="onSubmit"
-        ></cp-nav-bar>
-        <van-form autocomplete="off" ref="form">
-          <van-field
-            v-model="patient.name"
-            label="真实姓名"
-            placeholder="请输入真实姓名"
-            :rules="nameRules"
-          />
-          <van-field
-            v-model="patient.idCard"
-            label="身份证号"
-            placeholder="请输入身份证号"
-            :rules="idCardRules"
-          />
-          <van-field label="性别" class="pb4">
-            <!-- 单选按钮组件 -->
-            <template #input>
-              <cp-radio-btn v-model="patient.gender" :options="options"></cp-radio-btn>
-            </template>
-          </van-field>
-          <van-field label="默认就诊人">
-            <template #input>
-              <van-checkbox v-model="defaultFlag" :icon-size="18" round />
-            </template>
-          </van-field>
-        </van-form>
-        <!-- 删除按钮 -->
-        <van-action-bar v-if="patient.id">
-          <van-action-bar-button text="删除" @click="remove" />
-        </van-action-bar>
-      </van-popup>
     </div>
+    <!-- 底部按钮 -->
+    <div class="patient-next" @click="next" v-if="isChange">
+      <van-button type="primary" round block>下一步</van-button>
+    </div>
+    <!-- 使用 popup组件 -->
+    <van-popup position="right" v-model:show="show">
+      <cp-nav-bar
+        :title="patient.id ? '编辑患者' : '添加患者'"
+        right-text="保存"
+        :back="() => (show = false)"
+        @click-right="onSubmit"
+      ></cp-nav-bar>
+      <van-form autocomplete="off" ref="form">
+        <van-field
+          v-model="patient.name"
+          label="真实姓名"
+          placeholder="请输入真实姓名"
+          :rules="nameRules"
+        />
+        <van-field
+          v-model="patient.idCard"
+          label="身份证号"
+          placeholder="请输入身份证号"
+          :rules="idCardRules"
+        />
+        <van-field label="性别" class="pb4">
+          <!-- 单选按钮组件 -->
+          <template #input>
+            <cp-radio-btn v-model="patient.gender" :options="options"></cp-radio-btn>
+          </template>
+        </van-field>
+        <van-field label="默认就诊人">
+          <template #input>
+            <van-checkbox v-model="defaultFlag" :icon-size="18" round />
+          </template>
+        </van-field>
+      </van-form>
+      <!-- 删除按钮 -->
+      <van-action-bar v-if="patient.id">
+        <van-action-bar-button text="删除" @click="remove" />
+      </van-action-bar>
+    </van-popup>
   </div>
 </template>
 
