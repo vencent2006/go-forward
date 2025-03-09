@@ -31,6 +31,10 @@ onMounted(() => {
   socket.on('error', () => {
     console.log('发生错误')
   })
+  // 消息记录
+  socket.on('chatMsgList', (res) => {
+    console.log(res)
+  })
 })
 
 onUnmounted(() => {
