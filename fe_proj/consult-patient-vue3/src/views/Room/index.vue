@@ -2,6 +2,19 @@
 import RoomStatus from './components/RoomStatus.vue'
 import RoomAction from './components/RoomAction.vue'
 import RoomMessage from './components/RoomMessage.vue'
+import { io } from 'socket.io-client'
+const socket = io('http://localhost:3000')
+socket.on('connect', () => {
+  console.log('连接成功')
+  socket.emit('chat message', '你好')
+})
+socket.on('chat message', (msg) => {
+  console.log('收到消息', msg)
+  socket.close()
+})
+socket.on('disconnect', () => {
+  console.log('断开连接')
+})
 </script>
 <template>
   <div class="room-page">
