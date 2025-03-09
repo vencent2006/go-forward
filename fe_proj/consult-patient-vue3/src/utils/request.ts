@@ -3,9 +3,10 @@ import { useUserStore } from '@/stores'
 import axios, { AxiosError, type Method } from 'axios'
 import { showToast } from 'vant'
 
+export const baseURL = 'https://consult-api.itheima.net/'
 const instance = axios.create({
   // 1. 基础地址 超时时间
-  baseURL: 'https://consult-api.itheima.net/', // 基础路径
+  baseURL, // 基础路径
   timeout: 5000, // 超时时间
 })
 
