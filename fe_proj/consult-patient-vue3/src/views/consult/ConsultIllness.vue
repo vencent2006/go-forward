@@ -11,18 +11,7 @@ import {
 } from 'vant'
 import { useConsultStore } from '@/stores'
 import { useRouter } from 'vue-router'
-
-// 选项数据
-const timeOptions = [
-  { label: '一周内', value: IllnessTime.Week },
-  { label: '一月内', value: IllnessTime.Month },
-  { label: '半年内', value: IllnessTime.HalfYear },
-  { label: '半年以上', value: IllnessTime.More },
-]
-const flagOptions = [
-  { label: '就诊过', value: 1 },
-  { label: '没就诊过', value: 0 },
-]
+import { timeOptions, flagOptions } from '@/services/constants'
 
 // 病情描述对象
 const form = ref<ConsultIllness>({

@@ -77,6 +77,7 @@ const submit = async () => {
   store.clear()
   // 记录订单id
   orderId.value = res.data.id
+  console.log('orderId:', orderId.value)
   // 显示支付面板
   show.value = true
 }

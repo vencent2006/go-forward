@@ -24,7 +24,7 @@ onMounted(() => {
       // 订单id
       // orderId: route.query.orderId,
       // TODO 当前先固定了，不然chatMsgList取不到有内容的数据，后续要改掉
-      orderId: '7133337225187328',
+      orderId: '7133684705423360',
     },
   })
   socket.on('connect', () => {
@@ -67,7 +67,7 @@ onUnmounted(() => {
     <!-- 状态栏组件 -->
     <room-status></room-status>
     <!-- 消息 -->
-    <room-message></room-message>
+    <room-message v-for="item in list" :key="item.id" :item="item"></room-message>
     <!-- 操作栏 -->
     <room-action :disabled="true"></room-action>
   </div>
