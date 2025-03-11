@@ -9,12 +9,24 @@ import { useUserStore } from '@/stores'
 import { useRoute } from 'vue-router'
 import type { Message, TimeMessages } from '@/types/room'
 import { MsgType } from '@/enums'
-
+import type { ConsultOrderItem } from '@/types/consult'
+import { getConsultOrderDetail } from '@/services/consult'
+const consult = ref<ConsultOrderItem>()
+const orderIdMock = '7133684705423360'
+const loadConsult = async () => {
+  // TODO mock 数据
+  // const res = await getConsultOrderDetail(route.query.id as string) // as string 类型断言
+  const res = await getConsultOrderDetail(orderIdMock as string) // as string 类型断言
+  consult.value = res.data
+}
 const store = useUserStore()
 const route = useRoute()
 const list = ref<Message[]>([])
 let socket: Socket
 onMounted(() => {
+  // 获取订单数据
+  loadConsult()
+
   // 连接服务器
   socket = io(baseURL, {
     auth: {
@@ -24,7 +36,7 @@ onMounted(() => {
       // 订单id
       // orderId: route.query.orderId,
       // TODO 当前先固定了，不然chatMsgList取不到有内容的数据，后续要改掉
-      orderId: '7133684705423360',
+      orderId: orderIdMock,
     },
   })
   socket.on('connect', () => {
@@ -54,6 +66,9 @@ onMounted(() => {
     console.log(arr)
     list.value.unshift(...arr) // 往前添加 unshift
   })
+
+  // 监听订单状态变化
+  socket.on('statusChange', () => loadConsult())
 })
 
 onUnmounted(() => {
