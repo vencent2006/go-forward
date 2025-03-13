@@ -4,6 +4,8 @@ import type { Message } from '@/types/room'
 import { timeOptions, flagOptions } from '@/services/constants'
 import type { Image } from '@/types/consult'
 import { showImagePreview, showToast } from 'vant'
+import { useUserStore } from '@/stores'
+import dayjs from 'dayjs'
 defineProps<{ item: Message }>()
 
 // 获取患病时间
@@ -21,6 +23,10 @@ const onPreviewImage = (images?: Image[]) => {
     showImagePreview(images.map((item) => item.url)) // 图片预览
   else showToast('暂无图片')
 }
+
+const store = useUserStore()
+
+const formatTime = (time: string) => dayjs(time).format('HH:mm')
 </script>
 
 <template>
@@ -57,6 +63,33 @@ const onPreviewImage = (images?: Image[]) => {
     <div class="content">
       <span class="green">温馨提示：</span>
       <span>{{ item.msg.content }}</span>
+    </div>
+  </div>
+  <!-- 发送文字 -->
+  <div class="msg msg-to" v-if="item.msgType === MsgType.MsgText && item.from === store.user?.id">
+    <div class="content">
+      <div class="time">{{ formatTime(item.createTime) }}</div>
+      <div class="pao">{{ item.msg.content }}</div>
+    </div>
+    <van-image :src="item.fromAvatar" />
+  </div>
+  <!-- 发送图片 -->
+  <!-- <div
+    class="msg msg-to"
+    v-if="item.msgType === MsgType.MsgImage && item.from === store.user?.id"
+  >
+    <div class="content">
+      <div class="time">{{ formatTime(item.createTime) }}</div>
+      <van-image fit="contain" :src="item.msg.picture?.url" />
+    </div>
+    <van-image :src="item.fromAvatar" />
+  </div> -->
+  <!-- 接收文字 -->
+  <div class="msg msg-from" v-if="item.msgType === MsgType.MsgText && item.from !== store.user?.id">
+    <van-image :src="item.fromAvatar" />
+    <div class="content">
+      <div class="time">{{ formatTime(item.createTime) }}</div>
+      <div class="pao">{{ item.msg.content }}</div>
     </div>
   </div>
 </template>
