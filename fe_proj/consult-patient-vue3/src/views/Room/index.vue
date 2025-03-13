@@ -8,11 +8,11 @@ import { baseURL } from '@/utils/request'
 import { useUserStore } from '@/stores'
 import { useRoute } from 'vue-router'
 import type { Message, TimeMessages } from '@/types/room'
-import { MsgType } from '@/enums'
+import { MsgType, OrderType } from '@/enums'
 import type { ConsultOrderItem } from '@/types/consult'
 import { getConsultOrderDetail } from '@/services/consult'
 const consult = ref<ConsultOrderItem>()
-const orderIdMock = '7133684705423360'
+const orderIdMock = '7134595992539136'
 const loadConsult = async () => {
   // TODO mock 数据
   // const res = await getConsultOrderDetail(route.query.id as string) // as string 类型断言
@@ -80,11 +80,11 @@ onUnmounted(() => {
   <div class="room-page">
     <cp-nav-bar title="问诊室"></cp-nav-bar>
     <!-- 状态栏组件 -->
-    <room-status></room-status>
+    <room-status :status="consult?.status" :countdown="consult?.countdown"></room-status>
     <!-- 消息 -->
     <room-message v-for="item in list" :key="item.id" :item="item"></room-message>
     <!-- 操作栏 -->
-    <room-action :disabled="true"></room-action>
+    <room-action :disabled="consult?.status !== OrderType.ConsultChat"></room-action>
   </div>
 </template>
 <style lang="scss" scoped>
