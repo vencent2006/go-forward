@@ -74,16 +74,24 @@ const formatTime = (time: string) => dayjs(time).format('HH:mm')
     <van-image :src="item.fromAvatar" />
   </div>
   <!-- 发送图片 -->
-  <!-- <div
-    class="msg msg-to"
-    v-if="item.msgType === MsgType.MsgImage && item.from === store.user?.id"
-  >
+  <div class="msg msg-to" v-if="item.msgType === MsgType.MsgImage && item.from === store.user?.id">
     <div class="content">
       <div class="time">{{ formatTime(item.createTime) }}</div>
       <van-image fit="contain" :src="item.msg.picture?.url" />
     </div>
     <van-image :src="item.fromAvatar" />
-  </div> -->
+  </div>
+  <!-- 接收图片 -->
+  <div
+    class="msg msg-from"
+    v-if="item.msgType === MsgType.MsgImage && item.from !== store.user?.id"
+  >
+    <van-image :src="item.fromAvatar" />
+    <div class="content">
+      <div class="time">{{ formatTime(item.createTime) }}</div>
+      <van-image fit="contain" :src="item.msg.picture?.url" />
+    </div>
+  </div>
   <!-- 接收文字 -->
   <div class="msg msg-from" v-if="item.msgType === MsgType.MsgText && item.from !== store.user?.id">
     <van-image :src="item.fromAvatar" />

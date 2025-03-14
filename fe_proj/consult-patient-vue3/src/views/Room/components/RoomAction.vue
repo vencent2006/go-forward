@@ -9,8 +9,8 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'send-text', text: string): void
-  (e: 'send-image', image: Image): void
+  (e: 'send-text', text: string): void // 发送文本
+  (e: 'send-image', image: Image): void // 发送图片
 }>()
 
 const text = ref('')
