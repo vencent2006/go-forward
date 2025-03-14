@@ -11,6 +11,8 @@ import type { Message, TimeMessages } from '@/types/room'
 import { MsgType, OrderType } from '@/enums'
 import type { ConsultOrderItem, Image } from '@/types/consult'
 import { getConsultOrderDetail } from '@/services/consult'
+import dayjs from 'dayjs'
+import { showToast } from 'vant'
 const consult = ref<ConsultOrderItem>()
 const orderIdMock = '7134595992539136'
 const loadConsult = async () => {
@@ -22,6 +24,7 @@ const loadConsult = async () => {
 const store = useUserStore()
 const route = useRoute()
 const list = ref<Message[]>([])
+const initialMsg = ref(true) // 是不是第一次消息
 let socket: Socket
 onMounted(() => {
   // 获取订单数据
@@ -52,7 +55,12 @@ onMounted(() => {
   socket.on('chatMsgList', ({ data }: { data: TimeMessages[] }) => {
     // data 数据 ===> [{createTime}, ...items]
     const arr: Message[] = []
-    data.forEach((item) => {
+    data.forEach((item, i) => {
+      // 记录每一段消息中最早的消息时间，后去聊天记录需要使用
+      if (i === 0) {
+        // 最早的消息
+        time.value = item.createTime
+      }
       arr.push({
         msgType: MsgType.Notify, // 通用的消息
         msg: {
@@ -65,6 +73,18 @@ onMounted(() => {
     })
     console.log(arr)
     list.value.unshift(...arr) // 往前添加 unshift
+
+    loading.value = false // 关闭刷新
+    if (!arr.length) return showToast('没有更多聊天记录了')
+
+    if (initialMsg.value) {
+      // 第一次需要滚到到最新的消息
+      nextTick(() => {
+        // 等待dom更新
+        window.scrollTo(0, document.body.scrollHeight)
+        initialMsg.value = false // 不是第一次了
+      })
+    }
   })
 
   // 监听订单状态变化
@@ -105,14 +125,23 @@ const onSendImage = (image: Image) => {
     },
   })
 }
+
+// 下拉刷新
+const loading = ref(false)
+const time = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+const onRefresh = async () => {
+  socket.emit('getChatMsgList', 20, time.value, consult.value?.id)
+}
 </script>
 <template>
   <div class="room-page">
     <cp-nav-bar title="问诊室"></cp-nav-bar>
     <!-- 状态栏组件 -->
     <room-status :status="consult?.status" :countdown="consult?.countdown"></room-status>
-    <!-- 消息 -->
-    <room-message v-for="item in list" :key="item.id" :item="item"></room-message>
+    <van-pull-refresh v-model="loading" @refresh="onRefresh">
+      <!-- 消息 -->
+      <room-message v-for="item in list" :key="item.id" :item="item"></room-message>
+    </van-pull-refresh>
     <!-- 操作栏 -->
     <room-action
       @send-text="onSendText"
