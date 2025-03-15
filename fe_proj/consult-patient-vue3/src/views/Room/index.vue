@@ -77,7 +77,10 @@ onMounted(() => {
     loading.value = false // 关闭刷新
     if (!arr.length) return showToast('没有更多聊天记录了')
 
+    // 第一次消息的逻辑
     if (initialMsg.value) {
+      // 已读最后一条消息
+      socket.emit('updateMsgStatus', arr[arr.length - 1].id)
       // 第一次需要滚到到最新的消息
       nextTick(() => {
         // 等待dom更新
@@ -89,9 +92,13 @@ onMounted(() => {
 
   // 监听订单状态变化
   socket.on('statusChange', () => loadConsult())
-  // 监听聊天消息
+  // 接收聊天消息
   socket.on('receiveChatMsg', async (event) => {
+    // 已读该条消息
+    socket.emit('updateMsgStatus', event.id)
+    // 追加消息
     list.value.push(event)
+    // 滚动到底部
     await nextTick() // 等待dom更新
     window.scrollTo(0, document.body.scrollHeight) // 滚动到底部
   })
