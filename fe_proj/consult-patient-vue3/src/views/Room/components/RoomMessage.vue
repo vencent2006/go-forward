@@ -6,6 +6,7 @@ import type { Image } from '@/types/consult'
 import { showImagePreview, showToast } from 'vant'
 import { useUserStore } from '@/stores'
 import dayjs from 'dayjs'
+import { getPrescriptionPic } from '@/services/consult'
 defineProps<{ item: Message }>()
 
 // 获取患病时间
@@ -27,6 +28,14 @@ const onPreviewImage = (images?: Image[]) => {
 const store = useUserStore()
 
 const formatTime = (time: string) => dayjs(time).format('HH:mm')
+
+// 查看处方
+const onShowPrescription = async (id?: string) => {
+  if (id) {
+    const res = await getPrescriptionPic(id)
+    showImagePreview([res.data.url])
+  }
+}
 </script>
 
 <template>
@@ -98,6 +107,38 @@ const formatTime = (time: string) => dayjs(time).format('HH:mm')
     <div class="content">
       <div class="time">{{ formatTime(item.createTime) }}</div>
       <div class="pao">{{ item.msg.content }}</div>
+    </div>
+  </div>
+  <!-- 处方卡片 -->
+  <div class="msg msg-recipe" v-if="item.msgType === MsgType.CardPre">
+    <div class="content" v-if="item.msg.prescription">
+      <div class="head van-hairline--bottom">
+        <div class="head-tit">
+          <h3>电子处方</h3>
+          <p @click="onShowPrescription(item.msg.prescription?.id)">
+            原始处方 <van-icon name="arrow"></van-icon>
+          </p>
+        </div>
+        <p>
+          {{ item.msg.prescription.name }}
+          {{ item.msg.prescription.genderValue }}
+          {{ item.msg.prescription.age }}岁
+          {{ item.msg.prescription.diagnosis }}
+        </p>
+        <p>开方时间：{{ item.msg.prescription.createTime }}</p>
+      </div>
+      <div class="body">
+        <div class="body-item" v-for="med in item.msg.prescription.medicines" :key="med.id">
+          <div class="durg">
+            <p>{{ med.name }} {{ med.specs }}</p>
+            <p>{{ med.usageDosag }}</p>
+          </div>
+          <div class="num">x{{ med.quantity }}</div>
+        </div>
+      </div>
+      <div class="foot">
+        <span @click="buy(item.msg.prescription)">购买药品</span>
+      </div>
     </div>
   </div>
 </template>
