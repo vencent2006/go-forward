@@ -11,8 +11,8 @@ defineProps<{
 }>()
 
 // 注入问诊订单
-// const consult = inject<Ref<ConsultOrderItem>>('consult')
-// const completeEva = inject<(score: number) => void>('completeEva')
+const consult = inject<Ref<ConsultOrderItem>>('consult') // 有provide的组件才能注入
+const completeEva = inject<(score: number) => void>('completeEva') // 有provide的组件才能注入
 
 // 收集数据
 const score = ref(0)
@@ -22,18 +22,18 @@ const disabled = computed(() => !score.value || !content.value) // 提交按钮�
 const onSubmit = async () => {
   if (!score.value) return showToast('请选择评分')
   if (!content.value) return showToast('请填写评价')
-  // if (!consult?.value) return showToast('未找到订单')
-  // // 提交评价信息
-  // if (consult?.value.docInfo) {
-  //   await evaluateConsultOrder({
-  //     docId: consult?.value.docInfo?.id,
-  //     orderId: consult?.value.id,
-  //     score: score.value,
-  //     content: content.value,
-  //     anonymousFlag: anonymousFlag.value ? 1 : 0,
-  //   })
-  //   completeEva && completeEva(score.value)
-  // }
+  if (!consult?.value) return showToast('未找到订单')
+  // 提交评价信息
+  if (consult?.value.docInfo) {
+    await evaluateConsultOrder({
+      docId: consult?.value.docInfo?.id,
+      orderId: consult?.value.id,
+      score: score.value,
+      content: content.value,
+      anonymousFlag: anonymousFlag.value ? 1 : 0,
+    })
+    completeEva && completeEva(score.value)
+  }
 }
 </script>
 

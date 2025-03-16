@@ -3,7 +3,7 @@ import RoomStatus from './components/RoomStatus.vue'
 import RoomAction from './components/RoomAction.vue'
 import RoomMessage from './components/RoomMessage.vue'
 import { io, Socket } from 'socket.io-client'
-import { nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { nextTick, onMounted, onUnmounted, provide, ref } from 'vue'
 import { baseURL } from '@/utils/request'
 import { useUserStore } from '@/stores'
 import { useRoute } from 'vue-router'
@@ -21,6 +21,19 @@ const loadConsult = async () => {
   const res = await getConsultOrderDetail(orderIdMock as string) // as string 类型断言
   consult.value = res.data
 }
+
+// 提供问诊订单数据给后代组件
+provide('consult', consult)
+// 修改评价（完成评价）
+const completeEva = (score: number) => {
+  const item = list.value.find((item) => item.msgType === MsgType.CardEvaForm)
+  if (item) {
+    item.msg.evaluateDoc = { score }
+    item.msgType = MsgType.CardEva
+  }
+}
+provide('completeEva', completeEva) // 提供修改评价的方法给后代组件
+
 const store = useUserStore()
 const route = useRoute()
 const list = ref<Message[]>([])
