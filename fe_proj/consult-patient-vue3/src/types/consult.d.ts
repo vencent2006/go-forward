@@ -203,3 +203,14 @@ export type ConsultOrderItem = Consult & {
   /** 实付款 */
   actualPayment: number
 }
+
+// 问诊订单列表的参数
+export type ConsultOrderListParams = PageParams & {
+  type: ConsultType
+}
+
+export type ConsultOrderPage = {
+  total: number
+  pageTotal: number
+  rows: ConsultOrderItem[]
+}
