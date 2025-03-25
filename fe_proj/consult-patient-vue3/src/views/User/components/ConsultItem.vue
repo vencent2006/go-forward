@@ -1,5 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { OrderType } from '@/enums'
+import { ConsultOrderItem } from '@/types/consult'
+import { log } from 'console'
+import { computed, ref } from 'vue'
 
+const props = defineProps<{
+  item: ConsultOrderItem
+}>()
+
+// 更多操作
+const showPopover = ref(false)
+const actions = computed(() => [
+  {
+    text: '查看处方',
+    disabled: !props.item.prescriptionId,
+  },
+  {
+    text: '删除处方',
+  },
+])
+const onSelect = () => {
+  console.log('点击了更多操作')
+}
+</script>
 <template>
   <div class="consult-item">
     <div class="head van-hairline--bottom">
@@ -24,6 +47,26 @@
     <div class="foot">
       <van-button class="gray" plain size="small" round>取消问诊</van-button>
       <van-button type="primary" plain size="small" round> 继续沟通 </van-button>
+    </div>
+    <div class="foot" v-if="item.status === OrderType.ConsultComplete">
+      <!-- 更多组件 -->
+      <div class="more">
+        <van-popover
+          v-model:show="showPopover"
+          placement="top-start"
+          :actions="actions"
+          @select="onSelect"
+        >
+          <template #reference>更多</template>
+        </van-popover>
+      </div>
+      <van-button class="gray" plain size="small" round :to="`/room?orderId=${item.id}`">
+        问诊记录
+      </van-button>
+      <van-button v-if="item.evaluateId" class="gray" plain size="small" round>
+        查看评价
+      </van-button>
+      <van-button v-else type="primary" plain size="small" round> 写评价 </van-button>
     </div>
   </div>
 </template>
