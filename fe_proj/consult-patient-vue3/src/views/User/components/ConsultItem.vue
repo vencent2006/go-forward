@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { OrderType } from '@/enums'
-import { ConsultOrderItem } from '@/types/consult'
-import { log } from 'console'
+import { cancelOrder } from '@/services/consult'
+import type { ConsultOrderItem } from '@/types/consult'
+import { showFailToast, showSuccessToast } from 'vant'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{
@@ -20,7 +21,23 @@ const actions = computed(() => [
   },
 ])
 const onSelect = () => {
-  console.log('点击了更多操作')
+  console.log('选择了')
+}
+
+// 取消订单
+const loading = ref(false)
+const cancelConsultOrder = async (item: ConsultOrderItem) => {
+  try {
+    loading.value = true
+    await cancelOrder(item.id)
+    item.status = OrderType.ConsultCancel
+    item.statusValue = '已取消'
+    showSuccessToast('取消成功')
+  } catch (error) {
+    showFailToast('取消失败')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 <template>
@@ -45,28 +62,47 @@ const onSelect = () => {
       </div>
     </div>
     <div class="foot">
-      <van-button class="gray" plain size="small" round>取消问诊</van-button>
-      <van-button type="primary" plain size="small" round> 继续沟通 </van-button>
+      <van-button
+        :loading="loading"
+        @click="cancelConsultOrder(item)"
+        class="gray"
+        plain
+        size="small"
+        round
+        >取消问诊</van-button
+      >
+      <van-button type="primary" plain size="small" round :to="`/room?orderId=${item.id}`">
+        继续沟通
+      </van-button>
     </div>
-    <div class="foot" v-if="item.status === OrderType.ConsultComplete">
-      <!-- 更多组件 -->
-      <div class="more">
-        <van-popover
-          v-model:show="showPopover"
-          placement="top-start"
-          :actions="actions"
-          @select="onSelect"
-        >
-          <template #reference>更多</template>
-        </van-popover>
-      </div>
-      <van-button class="gray" plain size="small" round :to="`/room?orderId=${item.id}`">
-        问诊记录
+
+    <div class="foot" v-if="item.status === OrderType.ConsultPay">
+      <van-button
+        :loading="loading"
+        @click="cancelConsultOrder(item)"
+        class="gray"
+        plain
+        size="small"
+        round
+        >取消问诊</van-button
+      >
+      <van-button type="primary" plain size="small" round :to="`/user/consult/${item.id}`">
+        去支付
       </van-button>
-      <van-button v-if="item.evaluateId" class="gray" plain size="small" round>
-        查看评价
+    </div>
+    <div class="foot" v-if="item.status === OrderType.ConsultWait">
+      <van-button
+        :loading="loading"
+        @click="cancelConsultOrder(item)"
+        class="gray"
+        plain
+        size="small"
+        round
+        >取消问诊</van-button
+      >
+      <van-button type="primary" plain size="small" round :to="`/room?orderId=${item.id}`">
+        继续沟通
       </van-button>
-      <van-button v-else type="primary" plain size="small" round> 写评价 </van-button>
     </div>
   </div>
 </template>
