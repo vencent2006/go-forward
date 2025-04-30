@@ -34,6 +34,7 @@ require (
 	github.com/yanyiwu/gojieba v1.3.0
 	go.etcd.io/etcd/client/v3 v3.5.6
 	go.uber.org/zap v1.24.0
+	golang.org/x/oauth2 v0.13.0
 	golang.org/x/sync v0.4.0
 	google.golang.org/grpc v1.58.2
 	google.golang.org/grpc/examples v0.0.0-20231007004321-59f57b160e79
@@ -115,7 +116,6 @@ require (
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/net v0.16.0 // indirect
-	golang.org/x/oauth2 v0.13.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/term v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
