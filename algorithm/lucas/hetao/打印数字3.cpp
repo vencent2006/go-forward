@@ -1,27 +1,27 @@
 #include <iostream>
 using namespace std;
-char zero[5][6] = {
+string zero[5] = {
     "*****",
     "*   *",
     "*   *",
     "*   *",
     "*****"
 };
-char one[5][6] = {
+string one[5] = {
     "    *",
     "    *",
     "    *",
     "    *",
     "    *"
 };
-char two[5][6] = {
+string two[5] = {
     "*****",
     "    *",
     "*****",
     "*    ",
     "*****"
 };
-char three[6][6] = {
+string three[5] = {
     "*****",
     "    *",
     "*****",
@@ -34,17 +34,18 @@ int main() {
     cin >> s;
     int weishu = s.length();
     for (int i = 0; i < 5; i++) {
-        // 一共5行，遍历每一行
         for (int j = 0; j < weishu; j++) {
             int idx = s[j] - '0';
-            if (idx == 0) {
-                cout << zero[i];
-            } else if (idx == 1) {
-                cout << one[i];
-            } else if (idx == 2) {
-                cout << two[i];
-            } else if (idx == 3) {
-                cout << three[i];
+            switch (idx) {
+                case 0: cout << zero[i];
+                    break;
+                case 1: cout << one[i];
+                    break;
+                case 2: cout << two[i];
+                    break;
+                case 3: cout << three[i];
+                    break;
+                default: break;
             }
             cout << " ";
         }
