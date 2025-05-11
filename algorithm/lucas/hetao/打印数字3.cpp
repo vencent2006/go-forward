@@ -35,19 +35,18 @@ int main() {
     int weishu = s.length();
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < weishu; j++) {
-            int idx = s[j] - '0';
-            switch (idx) {
-                case 0: cout << zero[i];
+            switch (s[j]) {
+                case '0': cout << zero[i];
                     break;
-                case 1: cout << one[i];
+                case '1': cout << one[i];
                     break;
-                case 2: cout << two[i];
+                case '2': cout << two[i];
                     break;
-                case 3: cout << three[i];
+                case '3': cout << three[i];
                     break;
                 default: break;
             }
-            cout << " ";
+            cout << "   ";
         }
         cout << endl;
     }
