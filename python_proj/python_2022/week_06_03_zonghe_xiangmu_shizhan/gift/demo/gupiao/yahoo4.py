@@ -10,7 +10,7 @@ os.environ["https_proxy"] = proxy
 # 获取茅台（600519.SS）的股票数据，日期范围从 2020-01-01 到 2021-01-01
 # stock_data = yf.download('600519.SS', start='2020-01-01', end='2021-01-01', auto_adjust=False)
 # stock_data.to_csv('600519.SS.csv')
-stock_data = pd.read_csv('600519.SS.csv', skiprows=[1, 2])
+stock_data = pd.read_csv('files/600519.SS.csv', skiprows=[1, 2])
 print(stock_data)
 print(type(stock_data))
 print(stock_data.columns)

@@ -1,8 +1,8 @@
 import pandas as pd
 import plotly.express as px
 
-ts_df = pd.read_csv("TSLA.csv", skiprows=[1, 2]).rename(columns={'Price': 'Date'})
-ap_df = pd.read_csv("AAPL.csv", skiprows=[1, 2]).rename(columns={'Price': 'Date'})
+ts_df = pd.read_csv("files/TSLA.csv", skiprows=[1, 2]).rename(columns={'Price': 'Date'})
+ap_df = pd.read_csv("files/AAPL.csv", skiprows=[1, 2]).rename(columns={'Price': 'Date'})
 ts_df["Date"] = pd.to_datetime(ts_df["Date"], format='%Y-%m-%d')
 ap_df["Date"] = pd.to_datetime(ap_df["Date"], format='%Y-%m-%d')
 print(ts_df)

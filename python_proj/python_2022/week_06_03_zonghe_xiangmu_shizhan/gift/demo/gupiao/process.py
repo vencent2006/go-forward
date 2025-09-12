@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 
 # 读取时跳过第二行（股票代码行）
-d = pd.read_csv('AAPL.csv', skiprows=[1, 2])
+d = pd.read_csv('files/AAPL.csv', skiprows=[1, 2])
 
 # Price列更名为Date
 d = d.rename(columns={'Price': 'date'})
