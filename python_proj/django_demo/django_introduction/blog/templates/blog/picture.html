@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片展示</title>
+</head>
+<body>
+<!-- 显示图片的区域 -->
+<img id="picture" src="" alt="图片">
+<script>
+    // 获取图片元素和按钮元素
+    const picture = document.getElementById('picture');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    // 当前图片索引
+    let currentIndex = 0;
+
+    // 发送请求获取图片的函数
+    function fetchPicture(direction) {
+        // 根据按钮点击方向更新索引
+        if (direction === 'next') {
+            currentIndex++;
+        } else if (direction === 'prev' && currentIndex > 0) {
+            currentIndex--;
+        }
+
+        // 发送请求到服务端获取图片 URL
+        fetch(`/get-picture/?index=${currentIndex}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    // 更新图片的 src 属性
+                    picture.src = data.url;
+                }
+            })
+            .catch(error => console.error('获取图片失败:', error));
+    }
+
+    // 为上一张按钮添加点击事件监听器
+    prevBtn.addEventListener('click', () => fetchPicture('prev'));
+    // 为下一张按钮添加点击事件监听器
+    nextBtn.addEventListener('click', () => fetchPicture('next'));
+
+    // 页面加载时获取第一张图片
+    fetchPicture('next');
+</script>
+<!-- 上一张按钮 -->
+<button id="prev-btn">上一张</button>
+<!-- 下一张按钮 -->
+<button id="next-btn">下一张</button>
+
+</body>
+</html>

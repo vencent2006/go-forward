@@ -1,37 +1,40 @@
-import os
+from io import BytesIO
 
 import opennsfw2 as n2
+import requests
 
 
 # 将自动下载预训练模型 open_nsfw_weights.h5 到 C:\Users\Administrator\.opennsfw2\weights
-# pip install opennsfw2
+# pip install opennsfw2 requests
 
-def get_image_paths(directory, extensions):
+def predict_nsfw_from_url(image_url):
     """
-    获取指定目录下所有符合指定文件格式的文件路径。
+    从给定的图片 URL 预测图片的 NSFW 概率。
 
-    :param directory: 指定的目录路径
-    :param extensions: 允许的文件扩展名列表，例如 ['.png', '.jpg', '.jpeg']
-    :return: 符合条件的文件路径列表
+    :param image_url: 图片的网络 URL
+    :return: NSFW 概率值
     """
-    local_image_paths = []
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            if any(file.lower().endswith(ext) for ext in extensions):
-                local_image_paths.append(os.path.join(root, file))
-    return local_image_paths
+    try:
+        # 发送请求获取图片内容
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()  # 检查请求是否成功
+        # 将响应内容转换为字节流
+        image_stream = BytesIO(response.content)
+        # 预测 NSFW 概率
+        return n2.predict_image(image_stream)
+    except requests.RequestException as e:
+        print(f"请求图片 {image_url} 时出错: {e}")
+        return None
 
 
-# 指定目录和文件格式
-image_directory = './pics'
-image_extensions = ['.png', '.jpg', '.jpeg']
-
-# 获取符合条件的文件路径
-image_paths = get_image_paths(image_directory, image_extensions)
+# 指定网上图片地址列表
+image_urls = [
+    "https://i0.wp.com/wx4.sinaimg.cn/large/9df4d7b0ly8hpjjg20a97j20u00u0q5r.jpg",
+    # "https://example.com/image2.png"
+]
 
 # 批量预测
-nsfw_probabilities = n2.predict_images(image_paths)
-for index, value in enumerate(nsfw_probabilities):
-    print(f"Index: {image_paths[index]}, Value: {value}")
-# print(nsfw_probabilities)
-# [0.16282965242862701, 0.8638442158699036]
+for url in image_urls:
+    nsfw_probability = predict_nsfw_from_url(url)
+    if nsfw_probability is not None:
+        print(f"URL: {url}, NSFW 概率: {nsfw_probability}")

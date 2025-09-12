@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>微博 API 数据</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+
+        h2 {
+            color: darkslateblue;
+        }
+
+        body {
+            font-size: 15px;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h2>一、您提的问题是:</h2>
+    <pre>{{ question }}</pre>
+</div>
+<div>
+    <h2>二、问题的回答是:</h2>
+    <pre>{{ res_html|safe }}</pre>
+</div>
+<div>
+    <h2>三、引用的博文是:</h2>
+
+    {% for content in content_list %}
+        <pre>{{ content }}</pre>
+    {% endfor %}
+
+</div>
+</body>
+</html>
